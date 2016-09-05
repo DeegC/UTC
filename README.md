@@ -19,7 +19,7 @@ The current plan:
  * A [MCP3008] (https://www.adafruit.com/products/856) for analog input.
  * Connection with the mobile device will be via BT/WiFi tethering.
  * UI written using Angular2.
- * Backend/controller will be JVM-based RESTful server using Zeidon as DB manager.
+ * Backend/controller will be JVM-based RESTful server using [Zeidon] (https://github.com/DeegC/zeidon-joe) as DB manager.
  * Backend DB will probably be Sqlite for simplicity.
 
 I hope to have someone design a PCB board to make assembly easier.
