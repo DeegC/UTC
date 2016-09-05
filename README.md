@@ -4,6 +4,8 @@ This is a work-in-progress repository for creating a temperature controller that
 
 This is the next generation controller based on my previous [UDS] (http://www.instructables.com/id/Tweeting-Wireless-Ugly-Drum-Smoker-UDS-tempera/)
 
+You can track progress and makes suggestions [in this tracking issue] (https://github.com/DeegC/UTC/issues/1).
+
 Goals:
 
  * Run autonomously (the UDS required a mobile device within Bluetooth range).
