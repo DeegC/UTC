@@ -1,0 +1,891 @@
+z1000-Zeidon    UTC      TZEREMDO 09/05/16   20:52:16 1.0a2    
+eEntpER_Model 1
+aName      UTC
+aZKey      905181310
+aNextZKeyToAssign 905181396
+aLastSyncDate 20160905205216504
+aDesc      UDS Digital Supervisor (android)
+
+eER_Entity 2
+aName      RunInstant
+aZKey      905181315
+aPurpose   A
+aDesc      This entity records all the readings of a moment in time in a smoker run.
+aER_DiagramPosX 28
+aER_DiagramPosY 28
+awkSelectedAttributeForDragSort 2
+
+eER_Attribute 3
+aName      Timestamp
+aZKey      905181316
+aNotNull   Y
+aDesc      Instant that this record was recorded.
+awkSequence 1
+
+eDomain    4
+aZKey      905181215
+aDesc      Date/time field
+aName      DateTime
+aDataType  T
+aDomainType E
+aContextRestriction N
+
+eER_FactTypeForDelete 4
+aZKey      905181330
+
+eER_EntIdentifierForDelete 5
+aName      Timestamp
+aZKey      905181328
+aSystemMaintained N
+
+eER_Attribute 3
+aName      TargetTemperature
+aZKey      905181317
+aNotNull   Y
+awkSequence 2
+
+eDomain    4
+aZKey      905181155
+aDesc      Integer numbers from -lots to +lots
+aName      Integer
+aDataType  L
+aMaxStringLth 4
+aDecimalFormat 0
+aDomainType E
+aContextRestriction N
+
+eER_Attribute 3
+aName      Therm0
+aZKey      905181318
+aDesc      Reading from thermometer 0.
+awkSequence 3
+
+eDomain    4
+
+eER_Attribute 3
+aName      Therm1
+aZKey      905181319
+aDesc      Reading from thermometer 1.
+awkSequence 4
+
+eDomain    4
+
+eER_Attribute 3
+aName      Therm2
+aZKey      905181320
+aDesc      Reading from thermometer 2.
+awkSequence 5
+
+eDomain    4
+
+eER_Attribute 3
+aName      Therm3
+aZKey      905181321
+aDesc      Reading from thermometer 3.
+awkSequence 6
+
+eDomain    4
+
+eER_Attribute 3
+aName      Therm4
+aZKey      905181322
+aDesc      Reading from thermometer 4
+awkSequence 7
+
+eDomain    4
+
+eER_Attribute 3
+aName      Therm5
+aZKey      905181323
+aDesc      Reading from thermometer 5
+awkSequence 8
+
+eDomain    4
+
+eER_Attribute 3
+aName      Therm6
+aZKey      905181324
+awkSequence 9
+
+eDomain    4
+
+eER_Attribute 3
+aName      Therm7
+aZKey      905181325
+awkSequence 10
+
+eDomain    4
+
+eER_Attribute 3
+aName      PWM0
+aZKey      905181326
+aDesc      Set PWM speed for blower 0.
+awkSequence 11
+
+eDomain    4
+
+eER_RelLink 3
+aName      for
+aZKey      905181387
+aCardMin   1
+aCardMax   1
+
+eER_RelType_1 4
+aZKey      905181385
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 32
+aER_DiagramE1PosY 22
+aER_DiagramE2PosX 32
+aER_DiagramE2PosY 27
+
+eER_RelLink_Other 5
+aName      has
+aZKey      905181386
+aCardMin   0
+aCardMax   m
+
+eER_Entity_Other 6
+aSAP_Entity 0
+aName      SmokerRun
+aZKey      905181347
+aPurpose   S
+aER_DiagramPosX 28
+aER_DiagramPosY 17
+
+eER_EntIdentifier 3
+
+eER_FactType 4
+aZKey      905181329
+
+eER_RelLinkIdentifier 5
+
+eER_Entity_Other_Identifier 6
+
+eER_FactType 4
+
+eER_AttributeIdentifier 5
+
+eER_Entity 2
+aName      Configuration
+aZKey      905181331
+aPurpose   F
+aDesc      Config options for a monitoring session.
+aER_DiagramPosX 28
+aER_DiagramPosY 5
+aSAP_Entity 0
+awkSelectedAttributeForDragSort 13
+
+eER_Attribute 3
+aName      Id
+aZKey      905181332
+aNotNull   Y
+aSAP_Attribute 0
+awkSequence 1
+
+eDomain    4
+
+eER_FactTypeForDelete 4
+aZKey      905181346
+
+eER_EntIdentifierForDelete 5
+aName      Id
+aZKey      905181345
+aSystemMaintained Y
+
+eER_Attribute 3
+aName      Description
+aZKey      905181333
+aLth       255
+aNotNull   Y
+aDesc      Description of this session.
+awkSequence 2
+
+eDomain    4
+aZKey      905181158
+aDesc      Any Character String
+aName      Text
+aDataType  S
+aMaxStringLth 10000
+aDomainType E
+aContextRestriction N
+
+eER_Attribute 3
+aName      Notes
+aZKey      905181334
+aLth       10000
+aDesc      Notes that are copied to the Session when a new Session is created.
+awkSequence 3
+
+eDomain    4
+
+eER_Attribute 3
+aName      ThermometerCount
+aZKey      905181335
+aNotNull   Y
+aDesc      Number of Thermometers
+awkSequence 4
+
+eDomain    4
+aZKey      905181332
+aDesc      Integer from 1-6
+aName      ThermometerCount
+aDataType  L
+aDomainType T
+aContextRestriction N
+
+eER_Attribute 3
+aName      TemperatureUnit
+aZKey      905181336
+aNotNull   Y
+awkSequence 5
+
+eDomain    4
+aZKey      905180731
+aName      TemperatureUnit
+aDataType  S
+aMaxStringLth 1
+aDomainType T
+aContextRestriction N
+
+eER_Attribute 3
+aName      RecordTemperatures
+aZKey      905181337
+aDesc      If 'Y', then record the smoker sesson.
+awkSequence 6
+
+eDomain    4
+
+eER_Attribute 3
+aName      PidP
+aZKey      905181338
+aNotNull   Y
+aDesc      P value for PID algorithm.
+awkSequence 7
+
+eDomain    4
+
+eER_Attribute 3
+aName      PidI
+aZKey      905181339
+aNotNull   Y
+aDesc      I value for PID algorithm.
+awkSequence 8
+
+eDomain    4
+aZKey      905181226
+aName      Double
+aDataType  M
+aDomainType E
+aContextRestriction N
+
+eER_Attribute 3
+aName      PidD
+aZKey      905181340
+aNotNull   Y
+aDesc      D value for PID algorithm.
+awkSequence 9
+
+eDomain    4
+
+eER_Attribute 3
+aName      MaxPWM
+aZKey      905181341
+aDesc      The max value for the output pwm.  Use lower values for more powerful blowers.
+awkSequence 10
+
+eDomain    4
+
+eER_Attribute 3
+aName      TweetOn
+aZKey      905181342
+aDesc      If 'Y', then periodically tweet status.
+awkSequence 11
+
+eDomain    4
+aZKey      905181228
+aName      Boolean
+aDataType  L
+aMaxStringLth 1
+aDomainType E
+aContextRestriction N
+
+eER_Attribute 3
+aName      TweetPeriodInMinutes
+aZKey      905181343
+awkSequence 12
+
+eDomain    4
+
+eER_Attribute 3
+aName      PwmFrequency
+aZKey      905181344
+aDesc      Frequency of the PWM signal
+awkSequence 13
+
+eDomain    4
+
+eER_RelLink 3
+aName      has
+aZKey      905181389
+aCardMin   1
+aCardMax   10
+aAutoSeq   Y
+aTE_NoForeignKeyPrefix N
+aHangingForeignKeyEntity N
+
+eER_RelType_1 4
+aZKey      905181388
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 37
+aER_DiagramE1PosY 7
+aER_DiagramE2PosX 51
+aER_DiagramE2PosY 7
+
+eER_RelLink_Other 5
+aName      for
+aZKey      905181390
+aCardMin   1
+aCardMax   1
+aAutoSeq   Y
+aTE_NoForeignKeyPrefix N
+aHangingForeignKeyEntity N
+
+eER_Entity_Other 6
+aSAP_Entity 0
+aName      ThermometerConfig
+aZKey      905181361
+aPurpose   A
+aDesc      Config values for the thermometer
+aER_DiagramPosX 52
+aER_DiagramPosY 5
+
+eER_RelLink 3
+aName      has
+aZKey      905181392
+aCardMin   0
+aCardMax   m
+
+eER_RelType_1 4
+aZKey      905181391
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 32
+aER_DiagramE1PosY 10
+aER_DiagramE2PosX 32
+aER_DiagramE2PosY 16
+
+eER_RelLink_Other 5
+aName      for
+aZKey      905181393
+aCardMin   1
+aCardMax   1
+
+eER_Entity_Other 6
+
+eER_RelLink 3
+aName      has
+aZKey      905181395
+aCardMin   1
+aCardMax   m
+aAutoSeq   N
+aTE_NoForeignKeyPrefix N
+aHangingForeignKeyEntity N
+
+eER_RelType_1 4
+aZKey      905181394
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 27
+aER_DiagramE1PosY 7
+aER_DiagramE2PosX 18
+aER_DiagramE2PosY 7
+
+eER_RelLink_Other 5
+aName      for
+aZKey      905181396
+aCardMin   1
+aCardMax   1
+aAutoSeq   N
+aTE_NoForeignKeyPrefix N
+aHangingForeignKeyEntity N
+
+eER_Entity_Other 6
+aSAP_Entity 0
+aName      TargetTemperature
+aZKey      905181355
+aPurpose   F
+aDesc      This is the target temperature of the smoker
+aER_DiagramPosX 9
+aER_DiagramPosY 6
+
+eER_EntIdentifier 3
+
+eER_FactType 4
+
+eER_AttributeIdentifier 5
+
+eER_Entity 2
+awkSelectedAttributeForDragSort 2
+
+eER_Attribute 3
+aName      Id
+aZKey      905181348
+aNotNull   Y
+aSAP_Attribute 0
+awkSequence 1
+
+eDomain    4
+
+eER_FactTypeForDelete 4
+aZKey      905181354
+
+eER_EntIdentifierForDelete 5
+aName      Id
+aZKey      905181353
+aSystemMaintained Y
+
+eER_Attribute 3
+aName      Date
+aZKey      905181349
+aNotNull   Y
+awkSequence 2
+
+eDomain    4
+
+eER_Attribute 3
+aName      EndDate
+aZKey      905181350
+awkSequence 3
+
+eDomain    4
+
+eER_Attribute 3
+aName      Notes
+aZKey      905181351
+aLth       10000
+aDesc      Notes regarding this session
+awkSequence 4
+
+eDomain    4
+
+eER_Attribute 3
+aName      ConfigOi
+aZKey      905181352
+aLth       10000
+aNotNull   Y
+aDesc      This is the configuration that was used when this run was started.  It is the OI serialized into a string.
+awkSequence 5
+
+eDomain    4
+
+eER_RelLink 3
+
+eER_RelType_1 4
+
+eER_RelLink_Other 5
+
+eER_Entity_Other 6
+
+eER_RelLink 3
+
+eER_RelType_1 4
+
+eER_RelLink_Other 5
+
+eER_Entity_Other 6
+
+eER_EntIdentifier 3
+
+eER_FactType 4
+
+eER_AttributeIdentifier 5
+
+eER_Entity 2
+awkSelectedAttributeForDragSort 3
+
+eER_Attribute 3
+aName      Id
+aZKey      905181356
+aNotNull   Y
+aSAP_Attribute 0
+awkSequence 1
+
+eDomain    4
+
+eER_FactTypeForDelete 4
+aZKey      905181360
+
+eER_EntIdentifierForDelete 5
+aName      Id
+aZKey      905181359
+aSystemMaintained Y
+
+eER_Attribute 3
+aName      TargetTemperature
+aZKey      905181357
+aNotNull   Y
+awkSequence 2
+
+eDomain    4
+
+eER_Attribute 3
+aName      StartTimeInMinutes
+aZKey      905181358
+aNotNull   Y
+aDesc      This is time during the cook that this target temperature is used.
+awkSequence 3
+
+eDomain    4
+
+eER_RelLink 3
+
+eER_RelType_1 4
+
+eER_RelLink_Other 5
+
+eER_Entity_Other 6
+
+eER_EntIdentifier 3
+
+eER_FactType 4
+
+eER_AttributeIdentifier 5
+
+eER_Entity 2
+awkSelectedAttributeForDragSort 6
+
+eER_Attribute 3
+aName      Id
+aZKey      905181362
+aNotNull   Y
+aSAP_Attribute 0
+awkSequence 1
+
+eDomain    4
+
+eER_FactTypeForDelete 4
+aZKey      905181369
+
+eER_EntIdentifierForDelete 5
+aName      Id
+aZKey      905181368
+aSystemMaintained Y
+
+eER_Attribute 3
+aName      Name
+aZKey      905181363
+aLth       255
+aNotNull   Y
+aDesc      The name of this thermometer that will be displayed in the UI.
+awkSequence 2
+
+eDomain    4
+
+eER_Attribute 3
+aName      AlarmLow
+aZKey      905181364
+aDesc      Sound the alarm if this thermometer goes below this value
+awkSequence 3
+
+eDomain    4
+
+eER_Attribute 3
+aName      AlarmHigh
+aZKey      905181365
+aDesc      Sound the alarm if this thermometer goes over this value.
+awkSequence 4
+
+eDomain    4
+
+eER_Attribute 3
+aName      AlarmOn
+aZKey      905181366
+aDesc      Sound the temperature alarm only when this is on.
+awkSequence 5
+
+eDomain    4
+
+eER_Attribute 3
+aName      wTemperatureWithinAlarmThreshold
+aZKey      905181367
+aDesc      Used only when AlarmOn is Y--this keeps track of when the temperature for this thermometer has ever been within the AlarmLow and AlarmHigh threshold.
+aWork      Y
+awkSequence 6
+
+eDomain    4
+
+eER_RelLink 3
+
+eER_RelType_1 4
+
+eER_RelLink_Other 5
+
+eER_Entity_Other 6
+
+eER_EntIdentifier 3
+
+eER_FactType 4
+
+eER_AttributeIdentifier 5
+
+eER_Entity 2
+aName      TwitterConfig
+aZKey      905181370
+aPurpose   F
+aDesc      Config options for Twitter/tweeting.
+aER_DiagramPosX 52
+aER_DiagramPosY 14
+awkSelectedAttributeForDragSort 4
+
+eER_Attribute 3
+aName      Id
+aZKey      905181371
+aNotNull   Y
+awkSequence 1
+
+eDomain    4
+
+eER_FactTypeForDelete 4
+aZKey      905181379
+
+eER_EntIdentifierForDelete 5
+aName      Id
+aZKey      905181378
+aSystemMaintained Y
+
+eER_Attribute 3
+aName      ConsumerKey
+aZKey      905181372
+aLth       200
+aDesc      Twitter OAuth ConsumerKey
+awkSequence 2
+
+eDomain    4
+
+eER_Attribute 3
+aName      ConsumerSecret
+aZKey      905181373
+aLth       200
+aDesc      Twitter OAuth ConsumerSecret
+awkSequence 3
+
+eDomain    4
+
+eER_Attribute 3
+aName      AccessToken
+aZKey      905181374
+aLth       200
+aDesc      Twitter OAuth AccessToken
+awkSequence 4
+
+eDomain    4
+
+eER_Attribute 3
+aName      AccessTokenSecret
+aZKey      905181375
+aLth       200
+aDesc      Twitter OAuth AccessTokenSecret
+awkSequence 5
+
+eDomain    4
+
+eER_Attribute 3
+aName      Username
+aZKey      905181376
+aLth       255
+aDesc      Username for twitter account
+awkSequence 6
+
+eDomain    4
+
+eER_Attribute 3
+aName      TweetPeriodInMinutes
+aZKey      905181377
+aDesc      How often, in minutes, to tweet status.
+awkSequence 7
+
+eDomain    4
+
+eER_EntIdentifier 3
+
+eER_FactType 4
+
+eER_AttributeIdentifier 5
+
+eER_Entity 2
+aName      Base
+aZKey      905181311
+aPurpose   F
+aER_DiagramPosX 1
+aER_DiagramPosY 17
+
+eER_Attribute 3
+aName      Id
+aZKey      905181312
+aNotNull   Y
+awkSequence 1
+
+eDomain    4
+
+eER_FactTypeForDelete 4
+aZKey      905181314
+
+eER_EntIdentifierForDelete 5
+aName      Id
+aZKey      905181313
+aSystemMaintained Y
+
+eER_EntIdentifier 3
+
+eER_FactType 4
+
+eER_AttributeIdentifier 5
+
+eER_RelType 2
+
+eER_RelLink_2 3
+
+eER_Entity_2 4
+
+eER_RelLink_2 3
+
+eER_Entity_2 4
+
+eER_RelType 2
+
+eER_RelLink_2 3
+
+eER_Entity_2 4
+
+eER_RelLink_2 3
+
+eER_Entity_2 4
+
+eER_RelType 2
+
+eER_RelLink_2 3
+
+eER_Entity_2 4
+
+eER_RelLink_2 3
+
+eER_Entity_2 4
+
+eER_RelType 2
+
+eER_RelLink_2 3
+
+eER_Entity_2 4
+
+eER_RelLink_2 3
+
+eER_Entity_2 4
+
+i9         7
+i11        7
+i13        7
+i15        7
+i17        7
+i19        7
+i21        7
+i23        7
+i25        7
+i30        5
+i32        28
+i33        29
+i34        4
+i35        2
+i38        7
+i44        42
+i50        3
+i52        3
+i56        54
+i58        7
+i62        7
+i64        7
+i72        29
+i77        40
+i78        39
+i79        37
+i80        29
+i82        7
+i86        3
+i88        3
+i90        42
+i92        42
+i93        28
+i94        27
+i95        26
+i96        1
+i97        71
+i98        70
+i99        69
+i100       36
+i101       84
+i102       83
+i103       81
+i104       76
+i106       7
+i110       7
+i112       7
+i113       75
+i114       74
+i115       73
+i116       36
+i117       108
+i118       107
+i119       105
+i120       68
+i122       7
+i126       42
+i128       7
+i130       7
+i132       60
+i134       60
+i135       67
+i136       66
+i137       65
+i138       36
+i139       124
+i140       123
+i141       121
+i144       7
+i148       42
+i150       42
+i152       42
+i154       42
+i156       42
+i158       7
+i159       146
+i160       145
+i161       143
+i164       7
+i167       166
+i168       165
+i169       163
+i170       27
+i171       28
+i172       29
+i173       26
+i174       1
+i175       66
+i176       65
+i177       36
+i178       67
+i179       68
+i180       70
+i181       69
+i182       36
+i183       71
+i184       29
+i185       74
+i186       73
+i187       36
+i188       75
+i189       76

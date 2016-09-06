@@ -1,0 +1,475 @@
+z1000-Zeidon    UTC      TZCMLPLO 09/05/16   20:58:26 1.0a2    
+eLPLR      1
+aName      UTC
+aDesc      Universal Temperature Controller
+aZKey      92726748
+aPgmSrcDir c:\zeidon\zapp\utc
+aExecDir   c:\zeidon\zapp\utc\bin
+aMetaSrcDir c:\zeidon\zapp\utc
+aTaskUseCount 0
+aLastBuildDate 20160905174740766
+aLPLR_Type 2
+aTempDesc  Universal Temperature Controller
+aJavaPackageName org\deeg\utc
+awExecutableSubDirectory bin
+
+eW_MetaType 2
+aType      0
+
+eW_MetaType 2
+aType      1
+
+eW_MetaType 2
+aType      2
+
+eW_MetaType 2
+aType      3
+
+eW_MetaDef 3
+aCPLR_ZKey 905180725
+aStatus    1
+aName      TemperatureUnit
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905180727
+aStatus    1
+aName      Double
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905180729
+aStatus    1
+aName      DateTime
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905180731
+aStatus    1
+aName      TemperatureUnit
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905180730
+aStatus    1
+aName      Day
+aGroupName TablesA
+
+eW_MetaDef 3
+aCPLR_ZKey 905180728
+aStatus    1
+aName      AlphaNumeric
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aCPLR_ZKey 905180732
+aStatus    1
+aName      Text
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aCPLR_ZKey 905180734
+aStatus    1
+aName      Integer
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aCPLR_ZKey 905181203
+aStatus    1
+aName      Blob
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181155
+aStatus    1
+aName      Integer
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aCPLR_ZKey 905181203
+aStatus    1
+aName      Blob
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181215
+aStatus    1
+aName      DateTime
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181155
+aStatus    1
+aName      Integer
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aCPLR_ZKey 905181158
+aStatus    1
+aName      Text
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aCPLR_ZKey 905181332
+aStatus    1
+aName      ThermometerCount
+aGroupName TablesA
+
+eW_MetaDef 3
+aCPLR_ZKey 905180725
+aStatus    1
+aName      TemperatureUnit
+aGroupName UDS
+
+eW_MetaDef 3
+aCPLR_ZKey 905180731
+aStatus    1
+aName      TemperatureUnit
+aGroupName UDS
+
+eW_MetaDef 3
+aCPLR_ZKey 905181203
+aStatus    1
+aName      Blob
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181217
+aStatus    1
+aName      Y/N
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181215
+aStatus    1
+aName      DateTime
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181203
+aStatus    1
+aName      Blob
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181226
+aStatus    1
+aName      Double
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181217
+aStatus    1
+aName      Y/N
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181215
+aStatus    1
+aName      DateTime
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181203
+aStatus    1
+aName      Blob
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181228
+aStatus    1
+aName      Boolean
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181226
+aStatus    1
+aName      Double
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181217
+aStatus    1
+aName      Y/N
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181215
+aStatus    1
+aName      DateTime
+aGroupName Base
+
+eW_MetaType 2
+aType      4
+
+eW_MetaDef 3
+aCPLR_ZKey 905181310
+aStatus    1
+aUpdateInd 2
+aName      UTC
+aDesc      UDS Digital Supervisor (android)
+aLastSyncDate 20160905205216531
+aLastUpdateDate 20160905205216531
+
+eW_MetaType 2
+aType      5
+
+eW_MetaType 2
+aType      6
+
+eW_MetaDef 3
+aCPLR_ZKey 1894
+aStatus    1
+aUpdateInd 2
+aName      UTC
+aDesc      Universal Temperature Controller
+aLastSyncDate 20160905181725998
+aLastUpdateDate 20160905181725998
+
+eW_MetaType 2
+aType      7
+
+eW_MetaType 2
+aType      8
+
+eW_MetaType 2
+aType      9
+
+eW_MetaType 2
+aType      10
+
+eW_MetaType 2
+aType      11
+
+eW_MetaType 2
+aType      12
+
+eW_MetaType 2
+aType      13
+
+eW_MetaDef 3
+aCPLR_ZKey 905181202
+aStatus    1
+aUpdateInd 2
+aName      Base
+aLastSyncDate 20160905181935997
+aLastUpdateDate 20160905181935997
+
+eW_MetaDef 3
+aCPLR_ZKey 905181326
+aStatus    1
+aUpdateInd 2
+aName      TablesA
+aDesc      Initial grouping of simple Tables
+aLastSyncDate 20160905181325171
+aLastUpdateDate 20160905181325171
+
+eW_MetaDef 3
+aCPLR_ZKey 905181151
+aStatus    1
+aUpdateInd 2
+aName      TZAPDMAA
+aLastSyncDate 20160905181323291
+aLastUpdateDate 20160905181323291
+
+eW_MetaDef 3
+aCPLR_ZKey 905180724
+aStatus    1
+aUpdateInd 2
+aName      UDS
+aDesc      UDS domains
+aLastSyncDate 20160905181325963
+aLastUpdateDate 20160905181325963
+
+eW_MetaType 2
+aType      14
+
+eW_MetaType 2
+aType      15
+
+eW_MetaType 2
+aType      16
+
+eW_MetaType 2
+aType      2000
+
+eW_MetaType 2
+aType      2001
+
+eW_MetaType 2
+aType      2002
+
+eW_MetaType 2
+aType      2003
+
+eW_MetaDef 3
+aCPLR_ZKey 905181203
+aStatus    1
+aName      Blob
+aLastUpdateDate 20160905181935997
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181228
+aStatus    1
+aName      Boolean
+aLastUpdateDate 20160905181935997
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181215
+aStatus    1
+aName      DateTime
+aLastUpdateDate 20160905181935997
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181226
+aStatus    1
+aName      Double
+aLastUpdateDate 20160905181935997
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181155
+aStatus    1
+aName      Integer
+aLastUpdateDate 20160905181323291
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aCPLR_ZKey 905180731
+aStatus    1
+aName      TemperatureUnit
+aLastUpdateDate 20160905181325963
+aGroupName UDS
+
+eW_MetaDef 3
+aCPLR_ZKey 905180725
+aStatus    1
+aName      TemperatureUnit
+aLastUpdateDate 20160905181325963
+aGroupName UDS
+
+eW_MetaDef 3
+aCPLR_ZKey 905181158
+aStatus    1
+aName      Text
+aLastUpdateDate 20160905181323291
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aCPLR_ZKey 905181332
+aStatus    1
+aName      ThermometerCount
+aLastUpdateDate 20160905181325171
+aGroupName TablesA
+
+eW_MetaDef 3
+aCPLR_ZKey 905181217
+aStatus    1
+aName      Y/N
+aLastUpdateDate 20160905181935997
+aGroupName Base
+
+eW_MetaType 2
+aType      2004
+
+eW_MetaDef 3
+
+eW_MetaType 2
+aType      2005
+
+eW_MetaType 2
+aType      2006
+
+eW_MetaDef 3
+
+eW_MetaType 2
+aType      2007
+
+eW_MetaType 2
+aType      2008
+
+eW_MetaType 2
+aType      2009
+
+eW_MetaType 2
+aType      2010
+
+eW_MetaType 2
+aType      2011
+
+eW_MetaType 2
+aType      2012
+
+eW_MetaType 2
+aType      2013
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaDef 3
+
+eW_MetaType 2
+aType      2014
+
+eW_MetaType 2
+aType      2015
+
+eW_MetaType 2
+aType      2016
+
+eDomainJavaClass 2
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.StaticTableDomain
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.DynamicTableDomain
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.BlobDomain
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.Boolean
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.DateDomain
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.DoubleDomain
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.EmailAddressDomain
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.IntegerDomain
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.PasswordDomain
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.StringDomain
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.SSNDomain
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.TimeDomain
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.RegularExpressionDomain
+
+eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.DateTimeDomain
+
+i68        35
+i71        38
+i79        49
+i80        47
+i81        46
+i82        48

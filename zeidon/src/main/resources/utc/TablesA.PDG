@@ -1,0 +1,101 @@
+z1000-Zeidon    TABLESA  TZDGSRCO 09/05/16   18:13:25 1.0a2    
+eDomainGroup 1
+aZKey      905181326
+aNextZKeyToAssign 905181342
+aName      TablesA
+aDesc      Initial grouping of simple Tables
+aExtension C
+aLanguageType C
+aDomainAndGlobalOpGroupName TZAPDMAA
+aWorkNumeric 8
+
+eDomain    2
+aZKey      905181332
+aName      ThermometerCount
+aDesc      Integer from 1-6
+aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aDataType  L
+aContextRestriction N
+
+eContext   3
+aZKey      905181333
+aName      ThermometerCount
+aIsDefault Y
+
+eTableEntry 4
+aZKey      905181334
+
+eTableEntry 4
+aZKey      905181335
+aExternalValue 1
+aInternalValue 1
+
+eTableEntry 4
+aZKey      905181336
+aExternalValue 2
+aInternalValue 2
+
+eTableEntry 4
+aZKey      905181337
+aExternalValue 3
+aInternalValue 3
+
+eTableEntry 4
+aZKey      905181338
+aExternalValue 4
+aInternalValue 4
+
+eTableEntry 4
+aZKey      905181339
+aExternalValue 5
+aInternalValue 5
+
+eTableEntry 4
+aZKey      905181340
+aExternalValue 6
+aInternalValue 6
+
+eTableEntry 4
+aZKey      905181341
+aExternalValue 7
+aInternalValue 7
+
+eTableEntry 4
+aZKey      905181342
+aExternalValue 8
+aInternalValue 8
+
+eOperation 2
+aName      zdmInteger
+aZKey      905181327
+aDesc      Integer Algorithm
+aType      M
+aReturnDataType N
+
+eOperation 2
+aName      zdmDecimal
+aZKey      905181328
+aType      M
+
+eOperation 2
+aName      zdmPassword
+aZKey      905181329
+aDesc      Password Algorithm
+aType      M
+aReturnDataType N
+
+eOperation 2
+aName      zdmQSNameLJNS
+aZKey      905181330
+aDesc      QuinSoft Name - left justified, no spaces
+aType      M
+aReturnDataType N
+
+eOperation 2
+aName      zdmText
+aZKey      905181331
+aDesc      Text Algorithm
+aType      M
+aReturnDataType N
+

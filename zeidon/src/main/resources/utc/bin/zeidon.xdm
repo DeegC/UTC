@@ -1,0 +1,313 @@
+z1000-Zeidon    ZEIDON   TZDMXGPO 09/05/16   18:19:36 1.0a2    
+eDomainGroup 1
+aName      UTC
+
+eDomain    2
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.RegularExpressionDomain
+aZKey      905180728
+aName      AlphaNumeric
+aDesc      Characters 'a-z', 'A-Z', '0-9'
+aDomainType E
+aDataType  S
+aMaxStringLth 254
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmText
+aDecimalFormat 1234
+
+eContext   3
+aZKey      905180729
+aName      ALPHANUMERIC
+aJavaEditString [\w]*
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.BlobDomain
+aZKey      905181203
+aName      Blob
+aDesc      A do nothing domain for blobs
+aDomainType E
+aDataType  B
+aContextRestriction N
+
+eContext   3
+aZKey      905181204
+aName      BLOB
+aIsDefault Y
+
+eContext   3
+aZKey      905181205
+aName      Double
+aIsDefault Y
+
+eContext   3
+aZKey      905181206
+aName      DateTime
+aJavaEditString yyyy-MM-dd
+aIsDefault Y
+
+eContext   3
+aZKey      905181207
+aName      Default
+
+eTableEntry 4
+aZKey      905181208
+
+eTableEntry 4
+aZKey      905181209
+aExternalValue Default
+aInternalValue Y
+
+eTableEntry 4
+aZKey      905181210
+aInternalValue N
+
+eContext   3
+aZKey      905181211
+aName      Y/N
+aIsDefault Y
+
+eTableEntry 4
+aZKey      905181212
+
+eTableEntry 4
+aZKey      905181213
+aExternalValue Y
+aInternalValue Y
+
+eTableEntry 4
+aZKey      905181214
+aExternalValue N
+aInternalValue N
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.Boolean
+aZKey      905181228
+aName      Boolean
+aDomainType E
+aDataType  L
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      905181229
+aName      Boolean
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DateTimeDomain
+aZKey      905181215
+aName      DateTime
+aDesc      Date/time field
+aDomainType E
+aDataType  T
+aContextRestriction N
+
+eContext   3
+aZKey      905181216
+aName      DateTime
+aJavaEditString yyyy-MM-dd
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.IntegerDomain
+aZKey      905180730
+aName      Day
+aDesc      Number of day in month
+aDomainType A
+aDataType  L
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmInteger
+
+eContext   3
+aZKey      905180731
+aName      Day
+aEditString <= 31
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.DoubleDomain
+aZKey      905181226
+aName      Double
+aDomainType E
+aDataType  M
+aContextRestriction N
+
+eContext   3
+aZKey      905181227
+aName      Double
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.IntegerDomain
+aZKey      905181155
+aName      Integer
+aDesc      Integer numbers from -lots to +lots
+aDomainType E
+aDataType  L
+aMaxStringLth 4
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmInteger
+aDecimalFormat 0
+
+eContext   3
+aZKey      905181156
+aName      Hex
+
+eContext   3
+aZKey      905181157
+aName      INTEGER
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      905180731
+aName      TemperatureUnit
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      905180732
+aName      Unit
+aIsDefault Y
+
+eTableEntry 4
+aZKey      905180733
+
+eTableEntry 4
+aZKey      905180734
+aExternalValue Fahrenheit
+aInternalValue F
+
+eTableEntry 4
+aZKey      905180735
+aExternalValue Celsius
+aInternalValue C
+
+eTableEntry 4
+aZKey      905180736
+aExternalValue Kelvin
+aInternalValue K
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aZKey      905181158
+aName      Text
+aDesc      Any Character String
+aDomainType E
+aDataType  S
+aMaxStringLth 10000
+aContextRestriction N
+aDLL_Name  TZAPDMAA
+aOperName  zdmText
+
+eContext   3
+aZKey      905181159
+aName      TEXT
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      905181332
+aName      ThermometerCount
+aDesc      Integer from 1-6
+aDomainType T
+aDataType  L
+aContextRestriction N
+
+eContext   3
+aZKey      905181333
+aName      ThermometerCount
+aIsDefault Y
+
+eTableEntry 4
+aZKey      905181334
+
+eTableEntry 4
+aZKey      905181335
+aExternalValue 1
+aInternalValue 1
+
+eTableEntry 4
+aZKey      905181336
+aExternalValue 2
+aInternalValue 2
+
+eTableEntry 4
+aZKey      905181337
+aExternalValue 3
+aInternalValue 3
+
+eTableEntry 4
+aZKey      905181338
+aExternalValue 4
+aInternalValue 4
+
+eTableEntry 4
+aZKey      905181339
+aExternalValue 5
+aInternalValue 5
+
+eTableEntry 4
+aZKey      905181340
+aExternalValue 6
+aInternalValue 6
+
+eTableEntry 4
+aZKey      905181341
+aExternalValue 7
+aInternalValue 7
+
+eTableEntry 4
+aZKey      905181342
+aExternalValue 8
+aInternalValue 8
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      905181217
+aName      Y/N
+aDesc      Yes or No
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      905181218
+aName      Default
+
+eTableEntry 4
+aZKey      905181219
+
+eTableEntry 4
+aZKey      905181220
+aExternalValue Default
+aInternalValue Y
+
+eTableEntry 4
+aZKey      905181221
+aInternalValue N
+
+eContext   3
+aZKey      905181222
+aName      Y/N
+aIsDefault Y
+
+eTableEntry 4
+aZKey      905181223
+
+eTableEntry 4
+aZKey      905181224
+aExternalValue Y
+aInternalValue Y
+
+eTableEntry 4
+aZKey      905181225
+aExternalValue N
+aInternalValue N
+

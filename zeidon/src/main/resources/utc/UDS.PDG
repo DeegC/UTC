@@ -1,0 +1,72 @@
+z1000-Zeidon    UDS      TZDGSRCO 09/05/16   18:13:25 1.0a2    
+eDomainGroup 1
+aZKey      905180724
+aNextZKeyToAssign 905180736
+aName      UDS
+aDesc      UDS domains
+aExtension C
+
+eDomain    2
+aZKey      905180725
+aName      TemperatureUnit
+aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      905180726
+aName      Unit
+aIsDefault Y
+
+eTableEntry 4
+aZKey      905180727
+
+eTableEntry 4
+aZKey      905180728
+aExternalValue Fahrenheit
+aInternalValue F
+
+eTableEntry 4
+aZKey      905180729
+aExternalValue Celsius
+aInternalValue C
+
+eTableEntry 4
+aZKey      905180730
+aExternalValue Kelvin
+aInternalValue K
+
+eDomain    2
+aZKey      905180731
+aName      TemperatureUnit
+aDomainType T
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      905180732
+aName      Unit
+aIsDefault Y
+
+eTableEntry 4
+aZKey      905180733
+
+eTableEntry 4
+aZKey      905180734
+aExternalValue Fahrenheit
+aInternalValue F
+
+eTableEntry 4
+aZKey      905180735
+aExternalValue Celsius
+aInternalValue C
+
+eTableEntry 4
+aZKey      905180736
+aExternalValue Kelvin
+aInternalValue K
+

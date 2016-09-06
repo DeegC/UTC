@@ -1,0 +1,73 @@
+z1000-Zeidon    TZAPDMAA TZDGSRCO 09/05/16   18:13:23 1.0a2    
+eDomainGroup 1
+aZKey      905181151
+aNextZKeyToAssign 905181159
+aName      TZAPDMAA
+aExtension C
+aLanguageType C
+aDomainAndGlobalOpGroupName TZAPDMAA
+aWorkNumeric 12
+
+eDomain    2
+aZKey      905181155
+aName      Integer
+aDesc      Integer numbers from -lots to +lots
+aDomainType E
+aJavaClass com.quinsoft.zeidon.domains.IntegerDomain
+aDataType  L
+aMaxStringLth 4
+aContextRestriction N
+aDecimalFormat 0
+
+eContext   3
+aZKey      905181156
+aDesc      0-F ( only Hex digits)
+aName      Hex
+
+eContext   3
+aZKey      905181157
+aName      INTEGER
+aIsDefault Y
+aDIL_Text  Integer > 32K
+
+eSelectedOperation 3
+aName      zdmInteger
+aZKey      905181152
+aDesc      Integer Algorithm
+aType      M
+aReturnDataType N
+
+eDomain    2
+aZKey      905181158
+aName      Text
+aDesc      Any Character String
+aDomainType E
+aJavaClass com.quinsoft.zeidon.domains.StringDomain
+aDataType  S
+aMaxStringLth 10000
+aContextRestriction N
+
+eContext   3
+aZKey      905181159
+aName      TEXT
+
+eSelectedOperation 3
+aName      zdmText
+aZKey      905181154
+aDesc      Text Algorithm
+aType      M
+aReturnDataType N
+
+eOperation 2
+
+eOperation 2
+aName      zdmQSNameLJNS
+aZKey      905181153
+aDesc      QuinSoft Name - left justified, no spaces
+aType      M
+aReturnDataType N
+
+eOperation 2
+
+i8         4
+i10        7
