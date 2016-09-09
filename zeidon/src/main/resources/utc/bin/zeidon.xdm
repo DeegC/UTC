@@ -1,4 +1,4 @@
-z1000-Zeidon    ZEIDON   TZDMXGPO 09/05/16   18:19:36 1.0a2    
+z1000-Zeidon    ZEIDON   TZDMXGPO 09/05/16   21:18:51 1.0a2    
 eDomainGroup 1
 aName      UTC
 
@@ -163,38 +163,6 @@ aName      INTEGER
 aIsDefault Y
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
-aZKey      905180731
-aName      TemperatureUnit
-aDomainType T
-aDataType  S
-aMaxStringLth 1
-aContextRestriction N
-
-eContext   3
-aZKey      905180732
-aName      Unit
-aIsDefault Y
-
-eTableEntry 4
-aZKey      905180733
-
-eTableEntry 4
-aZKey      905180734
-aExternalValue Fahrenheit
-aInternalValue F
-
-eTableEntry 4
-aZKey      905180735
-aExternalValue Celsius
-aInternalValue C
-
-eTableEntry 4
-aZKey      905180736
-aExternalValue Kelvin
-aInternalValue K
-
-eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StringDomain
 aZKey      905181158
 aName      Text
@@ -211,61 +179,19 @@ aZKey      905181159
 aName      TEXT
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aJavaClass com.quinsoft.zeidon.domains.IntegerDomain
 aZKey      905181332
 aName      ThermometerCount
 aDesc      Integer from 1-6
-aDomainType T
+aDomainType E
 aDataType  L
 aContextRestriction N
+aConstraintRule 1..8
 
 eContext   3
-aZKey      905181333
-aName      ThermometerCount
+aZKey      905181343
+aName      Count
 aIsDefault Y
-
-eTableEntry 4
-aZKey      905181334
-
-eTableEntry 4
-aZKey      905181335
-aExternalValue 1
-aInternalValue 1
-
-eTableEntry 4
-aZKey      905181336
-aExternalValue 2
-aInternalValue 2
-
-eTableEntry 4
-aZKey      905181337
-aExternalValue 3
-aInternalValue 3
-
-eTableEntry 4
-aZKey      905181338
-aExternalValue 4
-aInternalValue 4
-
-eTableEntry 4
-aZKey      905181339
-aExternalValue 5
-aInternalValue 5
-
-eTableEntry 4
-aZKey      905181340
-aExternalValue 6
-aInternalValue 6
-
-eTableEntry 4
-aZKey      905181341
-aExternalValue 7
-aInternalValue 7
-
-eTableEntry 4
-aZKey      905181342
-aExternalValue 8
-aInternalValue 8
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain

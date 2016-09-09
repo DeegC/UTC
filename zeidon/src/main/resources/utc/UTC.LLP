@@ -1,4 +1,4 @@
-z1000-Zeidon    UTC      TZCMLPLO 09/05/16   20:58:26 1.0a2    
+z1000-Zeidon    UTC      TZCMLPLO 09/05/16   21:39:23 1.0a2    
 eLPLR      1
 aName      UTC
 aDesc      Universal Temperature Controller
@@ -6,7 +6,7 @@ aZKey      92726748
 aPgmSrcDir c:\zeidon\zapp\utc
 aExecDir   c:\zeidon\zapp\utc\bin
 aMetaSrcDir c:\zeidon\zapp\utc
-aTaskUseCount 0
+aTaskUseCount 1
 aLastBuildDate 20160905174740766
 aLPLR_Type 2
 aTempDesc  Universal Temperature Controller
@@ -41,12 +41,6 @@ eW_MetaDef 3
 aCPLR_ZKey 905180729
 aStatus    1
 aName      DateTime
-aGroupName Base
-
-eW_MetaDef 3
-aCPLR_ZKey 905180731
-aStatus    1
-aName      TemperatureUnit
 aGroupName Base
 
 eW_MetaDef 3
@@ -199,6 +193,18 @@ aStatus    1
 aName      DateTime
 aGroupName Base
 
+eW_MetaDef 3
+aCPLR_ZKey 905181332
+aStatus    1
+aName      ThermometerCount
+aGroupName TablesA
+
+eW_MetaDef 3
+aCPLR_ZKey 905181332
+aStatus    1
+aName      ThermometerCount
+aGroupName TablesA
+
 eW_MetaType 2
 aType      4
 
@@ -208,8 +214,8 @@ aStatus    1
 aUpdateInd 2
 aName      UTC
 aDesc      UDS Digital Supervisor (android)
-aLastSyncDate 20160905205216531
-aLastUpdateDate 20160905205216531
+aLastSyncDate 20160905213923585
+aLastUpdateDate 20160905213923585
 
 eW_MetaType 2
 aType      5
@@ -261,8 +267,8 @@ aStatus    1
 aUpdateInd 2
 aName      TablesA
 aDesc      Initial grouping of simple Tables
-aLastSyncDate 20160905181325171
-aLastUpdateDate 20160905181325171
+aLastSyncDate 20160905211851796
+aLastUpdateDate 20160905211851796
 
 eW_MetaDef 3
 aCPLR_ZKey 905181151
@@ -338,13 +344,6 @@ aLastUpdateDate 20160905181323291
 aGroupName TZAPDMAA
 
 eW_MetaDef 3
-aCPLR_ZKey 905180731
-aStatus    1
-aName      TemperatureUnit
-aLastUpdateDate 20160905181325963
-aGroupName UDS
-
-eW_MetaDef 3
 aCPLR_ZKey 905180725
 aStatus    1
 aName      TemperatureUnit
@@ -359,18 +358,17 @@ aLastUpdateDate 20160905181323291
 aGroupName TZAPDMAA
 
 eW_MetaDef 3
-aCPLR_ZKey 905181332
-aStatus    1
-aName      ThermometerCount
-aLastUpdateDate 20160905181325171
-aGroupName TablesA
-
-eW_MetaDef 3
 aCPLR_ZKey 905181217
 aStatus    1
 aName      Y/N
 aLastUpdateDate 20160905181935997
 aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181332
+aStatus    1
+aName      ThermometerCount
+aGroupName TablesA
 
 eW_MetaType 2
 aType      2004
@@ -467,9 +465,9 @@ aJavaClassName com.quinsoft.zeidon.domains.RegularExpressionDomain
 eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.DateTimeDomain
 
-i68        35
-i71        38
-i79        49
-i80        47
-i81        46
-i82        48
+i68        36
+i71        39
+i79        50
+i80        48
+i81        47
+i82        49

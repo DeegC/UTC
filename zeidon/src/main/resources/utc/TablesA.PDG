@@ -1,7 +1,7 @@
-z1000-Zeidon    TABLESA  TZDGSRCO 09/05/16   18:13:25 1.0a2    
+z1000-Zeidon    TABLESA  TZDGSRCO 09/05/16   21:18:51 1.0a2    
 eDomainGroup 1
 aZKey      905181326
-aNextZKeyToAssign 905181342
+aNextZKeyToAssign 905181343
 aName      TablesA
 aDesc      Initial grouping of simple Tables
 aExtension C
@@ -13,58 +13,16 @@ eDomain    2
 aZKey      905181332
 aName      ThermometerCount
 aDesc      Integer from 1-6
-aDomainType T
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aDomainType E
+aJavaClass com.quinsoft.zeidon.domains.IntegerDomain
 aDataType  L
 aContextRestriction N
+aConstraintRule 1..8
 
 eContext   3
-aZKey      905181333
-aName      ThermometerCount
+aZKey      905181343
+aName      Count
 aIsDefault Y
-
-eTableEntry 4
-aZKey      905181334
-
-eTableEntry 4
-aZKey      905181335
-aExternalValue 1
-aInternalValue 1
-
-eTableEntry 4
-aZKey      905181336
-aExternalValue 2
-aInternalValue 2
-
-eTableEntry 4
-aZKey      905181337
-aExternalValue 3
-aInternalValue 3
-
-eTableEntry 4
-aZKey      905181338
-aExternalValue 4
-aInternalValue 4
-
-eTableEntry 4
-aZKey      905181339
-aExternalValue 5
-aInternalValue 5
-
-eTableEntry 4
-aZKey      905181340
-aExternalValue 6
-aInternalValue 6
-
-eTableEntry 4
-aZKey      905181341
-aExternalValue 7
-aInternalValue 7
-
-eTableEntry 4
-aZKey      905181342
-aExternalValue 8
-aInternalValue 8
 
 eOperation 2
 aName      zdmInteger
