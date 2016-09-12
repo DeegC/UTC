@@ -1,7 +1,1193 @@
-z1000-Zeidon    UTC      TZTENVRO 09/05/16   18:17:25 1.0a2    
+z1000-Zeidon    UTC      TZTENVRO 09/10/16   23:38:29 1.0a2    
 eTE_DB_Environ 1
 aName      UTC
 aZKey      1894
+aNextZKeyToAssign 1896
 aDesc      Universal Temperature Controller
 aType      P
 
+eTE_DBMS_Source 2
+aName      Sqlite
+aZKey      1896
+aParadigm  R
+aDBMS      Sqlite
+aGenerateExecutable kzhsqllb
+aDisplayOwner N
+aTranslateNamesToLowerUnderscore Y
+
+eTE_TablRec 3
+aName      instant
+aZKey      1895
+aDataOrRel D
+aDesc      This entity records all the readings of a moment in time in a UTC run.
+awkSelectedFieldForDragSort 1
+
+eTE_FieldDataRel 4
+aName      timestamp
+aZKey      1896
+aDesc      Instant that this record was recorded.
+aDataOrRelfieldOrSet D
+aKey       Y
+aDataType  T
+aLength    4
+aKeepPhysicalCharacteristicsFlag Y
+aSQL_NULLS Y
+awkSequence 1
+
+eER_Attribute 5
+aName      Timestamp
+aZKey      905181316
+aNotNull   Y
+aDesc      Instant that this record was recorded.
+
+eDomain    6
+aZKey      905181215
+aName      DateTime
+aDataType  T
+aDesc      Date/time field
+aDomainType E
+aContextRestriction N
+
+eTE_FieldDataRel 4
+aName      target_temperature
+aZKey      1897
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+aSQL_NULLS Y
+awkSequence 2
+
+eER_Attribute 5
+aName      TargetTemperature
+aZKey      905181317
+aNotNull   Y
+
+eDomain    6
+aZKey      905181155
+aName      Integer
+aDataType  L
+aMaxStringLth 4
+aDecimalFormat 0
+aDesc      Integer numbers from -lots to +lots
+aDomainType E
+aContextRestriction N
+
+eTE_FieldDataRel 4
+aName      therm0
+aZKey      1898
+aDesc      Reading from thermometer 0.
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+awkSequence 3
+
+eER_Attribute 5
+aName      Therm0
+aZKey      905181318
+aDesc      Reading from thermometer 0.
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      therm1
+aZKey      1899
+aDesc      Reading from thermometer 1.
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+awkSequence 4
+
+eER_Attribute 5
+aName      Therm1
+aZKey      905181319
+aDesc      Reading from thermometer 1.
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      therm2
+aZKey      1900
+aDesc      Reading from thermometer 2.
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+awkSequence 5
+
+eER_Attribute 5
+aName      Therm2
+aZKey      905181320
+aDesc      Reading from thermometer 2.
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      therm3
+aZKey      1901
+aDesc      Reading from thermometer 3.
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+awkSequence 6
+
+eER_Attribute 5
+aName      Therm3
+aZKey      905181321
+aDesc      Reading from thermometer 3.
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      therm4
+aZKey      1902
+aDesc      Reading from thermometer 4
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+awkSequence 7
+
+eER_Attribute 5
+aName      Therm4
+aZKey      905181322
+aDesc      Reading from thermometer 4
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      therm5
+aZKey      1903
+aDesc      Reading from thermometer 5
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+awkSequence 8
+
+eER_Attribute 5
+aName      Therm5
+aZKey      905181323
+aDesc      Reading from thermometer 5
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      therm6
+aZKey      1904
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+awkSequence 9
+
+eER_Attribute 5
+aName      Therm6
+aZKey      905181324
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      therm7
+aZKey      1905
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+awkSequence 10
+
+eER_Attribute 5
+aName      Therm7
+aZKey      905181325
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      pw_m0
+aZKey      1906
+aDesc      Set PWM speed for blower 0.
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+awkSequence 11
+
+eER_Attribute 5
+aName      PWM0
+aZKey      905181326
+aDesc      Set PWM speed for blower 0.
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      fk_id_session
+aZKey      1951
+aDesc      z_session(has [0:m] ) instant
+aDataOrRelfieldOrSet R
+aKey       Y
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+aSQL_NULLS Y
+awkSequence 12
+
+eER_RelLink 5
+aName      has
+aZKey      905181386
+aCardMin   0
+aCardMax   m
+
+eER_RelType_O 6
+aZKey      905181385
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 32
+aER_DiagramE1PosY 22
+aER_DiagramE2PosX 32
+aER_DiagramE2PosY 27
+
+eER_EntityRelLink 6
+aName      Session
+aZKey      905181347
+aPurpose   F
+aDesc      A controller session; i.e. a cook.
+aER_DiagramPosX 28
+aER_DiagramPosY 17
+aSAP_Entity 0
+
+eTE_FieldDataRel_PK 5
+aName      id
+aZKey      1925
+aDataOrRelfieldOrSet D
+aKey       Y
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+aSQL_NULLS Y
+
+eER_Entity 4
+aName      Instant
+aZKey      905181315
+aPurpose   A
+aDesc      This entity records all the readings of a moment in time in a UTC run.
+aER_DiagramPosX 28
+aER_DiagramPosY 28
+
+eTE_TablRecKey 4
+aName      z_timestamp
+aZKey      1907
+aCategory  3
+aDesc      Implements 
+
+eER_EntIdentifier 5
+aName      Timestamp
+aZKey      905181328
+aSystemMaintained N
+
+eTE_FieldDataRelKey 5
+aTempOrderNo 1
+
+eTE_FieldDataRelKey 5
+aTempOrderNo 3
+
+eTE_TablRec 3
+aName      configuration
+aZKey      1908
+aDataOrRel D
+aDesc      Config options for a monitoring session.
+
+eTE_FieldDataRel 4
+aName      id
+aZKey      1909
+aDataOrRelfieldOrSet D
+aKey       Y
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+aSQL_NULLS Y
+awkSequence 1
+
+eER_Attribute 5
+aName      Id
+aZKey      905181332
+aNotNull   Y
+aSAP_Attribute 0
+
+eDomain    6
+
+eTE_FieldDataRelFK_1 5
+aName      fk_id_configuration
+aZKey      1952
+aDesc      configuration(has [1:10] ) thermometer_config
+aDataOrRelfieldOrSet R
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+aSQL_NULLS Y
+
+eTE_FieldDataRelFK_1 5
+aName      fk_id_configuration
+aZKey      1953
+aDesc      configuration(has [0:m] ) z_session
+aDataOrRelfieldOrSet R
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+aSQL_NULLS Y
+
+eTE_FieldDataRel 4
+aName      description
+aZKey      1910
+aDesc      Description of this session.
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  V
+aLength    255
+aSQL_NULLS Y
+awkSequence 2
+
+eER_Attribute 5
+aName      Description
+aZKey      905181333
+aLth       255
+aNotNull   Y
+aDesc      Description of this session.
+
+eDomain    6
+aZKey      905181158
+aName      Text
+aDataType  S
+aMaxStringLth 10000
+aDesc      Any Character String
+aDomainType E
+aContextRestriction N
+
+eTE_FieldDataRel 4
+aName      notes
+aZKey      1911
+aDesc      Notes that are copied to the Session when a new Session is created.
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  V
+aLength    10000
+awkSequence 3
+
+eER_Attribute 5
+aName      Notes
+aZKey      905181334
+aLth       10000
+aDesc      Notes that are copied to the Session when a new Session is created.
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      target_temperature
+aZKey      1912
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+aSQL_NULLS Y
+awkSequence 4
+
+eER_Attribute 5
+aName      TargetTemperature
+aZKey      905181397
+aNotNull   Y
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      thermometer_count
+aZKey      1913
+aDesc      Number of Thermometers
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+aSQL_NULLS Y
+awkSequence 5
+
+eER_Attribute 5
+aName      ThermometerCount
+aZKey      905181335
+aNotNull   Y
+aDesc      Number of Thermometers
+
+eDomain    6
+aZKey      905181332
+aName      ThermometerCount
+aDataType  L
+aDesc      Integer from 1-6
+aDomainType E
+aContextRestriction N
+aConstraintRule 1..8
+
+eTE_FieldDataRel 4
+aName      temperature_unit
+aZKey      1914
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  S
+aLength    1
+aSQL_NULLS Y
+awkSequence 6
+
+eER_Attribute 5
+aName      TemperatureUnit
+aZKey      905181336
+aNotNull   Y
+
+eDomain    6
+aZKey      905180725
+aName      TemperatureUnit
+aDataType  S
+aMaxStringLth 1
+aDomainType T
+aContextRestriction N
+
+eTE_FieldDataRel 4
+aName      record_temperatures
+aZKey      1915
+aDesc      If 'Y', then record the smoker sesson.
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+awkSequence 7
+
+eER_Attribute 5
+aName      RecordTemperatures
+aZKey      905181337
+aDesc      If 'Y', then record the smoker sesson.
+
+eDomain    6
+aZKey      905181228
+aName      Boolean
+aDataType  L
+aMaxStringLth 1
+aDomainType E
+aContextRestriction N
+
+eTE_FieldDataRel 4
+aName      pid_p
+aZKey      1916
+aDesc      P value for PID algorithm.
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  T
+aLength    4
+aSQL_NULLS Y
+awkSequence 8
+
+eER_Attribute 5
+aName      PidP
+aZKey      905181338
+aNotNull   Y
+aDesc      P value for PID algorithm.
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      pid_i
+aZKey      1917
+aDesc      I value for PID algorithm.
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  M
+aLength    40
+aSQL_NULLS Y
+awkSequence 9
+
+eER_Attribute 5
+aName      PidI
+aZKey      905181339
+aNotNull   Y
+aDesc      I value for PID algorithm.
+
+eDomain    6
+aZKey      905181226
+aName      Double
+aDataType  M
+aDomainType E
+aContextRestriction N
+
+eTE_FieldDataRel 4
+aName      pid_d
+aZKey      1918
+aDesc      D value for PID algorithm.
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  M
+aLength    40
+aSQL_NULLS Y
+awkSequence 10
+
+eER_Attribute 5
+aName      PidD
+aZKey      905181340
+aNotNull   Y
+aDesc      D value for PID algorithm.
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      max_pwm
+aZKey      1919
+aDesc      The max value for the output pwm.  Use lower values for more powerful blowers.
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+awkSequence 11
+
+eER_Attribute 5
+aName      MaxPWM
+aZKey      905181341
+aDesc      The max value for the output pwm.  Use lower values for more powerful blowers.
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      tweet_on
+aZKey      1920
+aDesc      If 'Y', then periodically tweet status.
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+awkSequence 12
+
+eER_Attribute 5
+aName      TweetOn
+aZKey      905181342
+aDesc      If 'Y', then periodically tweet status.
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      tweet_period_in_minutes
+aZKey      1921
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+awkSequence 13
+
+eER_Attribute 5
+aName      TweetPeriodInMinutes
+aZKey      905181343
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      pwm_frequency
+aZKey      1922
+aDesc      Frequency of the PWM signal
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+awkSequence 14
+
+eER_Attribute 5
+aName      PwmFrequency
+aZKey      905181344
+aDesc      Frequency of the PWM signal
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      autoseq
+aZKey      1950
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+awkSequence 15
+
+eER_RelLink 5
+aName      for
+aZKey      905181390
+aCardMin   1
+aCardMax   1
+aAutoSeq   Y
+aTE_NoForeignKeyPrefix N
+aHangingForeignKeyEntity N
+
+eER_RelType_O 6
+aZKey      905181388
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 37
+aER_DiagramE1PosY 7
+aER_DiagramE2PosX 51
+aER_DiagramE2PosY 7
+
+eER_EntityRelLink 6
+aName      ThermometerConfig
+aZKey      905181361
+aPurpose   A
+aDesc      Config values for the thermometer
+aER_DiagramPosX 52
+aER_DiagramPosY 5
+aSAP_Entity 0
+
+eER_Entity 4
+aName      Configuration
+aZKey      905181331
+aPurpose   F
+aDesc      Config options for a monitoring session.
+aER_DiagramPosX 28
+aER_DiagramPosY 5
+aSAP_Entity 0
+
+eTE_TablRecKey 4
+aName      id
+aZKey      1923
+aCategory  2
+aDesc      Implements 
+
+eER_EntIdentifier 5
+aName      Id
+aZKey      905181345
+aSystemMaintained Y
+
+eTE_FieldDataRelKey 5
+
+eTE_FieldDataRelAsFK 6
+
+eTE_FieldDataRelAsFK 6
+
+eTE_TablRec 3
+aName      session
+aZKey      1924
+aDataOrRel D
+aDesc      A controller session; i.e. a cook.
+aKeepPhysicalCharacteristicsFlag Y
+awkSelectedFieldForDragSort 2
+
+eTE_FieldDataRel 4
+awkSequence 1
+
+eER_Attribute 5
+aName      Id
+aZKey      905181348
+aNotNull   Y
+aSAP_Attribute 0
+
+eDomain    6
+
+eTE_FieldDataRelFK_1 5
+
+eTE_FieldDataRel 4
+aName      date
+aZKey      1926
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  T
+aLength    4
+aKeepPhysicalCharacteristicsFlag Y
+aSQL_NULLS Y
+awkSequence 2
+
+eER_Attribute 5
+aName      Date
+aZKey      905181349
+aNotNull   Y
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      end_date
+aZKey      1927
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  T
+aLength    4
+awkSequence 3
+
+eER_Attribute 5
+aName      EndDate
+aZKey      905181350
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      notes
+aZKey      1928
+aDesc      Notes regarding this session
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  V
+aLength    10000
+awkSequence 4
+
+eER_Attribute 5
+aName      Notes
+aZKey      905181351
+aLth       10000
+aDesc      Notes regarding this session
+
+eDomain    6
+
+eTE_FieldDataRel 4
+awkSequence 5
+
+eER_RelLink 5
+aName      has
+aZKey      905181392
+aCardMin   0
+aCardMax   m
+
+eER_RelType_O 6
+aZKey      905181391
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 32
+aER_DiagramE1PosY 10
+aER_DiagramE2PosX 32
+aER_DiagramE2PosY 16
+
+eER_EntityRelLink 6
+
+eTE_FieldDataRel_PK 5
+
+eER_Entity 4
+
+eTE_TablRecKey 4
+aName      id
+aZKey      1929
+aCategory  2
+aDesc      Implements 
+
+eER_EntIdentifier 5
+aName      Id
+aZKey      905181353
+aSystemMaintained Y
+
+eTE_FieldDataRelKey 5
+
+eTE_FieldDataRelAsFK 6
+
+eTE_TablRec 3
+aName      thermometer_config
+aZKey      1930
+aDataOrRel D
+aDesc      Config values for the thermometer
+
+eTE_FieldDataRel 4
+aName      id
+aZKey      1931
+aDataOrRelfieldOrSet D
+aKey       Y
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+aSQL_NULLS Y
+awkSequence 1
+
+eER_Attribute 5
+aName      Id
+aZKey      905181362
+aNotNull   Y
+aSAP_Attribute 0
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      name
+aZKey      1932
+aDesc      The name of this thermometer that will be displayed in the UI.
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  V
+aLength    255
+aSQL_NULLS Y
+awkSequence 2
+
+eER_Attribute 5
+aName      Name
+aZKey      905181363
+aLth       255
+aNotNull   Y
+aDesc      The name of this thermometer that will be displayed in the UI.
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      alarm_low
+aZKey      1933
+aDesc      Sound the alarm if this thermometer goes below this value
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+awkSequence 3
+
+eER_Attribute 5
+aName      AlarmLow
+aZKey      905181364
+aDesc      Sound the alarm if this thermometer goes below this value
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      alarm_high
+aZKey      1934
+aDesc      Sound the alarm if this thermometer goes over this value.
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+awkSequence 4
+
+eER_Attribute 5
+aName      AlarmHigh
+aZKey      905181365
+aDesc      Sound the alarm if this thermometer goes over this value.
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      alarm_on
+aZKey      1935
+aDesc      Sound the temperature alarm only when this is on.
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+awkSequence 5
+
+eER_Attribute 5
+aName      AlarmOn
+aZKey      905181366
+aDesc      Sound the temperature alarm only when this is on.
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      autoseq
+aZKey      1949
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+awkSequence 6
+
+eER_RelLink 5
+aName      has
+aZKey      905181389
+aCardMin   1
+aCardMax   10
+aAutoSeq   Y
+aTE_NoForeignKeyPrefix N
+aHangingForeignKeyEntity N
+
+eER_RelType_O 6
+
+eER_EntityRelLink 6
+
+eTE_FieldDataRel 4
+awkSequence 7
+
+eER_RelLink 5
+
+eER_RelType_O 6
+
+eER_EntityRelLink 6
+
+eTE_FieldDataRel_PK 5
+
+eER_Entity 4
+
+eTE_TablRecKey 4
+aName      id
+aZKey      1936
+aCategory  2
+aDesc      Implements 
+
+eER_EntIdentifier 5
+aName      Id
+aZKey      905181368
+aSystemMaintained Y
+
+eTE_FieldDataRelKey 5
+
+eTE_TablRec 3
+aName      twitter_config
+aZKey      1937
+aDataOrRel D
+aDesc      Config options for Twitter/tweeting.
+
+eTE_FieldDataRel 4
+aName      id
+aZKey      1938
+aDataOrRelfieldOrSet D
+aKey       Y
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+aSQL_NULLS Y
+awkSequence 1
+
+eER_Attribute 5
+aName      Id
+aZKey      905181371
+aNotNull   Y
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      consumer_key
+aZKey      1939
+aDesc      Twitter OAuth ConsumerKey
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  S
+aLength    200
+awkSequence 2
+
+eER_Attribute 5
+aName      ConsumerKey
+aZKey      905181372
+aLth       200
+aDesc      Twitter OAuth ConsumerKey
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      consumer_secret
+aZKey      1940
+aDesc      Twitter OAuth ConsumerSecret
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  S
+aLength    200
+awkSequence 3
+
+eER_Attribute 5
+aName      ConsumerSecret
+aZKey      905181373
+aLth       200
+aDesc      Twitter OAuth ConsumerSecret
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      access_token
+aZKey      1941
+aDesc      Twitter OAuth AccessToken
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  S
+aLength    200
+awkSequence 4
+
+eER_Attribute 5
+aName      AccessToken
+aZKey      905181374
+aLth       200
+aDesc      Twitter OAuth AccessToken
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      access_token_secret
+aZKey      1942
+aDesc      Twitter OAuth AccessTokenSecret
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  S
+aLength    200
+awkSequence 5
+
+eER_Attribute 5
+aName      AccessTokenSecret
+aZKey      905181375
+aLth       200
+aDesc      Twitter OAuth AccessTokenSecret
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      username
+aZKey      1943
+aDesc      Username for twitter account
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  V
+aLength    255
+awkSequence 6
+
+eER_Attribute 5
+aName      Username
+aZKey      905181376
+aLth       255
+aDesc      Username for twitter account
+
+eDomain    6
+
+eTE_FieldDataRel 4
+aName      tweet_period_in_minutes
+aZKey      1944
+aDesc      How often, in minutes, to tweet status.
+aDataOrRelfieldOrSet D
+aKey       N
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+awkSequence 7
+
+eER_Attribute 5
+aName      TweetPeriodInMinutes
+aZKey      905181377
+aDesc      How often, in minutes, to tweet status.
+
+eDomain    6
+
+eER_Entity 4
+aName      TwitterConfig
+aZKey      905181370
+aPurpose   F
+aDesc      Config options for Twitter/tweeting.
+aER_DiagramPosX 52
+aER_DiagramPosY 14
+
+eTE_TablRecKey 4
+aName      id
+aZKey      1945
+aCategory  2
+aDesc      Implements 
+
+eER_EntIdentifier 5
+aName      Id
+aZKey      905181378
+aSystemMaintained Y
+
+eTE_FieldDataRelKey 5
+
+eTE_TablRec 3
+aName      base
+aZKey      1946
+aDataOrRel D
+
+eTE_FieldDataRel 4
+aName      id
+aZKey      1947
+aDataOrRelfieldOrSet D
+aKey       Y
+aDataType  L
+aLength    4
+aSQL_SCALE 0
+aSQL_NULLS Y
+awkSequence 1
+
+eER_Attribute 5
+aName      Id
+aZKey      905181312
+aNotNull   Y
+
+eDomain    6
+
+eER_Entity 4
+aName      Base
+aZKey      905181311
+aPurpose   F
+aER_DiagramPosX 1
+aER_DiagramPosY 17
+
+eTE_TablRecKey 4
+aName      id
+aZKey      1948
+aCategory  2
+aDesc      Implements 
+
+eER_EntIdentifier 5
+aName      Id
+aZKey      905181313
+aSystemMaintained Y
+
+eTE_FieldDataRelKey 5
+
+i11        8
+i14        8
+i17        8
+i20        8
+i23        8
+i26        8
+i29        8
+i32        8
+i35        8
+i44        36
+i45        3
+i49        8
+i57        54
+i60        8
+i72        5
+i78        75
+i81        8
+i84        69
+i87        8
+i90        8
+i98        47
+i99        50
+i100       51
+i102       40
+i104       8
+i105       36
+i108       5
+i111       5
+i114       54
+i115       51
+i118       95
+i119       47
+i120       39
+i123       40
+i124       36
+i128       8
+i131       54
+i134       8
+i137       8
+i140       69
+i143       93
+i144       95
+i145       50
+i146       142
+i147       93
+i148       95
+i149       47
+i150       94
+i153       126
+i157       8
+i160       54
+i163       54
+i166       54
+i169       54
+i172       54
+i175       8
+i179       155
+i183       8
+i187       181

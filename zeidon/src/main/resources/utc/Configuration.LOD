@@ -1,0 +1,585 @@
+z1000-Zeidon    CONFIGURATZZOLODO 09/11/16   00:01:57 1.0a2    
+eLOD       1
+aZKey      910225831
+aNextZKeyToAssign 910225854
+aName      Configuration
+aDesc      Main configuration object
+
+eLOD_EntityParent 2
+aName      Configuration
+aIndentName Configuration
+aIndentLvl 0
+aZKey      910225832
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      N
+aParentDeleteBehave D
+aDesc      Config options for a monitoring session.
+
+eLOD_EntityChild 3
+aName      ThermometerConfig
+aIndentName    ThermometerConfig
+aIndentLvl 3
+aZKey      910225847
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aParentDeleteBehave D
+aRelLinkIndicator L
+aDesc      Config values for the thermometer
+
+eLOD_AttributeRec 4
+aZKey      910225848
+
+eER_AttributeRec 5
+aName      Id
+aZKey      905181362
+aNotNull   Y
+aSAP_Attribute 0
+
+eDomainRec 6
+aZKey      905181155
+aName      Integer
+aDomainType E
+aDataType  L
+aMaxStringLth 4
+aDecimalFormat 0
+aDesc      Integer numbers from -lots to +lots
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      910225849
+
+eER_AttributeRec 5
+aName      Name
+aZKey      905181363
+aLth       255
+aNotNull   Y
+aDesc      The name of this thermometer that will be displayed in the UI.
+
+eDomainRec 6
+aZKey      905181158
+aName      Text
+aDomainType E
+aDataType  S
+aMaxStringLth 10000
+aDesc      Any Character String
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      910225850
+
+eER_AttributeRec 5
+aName      AlarmLow
+aZKey      905181364
+aDesc      Sound the alarm if this thermometer goes below this value
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      910225851
+
+eER_AttributeRec 5
+aName      AlarmHigh
+aZKey      905181365
+aDesc      Sound the alarm if this thermometer goes over this value.
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      910225852
+
+eER_AttributeRec 5
+aName      AlarmOn
+aZKey      905181366
+aDesc      Sound the temperature alarm only when this is on.
+
+eDomainRec 6
+aZKey      905181228
+aName      Boolean
+aDomainType E
+aDataType  L
+aMaxStringLth 1
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      910225853
+
+eER_AttributeRec 5
+aName      wTemperatureWithinAlarmThreshold
+aZKey      905181367
+aDesc      Used only when AlarmOn is Y--this keeps track of when the temperature for this thermometer has ever been within the AlarmLow and AlarmHigh threshold.
+aWork      Y
+
+eDomainRec 6
+
+eER_EntityRec 4
+aName      ThermometerConfig
+aZKey      905181361
+aPurpose   A
+aDesc      Config values for the thermometer
+aER_DiagramPosX 52
+aER_DiagramPosY 5
+aSAP_Entity 0
+
+eER_RelLinkRec 4
+aName      has
+aAutoSeq   Y
+aHangingForeignKeyEntity N
+aZKey      905181389
+aCardMin   1
+aCardMax   10
+aTE_NoForeignKeyPrefix N
+
+eER_RelTypeRec 5
+aZKey      905181388
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 37
+aER_DiagramE1PosY 7
+aER_DiagramE2PosX 51
+aER_DiagramE2PosY 7
+
+eLOD_AttributeRec 3
+aZKey      910225833
+
+eER_AttributeRec 4
+aName      Id
+aZKey      905181332
+aNotNull   Y
+aSAP_Attribute 0
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      910225834
+
+eER_AttributeRec 4
+aName      Description
+aZKey      905181333
+aLth       255
+aNotNull   Y
+aDesc      Description of this session.
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      910225835
+
+eER_AttributeRec 4
+aName      Notes
+aZKey      905181334
+aLth       10000
+aDesc      Notes that are copied to the Session when a new Session is created.
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      910225836
+
+eER_AttributeRec 4
+aName      TargetTemperature
+aZKey      905181397
+aNotNull   Y
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      910225837
+
+eER_AttributeRec 4
+aName      ThermometerCount
+aZKey      905181335
+aNotNull   Y
+aDesc      Number of Thermometers
+
+eDomainRec 5
+aZKey      905181332
+aName      ThermometerCount
+aDomainType E
+aDataType  L
+aDesc      Integer from 1-6
+aContextRestriction N
+aConstraintRule 1..8
+
+eLOD_AttributeRec 3
+aZKey      910225838
+
+eER_AttributeRec 4
+aName      TemperatureUnit
+aZKey      905181336
+aNotNull   Y
+
+eDomainRec 5
+aZKey      905180725
+aName      TemperatureUnit
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eLOD_AttributeRec 3
+aZKey      910225839
+
+eER_AttributeRec 4
+aName      RecordTemperatures
+aZKey      905181337
+aDesc      If 'Y', then record the smoker sesson.
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      910225840
+
+eER_AttributeRec 4
+aName      PidP
+aZKey      905181338
+aNotNull   Y
+aDesc      P value for PID algorithm.
+
+eDomainRec 5
+aZKey      905181215
+aName      DateTime
+aDomainType E
+aDataType  T
+aDesc      Date/time field
+aContextRestriction N
+
+eLOD_AttributeRec 3
+aZKey      910225841
+
+eER_AttributeRec 4
+aName      PidI
+aZKey      905181339
+aNotNull   Y
+aDesc      I value for PID algorithm.
+
+eDomainRec 5
+aZKey      905181226
+aName      Double
+aDomainType E
+aDataType  M
+aContextRestriction N
+
+eLOD_AttributeRec 3
+aZKey      910225842
+
+eER_AttributeRec 4
+aName      PidD
+aZKey      905181340
+aNotNull   Y
+aDesc      D value for PID algorithm.
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      910225843
+
+eER_AttributeRec 4
+aName      MaxPWM
+aZKey      905181341
+aDesc      The max value for the output pwm.  Use lower values for more powerful blowers.
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      910225844
+
+eER_AttributeRec 4
+aName      TweetOn
+aZKey      905181342
+aDesc      If 'Y', then periodically tweet status.
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      910225845
+
+eER_AttributeRec 4
+aName      TweetPeriodInMinutes
+aZKey      905181343
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      910225846
+
+eER_AttributeRec 4
+aName      PwmFrequency
+aZKey      905181344
+aDesc      Frequency of the PWM signal
+
+eDomainRec 5
+
+eER_EntityRec 3
+aName      Configuration
+aZKey      905181331
+aPurpose   F
+aDesc      Config options for a monitoring session.
+aER_DiagramPosX 28
+aER_DiagramPosY 5
+aSAP_Entity 0
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 5
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 6
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 7
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 8
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 9
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 10
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 11
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 12
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 13
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 14
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 5
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 6
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
+ePOD       2
+aNAME      Configuration
+aZKey      910225854
+aTE_SourceZKey 1896
+
+eTE_DB_Environ 3
+aName      UTC
+aZKey      1894
+aDesc      Universal Temperature Controller
+aType      P
+
+eTE_DBMS_Source 4
+aName      Sqlite
+aZKey      1896
+aParadigm  R
+aDBMS      Sqlite
+aGenerateExecutable kzhsqllb
+aDisplayOwner N
+aTranslateNamesToLowerUnderscore Y
+
+i11        5
+i14        5
+i20        17
+i26        5
+i29        8
+i32        8
+i35        5
+i44        17
+i53        50
+i56        5
+i59        17
+i62        5
+i65        5
+i67        1
+i68        24
+i69        25
+i70        5
+i71        27
+i72        28
+i73        8
+i74        30
+i75        31
+i76        8
+i77        33
+i78        34
+i79        5
+i80        36
+i81        37
+i82        38
+i83        39
+i84        40
+i85        41
+i86        42
+i87        43
+i88        17
+i89        45
+i90        46
+i91        47
+i92        48
+i93        49
+i94        50
+i95        51
+i96        52
+i97        50
+i98        54
+i99        55
+i100       5
+i101       57
+i102       58
+i103       17
+i104       60
+i105       61
+i106       5
+i107       63
+i108       64
+i109       5
+i110       66
+i111       2
+i112       3
+i113       4
+i114       5
+i115       6
+i116       7
+i117       8
+i118       9
+i119       10
+i120       5
+i121       12
+i122       13
+i123       5
+i124       15
+i125       16
+i126       17
+i127       18
+i128       19
+i129       17
+i130       21
+i131       22
+i132       23

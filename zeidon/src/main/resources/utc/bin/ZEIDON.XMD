@@ -1,0 +1,280 @@
+z1000-Zeidon    ZEIDON   TZEREMXO 09/11/16   00:01:57 1.0a2    
+eMODEL     1
+aNumEnts   6
+aNumRels   3
+
+eENTITY    2
+aZKEY      905181315
+aNumAtts   12
+
+eATTRIB    3
+aZKEY      905181316
+aNAME      Timestamp
+aAPDM_TOK  905181215
+
+eATTRIB    3
+aZKEY      905181317
+aNAME      TargetTemperature
+aAPDM_TOK  905181155
+
+eATTRIB    3
+aZKEY      905181318
+aNAME      Therm0
+aAPDM_TOK  905181155
+
+eATTRIB    3
+aZKEY      905181319
+aNAME      Therm1
+aAPDM_TOK  905181155
+
+eATTRIB    3
+aZKEY      905181320
+aNAME      Therm2
+aAPDM_TOK  905181155
+
+eATTRIB    3
+aZKEY      905181321
+aNAME      Therm3
+aAPDM_TOK  905181155
+
+eATTRIB    3
+aZKEY      905181322
+aNAME      Therm4
+aAPDM_TOK  905181155
+
+eATTRIB    3
+aZKEY      905181323
+aNAME      Therm5
+aAPDM_TOK  905181155
+
+eATTRIB    3
+aZKEY      905181324
+aNAME      Therm6
+aAPDM_TOK  905181155
+
+eATTRIB    3
+aZKEY      905181325
+aNAME      Therm7
+aAPDM_TOK  905181155
+
+eATTRIB    3
+aZKEY      905181326
+aNAME      PWM0
+aAPDM_TOK  905181155
+
+eATTRIB    3
+aZKEY      1951
+aNAME      fk_id_session
+aAPDM_TOK  905181155
+aLTH       4
+
+eENTITY    2
+aZKEY      905181331
+aNumAtts   14
+
+eATTRIB    3
+aZKEY      905181332
+aNAME      Id
+aAPDM_TOK  905181155
+
+eATTRIB    3
+aZKEY      905181333
+aNAME      Description
+aAPDM_TOK  905181158
+aLTH       255
+
+eATTRIB    3
+aZKEY      905181334
+aNAME      Notes
+aAPDM_TOK  905181158
+aLTH       10000
+
+eATTRIB    3
+aZKEY      905181397
+aNAME      TargetTemperature
+aAPDM_TOK  905181155
+
+eATTRIB    3
+aZKEY      905181335
+aNAME      ThermometerCount
+aAPDM_TOK  905181332
+
+eATTRIB    3
+aZKEY      905181336
+aNAME      TemperatureUnit
+aAPDM_TOK  905180725
+
+eATTRIB    3
+aZKEY      905181337
+aNAME      RecordTemperatures
+aAPDM_TOK  905181228
+
+eATTRIB    3
+aZKEY      905181338
+aNAME      PidP
+aAPDM_TOK  905181215
+
+eATTRIB    3
+aZKEY      905181339
+aNAME      PidI
+aAPDM_TOK  905181226
+
+eATTRIB    3
+aZKEY      905181340
+aNAME      PidD
+aAPDM_TOK  905181226
+
+eATTRIB    3
+aZKEY      905181341
+aNAME      MaxPWM
+aAPDM_TOK  905181155
+
+eATTRIB    3
+aZKEY      905181342
+aNAME      TweetOn
+aAPDM_TOK  905181228
+
+eATTRIB    3
+aZKEY      905181343
+aNAME      TweetPeriodInMinutes
+aAPDM_TOK  905181155
+
+eATTRIB    3
+aZKEY      905181344
+aNAME      PwmFrequency
+aAPDM_TOK  905181155
+
+eENTITY    2
+aZKEY      905181347
+aNumAtts   5
+
+eATTRIB    3
+aZKEY      905181348
+aNAME      Id
+aAPDM_TOK  905181155
+
+eATTRIB    3
+aZKEY      905181349
+aNAME      Date
+aAPDM_TOK  905181215
+
+eATTRIB    3
+aZKEY      905181350
+aNAME      EndDate
+aAPDM_TOK  905181215
+
+eATTRIB    3
+aZKEY      905181351
+aNAME      Notes
+aAPDM_TOK  905181158
+aLTH       10000
+
+eATTRIB    3
+aZKEY      1953
+aNAME      fk_id_configuration
+aAPDM_TOK  905181155
+aLTH       4
+
+eENTITY    2
+aZKEY      905181361
+aNumAtts   7
+
+eATTRIB    3
+aZKEY      905181362
+aNAME      Id
+aAPDM_TOK  905181155
+
+eATTRIB    3
+aZKEY      905181363
+aNAME      Name
+aAPDM_TOK  905181158
+aLTH       255
+
+eATTRIB    3
+aZKEY      905181364
+aNAME      AlarmLow
+aAPDM_TOK  905181155
+
+eATTRIB    3
+aZKEY      905181365
+aNAME      AlarmHigh
+aAPDM_TOK  905181155
+
+eATTRIB    3
+aZKEY      905181366
+aNAME      AlarmOn
+aAPDM_TOK  905181228
+
+eATTRIB    3
+aZKEY      905181367
+aNAME      wTemperatureWithinAlarmThreshold
+aAPDM_TOK  905181228
+
+eATTRIB    3
+aZKEY      1952
+aNAME      fk_id_configuration
+aAPDM_TOK  905181155
+aLTH       4
+
+eENTITY    2
+aZKEY      905181370
+aNumAtts   7
+
+eATTRIB    3
+aZKEY      905181371
+aNAME      Id
+aAPDM_TOK  905181155
+
+eATTRIB    3
+aZKEY      905181372
+aNAME      ConsumerKey
+aAPDM_TOK  905181158
+aLTH       200
+
+eATTRIB    3
+aZKEY      905181373
+aNAME      ConsumerSecret
+aAPDM_TOK  905181158
+aLTH       200
+
+eATTRIB    3
+aZKEY      905181374
+aNAME      AccessToken
+aAPDM_TOK  905181158
+aLTH       200
+
+eATTRIB    3
+aZKEY      905181375
+aNAME      AccessTokenSecret
+aAPDM_TOK  905181158
+aLTH       200
+
+eATTRIB    3
+aZKEY      905181376
+aNAME      Username
+aAPDM_TOK  905181158
+aLTH       255
+
+eATTRIB    3
+aZKEY      905181377
+aNAME      TweetPeriodInMinutes
+aAPDM_TOK  905181155
+
+eENTITY    2
+aZKEY      905181311
+aNumAtts   1
+
+eATTRIB    3
+aZKEY      905181312
+aNAME      Id
+aAPDM_TOK  905181155
+
+eREL       2
+aZKEY      905181385
+
+eREL       2
+aZKEY      905181388
+
+eREL       2
+aZKEY      905181391
+

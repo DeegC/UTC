@@ -1,0 +1,12 @@
+z1000-Zeidon    3640F204 TZWDVORO 09/10/16   22:59:23 1.0a2    
+eViewObjRef 1
+aZKey      910225924
+aNextZKeyToAssign 910225924
+aName      Configuration
+aDesc      VOR automatically built from LOD Dialog
+
+eLOD       2
+aZKey      910225831
+aName      Configuration
+aDesc      Main configuration object
+

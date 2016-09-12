@@ -1,4 +1,4 @@
-z1000-Zeidon    UTC      TZCMLPLO 09/05/16   21:39:23 1.0a2    
+z1000-Zeidon    UTC      TZCMLPLO 09/11/16   00:02:51 1.0a2    
 eLPLR      1
 aName      UTC
 aDesc      Universal Temperature Controller
@@ -214,8 +214,8 @@ aStatus    1
 aUpdateInd 2
 aName      UTC
 aDesc      UDS Digital Supervisor (android)
-aLastSyncDate 20160905213923585
-aLastUpdateDate 20160905213923585
+aLastSyncDate 20160910225752811
+aLastUpdateDate 20160910225752811
 
 eW_MetaType 2
 aType      5
@@ -229,17 +229,35 @@ aStatus    1
 aUpdateInd 2
 aName      UTC
 aDesc      Universal Temperature Controller
-aLastSyncDate 20160905181725998
-aLastUpdateDate 20160905181725998
+aLastSyncDate 20160910233829304
+aLastUpdateDate 20160910233829304
 
 eW_MetaType 2
 aType      7
+
+eW_MetaDef 3
+aCPLR_ZKey 910225831
+aStatus    1
+aUpdateInd 2
+aName      Configuration
+aDesc      Main configuration object
+aLastSyncDate 20160911000157449
+aLastUpdateDate 20160911000157449
 
 eW_MetaType 2
 aType      8
 
 eW_MetaType 2
 aType      9
+
+eW_MetaDef 3
+aCPLR_ZKey 910225924
+aStatus    1
+aUpdateInd 2
+aName      Configuration
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20160910225923396
+aLastUpdateDate 20160910225923396
 
 eW_MetaType 2
 aType      10
@@ -386,11 +404,15 @@ eW_MetaDef 3
 eW_MetaType 2
 aType      2007
 
+eW_MetaDef 3
+
 eW_MetaType 2
 aType      2008
 
 eW_MetaType 2
 aType      2009
+
+eW_MetaDef 3
 
 eW_MetaType 2
 aType      2010
@@ -465,9 +487,11 @@ aJavaClassName com.quinsoft.zeidon.domains.RegularExpressionDomain
 eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.DateTimeDomain
 
-i68        36
-i71        39
-i79        50
-i80        48
-i81        47
-i82        49
+i70        36
+i73        39
+i75        41
+i78        44
+i83        52
+i84        50
+i85        49
+i86        51
