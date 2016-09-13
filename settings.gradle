@@ -1,0 +1,4 @@
+include 'zeidon'
+include 'server'
+
+rootProject.name = 'utc'

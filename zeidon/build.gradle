@@ -4,8 +4,8 @@ Domain logic for UTC and the Zeidon objects.
 Project name: ${project.name}
 """
 
-group = 'org.deeg.utc'
-version = '1.0'
+// group = 
+// version = '1.0'
 
 // Apply the scala plugin to add support for Scala
 apply plugin: 'scala'

@@ -1,0 +1,7 @@
+allprojects {
+  apply plugin: 'scala'
+
+  group = 'org.deeg.utc'
+  version = '1.0'
+}
+    
