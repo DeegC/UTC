@@ -4,37 +4,17 @@ Scalatra server for handling UTC requests.
 Project name: ${project.name}
 """
 
-group = 'org.deeg.utc'
-version = '1.0'
-
-// Apply the scala plugin to add support for Scala
-apply plugin: 'scala'
-
-// In this section you declare where to find the dependencies of your project
-repositories {
-    mavenLocal()
-    maven {
-      url "https://oss.sonatype.org/content/repositories/snapshots"
-    }
-    mavenCentral()
-}
-
 configurations {
     jetty
 }
 
-
-
-// In this section you declare the dependencies for your production and test code
 dependencies {
-    // We use Scala 2.11 in our library project
-    compile 'org.scala-lang:scala-library:2.11.8'
     compile project(':zeidon')
-
-    // We use Scalatest for testing our library
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.scalatest:scalatest_2.11:3.0.0'
-    testRuntime 'org.scala-lang.modules:scala-xml_2.11:1.0.5'
+    compile 'org.scalatra:scalatra-scalate_2.11:2.3.1'
+    compile 'org.scalatra:scalatra_2.11:2.3.1'
+    compile 'org.scalatra:scalatra-json_2.11:2.3.1'
+    compile 'org.eclipse.jetty.orbit:javax.servlet:3.0.0.v201112011016'
+    compile 'org.json4s:json4s-jackson_2.11:3.3.0'
     
     jetty "org.eclipse.jetty:jetty-runner:9.3.11.v20160721"
 }
