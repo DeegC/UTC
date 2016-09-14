@@ -1,4 +1,4 @@
-z1000-Zeidon    BASE     TZDGSRCO 09/05/16   18:19:35 1.0a2    
+z1000-Zeidon    BASE     TZDGSRCO 09/14/16   15:43:47 1.0a2    
 eDomainGroup 1
 aZKey      905181202
 aNextZKeyToAssign 905181229
@@ -6,69 +6,10 @@ aName      Base
 aExtension C
 
 eDomain    2
-aZKey      905181203
-aName      Blob
-aDesc      A do nothing domain for blobs
-aDomainType E
-aJavaClass com.quinsoft.zeidon.domains.BlobDomain
-aDataType  B
-aContextRestriction N
-
-eContext   3
-aZKey      905181204
-aName      BLOB
-aIsDefault Y
-
-eContext   3
-aZKey      905181205
-aName      Double
-aIsDefault Y
-
-eContext   3
-aZKey      905181206
-aName      DateTime
-aJavaEditString yyyy-MM-dd
-aIsDefault Y
-
-eContext   3
-aZKey      905181207
-aName      Default
-
-eTableEntry 4
-aZKey      905181208
-
-eTableEntry 4
-aZKey      905181209
-aExternalValue Default
-aInternalValue Y
-
-eTableEntry 4
-aZKey      905181210
-aInternalValue N
-
-eContext   3
-aZKey      905181211
-aName      Y/N
-aIsDefault Y
-
-eTableEntry 4
-aZKey      905181212
-
-eTableEntry 4
-aZKey      905181213
-aExternalValue Y
-aInternalValue Y
-
-eTableEntry 4
-aZKey      905181214
-aExternalValue N
-aInternalValue N
-
-eDomain    2
 aZKey      905181228
 aName      Boolean
 aDomainType E
-aJavaClass com.quinsoft.zeidon.domains.Boolean
+aJavaClass com.quinsoft.zeidon.domains.BooleanDomain
 aDataType  L
 aMaxStringLth 1
 aContextRestriction N

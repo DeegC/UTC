@@ -4,8 +4,14 @@ Scalatra server for handling UTC requests.
 Project name: ${project.name}
 """
 
-configurations {
-    jetty
+apply plugin: 'war'
+apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
+
+gretty {
+    classPath "${project.projectDir}/conf"
+
+    debugPort = 8000
+    debugSuspend = false
 }
 
 dependencies {
@@ -16,11 +22,5 @@ dependencies {
     compile 'org.eclipse.jetty.orbit:javax.servlet:3.0.0.v201112011016'
     compile 'org.json4s:json4s-jackson_2.11:3.3.0'
     
-    jetty "org.eclipse.jetty:jetty-runner:9.3.11.v20160721"
-}
-
-task jettyRun(type: JavaExec, dependsOn: build) {
-    main = "org.eclipse.jetty.runner.Runner"
-    args = [jar.archivePath]
-    classpath configurations.jetty
+    //jetty "org.eclipse.jetty:jetty-runner:9.3.11.v20160721"
 }

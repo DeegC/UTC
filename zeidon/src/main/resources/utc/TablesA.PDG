@@ -1,4 +1,4 @@
-z1000-Zeidon    TABLESA  TZDGSRCO 09/05/16   21:18:51 1.0a2    
+z1000-Zeidon    TABLESA  TZDGSRCO 09/14/16   15:46:32 1.0a2    
 eDomainGroup 1
 aZKey      905181326
 aNextZKeyToAssign 905181343
@@ -12,12 +12,12 @@ aWorkNumeric 8
 eDomain    2
 aZKey      905181332
 aName      ThermometerCount
-aDesc      Integer from 1-6
+aDesc      Integer from 1-8
 aDomainType E
 aJavaClass com.quinsoft.zeidon.domains.IntegerDomain
 aDataType  L
 aContextRestriction N
-aConstraintRule 1..8
+aConstraintRule (1..8)
 
 eContext   3
 aZKey      905181343

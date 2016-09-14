@@ -65,7 +65,7 @@ class UtcScalatra extends ScalatraServlet
     }
 
     post("/:lod") {
-        oe.forTask( "Northwind" ) { task =>
+        oe.forTask( "UTC" ) { task =>
             val view = task.deserializeOi()
                            .setLodDef( params( "lod") )
                            .setVersion("1")
@@ -81,8 +81,14 @@ class UtcScalatra extends ScalatraServlet
         }
     }
 
+    get("/echo/:string") {
+        oe.forTask( "UTC" ) { task =>
+            params("string" )
+        }
+    }
+    
     private def activate( f: (Task) => View ) = {
-        oe.forTask( "Northwind" ) { task =>
+        oe.forTask( "UTC" ) { task =>
             val view = f( task )
             if ( view.isEmpty )
                 NotFound( "No data found" )

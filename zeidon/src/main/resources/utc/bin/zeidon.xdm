@@ -1,8 +1,6 @@
-z1000-Zeidon    ZEIDON   TZDMXGPO 09/05/16   21:18:51 1.0a2    
+z1000-Zeidon    ZEIDON   TZDMXGPO 09/14/16   15:46:32 1.0a2    
 eDomainGroup 1
 aName      UTC
-
-eDomain    2
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.RegularExpressionDomain
@@ -23,66 +21,7 @@ aName      ALPHANUMERIC
 aJavaEditString [\w]*
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.BlobDomain
-aZKey      905181203
-aName      Blob
-aDesc      A do nothing domain for blobs
-aDomainType E
-aDataType  B
-aContextRestriction N
-
-eContext   3
-aZKey      905181204
-aName      BLOB
-aIsDefault Y
-
-eContext   3
-aZKey      905181205
-aName      Double
-aIsDefault Y
-
-eContext   3
-aZKey      905181206
-aName      DateTime
-aJavaEditString yyyy-MM-dd
-aIsDefault Y
-
-eContext   3
-aZKey      905181207
-aName      Default
-
-eTableEntry 4
-aZKey      905181208
-
-eTableEntry 4
-aZKey      905181209
-aExternalValue Default
-aInternalValue Y
-
-eTableEntry 4
-aZKey      905181210
-aInternalValue N
-
-eContext   3
-aZKey      905181211
-aName      Y/N
-aIsDefault Y
-
-eTableEntry 4
-aZKey      905181212
-
-eTableEntry 4
-aZKey      905181213
-aExternalValue Y
-aInternalValue Y
-
-eTableEntry 4
-aZKey      905181214
-aExternalValue N
-aInternalValue N
-
-eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.Boolean
+aJavaClass com.quinsoft.zeidon.domains.BooleanDomain
 aZKey      905181228
 aName      Boolean
 aDomainType E
@@ -182,11 +121,11 @@ eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.IntegerDomain
 aZKey      905181332
 aName      ThermometerCount
-aDesc      Integer from 1-6
+aDesc      Integer from 1-8
 aDomainType E
 aDataType  L
 aContextRestriction N
-aConstraintRule 1..8
+aConstraintRule (1..8)
 
 eContext   3
 aZKey      905181343
