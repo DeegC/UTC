@@ -40,7 +40,14 @@ class UtcScalatra extends ScalatraServlet
     get("/:lod") {
         activate { task =>
             val order = View( task ) basedOn params( "lod" )
-            val qual = order.buildQual().rootOnlyMultiple()
+            val qual = order.buildQual()
+            
+            if ( params.contains( "qual" ) ) {
+              
+            }
+            else {
+              qual.rootOnlyMultiple()
+            }
 
             qual.withPaging( params.getOrElse("perPage", "20").toInt,
                              params.getOrElse("page", "1").toInt,
