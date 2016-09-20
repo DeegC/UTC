@@ -19,6 +19,9 @@ class UtcScalatra extends ScalatraServlet
 
     protected implicit val jsonFormats: Formats = DefaultFormats
     val oe = JavaObjectEngine.getInstance()
+    if ( oe.getSystemTask.readZeidonConfig("UTC", "StartUdpServer", "N" ) == "Y" ) {
+      new UdpServerThread( oe ).start();
+    }
 
     options("/*") {
         response.setHeader("Access-Control-Allow-Methods", "POST");
@@ -43,7 +46,7 @@ class UtcScalatra extends ScalatraServlet
             val qual = order.buildQual()
             
             if ( params.contains( "qual" ) ) {
-              
+              qual.setQualFromJson( params( "qual" ) )
             }
             else {
               qual.rootOnlyMultiple()
@@ -123,5 +126,9 @@ class UtcScalatra extends ScalatraServlet
         val product = params.getOrElse("product", "" )
         if ( product != "" )
             qual.and( _.Product.ProductName like "%" + product + "%" )
+    }
+    
+    private def startUdpServer() = {
+      
     }
 }
