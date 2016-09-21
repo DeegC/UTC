@@ -1,4 +1,4 @@
-z1000-Zeidon    CONFIGURATZZOLODO 09/11/16   00:01:57 1.0a2    
+z1000-Zeidon    CONFIGURATZZOLODO 09/20/16   23:50:49 1.0a2    
 eLOD       1
 aZKey      910225831
 aNextZKeyToAssign 910225854
@@ -49,13 +49,12 @@ aNotNull   Y
 aSAP_Attribute 0
 
 eDomainRec 6
-aZKey      905181155
-aName      Integer
+aZKey      905181242
+aName      GeneratedKey
 aDomainType E
 aDataType  L
-aMaxStringLth 4
-aDecimalFormat 0
-aDesc      Integer numbers from -lots to +lots
+aMaxStringLth 64
+aDesc      Generic DB-generated key
 aContextRestriction N
 
 eLOD_AttributeRec 4
@@ -86,6 +85,14 @@ aZKey      905181364
 aDesc      Sound the alarm if this thermometer goes below this value
 
 eDomainRec 6
+aZKey      905181155
+aName      Integer
+aDomainType E
+aDataType  L
+aMaxStringLth 4
+aDecimalFormat 0
+aDesc      Integer numbers from -lots to +lots
+aContextRestriction N
 
 eLOD_AttributeRec 4
 aZKey      910225851
@@ -210,9 +217,9 @@ aZKey      905181332
 aName      ThermometerCount
 aDomainType E
 aDataType  L
-aDesc      Integer from 1-6
+aDesc      Integer from 1-8
 aContextRestriction N
-aConstraintRule 1..8
+aConstraintRule (1..8)
 
 eLOD_AttributeRec 3
 aZKey      910225838
@@ -504,19 +511,18 @@ aGenerateExecutable kzhsqllb
 aDisplayOwner N
 aTranslateNamesToLowerUnderscore Y
 
-i11        5
-i14        5
+i14        11
 i20        17
 i26        5
 i29        8
 i32        8
-i35        5
+i35        11
 i44        17
 i53        50
-i56        5
+i56        11
 i59        17
-i62        5
-i65        5
+i62        11
+i65        11
 i67        1
 i68        24
 i69        25
@@ -529,7 +535,7 @@ i75        31
 i76        8
 i77        33
 i78        34
-i79        5
+i79        11
 i80        36
 i81        37
 i82        38
@@ -550,16 +556,16 @@ i96        52
 i97        50
 i98        54
 i99        55
-i100       5
+i100       11
 i101       57
 i102       58
 i103       17
 i104       60
 i105       61
-i106       5
+i106       11
 i107       63
 i108       64
-i109       5
+i109       11
 i110       66
 i111       2
 i112       3
@@ -570,10 +576,10 @@ i116       7
 i117       8
 i118       9
 i119       10
-i120       5
+i120       11
 i121       12
 i122       13
-i123       5
+i123       11
 i124       15
 i125       16
 i126       17

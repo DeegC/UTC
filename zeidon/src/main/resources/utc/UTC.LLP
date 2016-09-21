@@ -1,4 +1,4 @@
-z1000-Zeidon    UTC      TZCMLPLO 09/14/16   15:50:26 1.0a2    
+z1000-Zeidon    UTC      TZCMLPLO 09/20/16   23:50:51 1.0a2    
 eLPLR      1
 aName      UTC
 aDesc      Universal Temperature Controller
@@ -7,7 +7,7 @@ aPgmSrcDir c:\zeidon\zapp\utc
 aExecDir   c:\zeidon\zapp\utc\bin
 aMetaSrcDir c:\zeidon\zapp\utc
 aTaskUseCount 0
-aLastBuildDate 20160914151731287
+aLastBuildDate 20160920233723066
 aLPLR_Type 2
 aTempDesc  Universal Temperature Controller
 aJavaPackageName org\deeg\utc
@@ -26,11 +26,66 @@ eW_MetaType 2
 aType      3
 
 eW_MetaDef 3
+aCPLR_ZKey 905181332
+aStatus    1
+aUpdateInd 2
+aName      ThermometerCount
+aLastUpdateDate 20160914194632085
+
+eW_MetaDef 3
 aCPLR_ZKey 905180725
 aStatus    1
 aUpdateInd 2
 aName      TemperatureUnit
 aLastUpdateDate 20160906005616195
+
+eW_MetaDef 3
+aCPLR_ZKey 905181228
+aStatus    1
+aName      Boolean
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181230
+aStatus    1
+aName      Blob
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181232
+aStatus    1
+aName      Date
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181234
+aStatus    1
+aName      Year
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181242
+aStatus    1
+aName      GeneratedKey
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181226
+aStatus    1
+aName      Double
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181217
+aStatus    1
+aName      Y/N
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181215
+aStatus    1
+aName      DateTime
+aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 905181155
@@ -45,15 +100,33 @@ aName      Text
 aGroupName TZAPDMAA
 
 eW_MetaDef 3
-aCPLR_ZKey 905181332
-aStatus    1
-aName      ThermometerCount
-aGroupName TablesA
-
-eW_MetaDef 3
 aCPLR_ZKey 905181228
 aStatus    1
 aName      Boolean
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181230
+aStatus    1
+aName      Blob
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181232
+aStatus    1
+aName      Date
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181234
+aStatus    1
+aName      Year
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181242
+aStatus    1
+aName      GeneratedKey
 aGroupName Base
 
 eW_MetaDef 3
@@ -73,90 +146,6 @@ aCPLR_ZKey 905181215
 aStatus    1
 aName      DateTime
 aGroupName Base
-
-eW_MetaDef 3
-aCPLR_ZKey 905181228
-aStatus    1
-aName      Boolean
-aGroupName Base
-
-eW_MetaDef 3
-aCPLR_ZKey 905181226
-aStatus    1
-aName      Double
-aGroupName Base
-
-eW_MetaDef 3
-aCPLR_ZKey 905181217
-aStatus    1
-aName      Y/N
-aGroupName Base
-
-eW_MetaDef 3
-aCPLR_ZKey 905181215
-aStatus    1
-aName      DateTime
-aGroupName Base
-
-eW_MetaDef 3
-aCPLR_ZKey 905181332
-aStatus    1
-aName      ThermometerCount
-aGroupName TablesA
-
-eW_MetaDef 3
-aCPLR_ZKey 905181228
-aStatus    1
-aName      Boolean
-aGroupName Base
-
-eW_MetaDef 3
-aCPLR_ZKey 905181226
-aStatus    1
-aName      Double
-aGroupName Base
-
-eW_MetaDef 3
-aCPLR_ZKey 905181217
-aStatus    1
-aName      Y/N
-aGroupName Base
-
-eW_MetaDef 3
-aCPLR_ZKey 905181215
-aStatus    1
-aName      DateTime
-aGroupName Base
-
-eW_MetaDef 3
-aCPLR_ZKey 905181228
-aStatus    1
-aName      Boolean
-aGroupName Base
-
-eW_MetaDef 3
-aCPLR_ZKey 905181226
-aStatus    1
-aName      Double
-aGroupName Base
-
-eW_MetaDef 3
-aCPLR_ZKey 905181217
-aStatus    1
-aName      Y/N
-aGroupName Base
-
-eW_MetaDef 3
-aCPLR_ZKey 905181215
-aStatus    1
-aName      DateTime
-aGroupName Base
-
-eW_MetaDef 3
-aCPLR_ZKey 905181332
-aStatus    1
-aName      ThermometerCount
-aGroupName TablesA
 
 eW_MetaType 2
 aType      4
@@ -167,8 +156,8 @@ aStatus    1
 aUpdateInd 2
 aName      UTC
 aDesc      UDS Digital Supervisor (android)
-aLastSyncDate 20160911025752803
-aLastUpdateDate 20160911025752803
+aLastSyncDate 20160920234421338
+aLastUpdateDate 20160920234421338
 
 eW_MetaType 2
 aType      5
@@ -182,8 +171,8 @@ aStatus    1
 aUpdateInd 2
 aName      UTC
 aDesc      Universal Temperature Controller
-aLastSyncDate 20160911033829292
-aLastUpdateDate 20160911033829292
+aLastSyncDate 20160920234739467
+aLastUpdateDate 20160920234739467
 
 eW_MetaType 2
 aType      7
@@ -194,8 +183,8 @@ aStatus    1
 aUpdateInd 2
 aName      Configuration
 aDesc      Main configuration object
-aLastSyncDate 20160911040157444
-aLastUpdateDate 20160911040157444
+aLastSyncDate 20160920235049730
+aLastUpdateDate 20160920235049730
 
 eW_MetaType 2
 aType      8
@@ -229,8 +218,8 @@ aCPLR_ZKey 905181202
 aStatus    1
 aUpdateInd 2
 aName      Base
-aLastSyncDate 20160914154347681
-aLastUpdateDate 20160914154347681
+aLastSyncDate 20160920234011296
+aLastUpdateDate 20160920234011296
 
 eW_MetaDef 3
 aCPLR_ZKey 905181326
@@ -238,16 +227,16 @@ aStatus    1
 aUpdateInd 2
 aName      TablesA
 aDesc      Initial grouping of simple Tables
-aLastSyncDate 20160914154632091
-aLastUpdateDate 20160914154632091
+aLastSyncDate 20160914194632085
+aLastUpdateDate 20160914194632085
 
 eW_MetaDef 3
 aCPLR_ZKey 905181151
 aStatus    1
 aUpdateInd 2
 aName      TZAPDMAA
-aLastSyncDate 20160914152100941
-aLastUpdateDate 20160914152100941
+aLastSyncDate 20160920233930932
+aLastUpdateDate 20160920233930932
 
 eW_MetaDef 3
 aCPLR_ZKey 905180724
@@ -280,31 +269,52 @@ eW_MetaType 2
 aType      2003
 
 eW_MetaDef 3
+aCPLR_ZKey 905181230
+aStatus    1
+aName      Blob
+aLastUpdateDate 20160920234011296
+aGroupName Base
+
+eW_MetaDef 3
 aCPLR_ZKey 905181228
 aStatus    1
 aName      Boolean
-aLastUpdateDate 20160914154347681
+aLastUpdateDate 20160920234011296
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181232
+aStatus    1
+aName      Date
+aLastUpdateDate 20160920234011296
 aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 905181215
 aStatus    1
 aName      DateTime
-aLastUpdateDate 20160914154347681
+aLastUpdateDate 20160920234011296
 aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 905181226
 aStatus    1
 aName      Double
-aLastUpdateDate 20160914154347681
+aLastUpdateDate 20160920234011296
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181242
+aStatus    1
+aName      GeneratedKey
+aLastUpdateDate 20160920234011296
 aGroupName Base
 
 eW_MetaDef 3
 aCPLR_ZKey 905181155
 aStatus    1
 aName      Integer
-aLastUpdateDate 20160914152100941
+aLastUpdateDate 20160920233930932
 aGroupName TZAPDMAA
 
 eW_MetaDef 3
@@ -314,21 +324,25 @@ eW_MetaDef 3
 aCPLR_ZKey 905181158
 aStatus    1
 aName      Text
-aLastUpdateDate 20160914152100941
+aLastUpdateDate 20160920233930932
 aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aGroupName TablesA
 
 eW_MetaDef 3
 aCPLR_ZKey 905181217
 aStatus    1
 aName      Y/N
-aLastUpdateDate 20160914154347681
+aLastUpdateDate 20160920234011296
 aGroupName Base
 
 eW_MetaDef 3
-aCPLR_ZKey 905181332
+aCPLR_ZKey 905181234
 aStatus    1
-aName      ThermometerCount
-aGroupName TablesA
+aName      Year
+aLastUpdateDate 20160920234011296
+aGroupName Base
 
 eW_MetaType 2
 aType      2004
@@ -406,6 +420,9 @@ eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.DoubleDomain
 
 eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.GeneratedKeyDomain
+
+eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.EmailAddressDomain
 
 eDomainJavaClass 2
@@ -427,17 +444,21 @@ eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.RegularExpressionDomain
 
 eDomainJavaClass 2
+aJavaClassName com.quinsoft.zeidon.domains.Base64BlobDomain
+
+eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.BooleanDomain
 
 eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.DateTimeDomain
 
-i56        5
-i61        28
-i64        31
-i66        33
-i69        36
-i74        42
-i75        43
-i76        41
-i77        44
+i57        6
+i59        5
+i63        26
+i66        29
+i68        31
+i71        34
+i76        40
+i77        41
+i78        39
+i79        42

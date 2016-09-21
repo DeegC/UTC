@@ -1,11 +1,11 @@
-z1000-Zeidon    CONFIGURATZZOXODO 09/11/16   00:01:57 1.0a2    
+z1000-Zeidon    CONFIGURATZZOXODO 09/20/16   23:50:49 1.0a2    
 eOBJECT    1
 aNAME      Configuration
 aZKey      910225831
 aDFT_DBNAME Sqlite
 aDATABASE  Sqlite
 aOPER_LIBNM Configuration
-aER_DATE   20160910225752799
+aER_DATE   20160920234421243
 
 eENTITY    2
 aNAME      Configuration
@@ -22,8 +22,8 @@ eATTRIB    3
 aNAME      Id
 aERATT_TOK 905181332
 aPERSIST   Y
-aAPDM_TOK  905181155
-aDOMAIN    Integer
+aAPDM_TOK  905181242
+aDOMAIN    GeneratedKey
 aTYPE      L
 aLTH       4
 aKEY       Y
@@ -184,7 +184,7 @@ aXVAATT_TOK 14
 
 eATTRIB    3
 aNAME      autoseq
-aERATT_TOK 1950
+aERATT_TOK 2068
 aPERSIST   Y
 aAPDM_TOK  905181155
 aDOMAIN    Integer
@@ -198,9 +198,9 @@ aRECNAME   configuration
 aTYPE      P
 
 eDATAFIELD 4
-aFLDLTH    4
+aFLDLTH    64
 aFLDNAME   id
-aFLDTYPE   L
+aFLDTYPE   A
 aXVAATT_TOK 1
 
 eDATAFIELD 4
@@ -307,8 +307,8 @@ eATTRIB    4
 aNAME      Id
 aERATT_TOK 905181362
 aPERSIST   Y
-aAPDM_TOK  905181155
-aDOMAIN    Integer
+aAPDM_TOK  905181242
+aDOMAIN    GeneratedKey
 aTYPE      L
 aLTH       4
 aKEY       Y
@@ -374,7 +374,7 @@ aXVAATT_TOK 21
 
 eATTRIB    4
 aNAME      autoseq
-aERATT_TOK 1949
+aERATT_TOK 2067
 aPERSIST   Y
 aAPDM_TOK  905181155
 aDOMAIN    Integer
@@ -386,10 +386,10 @@ aAUTO_SEQ  Y
 
 eATTRIB    4
 aNAME      fk_id_configuration
-aERATT_TOK 1952
+aERATT_TOK 2070
 aPERSIST   Y
-aAPDM_TOK  905181155
-aDOMAIN    Integer
+aAPDM_TOK  905181242
+aDOMAIN    GeneratedKey
 aTYPE      L
 aLTH       4
 aREQUIRED  Y
@@ -403,9 +403,9 @@ aRECNAME   thermometer_config
 aTYPE      P
 
 eDATAFIELD 5
-aFLDLTH    4
+aFLDLTH    64
 aFLDNAME   id
-aFLDTYPE   L
+aFLDTYPE   A
 aXVAATT_TOK 16
 
 eDATAFIELD 5
@@ -439,9 +439,9 @@ aFLDTYPE   L
 aXVAATT_TOK 22
 
 eDATAFIELD 5
-aFLDLTH    4
+aFLDLTH    64
 aFLDNAME   fk_id_configuration
-aFLDTYPE   L
+aFLDTYPE   A
 aXVAATT_TOK 23
 
 eRELRECORD 5

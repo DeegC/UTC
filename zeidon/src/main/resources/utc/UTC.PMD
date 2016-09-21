@@ -1,9 +1,9 @@
-z1000-Zeidon    UTC      TZEREMDO 09/10/16   22:57:52 1.0a2    
+z1000-Zeidon    UTC      TZEREMDO 09/20/16   23:44:21 1.0a2    
 eEntpER_Model 1
 aName      UTC
 aZKey      905181310
-aNextZKeyToAssign 905181397
-aLastSyncDate 20160910225752799
+aNextZKeyToAssign 905181400
+aLastSyncDate 20160920234421243
 aDesc      UDS Digital Supervisor (android)
 
 eER_Entity 2
@@ -176,7 +176,7 @@ aDesc      Config options for a monitoring session.
 aER_DiagramPosX 28
 aER_DiagramPosY 5
 aSAP_Entity 0
-awkSelectedAttributeForDragSort 7
+awkSelectedAttributeForDragSort 1
 
 eER_Attribute 3
 aName      Id
@@ -186,6 +186,13 @@ aSAP_Attribute 0
 awkSequence 1
 
 eDomain    4
+aZKey      905181242
+aDesc      Generic DB-generated key
+aName      GeneratedKey
+aDataType  L
+aMaxStringLth 64
+aDomainType E
+aContextRestriction N
 
 eER_FactTypeForDelete 4
 aZKey      905181346
@@ -238,12 +245,12 @@ awkSequence 5
 
 eDomain    4
 aZKey      905181332
-aDesc      Integer from 1-6
+aDesc      Integer from 1-8
 aName      ThermometerCount
 aDataType  L
 aDomainType E
 aContextRestriction N
-aConstraintRule 1..8
+aConstraintRule (1..8)
 
 eER_Attribute 3
 aName      TemperatureUnit
@@ -252,7 +259,7 @@ aNotNull   Y
 awkSequence 6
 
 eDomain    4
-aZKey      905180731
+aZKey      905180725
 aName      TemperatureUnit
 aDataType  S
 aMaxStringLth 1
@@ -404,7 +411,7 @@ eER_FactType 4
 eER_AttributeIdentifier 5
 
 eER_Entity 2
-awkSelectedAttributeForDragSort 5
+awkSelectedAttributeForDragSort 1
 
 eER_Attribute 3
 aName      Id
@@ -470,7 +477,7 @@ eER_FactType 4
 eER_AttributeIdentifier 5
 
 eER_Entity 2
-awkSelectedAttributeForDragSort 6
+awkSelectedAttributeForDragSort 1
 
 eER_Attribute 3
 aName      Id
@@ -553,7 +560,7 @@ aPurpose   F
 aDesc      Config options for Twitter/tweeting.
 aER_DiagramPosX 52
 aER_DiagramPosY 14
-awkSelectedAttributeForDragSort 4
+awkSelectedAttributeForDragSort 1
 
 eER_Attribute 3
 aName      Id
@@ -636,6 +643,7 @@ aZKey      905181311
 aPurpose   F
 aER_DiagramPosX 1
 aER_DiagramPosY 17
+awkSelectedAttributeForDragSort 1
 
 eER_Attribute 3
 aName      Id
@@ -703,7 +711,6 @@ i32        28
 i33        29
 i34        4
 i35        2
-i38        7
 i44        42
 i46        7
 i54        3
@@ -717,7 +724,7 @@ i75        40
 i76        39
 i77        37
 i78        29
-i80        7
+i80        38
 i84        3
 i86        3
 i88        42
@@ -733,7 +740,7 @@ i97        82
 i98        81
 i99        79
 i100       70
-i102       7
+i102       38
 i106       42
 i108       7
 i110       7
@@ -746,7 +753,7 @@ i118       36
 i119       104
 i120       103
 i121       101
-i124       7
+i124       38
 i128       42
 i130       42
 i132       42
@@ -756,7 +763,7 @@ i138       7
 i139       126
 i140       125
 i141       123
-i144       7
+i144       38
 i147       146
 i148       145
 i149       143

@@ -1,4 +1,4 @@
-z1000-Zeidon    UTC      TZTENVRO 09/10/16   23:38:29 1.0a2    
+z1000-Zeidon    UTC      TZTENVRO 09/20/16   23:47:39 1.0a2    
 eTE_DB_Environ 1
 aName      UTC
 aZKey      1894
@@ -17,14 +17,14 @@ aTranslateNamesToLowerUnderscore Y
 
 eTE_TablRec 3
 aName      instant
-aZKey      1895
+aZKey      2013
 aDataOrRel D
 aDesc      This entity records all the readings of a moment in time in a UTC run.
-awkSelectedFieldForDragSort 1
+awkSelectedFieldForDragSort 12
 
 eTE_FieldDataRel 4
 aName      timestamp
-aZKey      1896
+aZKey      2014
 aDesc      Instant that this record was recorded.
 aDataOrRelfieldOrSet D
 aKey       Y
@@ -50,7 +50,7 @@ aContextRestriction N
 
 eTE_FieldDataRel 4
 aName      target_temperature
-aZKey      1897
+aZKey      2015
 aDataOrRelfieldOrSet D
 aKey       N
 aDataType  L
@@ -76,7 +76,7 @@ aContextRestriction N
 
 eTE_FieldDataRel 4
 aName      therm0
-aZKey      1898
+aZKey      2016
 aDesc      Reading from thermometer 0.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -94,7 +94,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      therm1
-aZKey      1899
+aZKey      2017
 aDesc      Reading from thermometer 1.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -112,7 +112,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      therm2
-aZKey      1900
+aZKey      2018
 aDesc      Reading from thermometer 2.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -130,7 +130,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      therm3
-aZKey      1901
+aZKey      2019
 aDesc      Reading from thermometer 3.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -148,7 +148,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      therm4
-aZKey      1902
+aZKey      2020
 aDesc      Reading from thermometer 4
 aDataOrRelfieldOrSet D
 aKey       N
@@ -166,7 +166,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      therm5
-aZKey      1903
+aZKey      2021
 aDesc      Reading from thermometer 5
 aDataOrRelfieldOrSet D
 aKey       N
@@ -184,7 +184,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      therm6
-aZKey      1904
+aZKey      2022
 aDataOrRelfieldOrSet D
 aKey       N
 aDataType  L
@@ -200,7 +200,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      therm7
-aZKey      1905
+aZKey      2023
 aDataOrRelfieldOrSet D
 aKey       N
 aDataType  L
@@ -216,7 +216,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      pw_m0
-aZKey      1906
+aZKey      2024
 aDesc      Set PWM speed for blower 0.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -234,13 +234,13 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      fk_id_session
-aZKey      1951
+aZKey      2069
 aDesc      z_session(has [0:m] ) instant
 aDataOrRelfieldOrSet R
 aKey       Y
-aDataType  L
-aLength    4
-aSQL_SCALE 0
+aDataType  A
+aLength    64
+aKeepPhysicalCharacteristicsFlag Y
 aSQL_NULLS Y
 awkSequence 12
 
@@ -271,12 +271,11 @@ aSAP_Entity 0
 
 eTE_FieldDataRel_PK 5
 aName      id
-aZKey      1925
+aZKey      2043
 aDataOrRelfieldOrSet D
 aKey       Y
-aDataType  L
-aLength    4
-aSQL_SCALE 0
+aDataType  A
+aLength    64
 aSQL_NULLS Y
 
 eER_Entity 4
@@ -289,7 +288,7 @@ aER_DiagramPosY 28
 
 eTE_TablRecKey 4
 aName      z_timestamp
-aZKey      1907
+aZKey      2025
 aCategory  3
 aDesc      Implements 
 
@@ -306,18 +305,17 @@ aTempOrderNo 3
 
 eTE_TablRec 3
 aName      configuration
-aZKey      1908
+aZKey      2026
 aDataOrRel D
 aDesc      Config options for a monitoring session.
 
 eTE_FieldDataRel 4
 aName      id
-aZKey      1909
+aZKey      2027
 aDataOrRelfieldOrSet D
 aKey       Y
-aDataType  L
-aLength    4
-aSQL_SCALE 0
+aDataType  A
+aLength    64
 aSQL_NULLS Y
 awkSequence 1
 
@@ -328,30 +326,35 @@ aNotNull   Y
 aSAP_Attribute 0
 
 eDomain    6
+aZKey      905181242
+aName      GeneratedKey
+aDataType  L
+aMaxStringLth 64
+aDesc      Generic DB-generated key
+aDomainType E
+aContextRestriction N
 
 eTE_FieldDataRelFK_1 5
 aName      fk_id_configuration
-aZKey      1952
+aZKey      2070
 aDesc      configuration(has [1:10] ) thermometer_config
 aDataOrRelfieldOrSet R
-aDataType  L
-aLength    4
-aSQL_SCALE 0
+aDataType  A
+aLength    64
 aSQL_NULLS Y
 
 eTE_FieldDataRelFK_1 5
 aName      fk_id_configuration
-aZKey      1953
+aZKey      2071
 aDesc      configuration(has [0:m] ) z_session
 aDataOrRelfieldOrSet R
-aDataType  L
-aLength    4
-aSQL_SCALE 0
+aDataType  A
+aLength    64
 aSQL_NULLS Y
 
 eTE_FieldDataRel 4
 aName      description
-aZKey      1910
+aZKey      2028
 aDesc      Description of this session.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -378,7 +381,7 @@ aContextRestriction N
 
 eTE_FieldDataRel 4
 aName      notes
-aZKey      1911
+aZKey      2029
 aDesc      Notes that are copied to the Session when a new Session is created.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -396,7 +399,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      target_temperature
-aZKey      1912
+aZKey      2030
 aDataOrRelfieldOrSet D
 aKey       N
 aDataType  L
@@ -414,7 +417,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      thermometer_count
-aZKey      1913
+aZKey      2031
 aDesc      Number of Thermometers
 aDataOrRelfieldOrSet D
 aKey       N
@@ -433,14 +436,14 @@ eDomain    6
 aZKey      905181332
 aName      ThermometerCount
 aDataType  L
-aDesc      Integer from 1-6
+aDesc      Integer from 1-8
 aDomainType E
 aContextRestriction N
-aConstraintRule 1..8
+aConstraintRule (1..8)
 
 eTE_FieldDataRel 4
 aName      temperature_unit
-aZKey      1914
+aZKey      2032
 aDataOrRelfieldOrSet D
 aKey       N
 aDataType  S
@@ -463,7 +466,7 @@ aContextRestriction N
 
 eTE_FieldDataRel 4
 aName      record_temperatures
-aZKey      1915
+aZKey      2033
 aDesc      If 'Y', then record the smoker sesson.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -486,7 +489,7 @@ aContextRestriction N
 
 eTE_FieldDataRel 4
 aName      pid_p
-aZKey      1916
+aZKey      2034
 aDesc      P value for PID algorithm.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -505,7 +508,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      pid_i
-aZKey      1917
+aZKey      2035
 aDesc      I value for PID algorithm.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -529,7 +532,7 @@ aContextRestriction N
 
 eTE_FieldDataRel 4
 aName      pid_d
-aZKey      1918
+aZKey      2036
 aDesc      D value for PID algorithm.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -548,7 +551,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      max_pwm
-aZKey      1919
+aZKey      2037
 aDesc      The max value for the output pwm.  Use lower values for more powerful blowers.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -566,7 +569,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      tweet_on
-aZKey      1920
+aZKey      2038
 aDesc      If 'Y', then periodically tweet status.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -583,7 +586,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      tweet_period_in_minutes
-aZKey      1921
+aZKey      2039
 aDataOrRelfieldOrSet D
 aKey       N
 aDataType  L
@@ -599,7 +602,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      pwm_frequency
-aZKey      1922
+aZKey      2040
 aDesc      Frequency of the PWM signal
 aDataOrRelfieldOrSet D
 aKey       N
@@ -617,7 +620,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      autoseq
-aZKey      1950
+aZKey      2068
 aDataOrRelfieldOrSet D
 aKey       N
 aDataType  L
@@ -663,7 +666,7 @@ aSAP_Entity 0
 
 eTE_TablRecKey 4
 aName      id
-aZKey      1923
+aZKey      2041
 aCategory  2
 aDesc      Implements 
 
@@ -680,7 +683,7 @@ eTE_FieldDataRelAsFK 6
 
 eTE_TablRec 3
 aName      session
-aZKey      1924
+aZKey      2042
 aDataOrRel D
 aDesc      A controller session; i.e. a cook.
 aKeepPhysicalCharacteristicsFlag Y
@@ -701,7 +704,7 @@ eTE_FieldDataRelFK_1 5
 
 eTE_FieldDataRel 4
 aName      date
-aZKey      1926
+aZKey      2044
 aDataOrRelfieldOrSet D
 aKey       N
 aDataType  T
@@ -719,7 +722,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      end_date
-aZKey      1927
+aZKey      2045
 aDataOrRelfieldOrSet D
 aKey       N
 aDataType  T
@@ -734,7 +737,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      notes
-aZKey      1928
+aZKey      2046
 aDesc      Notes regarding this session
 aDataOrRelfieldOrSet D
 aKey       N
@@ -777,7 +780,7 @@ eER_Entity 4
 
 eTE_TablRecKey 4
 aName      id
-aZKey      1929
+aZKey      2047
 aCategory  2
 aDesc      Implements 
 
@@ -792,18 +795,17 @@ eTE_FieldDataRelAsFK 6
 
 eTE_TablRec 3
 aName      thermometer_config
-aZKey      1930
+aZKey      2048
 aDataOrRel D
 aDesc      Config values for the thermometer
 
 eTE_FieldDataRel 4
 aName      id
-aZKey      1931
+aZKey      2049
 aDataOrRelfieldOrSet D
 aKey       Y
-aDataType  L
-aLength    4
-aSQL_SCALE 0
+aDataType  A
+aLength    64
 aSQL_NULLS Y
 awkSequence 1
 
@@ -817,7 +819,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      name
-aZKey      1932
+aZKey      2050
 aDesc      The name of this thermometer that will be displayed in the UI.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -837,7 +839,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      alarm_low
-aZKey      1933
+aZKey      2051
 aDesc      Sound the alarm if this thermometer goes below this value
 aDataOrRelfieldOrSet D
 aKey       N
@@ -855,7 +857,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      alarm_high
-aZKey      1934
+aZKey      2052
 aDesc      Sound the alarm if this thermometer goes over this value.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -873,7 +875,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      alarm_on
-aZKey      1935
+aZKey      2053
 aDesc      Sound the temperature alarm only when this is on.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -890,7 +892,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      autoseq
-aZKey      1949
+aZKey      2067
 aDataOrRelfieldOrSet D
 aKey       N
 aDataType  L
@@ -925,7 +927,7 @@ eER_Entity 4
 
 eTE_TablRecKey 4
 aName      id
-aZKey      1936
+aZKey      2054
 aCategory  2
 aDesc      Implements 
 
@@ -938,18 +940,17 @@ eTE_FieldDataRelKey 5
 
 eTE_TablRec 3
 aName      twitter_config
-aZKey      1937
+aZKey      2055
 aDataOrRel D
 aDesc      Config options for Twitter/tweeting.
 
 eTE_FieldDataRel 4
 aName      id
-aZKey      1938
+aZKey      2056
 aDataOrRelfieldOrSet D
 aKey       Y
-aDataType  L
-aLength    4
-aSQL_SCALE 0
+aDataType  A
+aLength    64
 aSQL_NULLS Y
 awkSequence 1
 
@@ -962,7 +963,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      consumer_key
-aZKey      1939
+aZKey      2057
 aDesc      Twitter OAuth ConsumerKey
 aDataOrRelfieldOrSet D
 aKey       N
@@ -980,7 +981,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      consumer_secret
-aZKey      1940
+aZKey      2058
 aDesc      Twitter OAuth ConsumerSecret
 aDataOrRelfieldOrSet D
 aKey       N
@@ -998,7 +999,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      access_token
-aZKey      1941
+aZKey      2059
 aDesc      Twitter OAuth AccessToken
 aDataOrRelfieldOrSet D
 aKey       N
@@ -1016,7 +1017,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      access_token_secret
-aZKey      1942
+aZKey      2060
 aDesc      Twitter OAuth AccessTokenSecret
 aDataOrRelfieldOrSet D
 aKey       N
@@ -1034,7 +1035,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      username
-aZKey      1943
+aZKey      2061
 aDesc      Username for twitter account
 aDataOrRelfieldOrSet D
 aKey       N
@@ -1052,7 +1053,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      tweet_period_in_minutes
-aZKey      1944
+aZKey      2062
 aDesc      How often, in minutes, to tweet status.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -1078,7 +1079,7 @@ aER_DiagramPosY 14
 
 eTE_TablRecKey 4
 aName      id
-aZKey      1945
+aZKey      2063
 aCategory  2
 aDesc      Implements 
 
@@ -1091,17 +1092,16 @@ eTE_FieldDataRelKey 5
 
 eTE_TablRec 3
 aName      base
-aZKey      1946
+aZKey      2064
 aDataOrRel D
 
 eTE_FieldDataRel 4
 aName      id
-aZKey      1947
+aZKey      2065
 aDataOrRelfieldOrSet D
 aKey       Y
-aDataType  L
-aLength    4
-aSQL_SCALE 0
+aDataType  A
+aLength    64
 aSQL_NULLS Y
 awkSequence 1
 
@@ -1121,7 +1121,7 @@ aER_DiagramPosY 17
 
 eTE_TablRecKey 4
 aName      id
-aZKey      1948
+aZKey      2066
 aCategory  2
 aDesc      Implements 
 
@@ -1143,7 +1143,6 @@ i32        8
 i35        8
 i44        36
 i45        3
-i49        8
 i57        54
 i60        8
 i72        5
@@ -1156,7 +1155,7 @@ i98        47
 i99        50
 i100       51
 i102       40
-i104       8
+i104       49
 i105       36
 i108       5
 i111       5
@@ -1167,7 +1166,7 @@ i119       47
 i120       39
 i123       40
 i124       36
-i128       8
+i128       49
 i131       54
 i134       8
 i137       8
@@ -1181,7 +1180,7 @@ i148       95
 i149       47
 i150       94
 i153       126
-i157       8
+i157       49
 i160       54
 i163       54
 i166       54
@@ -1189,5 +1188,5 @@ i169       54
 i172       54
 i175       8
 i179       155
-i183       8
+i183       49
 i187       181

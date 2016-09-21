@@ -19,11 +19,11 @@ CREATE TABLE instant (
            therm6                                                           int                NULL    , 
            therm7                                                           int                NULL    , 
            pw_m0                                                            int                NULL    , 
-           fk_id_session                                                    int                NOT NULL ) ;
+           fk_id_session                                                    INTEGER            NOT NULL ) ;
  
 /* Entity - Configuration */
 CREATE TABLE configuration ( 
-           id                                                               int                NOT NULL, 
+           id                                                               INTEGER PRIMARY KEY NOT NULL, 
            description                                                      longtext           NOT NULL, 
            notes                                                            longtext           NULL    , 
            target_temperature                                               int                NOT NULL, 
@@ -41,25 +41,25 @@ CREATE TABLE configuration (
  
 /* Entity - Session */
 CREATE TABLE session ( 
-           id                                                               int                NOT NULL, 
+           id                                                               INTEGER PRIMARY KEY NOT NULL, 
            date                                                             datetime           NOT NULL, 
            end_date                                                         datetime           NULL    , 
            notes                                                            longtext           NULL    , 
-           fk_id_configuration                                              int                NOT NULL ) ;
+           fk_id_configuration                                              INTEGER            NOT NULL ) ;
  
 /* Entity - ThermometerConfig */
 CREATE TABLE thermometer_config ( 
-           id                                                               int                NOT NULL, 
+           id                                                               INTEGER PRIMARY KEY NOT NULL, 
            name                                                             longtext           NOT NULL, 
            alarm_low                                                        int                NULL    , 
            alarm_high                                                       int                NULL    , 
            alarm_on                                                         int                NULL    , 
            autoseq                                                          int                NULL    , 
-           fk_id_configuration                                              int                NOT NULL ) ;
+           fk_id_configuration                                              INTEGER            NOT NULL ) ;
  
 /* Entity - TwitterConfig */
 CREATE TABLE twitter_config ( 
-           id                                                               int                NOT NULL, 
+           id                                                               INTEGER PRIMARY KEY NOT NULL, 
            consumer_key                                                     varchar( 200 )     NULL    , 
            consumer_secret                                                  varchar( 200 )     NULL    , 
            access_token                                                     varchar( 200 )     NULL    , 
@@ -69,7 +69,7 @@ CREATE TABLE twitter_config (
  
 /* Entity - Base */
 CREATE TABLE base ( 
-           id                                                               int                NOT NULL ) ;
+           id                                                               INTEGER PRIMARY KEY NOT NULL ) ;
  
 GRANT ALL ON instant TO PUBLIC 
 GRANT ALL ON configuration TO PUBLIC 
