@@ -1,24 +1,6 @@
-z1000-Zeidon    ZEIDON   TZDMXGPO 09/20/16   23:40:11 1.0a2    
+z1000-Zeidon    ZEIDON   TZDMXGPO 09/21/16   00:13:17 1.0a2    
 eDomainGroup 1
 aName      UTC
-
-eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.RegularExpressionDomain
-aZKey      905180728
-aName      AlphaNumeric
-aDesc      Characters 'a-z', 'A-Z', '0-9'
-aDomainType E
-aDataType  S
-aMaxStringLth 254
-aContextRestriction N
-aDLL_Name  TZAPDMAA
-aOperName  zdmText
-aDecimalFormat 1234
-
-eContext   3
-aZKey      905180729
-aName      ALPHANUMERIC
-aJavaEditString [\w]*
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.Base64BlobDomain
@@ -79,23 +61,6 @@ aJavaEditString yyyy-MM-dd
 aIsDefault Y
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.IntegerDomain
-aZKey      905180730
-aName      Day
-aDesc      Number of day in month
-aDomainType A
-aDataType  L
-aContextRestriction N
-aDLL_Name  TZAPDMAA
-aOperName  zdmInteger
-
-eContext   3
-aZKey      905180731
-aName      Day
-aEditString <= 31
-aIsDefault Y
-
-eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.DoubleDomain
 aZKey      905181226
 aName      Double
@@ -144,6 +109,38 @@ eContext   3
 aZKey      905181157
 aName      INTEGER
 aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
+aZKey      905180725
+aName      TemperatureUnit
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eContext   3
+aZKey      905180726
+aName      Unit
+aIsDefault Y
+
+eTableEntry 4
+aZKey      905180727
+
+eTableEntry 4
+aZKey      905180728
+aExternalValue Fahrenheit
+aInternalValue F
+
+eTableEntry 4
+aZKey      905180729
+aExternalValue Celsius
+aInternalValue C
+
+eTableEntry 4
+aZKey      905180730
+aExternalValue Kelvin
+aInternalValue K
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StringDomain
@@ -219,43 +216,4 @@ eTableEntry 4
 aZKey      905181225
 aExternalValue N
 aInternalValue N
-
-eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
-aZKey      905181234
-aName      Year
-aDesc      4-digit year
-aDomainType T
-aDataType  L
-aContextRestriction N
-
-eContext   3
-aZKey      905181235
-aName      Year
-aIsDefault Y
-
-eTableEntry 4
-aZKey      905181236
-aExternalValue 2013
-aInternalValue 2013
-
-eTableEntry 4
-aZKey      905181237
-aExternalValue 2014
-aInternalValue 2014
-
-eTableEntry 4
-aZKey      905181238
-aExternalValue 2015
-aInternalValue 2015
-
-eTableEntry 4
-aZKey      905181239
-aExternalValue 2016
-aInternalValue 2016
-
-eTableEntry 4
-aZKey      905181240
-aExternalValue 2017
-aInternalValue 2017
 

@@ -101,7 +101,8 @@ class UtcScalatra extends ScalatraServlet
         oe.forTask( "UTC" ) { task =>
             val view = f( task )
             if ( view.isEmpty )
-                NotFound( "No data found" )
+                //NotFound( view.serializeOi.asJson.toString() )
+                NoContent
             else {
                 val serialized = view.serializeOi.asJson.toString()
                 task.log().debug( serialized )

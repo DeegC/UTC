@@ -1,4 +1,4 @@
-z1000-Zeidon    BASE     TZDGSRCO 09/20/16   23:40:11 1.0a2    
+z1000-Zeidon    BASE     TZDGSRCO 09/21/16   00:12:05 1.0a2    
 eDomainGroup 1
 aZKey      905181202
 aNextZKeyToAssign 905181253
@@ -47,45 +47,6 @@ aZKey      905181233
 aName      Date
 aJavaEditString yyyy-MM-dd
 aIsDefault Y
-
-eDomain    2
-aZKey      905181234
-aName      Year
-aDesc      4-digit year
-aDomainType T
-aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
-aDataType  L
-aContextRestriction N
-
-eContext   3
-aZKey      905181235
-aName      Year
-aIsDefault Y
-
-eTableEntry 4
-aZKey      905181236
-aExternalValue 2013
-aInternalValue 2013
-
-eTableEntry 4
-aZKey      905181237
-aExternalValue 2014
-aInternalValue 2014
-
-eTableEntry 4
-aZKey      905181238
-aExternalValue 2015
-aInternalValue 2015
-
-eTableEntry 4
-aZKey      905181239
-aExternalValue 2016
-aInternalValue 2016
-
-eTableEntry 4
-aZKey      905181240
-aExternalValue 2017
-aInternalValue 2017
 
 eDomain    2
 aZKey      905181242
