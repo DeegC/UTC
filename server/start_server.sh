@@ -4,14 +4,9 @@ JETTY_RUNNER=$(find jetty -name jetty-runner*)
 UTC_WAR=$(find build -name server*.war)
 PORT=8080
 
-java -Xmx50m -DSQLITE_ROOT=$(pwd)/../sqlite -jar $JETTY_RUNNER --port $PORT --classes $(pwd)/conf $UTC_WAR
-
-exit 0
-
-# Following kept for posterity
-
+JETTY_DEBUG=
 if [ "$1" == "-d" ]; then
-    gradle appRunDebug
-else
-    gradle appRun
+    JETTY_DEBUG="-Xdebug -agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n"
 fi
+
+java -Xmx50m $JETTY_DEBUG -DSQLITE_ROOT=$(pwd)/../sqlite -jar $JETTY_RUNNER --port $PORT --classes $(pwd)/conf $UTC_WAR
