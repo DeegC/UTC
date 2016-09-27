@@ -12,13 +12,34 @@
     </encoder>
   </appender>
 
+
+  <appender name="LOGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${java.io.tmpdir}/utc.log</file>
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <!-- rollover daily -->
+      <fileNamePattern>${java.io.tmpdir}/utc.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+      <timeBasedFileNamingAndTriggeringPolicy
+	  class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+	<maxFileSize>10MB</maxFileSize>
+      </timeBasedFileNamingAndTriggeringPolicy>
+    </rollingPolicy>
+  </appender>
+
+  
+  
   <logger name="org.smartjava.scalatra" level="DEBUG"/>
   
   <logger name="com.quinsoft.zeidon.Task" level="DEBUG">
     <appender-ref ref="ZSTDOUT" />
+    <appender-ref ref="LOGFILE" />
   </logger>
 
   <root level="DEBUG">
     <appender-ref ref="STDOUT" />
+    <appender-ref ref="LOGFILE" />
   </root>
 </configuration>
