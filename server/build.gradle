@@ -5,17 +5,6 @@ Project name: ${project.name}
 """
 
 apply plugin: 'war'
-apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
-
-gretty {
-    classPath "${project.projectDir}/conf"
-
-    debugPort = 8000
-    debugSuspend = false
-    
-    // Set environment variable used in zeidon.ini to specify where sqlite DB is located.
-    jvmArgs = [ "-DSQLITE_ROOT=${project.projectDir}/../sqlite" ]
-}
 
 dependencies {
     compile project(':zeidon')
@@ -25,6 +14,6 @@ dependencies {
     compile 'org.eclipse.jetty.orbit:javax.servlet:3.0.0.v201112011016'
     compile 'org.json4s:json4s-jackson_2.11:3.3.0'
     compile 'org.xerial:sqlite-jdbc:3.8.11.2'
-    
-    //jetty "org.eclipse.jetty:jetty-runner:9.3.11.v20160721"
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.+'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.+'
 }
