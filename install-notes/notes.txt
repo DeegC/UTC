@@ -1,0 +1,13 @@
+Pair phone with CHIP.
+
+To get python script running.
+Edit /lib/systemd/system/bluetooth.service and add '-C' after 'bluetoothd'. Reboot.
+sudo sdptool add SP
+
+Automatically send ip after connect
+apt-get install ssmtp
+/etc/network/if-up.d/send-ip:
+	ip addr show wlan0  | mail -s"Chip IP" dgc@dgchristensen.net
+
+Oracle JDK 8 is necessary because it's the only JVM fast enough to run jetty.
+  - Add webupd8team-java.list to /etc/apt/sources.list.d
