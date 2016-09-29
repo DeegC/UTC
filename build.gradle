@@ -18,7 +18,12 @@ subprojects {
 
   dependencies {
     compile 'org.scala-lang:scala-library:2.11.8'
-
+    compile 'org.scala-lang:scala-compiler:2.11.8'
+    compile 'org.json4s:json4s-jackson_2.11:3.3.0'
+    compile 'org.xerial:sqlite-jdbc:3.14.2'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.+'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.+'
+		
     testCompile 'junit:junit:4.12'
     testCompile 'org.scalatest:scalatest_2.11:3.0.0'
     testRuntime 'org.scala-lang.modules:scala-xml_2.11:1.0.5'

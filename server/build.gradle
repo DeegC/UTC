@@ -12,8 +12,4 @@ dependencies {
     compile 'org.scalatra:scalatra_2.11:2.3.1'
     compile 'org.scalatra:scalatra-json_2.11:2.3.1'
     compile 'org.eclipse.jetty.orbit:javax.servlet:3.0.0.v201112011016'
-    compile 'org.json4s:json4s-jackson_2.11:3.3.0'
-    compile 'org.xerial:sqlite-jdbc:3.8.11.2'
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.+'
-    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.+'
 }

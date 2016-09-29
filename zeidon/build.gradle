@@ -9,3 +9,27 @@ dependencies {
     compile 'com.quinsoft.zeidon:zeidon-joe:1.4.0-SNAPSHOT'
     compile 'com.quinsoft.zeidon:zeidon-scala:1.4.0-SNAPSHOT'
 }
+
+task repl(type:JavaExec) {
+
+  def initFile = ''
+
+  File.createTempFile("temp",".tmp").with {
+    deleteOnExit()
+    write '''
+import com.quinsoft.zeidon.standardoe.JavaObjectEngine
+import com.quinsoft.zeidon.scala._
+
+val oe = JavaObjectEngine.getInstance()
+val task = oe.createTask("UTC")
+    
+'''
+    initFile = absolutePath
+  }
+
+  main = "scala.tools.nsc.MainGenericRunner"
+  classpath( sourceSets.main.runtimeClasspath, '../conf' )
+  standardInput System.in
+  args( '-i', initFile, '-usejavacp' )
+  jvmArgs( '-DSQLITE_ROOT=../sqlite' )
+}

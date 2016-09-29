@@ -14,6 +14,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import com.quinsoft.zeidon.ObjectEngine;
+import com.quinsoft.zeidon.Task;
 
 /**
  * Starts up a thread to listen on UDP port 4445.  When it recieves a UDP packet
@@ -28,11 +29,13 @@ public class UdpServerThread extends Thread
     protected DatagramSocket socket     = null;
     protected boolean        listening = true;
     private final String addressList;
+    private final Task   systemTask;
 
     public UdpServerThread( ObjectEngine oe ) throws IOException
     {
         super( "UDP Server" );
         
+        systemTask = oe.getSystemTask();
         List<String> addresses = new ArrayList<>();
         
         Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
@@ -47,7 +50,7 @@ public class UdpServerThread extends Thread
                     } );
 
         addressList = StringUtils.join( addresses, "\n" );
-        System.out.println( "Addresses: \n" + addressList );
+        systemTask.log().info( "Addresses: \n" + addressList );
         socket = new DatagramSocket( 4445 );
     }
 
@@ -64,7 +67,7 @@ public class UdpServerThread extends Thread
                 DatagramPacket packet = new DatagramPacket( buf, buf.length );
                 socket.receive( packet );
                 String str = new String( buf );
-                System.out.println( "UDP=> " + str );
+                systemTask.log().info( "UDP=> " + str );
                 if ( str.startsWith( "KILL" ) )
                 {
                     System.out.println( "Turning off UDP listen" );
@@ -83,6 +86,7 @@ public class UdpServerThread extends Thread
                 int port = packet.getPort();
                 packet = new DatagramPacket( buf, buf.length, address, port );
                 socket.send( packet );
+                systemTask.log().info( "UDP returned => " + addressList );
             }
             catch ( IOException e )
             {
