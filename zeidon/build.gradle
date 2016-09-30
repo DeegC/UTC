@@ -4,10 +4,24 @@ Domain logic for UTC and the Zeidon objects.
 Project name: ${project.name}
 """
 
+configurations {
+    repl
+}
+
 // In this section you declare the dependencies for your production and test code
 dependencies {
-    compile 'com.quinsoft.zeidon:zeidon-joe:1.4.1-SNAPSHOT'
-    compile 'com.quinsoft.zeidon:zeidon-scala:1.4.1-SNAPSHOT'
+    compile( 'com.quinsoft.zeidon:zeidon-scala:1.4.1-SNAPSHOT') {
+        exclude module: 'scala-reflect'
+    }
+
+    compile 'org.scala-lang:scala-library:2.11.8'
+//    compile 'org.json4s:json4s-jackson_2.11:3.3.0'
+    compile 'org.xerial:sqlite-jdbc:3.14.2'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.+'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.+'
+
+    repl 'org.scala-lang:scala-compiler:2.11.8'
+    repl 'jline:jline:2.13'
 }
 
 task repl(type:JavaExec) {
@@ -28,8 +42,8 @@ val task = oe.createTask("UTC")
   }
 
   main = "scala.tools.nsc.MainGenericRunner"
-  classpath( sourceSets.main.runtimeClasspath, '../conf' )
+  classpath( sourceSets.main.runtimeClasspath, '../conf', configurations.repl )
   standardInput System.in
   args( '-i', initFile, '-usejavacp' )
-  jvmArgs( '-DSQLITE_ROOT=../sqlite' )
+  jvmArgs( '-DSQLITE_ROOT=../sqlite', '-Djline.inputrc=~/.jline.inputrc' )
 }
