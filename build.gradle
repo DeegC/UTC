@@ -1,12 +1,8 @@
-allprojects {
+subprojects {
   apply plugin: 'scala'
 
   group = 'org.deeg.utc'
   version = '1.0'
-}
-
-subprojects {
-  apply plugin: 'scala'
 
   repositories {
      mavenLocal()
