@@ -1,4 +1,5 @@
 include 'zeidon'
 include 'server'
 
-rootProject.name = 'utc'
+project(":zeidon").name = "utc-zeidon"
+project(":server").name = "utc-server"
