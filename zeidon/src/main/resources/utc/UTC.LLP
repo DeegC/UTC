@@ -1,4 +1,4 @@
-z1000-Zeidon    UTC      TZCMLPLO 09/21/16   00:13:37 1.0a2    
+z1000-Zeidon    UTC      TZCMLPLO 09/29/16   21:24:27 1.0a2    
 eLPLR      1
 aName      UTC
 aDesc      Universal Temperature Controller
@@ -100,6 +100,18 @@ aStatus    1
 aName      ThermometerCount
 aGroupName TablesA
 
+eW_MetaDef 3
+aCPLR_ZKey 905180731
+aStatus    1
+aName      TemperatureUnit
+aGroupName UDS
+
+eW_MetaDef 3
+aCPLR_ZKey 905180737
+aStatus    1
+aName      Temperature
+aGroupName UDS
+
 eW_MetaType 2
 aType      4
 
@@ -109,8 +121,8 @@ aStatus    1
 aUpdateInd 2
 aName      UTC
 aDesc      UDS Digital Supervisor (android)
-aLastSyncDate 20160921034421333
-aLastUpdateDate 20160921034421333
+aLastSyncDate 20160929212317099
+aLastUpdateDate 20160929212317099
 
 eW_MetaType 2
 aType      5
@@ -124,8 +136,8 @@ aStatus    1
 aUpdateInd 2
 aName      UTC
 aDesc      Universal Temperature Controller
-aLastSyncDate 20160921034739460
-aLastUpdateDate 20160921034739460
+aLastSyncDate 20160929212410261
+aLastUpdateDate 20160929212410261
 
 eW_MetaType 2
 aType      7
@@ -138,6 +150,23 @@ aName      Configuration
 aDesc      Main configuration object
 aLastSyncDate 20160921035049723
 aLastUpdateDate 20160921035049723
+
+eW_MetaDef 3
+aCPLR_ZKey 929210436
+aStatus    1
+aUpdateInd 2
+aName      Instant
+aDesc      Records the status of the sensors at a particular time.
+aLastSyncDate 20160929210634743
+aLastUpdateDate 20160929210634743
+
+eW_MetaDef 3
+aCPLR_ZKey 929210658
+aStatus    1
+aUpdateInd 2
+aName      Session
+aLastSyncDate 20160929210829834
+aLastUpdateDate 20160929210829834
 
 eW_MetaType 2
 aType      8
@@ -153,6 +182,24 @@ aName      Configuration
 aDesc      VOR automatically built from LOD Dialog
 aLastSyncDate 20160911025923390
 aLastUpdateDate 20160911025923390
+
+eW_MetaDef 3
+aCPLR_ZKey 929210527
+aStatus    1
+aUpdateInd 2
+aName      Instant
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20160929210526755
+aLastUpdateDate 20160929210526755
+
+eW_MetaDef 3
+aCPLR_ZKey 929210726
+aStatus    1
+aUpdateInd 2
+aName      Session
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20160929210725490
+aLastUpdateDate 20160929210725490
 
 eW_MetaType 2
 aType      10
@@ -197,8 +244,8 @@ aStatus    1
 aUpdateInd 2
 aName      UDS
 aDesc      UDS domains
-aLastSyncDate 20160921001310628
-aLastUpdateDate 20160921001310628
+aLastSyncDate 20160929212055880
+aLastUpdateDate 20160929212055880
 
 eW_MetaType 2
 aType      14
@@ -243,22 +290,29 @@ eW_MetaDef 3
 aGroupName TZAPDMAA
 
 eW_MetaDef 3
+aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aCPLR_ZKey 905181332
+aStatus    1
+aName      ThermometerCount
+aLastUpdateDate 20160921001317375
+aGroupName TablesA
+
+eW_MetaDef 3
+aGroupName Base
+
+eW_MetaDef 3
 aCPLR_ZKey 905180731
 aStatus    1
 aName      TemperatureUnit
 aGroupName UDS
 
 eW_MetaDef 3
-aGroupName TZAPDMAA
-
-eW_MetaDef 3
-aGroupName Base
-
-eW_MetaDef 3
-aCPLR_ZKey 905181332
+aCPLR_ZKey 905180737
 aStatus    1
-aName      ThermometerCount
-aGroupName TablesA
+aName      Temperature
+aGroupName UDS
 
 eW_MetaType 2
 aType      2004
@@ -278,11 +332,19 @@ aType      2007
 
 eW_MetaDef 3
 
+eW_MetaDef 3
+
+eW_MetaDef 3
+
 eW_MetaType 2
 aType      2008
 
 eW_MetaType 2
 aType      2009
+
+eW_MetaDef 3
+
+eW_MetaDef 3
 
 eW_MetaDef 3
 
@@ -368,20 +430,24 @@ aJavaClassName com.quinsoft.zeidon.domains.BooleanDomain
 eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.DateTimeDomain
 
-i41        6
-i42        5
-i43        7
-i44        11
-i45        9
-i46        8
-i47        12
-i49        13
-i50        10
-i53        17
-i56        20
-i58        22
-i61        25
-i66        31
-i67        32
-i68        30
-i69        33
+i47        6
+i48        5
+i49        7
+i50        11
+i51        9
+i52        8
+i53        12
+i54        13
+i56        10
+i60        19
+i63        22
+i65        24
+i66        25
+i67        26
+i70        29
+i71        31
+i72        30
+i77        37
+i78        38
+i79        36
+i80        39

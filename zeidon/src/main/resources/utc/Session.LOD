@@ -1,0 +1,831 @@
+z1000-Zeidon    SESSION  TZZOLODO 09/29/16   21:24:23 1.0a2    
+eLOD       1
+aZKey      929210658
+aNextZKeyToAssign 929210691
+aName      Session
+
+eLOD_EntityParent 2
+aName      Session
+aIndentName Session
+aIndentLvl 0
+aZKey      929210659
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      N
+aParentDeleteBehave D
+aDesc      A controller session; i.e. a cook.
+
+eLOD_EntityChild 3
+aName      Configuration
+aIndentName    Configuration
+aIndentLvl 3
+aZKey      929210677
+aCreate    N
+aDelete    N
+aUpdate    N
+aInclude   Y
+aInclSrc   Y
+aExclude   Y
+aRecursive N
+aDerived   N
+aParentDeleteBehave E
+aRelLinkIndicator H
+aDesc      Config options for a monitoring session.
+
+eLOD_AttributeRec 4
+aZKey      929210678
+
+eER_AttributeRec 5
+aName      Id
+aZKey      905181332
+aNotNull   Y
+aSAP_Attribute 0
+
+eDomainRec 6
+aZKey      905181242
+aName      GeneratedKey
+aDomainType E
+aDataType  L
+aMaxStringLth 64
+aDesc      Generic DB-generated key
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      929210679
+
+eER_AttributeRec 5
+aName      Description
+aZKey      905181333
+aLth       255
+aNotNull   Y
+aDesc      Description of this session.
+
+eDomainRec 6
+aZKey      905181158
+aName      Text
+aDomainType E
+aDataType  S
+aMaxStringLth 10000
+aDesc      Any Character String
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      929210680
+
+eER_AttributeRec 5
+aName      Notes
+aZKey      905181334
+aLth       10000
+aDesc      Notes that are copied to the Session when a new Session is created.
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      929210681
+
+eER_AttributeRec 5
+aName      TargetTemperature
+aZKey      905181397
+aNotNull   Y
+
+eDomainRec 6
+aZKey      905181155
+aName      Integer
+aDomainType E
+aDataType  L
+aMaxStringLth 4
+aDecimalFormat 0
+aDesc      Integer numbers from -lots to +lots
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      929210682
+
+eER_AttributeRec 5
+aName      ThermometerCount
+aZKey      905181335
+aNotNull   Y
+aDesc      Number of Thermometers
+
+eDomainRec 6
+aZKey      905181332
+aName      ThermometerCount
+aDomainType E
+aDataType  L
+aDesc      Integer from 1-8
+aContextRestriction N
+aConstraintRule (1..8)
+
+eLOD_AttributeRec 4
+aZKey      929210683
+
+eER_AttributeRec 5
+aName      TemperatureUnit
+aZKey      905181336
+aNotNull   Y
+
+eDomainRec 6
+aZKey      905180731
+aName      TemperatureUnit
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      929210684
+
+eER_AttributeRec 5
+aName      RecordTemperatures
+aZKey      905181337
+aDesc      If 'Y', then record the smoker sesson.
+
+eDomainRec 6
+aZKey      905181228
+aName      Boolean
+aDomainType E
+aDataType  L
+aMaxStringLth 1
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      929210685
+
+eER_AttributeRec 5
+aName      PidP
+aZKey      905181338
+aNotNull   Y
+aDesc      P value for PID algorithm.
+
+eDomainRec 6
+aZKey      905181215
+aName      DateTime
+aDomainType E
+aDataType  T
+aDesc      Date/time field
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      929210686
+
+eER_AttributeRec 5
+aName      PidI
+aZKey      905181339
+aNotNull   Y
+aDesc      I value for PID algorithm.
+
+eDomainRec 6
+aZKey      905181226
+aName      Double
+aDomainType E
+aDataType  M
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      929210687
+
+eER_AttributeRec 5
+aName      PidD
+aZKey      905181340
+aNotNull   Y
+aDesc      D value for PID algorithm.
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      929210688
+
+eER_AttributeRec 5
+aName      MaxPWM
+aZKey      905181341
+aDesc      The max value for the output pwm.  Use lower values for more powerful blowers.
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      929210689
+
+eER_AttributeRec 5
+aName      TweetOn
+aZKey      905181342
+aDesc      If 'Y', then periodically tweet status.
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      929210690
+
+eER_AttributeRec 5
+aName      TweetPeriodInMinutes
+aZKey      905181343
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      929210691
+
+eER_AttributeRec 5
+aName      PwmFrequency
+aZKey      905181344
+aDesc      Frequency of the PWM signal
+
+eDomainRec 6
+
+eER_EntityRec 4
+aName      Configuration
+aZKey      905181331
+aPurpose   F
+aDesc      Config options for a monitoring session.
+aER_DiagramPosX 28
+aER_DiagramPosY 5
+aSAP_Entity 0
+
+eER_RelLinkRec 4
+aName      for
+aZKey      905181393
+aCardMin   1
+aCardMax   1
+
+eER_RelTypeRec 5
+aZKey      905181391
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 32
+aER_DiagramE1PosY 10
+aER_DiagramE2PosX 32
+aER_DiagramE2PosY 16
+
+eLOD_EntityChild 3
+aName      Instant
+aIndentName    Instant
+aIndentLvl 3
+aZKey      929210664
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aParentDeleteBehave D
+aRelLinkIndicator L
+aDesc      This entity records all the readings of a moment in time in a UTC run.
+aSeqNo     0
+
+eLOD_AttributeRec 4
+aZKey      929210665
+
+eER_AttributeRec 5
+aName      Timestamp
+aZKey      905181316
+aNotNull   Y
+aDesc      Instant that this record was recorded.
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      929210666
+
+eER_AttributeRec 5
+aName      TargetTemperature
+aZKey      905181317
+aNotNull   Y
+
+eDomainRec 6
+aZKey      905180737
+aName      Temperature
+aDomainType E
+aDataType  L
+aDesc      Temperature stored as Fahrenheit.  Can be converted to C or K.
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      929210667
+
+eER_AttributeRec 5
+aName      Therm0
+aZKey      905181318
+aDesc      Reading from thermometer 0.
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      929210668
+
+eER_AttributeRec 5
+aName      Therm1
+aZKey      905181319
+aDesc      Reading from thermometer 1.
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      929210669
+
+eER_AttributeRec 5
+aName      Therm2
+aZKey      905181320
+aDesc      Reading from thermometer 2.
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      929210670
+
+eER_AttributeRec 5
+aName      Therm3
+aZKey      905181321
+aDesc      Reading from thermometer 3.
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      929210671
+
+eER_AttributeRec 5
+aName      Therm4
+aZKey      905181322
+aDesc      Reading from thermometer 4
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      929210672
+
+eER_AttributeRec 5
+aName      Therm5
+aZKey      905181323
+aDesc      Reading from thermometer 5
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      929210673
+
+eER_AttributeRec 5
+aName      Therm6
+aZKey      905181324
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      929210674
+
+eER_AttributeRec 5
+aName      Therm7
+aZKey      905181325
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      929210675
+
+eER_AttributeRec 5
+aName      PWM0
+aZKey      905181326
+aDesc      Set PWM speed for blower 0.
+
+eDomainRec 6
+
+eER_EntityRec 4
+aName      Instant
+aZKey      905181315
+aPurpose   A
+aDesc      This entity records all the readings of a moment in time in a UTC run.
+aER_DiagramPosX 28
+aER_DiagramPosY 28
+
+eER_RelLinkRec 4
+aName      has
+aZKey      905181386
+aCardMin   0
+aCardMax   m
+
+eER_RelTypeRec 5
+aZKey      905181385
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 32
+aER_DiagramE1PosY 22
+aER_DiagramE2PosX 32
+aER_DiagramE2PosY 27
+
+eLOD_AttributeRec 3
+aZKey      929210660
+
+eER_AttributeRec 4
+aName      Id
+aZKey      905181348
+aNotNull   Y
+aSAP_Attribute 0
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      929210661
+
+eER_AttributeRec 4
+aName      Date
+aZKey      905181349
+aNotNull   Y
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      929210662
+
+eER_AttributeRec 4
+aName      EndDate
+aZKey      905181350
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      929210663
+
+eER_AttributeRec 4
+aName      Notes
+aZKey      905181351
+aLth       10000
+aDesc      Notes regarding this session
+
+eDomainRec 5
+
+eER_EntityRec 3
+aName      Session
+aZKey      905181347
+aPurpose   F
+aDesc      A controller session; i.e. a cook.
+aER_DiagramPosX 28
+aER_DiagramPosY 17
+aSAP_Entity 0
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 5
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 6
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 7
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 8
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 9
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 10
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 11
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 12
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 13
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 14
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 5
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 6
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 7
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 8
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 9
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 10
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 11
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
+ePOD       2
+aNAME      Session
+aZKey      929210676
+aTE_SourceZKey 1896
+
+eTE_DB_Environ 3
+aName      UTC
+aZKey      1894
+aDesc      Universal Temperature Controller
+aType      P
+
+eTE_DBMS_Source 4
+aName      Sqlite
+aZKey      1896
+aParadigm  R
+aDBMS      Sqlite
+aGenerateExecutable kzhsqllb
+aDisplayOwner N
+aTranslateNamesToLowerUnderscore Y
+
+i11        8
+i32        29
+i35        14
+i38        23
+i41        14
+i44        14
+i51        26
+i57        54
+i60        54
+i63        54
+i66        54
+i69        54
+i72        54
+i75        54
+i78        54
+i81        14
+i87        5
+i90        26
+i93        26
+i96        8
+i98        1
+i99        85
+i100       86
+i101       5
+i102       88
+i103       89
+i104       26
+i105       91
+i106       92
+i107       26
+i108       94
+i109       95
+i110       8
+i111       97
+i112       2
+i113       3
+i114       4
+i115       5
+i116       6
+i117       7
+i118       8
+i119       9
+i120       10
+i121       8
+i122       12
+i123       13
+i124       14
+i125       15
+i126       16
+i127       17
+i128       18
+i129       19
+i130       20
+i131       21
+i132       22
+i133       23
+i134       24
+i135       25
+i136       26
+i137       27
+i138       28
+i139       29
+i140       30
+i141       31
+i142       29
+i143       33
+i144       34
+i145       14
+i146       36
+i147       37
+i148       23
+i149       39
+i150       40
+i151       14
+i152       42
+i153       43
+i154       14
+i155       45
+i156       46
+i157       47
+i158       48
+i159       49
+i160       50
+i161       26
+i162       52
+i163       53
+i164       54
+i165       55
+i166       56
+i167       54
+i168       58
+i169       59
+i170       54
+i171       61
+i172       62
+i173       54
+i174       64
+i175       65
+i176       54
+i177       67
+i178       68
+i179       54
+i180       70
+i181       71
+i182       54
+i183       73
+i184       74
+i185       54
+i186       76
+i187       77
+i188       54
+i189       79
+i190       80
+i191       14
+i192       82
+i193       83
+i194       84

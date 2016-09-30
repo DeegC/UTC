@@ -1,72 +1,16 @@
-z1000-Zeidon    ZEIDON   TZEREMXO 09/20/16   23:50:49 1.0a2    
+z1000-Zeidon    ZEIDON   TZEREMXO 09/29/16   21:24:22 1.0a2    
 eMODEL     1
 aNumEnts   6
 aNumRels   3
 
 eENTITY    2
-aZKEY      905181315
-aNumAtts   12
+aZKEY      905181311
+aNumAtts   1
 
 eATTRIB    3
-aZKEY      905181316
-aNAME      Timestamp
-aAPDM_TOK  905181215
-
-eATTRIB    3
-aZKEY      905181317
-aNAME      TargetTemperature
-aAPDM_TOK  905181155
-
-eATTRIB    3
-aZKEY      905181318
-aNAME      Therm0
-aAPDM_TOK  905181155
-
-eATTRIB    3
-aZKEY      905181319
-aNAME      Therm1
-aAPDM_TOK  905181155
-
-eATTRIB    3
-aZKEY      905181320
-aNAME      Therm2
-aAPDM_TOK  905181155
-
-eATTRIB    3
-aZKEY      905181321
-aNAME      Therm3
-aAPDM_TOK  905181155
-
-eATTRIB    3
-aZKEY      905181322
-aNAME      Therm4
-aAPDM_TOK  905181155
-
-eATTRIB    3
-aZKEY      905181323
-aNAME      Therm5
-aAPDM_TOK  905181155
-
-eATTRIB    3
-aZKEY      905181324
-aNAME      Therm6
-aAPDM_TOK  905181155
-
-eATTRIB    3
-aZKEY      905181325
-aNAME      Therm7
-aAPDM_TOK  905181155
-
-eATTRIB    3
-aZKEY      905181326
-aNAME      PWM0
-aAPDM_TOK  905181155
-
-eATTRIB    3
-aZKEY      2069
-aNAME      fk_id_session
+aZKEY      905181312
+aNAME      Id
 aAPDM_TOK  905181242
-aLTH       64
 
 eENTITY    2
 aZKEY      905181331
@@ -102,7 +46,7 @@ aAPDM_TOK  905181332
 eATTRIB    3
 aZKEY      905181336
 aNAME      TemperatureUnit
-aAPDM_TOK  905180725
+aAPDM_TOK  905180731
 
 eATTRIB    3
 aZKEY      905181337
@@ -145,6 +89,76 @@ aNAME      PwmFrequency
 aAPDM_TOK  905181155
 
 eENTITY    2
+aZKEY      905181315
+aNumAtts   13
+
+eATTRIB    3
+aZKEY      905181316
+aNAME      Timestamp
+aAPDM_TOK  905181215
+
+eATTRIB    3
+aZKEY      905181317
+aNAME      TargetTemperature
+aAPDM_TOK  905180737
+
+eATTRIB    3
+aZKEY      905181318
+aNAME      Therm0
+aAPDM_TOK  905180737
+
+eATTRIB    3
+aZKEY      905181319
+aNAME      Therm1
+aAPDM_TOK  905180737
+
+eATTRIB    3
+aZKEY      905181320
+aNAME      Therm2
+aAPDM_TOK  905180737
+
+eATTRIB    3
+aZKEY      905181321
+aNAME      Therm3
+aAPDM_TOK  905180737
+
+eATTRIB    3
+aZKEY      905181322
+aNAME      Therm4
+aAPDM_TOK  905180737
+
+eATTRIB    3
+aZKEY      905181323
+aNAME      Therm5
+aAPDM_TOK  905180737
+
+eATTRIB    3
+aZKEY      905181324
+aNAME      Therm6
+aAPDM_TOK  905180737
+
+eATTRIB    3
+aZKEY      905181325
+aNAME      Therm7
+aAPDM_TOK  905180737
+
+eATTRIB    3
+aZKEY      905181326
+aNAME      PWM0
+aAPDM_TOK  905181155
+
+eATTRIB    3
+aZKEY      905181401
+aNAME      CpuTemperature
+aAPDM_TOK  905180737
+
+eATTRIB    3
+aZKEY      2129
+aNAME      fk_id_session
+aAPDM_TOK  905181242
+aLTH       64
+
+eENTITY    2
 aZKEY      905181347
 aNumAtts   5
 
@@ -170,7 +184,7 @@ aAPDM_TOK  905181158
 aLTH       10000
 
 eATTRIB    3
-aZKEY      2071
+aZKEY      2131
 aNAME      fk_id_configuration
 aAPDM_TOK  905181242
 aLTH       64
@@ -211,7 +225,7 @@ aNAME      wTemperatureWithinAlarmThreshold
 aAPDM_TOK  905181228
 
 eATTRIB    3
-aZKEY      2070
+aZKEY      2130
 aNAME      fk_id_configuration
 aAPDM_TOK  905181242
 aLTH       64
@@ -259,15 +273,6 @@ eATTRIB    3
 aZKEY      905181377
 aNAME      TweetPeriodInMinutes
 aAPDM_TOK  905181155
-
-eENTITY    2
-aZKEY      905181311
-aNumAtts   1
-
-eATTRIB    3
-aZKEY      905181312
-aNAME      Id
-aAPDM_TOK  905181242
 
 eREL       2
 aZKEY      905181385

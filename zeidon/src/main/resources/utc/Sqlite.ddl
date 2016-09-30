@@ -1,25 +1,14 @@
 /* CREATE DATABASE Sqlite */ ;
-DROP TABLE IF EXISTS instant ;
+DROP TABLE IF EXISTS base ;
 DROP TABLE IF EXISTS configuration ;
+DROP TABLE IF EXISTS instant ;
 DROP TABLE IF EXISTS session ;
 DROP TABLE IF EXISTS thermometer_config ;
 DROP TABLE IF EXISTS twitter_config ;
-DROP TABLE IF EXISTS base ;
 
-/* Entity - Instant */
-CREATE TABLE instant ( 
-           timestamp                                                        datetime           NOT NULL, 
-           target_temperature                                               int                NOT NULL, 
-           therm0                                                           int                NULL    , 
-           therm1                                                           int                NULL    , 
-           therm2                                                           int                NULL    , 
-           therm3                                                           int                NULL    , 
-           therm4                                                           int                NULL    , 
-           therm5                                                           int                NULL    , 
-           therm6                                                           int                NULL    , 
-           therm7                                                           int                NULL    , 
-           pw_m0                                                            int                NULL    , 
-           fk_id_session                                                    INTEGER            NOT NULL ) ;
+/* Entity - Base */
+CREATE TABLE base ( 
+           id                                                               INTEGER PRIMARY KEY NOT NULL ) ;
  
 /* Entity - Configuration */
 CREATE TABLE configuration ( 
@@ -38,6 +27,22 @@ CREATE TABLE configuration (
            tweet_period_in_minutes                                          int                NULL    , 
            pwm_frequency                                                    int                NULL    , 
            autoseq                                                          int                NULL     ) ;
+ 
+/* Entity - Instant */
+CREATE TABLE instant ( 
+           timestamp                                                        datetime           NOT NULL, 
+           target_temperature                                               int                NOT NULL, 
+           therm0                                                           int                NULL    , 
+           therm1                                                           int                NULL    , 
+           therm2                                                           int                NULL    , 
+           therm3                                                           int                NULL    , 
+           therm4                                                           int                NULL    , 
+           therm5                                                           int                NULL    , 
+           therm6                                                           int                NULL    , 
+           therm7                                                           int                NULL    , 
+           pw_m0                                                            int                NULL    , 
+           cpu_temperature                                                  int                NULL    , 
+           fk_id_session                                                    INTEGER            NOT NULL ) ;
  
 /* Entity - Session */
 CREATE TABLE session ( 
@@ -67,14 +72,10 @@ CREATE TABLE twitter_config (
            username                                                         longtext           NULL    , 
            tweet_period_in_minutes                                          int                NULL     ) ;
  
-/* Entity - Base */
-CREATE TABLE base ( 
-           id                                                               INTEGER PRIMARY KEY NOT NULL ) ;
- 
-GRANT ALL ON instant TO PUBLIC 
+GRANT ALL ON base TO PUBLIC 
 GRANT ALL ON configuration TO PUBLIC 
+GRANT ALL ON instant TO PUBLIC 
 GRANT ALL ON session TO PUBLIC 
 GRANT ALL ON thermometer_config TO PUBLIC 
 GRANT ALL ON twitter_config TO PUBLIC 
-GRANT ALL ON base TO PUBLIC 
 

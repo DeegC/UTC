@@ -1,0 +1,456 @@
+z1000-Zeidon    INSTANT  TZZOLODO 09/29/16   21:24:22 1.0a2    
+eLOD       1
+aZKey      929210436
+aNextZKeyToAssign 929210454
+aName      Instant
+aDesc      Records the status of the sensors at a particular time.
+
+eLOD_EntityParent 2
+aName      Instant
+aIndentName Instant
+aIndentLvl 0
+aZKey      929210437
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      N
+aParentDeleteBehave D
+aDesc      This entity records all the readings of a moment in time in a UTC run.
+
+eLOD_EntityChild 3
+aName      Session
+aIndentName    Session
+aIndentLvl 3
+aZKey      929210449
+aCreate    N
+aDelete    N
+aUpdate    N
+aInclude   Y
+aInclSrc   Y
+aExclude   Y
+aRecursive N
+aDerived   N
+aParentDeleteBehave E
+aRelLinkIndicator H
+aDesc      A controller session; i.e. a cook.
+
+eLOD_AttributeRec 4
+aZKey      929210450
+
+eER_AttributeRec 5
+aName      Id
+aZKey      905181348
+aNotNull   Y
+aSAP_Attribute 0
+
+eDomainRec 6
+aZKey      905181242
+aName      GeneratedKey
+aDomainType E
+aDataType  L
+aMaxStringLth 64
+aDesc      Generic DB-generated key
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      929210451
+
+eER_AttributeRec 5
+aName      Date
+aZKey      905181349
+aNotNull   Y
+
+eDomainRec 6
+aZKey      905181215
+aName      DateTime
+aDomainType E
+aDataType  T
+aDesc      Date/time field
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      929210452
+
+eER_AttributeRec 5
+aName      EndDate
+aZKey      905181350
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      929210453
+
+eER_AttributeRec 5
+aName      Notes
+aZKey      905181351
+aLth       10000
+aDesc      Notes regarding this session
+
+eDomainRec 6
+aZKey      905181158
+aName      Text
+aDomainType E
+aDataType  S
+aMaxStringLth 10000
+aDesc      Any Character String
+aContextRestriction N
+
+eER_EntityRec 4
+aName      Session
+aZKey      905181347
+aPurpose   F
+aDesc      A controller session; i.e. a cook.
+aER_DiagramPosX 28
+aER_DiagramPosY 17
+aSAP_Entity 0
+
+eER_RelLinkRec 4
+aName      for
+aZKey      905181387
+aCardMin   1
+aCardMax   1
+
+eER_RelTypeRec 5
+aZKey      905181385
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 32
+aER_DiagramE1PosY 22
+aER_DiagramE2PosX 32
+aER_DiagramE2PosY 27
+
+eLOD_AttributeRec 3
+aZKey      929210438
+
+eER_AttributeRec 4
+aName      Timestamp
+aZKey      905181316
+aNotNull   Y
+aDesc      Instant that this record was recorded.
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      929210439
+
+eER_AttributeRec 4
+aName      TargetTemperature
+aZKey      905181317
+aNotNull   Y
+
+eDomainRec 5
+aZKey      905180737
+aName      Temperature
+aDomainType E
+aDataType  L
+aDesc      Temperature stored as Fahrenheit.  Can be converted to C or K.
+aContextRestriction N
+
+eLOD_AttributeRec 3
+aZKey      929210440
+
+eER_AttributeRec 4
+aName      Therm0
+aZKey      905181318
+aDesc      Reading from thermometer 0.
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      929210441
+
+eER_AttributeRec 4
+aName      Therm1
+aZKey      905181319
+aDesc      Reading from thermometer 1.
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      929210442
+
+eER_AttributeRec 4
+aName      Therm2
+aZKey      905181320
+aDesc      Reading from thermometer 2.
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      929210443
+
+eER_AttributeRec 4
+aName      Therm3
+aZKey      905181321
+aDesc      Reading from thermometer 3.
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      929210444
+
+eER_AttributeRec 4
+aName      Therm4
+aZKey      905181322
+aDesc      Reading from thermometer 4
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      929210445
+
+eER_AttributeRec 4
+aName      Therm5
+aZKey      905181323
+aDesc      Reading from thermometer 5
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      929210446
+
+eER_AttributeRec 4
+aName      Therm6
+aZKey      905181324
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      929210447
+
+eER_AttributeRec 4
+aName      Therm7
+aZKey      905181325
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      929210448
+
+eER_AttributeRec 4
+aName      PWM0
+aZKey      905181326
+aDesc      Set PWM speed for blower 0.
+
+eDomainRec 5
+aZKey      905181155
+aName      Integer
+aDomainType E
+aDataType  L
+aMaxStringLth 4
+aDecimalFormat 0
+aDesc      Integer numbers from -lots to +lots
+aContextRestriction N
+
+eER_EntityRec 3
+aName      Instant
+aZKey      905181315
+aPurpose   A
+aDesc      This entity records all the readings of a moment in time in a UTC run.
+aER_DiagramPosX 28
+aER_DiagramPosY 28
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 5
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 6
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 7
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 8
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 9
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 10
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 11
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
+ePOD       2
+aNAME      Instant
+aZKey      929210454
+aTE_SourceZKey 1896
+
+eTE_DB_Environ 3
+aName      UTC
+aZKey      1894
+aDesc      Universal Temperature Controller
+aType      P
+
+eTE_DBMS_Source 4
+aName      Sqlite
+aZKey      1896
+aParadigm  R
+aDBMS      Sqlite
+aGenerateExecutable kzhsqllb
+aDisplayOwner N
+aTranslateNamesToLowerUnderscore Y
+
+i11        8
+i20        8
+i26        23
+i29        23
+i32        23
+i35        23
+i38        23
+i41        23
+i44        23
+i47        23
+i52        1
+i53        18
+i54        19
+i55        8
+i56        21
+i57        22
+i58        23
+i59        24
+i60        25
+i61        23
+i62        27
+i63        28
+i64        23
+i65        30
+i66        31
+i67        23
+i68        33
+i69        34
+i70        23
+i71        36
+i72        37
+i73        23
+i74        39
+i75        40
+i76        23
+i77        42
+i78        43
+i79        23
+i80        45
+i81        46
+i82        23
+i83        48
+i84        49
+i85        50
+i86        51
+i87        2
+i88        3
+i89        4
+i90        5
+i91        6
+i92        7
+i93        8
+i94        9
+i95        10
+i96        8
+i97        12
+i98        13
+i99        14
+i100       15
+i101       16
+i102       17

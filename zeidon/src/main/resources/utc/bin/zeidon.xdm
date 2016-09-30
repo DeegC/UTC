@@ -1,4 +1,4 @@
-z1000-Zeidon    ZEIDON   TZDMXGPO 09/21/16   00:13:17 1.0a2    
+z1000-Zeidon    ZEIDON   TZDMXGPO 09/29/16   21:20:55 1.0a2    
 eDomainGroup 1
 aName      UTC
 
@@ -108,6 +108,20 @@ aName      Hex
 eContext   3
 aZKey      905181157
 aName      INTEGER
+aIsDefault Y
+
+eDomain    2
+aJavaClass com.quinsoft.zeidon.domains.IntegerDomain
+aZKey      905180737
+aName      Temperature
+aDesc      Temperature stored as Fahrenheit.  Can be converted to C or K.
+aDomainType E
+aDataType  L
+aContextRestriction N
+
+eContext   3
+aZKey      905180738
+aName      F
 aIsDefault Y
 
 eDomain    2

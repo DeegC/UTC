@@ -1,168 +1,43 @@
-z1000-Zeidon    UTC      TZEREMDO 09/20/16   23:44:21 1.0a2    
+z1000-Zeidon    UTC      TZEREMDO 09/29/16   21:23:17 1.0a2    
 eEntpER_Model 1
 aName      UTC
 aZKey      905181310
-aNextZKeyToAssign 905181400
-aLastSyncDate 20160920234421243
+aNextZKeyToAssign 905181401
+aLastSyncDate 20160929212317032
 aDesc      UDS Digital Supervisor (android)
 
 eER_Entity 2
-aName      Instant
-aZKey      905181315
-aPurpose   A
-aDesc      This entity records all the readings of a moment in time in a UTC run.
-aER_DiagramPosX 28
-aER_DiagramPosY 28
-awkSelectedAttributeForDragSort 2
+aName      Base
+aZKey      905181311
+aPurpose   F
+aER_DiagramPosX 1
+aER_DiagramPosY 17
+awkSelectedAttributeForDragSort 1
 
 eER_Attribute 3
-aName      Timestamp
-aZKey      905181316
+aName      Id
+aZKey      905181312
 aNotNull   Y
-aDesc      Instant that this record was recorded.
 awkSequence 1
 
 eDomain    4
-aZKey      905181215
-aDesc      Date/time field
-aName      DateTime
-aDataType  T
+aZKey      905181242
+aDesc      Generic DB-generated key
+aName      GeneratedKey
+aDataType  L
+aMaxStringLth 64
 aDomainType E
 aContextRestriction N
 
 eER_FactTypeForDelete 4
-aZKey      905181330
+aZKey      905181314
 
 eER_EntIdentifierForDelete 5
-aName      Timestamp
-aZKey      905181328
-aSystemMaintained N
-
-eER_Attribute 3
-aName      TargetTemperature
-aZKey      905181317
-aNotNull   Y
-awkSequence 2
-
-eDomain    4
-aZKey      905181155
-aDesc      Integer numbers from -lots to +lots
-aName      Integer
-aDataType  L
-aMaxStringLth 4
-aDecimalFormat 0
-aDomainType E
-aContextRestriction N
-
-eER_Attribute 3
-aName      Therm0
-aZKey      905181318
-aDesc      Reading from thermometer 0.
-awkSequence 3
-
-eDomain    4
-
-eER_Attribute 3
-aName      Therm1
-aZKey      905181319
-aDesc      Reading from thermometer 1.
-awkSequence 4
-
-eDomain    4
-
-eER_Attribute 3
-aName      Therm2
-aZKey      905181320
-aDesc      Reading from thermometer 2.
-awkSequence 5
-
-eDomain    4
-
-eER_Attribute 3
-aName      Therm3
-aZKey      905181321
-aDesc      Reading from thermometer 3.
-awkSequence 6
-
-eDomain    4
-
-eER_Attribute 3
-aName      Therm4
-aZKey      905181322
-aDesc      Reading from thermometer 4
-awkSequence 7
-
-eDomain    4
-
-eER_Attribute 3
-aName      Therm5
-aZKey      905181323
-aDesc      Reading from thermometer 5
-awkSequence 8
-
-eDomain    4
-
-eER_Attribute 3
-aName      Therm6
-aZKey      905181324
-awkSequence 9
-
-eDomain    4
-
-eER_Attribute 3
-aName      Therm7
-aZKey      905181325
-awkSequence 10
-
-eDomain    4
-
-eER_Attribute 3
-aName      PWM0
-aZKey      905181326
-aDesc      Set PWM speed for blower 0.
-awkSequence 11
-
-eDomain    4
-
-eER_RelLink 3
-aName      for
-aZKey      905181387
-aCardMin   1
-aCardMax   1
-
-eER_RelType_1 4
-aZKey      905181385
-aFact      Added thru ER Dialog
-aER_DiagramBendPosX 0
-aER_DiagramBendPosY 0
-aER_DiagramE1PosX 32
-aER_DiagramE1PosY 22
-aER_DiagramE2PosX 32
-aER_DiagramE2PosY 27
-
-eER_RelLink_Other 5
-aName      has
-aZKey      905181386
-aCardMin   0
-aCardMax   m
-
-eER_Entity_Other 6
-aSAP_Entity 0
-aName      Session
-aZKey      905181347
-aPurpose   F
-aDesc      A controller session; i.e. a cook.
-aER_DiagramPosX 28
-aER_DiagramPosY 17
+aName      Id
+aZKey      905181313
+aSystemMaintained Y
 
 eER_EntIdentifier 3
-
-eER_FactType 4
-aZKey      905181329
-
-eER_RelLinkIdentifier 5
-
-eER_Entity_Other_Identifier 6
 
 eER_FactType 4
 
@@ -186,13 +61,6 @@ aSAP_Attribute 0
 awkSequence 1
 
 eDomain    4
-aZKey      905181242
-aDesc      Generic DB-generated key
-aName      GeneratedKey
-aDataType  L
-aMaxStringLth 64
-aDomainType E
-aContextRestriction N
 
 eER_FactTypeForDelete 4
 aZKey      905181346
@@ -235,6 +103,14 @@ aNotNull   Y
 awkSequence 4
 
 eDomain    4
+aZKey      905181155
+aDesc      Integer numbers from -lots to +lots
+aName      Integer
+aDataType  L
+aMaxStringLth 4
+aDecimalFormat 0
+aDomainType E
+aContextRestriction N
 
 eER_Attribute 3
 aName      ThermometerCount
@@ -259,7 +135,7 @@ aNotNull   Y
 awkSequence 6
 
 eDomain    4
-aZKey      905180725
+aZKey      905180731
 aName      TemperatureUnit
 aDataType  S
 aMaxStringLth 1
@@ -288,6 +164,12 @@ aDesc      P value for PID algorithm.
 awkSequence 8
 
 eDomain    4
+aZKey      905181215
+aDesc      Date/time field
+aName      DateTime
+aDataType  T
+aDomainType E
+aContextRestriction N
 
 eER_Attribute 3
 aName      PidI
@@ -403,8 +285,169 @@ aCardMin   1
 aCardMax   1
 
 eER_Entity_Other 6
+aSAP_Entity 0
+aName      Session
+aZKey      905181347
+aPurpose   F
+aDesc      A controller session; i.e. a cook.
+aER_DiagramPosX 28
+aER_DiagramPosY 17
 
 eER_EntIdentifier 3
+
+eER_FactType 4
+
+eER_AttributeIdentifier 5
+
+eER_Entity 2
+aName      Instant
+aZKey      905181315
+aPurpose   A
+aDesc      This entity records all the readings of a moment in time in a UTC run.
+aER_DiagramPosX 28
+aER_DiagramPosY 28
+awkSelectedAttributeForDragSort 2
+
+eER_Attribute 3
+aName      Timestamp
+aZKey      905181316
+aNotNull   Y
+aDesc      Instant that this record was recorded.
+awkSequence 1
+
+eDomain    4
+
+eER_FactTypeForDelete 4
+aZKey      905181330
+
+eER_EntIdentifierForDelete 5
+aName      Timestamp
+aZKey      905181328
+aSystemMaintained N
+
+eER_Attribute 3
+aName      TargetTemperature
+aZKey      905181317
+aNotNull   Y
+awkSequence 2
+
+eDomain    4
+aZKey      905180737
+aDesc      Temperature stored as Fahrenheit.  Can be converted to C or K.
+aName      Temperature
+aDataType  L
+aDomainType E
+aContextRestriction N
+
+eER_Attribute 3
+aName      Therm0
+aZKey      905181318
+aDesc      Reading from thermometer 0.
+awkSequence 3
+
+eDomain    4
+
+eER_Attribute 3
+aName      Therm1
+aZKey      905181319
+aDesc      Reading from thermometer 1.
+awkSequence 4
+
+eDomain    4
+
+eER_Attribute 3
+aName      Therm2
+aZKey      905181320
+aDesc      Reading from thermometer 2.
+awkSequence 5
+
+eDomain    4
+
+eER_Attribute 3
+aName      Therm3
+aZKey      905181321
+aDesc      Reading from thermometer 3.
+awkSequence 6
+
+eDomain    4
+
+eER_Attribute 3
+aName      Therm4
+aZKey      905181322
+aDesc      Reading from thermometer 4
+awkSequence 7
+
+eDomain    4
+
+eER_Attribute 3
+aName      Therm5
+aZKey      905181323
+aDesc      Reading from thermometer 5
+awkSequence 8
+
+eDomain    4
+
+eER_Attribute 3
+aName      Therm6
+aZKey      905181324
+awkSequence 9
+
+eDomain    4
+
+eER_Attribute 3
+aName      Therm7
+aZKey      905181325
+awkSequence 10
+
+eDomain    4
+
+eER_Attribute 3
+aName      PWM0
+aZKey      905181326
+aDesc      Set PWM speed for blower 0.
+awkSequence 11
+
+eDomain    4
+
+eER_Attribute 3
+aName      CpuTemperature
+aZKey      905181401
+awkSequence 12
+
+eDomain    4
+
+eER_RelLink 3
+aName      for
+aZKey      905181387
+aCardMin   1
+aCardMax   1
+
+eER_RelType_1 4
+aZKey      905181385
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 32
+aER_DiagramE1PosY 22
+aER_DiagramE2PosX 32
+aER_DiagramE2PosY 27
+
+eER_RelLink_Other 5
+aName      has
+aZKey      905181386
+aCardMin   0
+aCardMax   m
+
+eER_Entity_Other 6
+
+eER_EntIdentifier 3
+
+eER_FactType 4
+aZKey      905181329
+
+eER_RelLinkIdentifier 5
+
+eER_Entity_Other_Identifier 6
 
 eER_FactType 4
 
@@ -637,36 +680,6 @@ eER_FactType 4
 
 eER_AttributeIdentifier 5
 
-eER_Entity 2
-aName      Base
-aZKey      905181311
-aPurpose   F
-aER_DiagramPosX 1
-aER_DiagramPosY 17
-awkSelectedAttributeForDragSort 1
-
-eER_Attribute 3
-aName      Id
-aZKey      905181312
-aNotNull   Y
-awkSequence 1
-
-eDomain    4
-
-eER_FactTypeForDelete 4
-aZKey      905181314
-
-eER_EntIdentifierForDelete 5
-aName      Id
-aZKey      905181313
-aSystemMaintained Y
-
-eER_EntIdentifier 3
-
-eER_FactType 4
-
-eER_AttributeIdentifier 5
-
 eER_RelType 2
 
 eER_RelLink_2 3
@@ -697,88 +710,88 @@ eER_RelLink_2 3
 
 eER_Entity_2 4
 
-i9         7
-i11        7
-i13        7
-i15        7
-i17        7
-i19        7
-i21        7
-i23        7
-i25        7
-i30        5
-i32        28
-i33        29
-i34        4
-i35        2
-i44        42
-i46        7
-i54        3
-i58        56
-i60        7
-i62        52
-i64        7
-i66        7
-i74        29
-i75        40
-i76        39
-i77        37
-i78        29
-i80        38
-i84        3
-i86        3
-i88        42
-i89        28
-i90        27
-i91        26
-i92        1
-i93        73
-i94        72
-i95        71
-i96        36
-i97        82
-i98        81
-i99        79
-i100       70
-i102       38
-i106       42
-i108       7
-i110       7
-i112       52
-i114       52
-i115       69
-i116       68
-i117       67
-i118       36
-i119       104
-i120       103
-i121       101
-i124       38
-i128       42
-i130       42
-i132       42
-i134       42
-i136       42
-i138       7
-i139       126
-i140       125
-i141       123
-i144       38
-i147       146
-i148       145
-i149       143
-i150       27
-i151       28
-i152       29
-i153       26
-i154       1
-i155       68
-i156       67
-i157       36
-i158       69
-i159       70
-i160       72
-i161       71
-i162       36
-i163       73
-i164       29
+i6         5
+i7         4
+i8         2
+i11        3
+i17        15
+i31        29
+i33        19
+i35        25
+i37        19
+i39        19
+i48        13
+i49        12
+i50        10
+i53        27
+i59        57
+i61        57
+i63        57
+i65        57
+i67        57
+i69        57
+i71        57
+i73        57
+i75        19
+i77        57
+i81        47
+i82        55
+i84        80
+i85        47
+i86        54
+i87        52
+i88        47
+i90        3
+i94        27
+i96        27
+i98        15
+i99        80
+i100       79
+i101       78
+i102       51
+i103       46
+i104       45
+i105       44
+i106       9
+i107       92
+i108       91
+i109       89
+i110       43
+i112       3
+i116       15
+i118       19
+i120       19
+i122       25
+i124       25
+i125       42
+i126       41
+i127       40
+i128       9
+i129       114
+i130       113
+i131       111
+i134       3
+i138       15
+i140       15
+i142       15
+i144       15
+i146       15
+i148       19
+i149       136
+i150       135
+i151       133
+i152       79
+i153       80
+i154       47
+i155       78
+i156       51
+i157       41
+i158       40
+i159       9
+i160       42
+i161       43
+i162       45
+i163       44
+i164       9
+i165       46
+i166       47

@@ -1,4 +1,4 @@
-z1000-Zeidon    CONFIGURATZZOLODO 09/20/16   23:50:49 1.0a2    
+z1000-Zeidon    CONFIGURATZZOLODO 09/29/16   21:24:22 1.0a2    
 eLOD       1
 aZKey      910225831
 aNextZKeyToAssign 910225854
@@ -230,7 +230,7 @@ aZKey      905181336
 aNotNull   Y
 
 eDomainRec 5
-aZKey      905180725
+aZKey      905180731
 aName      TemperatureUnit
 aDomainType T
 aDataType  S

@@ -1,0 +1,12 @@
+z1000-Zeidon    3762A09F TZWDVORO 09/29/16   21:05:26 1.0a2    
+eViewObjRef 1
+aZKey      929210527
+aNextZKeyToAssign 929210527
+aName      Instant
+aDesc      VOR automatically built from LOD Dialog
+
+eLOD       2
+aZKey      929210436
+aName      Instant
+aDesc      Records the status of the sensors at a particular time.
+
