@@ -8,7 +8,6 @@ apply plugin: 'war'
 
 dependencies {
     compile project(':zeidon')
-    compile 'org.scalatra:scalatra-scalate_2.11:2.3.1'
     compile 'org.scalatra:scalatra_2.11:2.3.1'
     compile 'org.scalatra:scalatra-json_2.11:2.3.1'
     compile 'org.eclipse.jetty.orbit:javax.servlet:3.0.0.v201112011016'

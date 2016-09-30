@@ -2,7 +2,6 @@ package org.deeg.utc
 
 import org.scalatra._
 import java.net.URL
-import org.scalatra.scalate.ScalateSupport
 import org.json4s.{DefaultFormats, Formats}
 import org.scalatra.json._
 import com.quinsoft.zeidon.standardoe.JavaObjectEngine
@@ -13,7 +12,6 @@ import com.quinsoft.zeidon.standardoe.IncrementalEntityFlags
 import com.quinsoft.zeidon.scala.QualBuilder
 
 class UtcScalatra extends ScalatraServlet
-                           with ScalateSupport
                            with JacksonJsonSupport
                            with CorsSupport {
 
@@ -27,8 +25,8 @@ class UtcScalatra extends ScalatraServlet
     val session = View( task ) basedOn "Session" activateEmpty()
     session.Session create()
     val reader = new ChipSensorReader
-    reader.readSensors(session)
-    task.log().info( "CpuTemperature = %s", session.Instance.CpuTemperature )
+    //reader.readSensors(session)
+    //task.log().info( "CpuTemperature = %s", session.Instance.CpuTemperature )
     
     options("/*") {
         response.setHeader("Access-Control-Allow-Methods", "POST");
