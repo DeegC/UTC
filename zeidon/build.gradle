@@ -6,8 +6,8 @@ Project name: ${project.name}
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
-    compile 'com.quinsoft.zeidon:zeidon-joe:1.4.0-SNAPSHOT'
-    compile 'com.quinsoft.zeidon:zeidon-scala:1.4.0-SNAPSHOT'
+    compile 'com.quinsoft.zeidon:zeidon-joe:1.4.1-SNAPSHOT'
+    compile 'com.quinsoft.zeidon:zeidon-scala:1.4.1-SNAPSHOT'
 }
 
 task repl(type:JavaExec) {
