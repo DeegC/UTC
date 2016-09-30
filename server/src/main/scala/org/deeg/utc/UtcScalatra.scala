@@ -23,6 +23,13 @@ class UtcScalatra extends ScalatraServlet
       new UdpServerThread( oe ).start();
     }
 
+    val task = oe.createTask("UTC")
+    val session = View( task ) basedOn "Session" activateEmpty()
+    session.Session create()
+    val reader = new ChipSensorReader
+    reader.readSensors(session)
+    task.log().info( "CpuTemperature = %s", session.Instance.CpuTemperature )
+    
     options("/*") {
         response.setHeader("Access-Control-Allow-Methods", "POST");
         response.setHeader("Access-Control-Allow-Headers", request.getHeader("Access-Control-Request-Headers"));
