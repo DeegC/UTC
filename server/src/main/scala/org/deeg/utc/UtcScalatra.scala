@@ -9,8 +9,7 @@ import com.quinsoft.zeidon.Task
 import com.quinsoft.zeidon.standardoe.IncrementalEntityFlags
 import com.quinsoft.zeidon.scala.QualBuilder
 
-class UtcScalatra extends ScalatraServlet
-                           with CorsSupport {
+class UtcScalatra extends ScalatraServlet with CorsSupport {
 
     val oe = JavaObjectEngine.getInstance()
     if ( oe.getSystemTask.readZeidonConfig("UTC", "StartUdpServer", "N" ) == "Y" ) {
@@ -25,7 +24,6 @@ class UtcScalatra extends ScalatraServlet
     options("/*") {
         response.setHeader("Access-Control-Allow-Methods", "POST");
         response.setHeader("Access-Control-Allow-Headers", request.getHeader("Access-Control-Request-Headers"));
-        response.setHeader("Content-Type", "text/json");
     }
 
     error {
