@@ -2,6 +2,7 @@
 
 #curl -G --data-urlencode 'qual={"oi": {"id":10}}' localhost:4567/
 curl -G --data-urlencode 'qual={
+  "version": "1",
   "EntitySpec" : [ {
     "EntityName" : "Configuration",
     "QualAttrib" : [ {

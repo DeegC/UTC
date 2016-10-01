@@ -2,9 +2,6 @@ package org.deeg.utc
 
 import org.scalatra._
 import java.net.URL
-import org.scalatra.scalate.ScalateSupport
-import org.json4s.{DefaultFormats, Formats}
-import org.scalatra.json._
 import com.quinsoft.zeidon.standardoe.JavaObjectEngine
 import com.quinsoft.zeidon.scala.View
 import com.quinsoft.zeidon.scala.Implicits._
@@ -13,11 +10,8 @@ import com.quinsoft.zeidon.standardoe.IncrementalEntityFlags
 import com.quinsoft.zeidon.scala.QualBuilder
 
 class UtcScalatra extends ScalatraServlet
-                           with ScalateSupport
-                           with JacksonJsonSupport
                            with CorsSupport {
 
-    protected implicit val jsonFormats: Formats = DefaultFormats
     val oe = JavaObjectEngine.getInstance()
     if ( oe.getSystemTask.readZeidonConfig("UTC", "StartUdpServer", "N" ) == "Y" ) {
       new UdpServerThread( oe ).start();
@@ -33,6 +27,7 @@ class UtcScalatra extends ScalatraServlet
     options("/*") {
         response.setHeader("Access-Control-Allow-Methods", "POST");
         response.setHeader("Access-Control-Allow-Headers", request.getHeader("Access-Control-Request-Headers"));
+        response.setHeader("Content-Type", "text/json");
     }
 
     error {
@@ -44,7 +39,7 @@ class UtcScalatra extends ScalatraServlet
 
     // Before every action runs, set the content type to be in JSON format.
     before() {
-        contentType = formats("json")
+        contentType = "text/json"
     }
 
     get("/:lod") {
@@ -108,8 +103,7 @@ class UtcScalatra extends ScalatraServlet
         oe.forTask( "UTC" ) { task =>
             val view = f( task )
             if ( view.isEmpty )
-                //NotFound( view.serializeOi.asJson.toString() )
-                NoContent
+		"{}"
             else {
                 val serialized = view.serializeOi.asJson.toString()
                 task.log().debug( serialized )

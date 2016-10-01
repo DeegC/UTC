@@ -1,7 +1,7 @@
 #!/bin/bash
 
 JETTY_RUNNER=$(find jetty -name jetty-runner*)
-UTC_WAR=$(find build -name server*.war)
+UTC_WAR=$(find build -name utc-server*.war)
 PORT=8080
 
 JETTY_DEBUG=
