@@ -4,11 +4,12 @@ import com.quinsoft.zeidon.scala.basedOn
 import com.quinsoft.zeidon.scala.View
 import com.quinsoft.zeidon.scala.Implicits._
 import sys.process._
+import com.quinsoft.zeidon.Task
 
 /**
  * Reads sensor data from a C.H.I.P.
  */
-class ChipSensorReader extends SensorReader {
+class ChipSensorReader(val task: Task) extends SensorReader {
     
   def readSensors( session: View @basedOn( "Session" ) ) = {
     session.Instant create()
@@ -18,6 +19,7 @@ class ChipSensorReader extends SensorReader {
   private def readCpuTemperature: Int = {
     val lsb = "i2cget -y -f 0 0x34 0x5f".!!
     val msb = "i2cget -y -f 0 0x34 0x5e".!!
+    task.log().info("lsb = '%s', msb = '%s'", lsb, msb, null )
     val ilsb = Integer.parseInt(lsb.substring(2,4), 16)
     val imsb = Integer.parseInt(msb.substring(2,4), 16)
     val temp = (imsb << 4) | (ilsb & 0x0f)

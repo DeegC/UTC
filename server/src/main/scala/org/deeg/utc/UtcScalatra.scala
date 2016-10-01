@@ -26,7 +26,7 @@ class UtcScalatra extends ScalatraServlet
     val task = oe.createTask("UTC")
     val session = View( task ) basedOn "Session" activateEmpty()
     session.Session create()
-    val reader = new ChipSensorReader
+    val reader = new ChipSensorReader( task )
     reader.readSensors(session)
     task.log().info( "CpuTemperature = %s", session.Instance.CpuTemperature )
     
