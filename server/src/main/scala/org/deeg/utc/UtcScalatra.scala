@@ -20,9 +20,7 @@ class UtcScalatra extends ScalatraServlet
     val task = oe.createTask("UTC")
     val session = View( task ) basedOn "Session" activateEmpty()
     session.Session create()
-    val reader = HardwareInterface.getHardwareInterface( task )
-    reader.readSensors(session)
-    task.log().info( "CpuTemperature = %s", session.Instant.CpuTemperature )
+    val hardware = HardwareInterface.getHardwareInterface( task )
     
     options("/*") {
         response.setHeader("Access-Control-Allow-Methods", "POST");

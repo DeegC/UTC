@@ -19,14 +19,15 @@
       <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
     </encoder>
 
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${java.io.tmpdir}/utc.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-      <maxHistory>5</maxHistory>
-      <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-	<maxFileSize>10MB</maxFileSize>
-      </timeBasedFileNamingAndTriggeringPolicy>
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+      <fileNamePattern>${java.io.tmpdir}/utc.%i.log</fileNamePattern>
+      <minIndex>1</minIndex>
+      <maxIndex>5</maxIndex>
     </rollingPolicy>
-    <prudent>true</prudent>
+
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <maxFileSize>5MB</maxFileSize>
+    </triggeringPolicy>
   </appender>
  
   <logger name="org.smartjava.scalatra" level="DEBUG"/>
@@ -37,7 +38,6 @@
   </logger>
 
   <root level="DEBUG">
-    <appender-ref ref="STDOUT" />
     <appender-ref ref="LOGFILE" />
   </root>
 </configuration>
