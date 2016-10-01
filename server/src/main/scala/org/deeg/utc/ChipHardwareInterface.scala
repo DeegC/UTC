@@ -7,19 +7,14 @@ import sys.process._
 import com.quinsoft.zeidon.Task
 
 /**
- * Reads sensor data from a C.H.I.P.
+ * Interface with a C.H.I.P.
  */
-class ChipSensorReader(val task: Task) extends SensorReader {
+class ChipHardwareInterface(val task: Task) extends HardwareInterface {
     
-  def readSensors( session: View @basedOn( "Session" ) ) = {
-    session.Instant create()
-    session.Instant.CpuTemperature = readCpuTemperature
-  }
-
-  private def readCpuTemperature: Int = {
+  override def readCpuTemperature: Int = {
     val lsb = "i2cget -y -f 0 0x34 0x5f".!!
     val msb = "i2cget -y -f 0 0x34 0x5e".!!
-    task.log().info("lsb = '%s', msb = '%s'", lsb, msb, null )
+    task.slog.debug( s"lsb = '$lsb', msb = '$msb'" )
     val ilsb = Integer.parseInt(lsb.substring(2,4), 16)
     val imsb = Integer.parseInt(msb.substring(2,4), 16)
     val temp = (imsb << 4) | (ilsb & 0x0f)
