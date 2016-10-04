@@ -1,4 +1,4 @@
-z1000-Zeidon    SESSION  TZZOLODO 09/30/16   22:49:44 1.0a2    
+z1000-Zeidon    SESSION  TZZOLODO 10/03/16   23:10:51 1.0a2    
 eLOD       1
 aZKey      929210658
 aNextZKeyToAssign 929210692
@@ -164,12 +164,6 @@ aNotNull   Y
 aDesc      P value for PID algorithm.
 
 eDomainRec 6
-aZKey      905181215
-aName      DateTime
-aDomainType E
-aDataType  T
-aDesc      Date/time field
-aContextRestriction N
 
 eLOD_AttributeRec 4
 aZKey      929210686
@@ -290,6 +284,12 @@ aNotNull   Y
 aDesc      Instant that this record was recorded.
 
 eDomainRec 6
+aZKey      905181215
+aName      DateTime
+aDomainType E
+aDataType  T
+aDesc      Date/time field
+aContextRestriction N
 
 eLOD_AttributeRec 4
 aZKey      929210666
@@ -731,12 +731,12 @@ aDisplayOwner N
 aTranslateNamesToLowerUnderscore Y
 
 i11        8
+i26        14
 i32        29
 i35        14
 i38        23
 i41        14
 i44        14
-i51        26
 i57        54
 i60        54
 i63        54
@@ -748,8 +748,8 @@ i78        54
 i81        14
 i84        54
 i90        5
-i93        26
-i96        26
+i93        51
+i96        51
 i99        8
 i101       1
 i102       88
@@ -757,10 +757,10 @@ i103       89
 i104       5
 i105       91
 i106       92
-i107       26
+i107       51
 i108       94
 i109       95
-i110       26
+i110       51
 i111       97
 i112       98
 i113       8
@@ -789,7 +789,7 @@ i135       22
 i136       23
 i137       24
 i138       25
-i139       26
+i139       14
 i140       27
 i141       28
 i142       29
@@ -814,7 +814,7 @@ i160       47
 i161       48
 i162       49
 i163       50
-i164       26
+i164       51
 i165       52
 i166       53
 i167       54

@@ -1,5 +1,4 @@
-include 'zeidon'
-include 'server'
+include 'zeidon', 'server'
 
 project(":zeidon").name = "utc-zeidon"
 project(":server").name = "utc-server"

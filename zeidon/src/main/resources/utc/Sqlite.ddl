@@ -19,7 +19,7 @@ CREATE TABLE configuration (
            thermometer_count                                                int                NOT NULL, 
            temperature_unit                                                 varchar( 1 )       NOT NULL, 
            record_temperatures                                              int                NULL    , 
-           pid_p                                                            datetime           NOT NULL, 
+           pid_p                                                            int                NOT NULL, 
            pid_i                                                            double             NOT NULL, 
            pid_d                                                            double             NOT NULL, 
            max_pwm                                                          int                NULL    , 

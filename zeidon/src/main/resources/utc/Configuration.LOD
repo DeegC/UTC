@@ -1,4 +1,4 @@
-z1000-Zeidon    CONFIGURATZZOLODO 09/29/16   21:24:22 1.0a2    
+z1000-Zeidon    CONFIGURATZZOLODO 10/03/16   23:10:50 1.0a2    
 eLOD       1
 aZKey      910225831
 aNextZKeyToAssign 910225854
@@ -257,12 +257,6 @@ aNotNull   Y
 aDesc      P value for PID algorithm.
 
 eDomainRec 5
-aZKey      905181215
-aName      DateTime
-aDomainType E
-aDataType  T
-aDesc      Date/time field
-aContextRestriction N
 
 eLOD_AttributeRec 3
 aZKey      910225841
@@ -518,6 +512,7 @@ i29        8
 i32        8
 i35        11
 i44        17
+i47        11
 i53        50
 i56        11
 i59        17
@@ -547,7 +542,7 @@ i87        43
 i88        17
 i89        45
 i90        46
-i91        47
+i91        11
 i92        48
 i93        49
 i94        50

@@ -1,9 +1,9 @@
-z1000-Zeidon    UTC      TZEREMDO 09/29/16   21:23:17 1.0a2    
+z1000-Zeidon    UTC      TZEREMDO 10/03/16   23:10:04 1.0a2    
 eEntpER_Model 1
 aName      UTC
 aZKey      905181310
 aNextZKeyToAssign 905181401
-aLastSyncDate 20160929212317032
+aLastSyncDate 20161003231004613
 aDesc      UDS Digital Supervisor (android)
 
 eER_Entity 2
@@ -51,7 +51,7 @@ aDesc      Config options for a monitoring session.
 aER_DiagramPosX 28
 aER_DiagramPosY 5
 aSAP_Entity 0
-awkSelectedAttributeForDragSort 1
+awkSelectedAttributeForDragSort 8
 
 eER_Attribute 3
 aName      Id
@@ -164,12 +164,6 @@ aDesc      P value for PID algorithm.
 awkSequence 8
 
 eDomain    4
-aZKey      905181215
-aDesc      Date/time field
-aName      DateTime
-aDataType  T
-aDomainType E
-aContextRestriction N
 
 eER_Attribute 3
 aName      PidI
@@ -316,6 +310,12 @@ aDesc      Instant that this record was recorded.
 awkSequence 1
 
 eDomain    4
+aZKey      905181215
+aDesc      Date/time field
+aName      DateTime
+aDataType  T
+aDomainType E
+aContextRestriction N
 
 eER_FactTypeForDelete 4
 aZKey      905181330
@@ -715,6 +715,7 @@ i7         4
 i8         2
 i11        3
 i17        15
+i27        19
 i31        29
 i33        19
 i35        25
@@ -723,7 +724,6 @@ i39        19
 i48        13
 i49        12
 i50        10
-i53        27
 i59        57
 i61        57
 i63        57
@@ -742,8 +742,8 @@ i86        54
 i87        52
 i88        47
 i90        3
-i94        27
-i96        27
+i94        53
+i96        53
 i98        15
 i99        80
 i100       79

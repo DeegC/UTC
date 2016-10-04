@@ -8,6 +8,8 @@ import com.quinsoft.zeidon.scala.Implicits._
 import com.quinsoft.zeidon.Task
 import com.quinsoft.zeidon.standardoe.IncrementalEntityFlags
 import com.quinsoft.zeidon.scala.QualBuilder
+import com.deeg.utc.zeidon._
+
 
 class UtcScalatra extends ScalatraServlet with CorsSupport {
 
@@ -16,10 +18,14 @@ class UtcScalatra extends ScalatraServlet with CorsSupport {
       new UdpServerThread( oe ).start();
     }
 
+    // --
+    // Initialize OE and Configuration
+    // --
+    
     val task = oe.createTask("UTC")
-    val session = View( task ) basedOn "Session" activateEmpty()
-    session.Session create()
     val hardware = HardwareInterface.getHardwareInterface( task )
+    val configuration = new Configuration( task )
+    configuration.createDefaultConfiguration()
     
     options("/*") {
         response.setHeader("Access-Control-Allow-Methods", "POST");
@@ -67,8 +73,9 @@ class UtcScalatra extends ScalatraServlet with CorsSupport {
     get("/:lod/:id") {
         activate { task =>
             val lodName = params( "lod" )
-            val order = View( task ) basedOn lodName
-            order.buildQual( _.root.key = params("id" ) ).readOnly.activate()
+            task.activate( lodName, qual =>
+              qual.where( _.root.key = params("id" ) ).readOnly
+            )
         }
     }
 
@@ -83,7 +90,7 @@ class UtcScalatra extends ScalatraServlet with CorsSupport {
 
             view.commit
 
-            val serialized = view.serializeOi.asJson.toString()
+            val serialized = view.serializeOi.asJson.withIncremental().toString()
             task.log().debug( serialized )
             serialized
         }
@@ -101,7 +108,7 @@ class UtcScalatra extends ScalatraServlet with CorsSupport {
             if ( view.isEmpty )
 		"{}"
             else {
-                val serialized = view.serializeOi.asJson.toString()
+                val serialized = view.serializeOi.asJson.withIncremental().toString()
                 task.log().debug( serialized )
                 serialized
             }
