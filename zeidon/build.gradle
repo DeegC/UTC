@@ -11,13 +11,17 @@ configurations {
 // In this section you declare the dependencies for your production and test code
 dependencies {
     compile( 'com.quinsoft.zeidon:zeidon-scala:1.4.1-SNAPSHOT') {
+        // Exclude some projects to keep the final .war size down.
         exclude module: 'scala-reflect'
+        exclude module: 'httpclient'
+        exclude module: 'commons-validator'
     }
 
-    compile 'org.scala-lang:scala-library:2.11.8'
-//    compile 'org.json4s:json4s-jackson_2.11:3.3.0'
+    compile( 'org.scala-lang:scala-library:2.11.8' ) {
+	exclude module: 'scala-xml_2.11'
+    }
+    
     compile 'org.xerial:sqlite-jdbc:3.14.2'
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.+'
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.+'
 
     repl 'org.scala-lang:scala-compiler:2.11.8'
