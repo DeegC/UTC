@@ -7,7 +7,7 @@ Project name: ${project.name}
 apply plugin: 'war'
 
 dependencies {
-    compile project(':utc-zeidon')
+    compile project(':utc-controller')
     compile( 'org.scalatra:scalatra_2.11:2.3.1' ) {
         exclude module: 'scala-xml_2.11'
     }
