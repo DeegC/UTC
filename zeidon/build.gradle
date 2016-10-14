@@ -49,5 +49,5 @@ val task = oe.createTask("UTC")
   classpath( sourceSets.main.runtimeClasspath, '../conf', configurations.repl )
   standardInput System.in
   args( '-i', initFile, '-usejavacp' )
-  jvmArgs( '-DSQLITE_ROOT=../sqlite', '-Djline.inputrc=~/.jline.inputrc' )
+  jvmArgs( '-DSQLITE_ROOT=../sqlite', '-Djline.inputrc=~/.jline.inputrc', '-Xdebug', '-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n' )
 }
