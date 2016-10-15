@@ -4,6 +4,10 @@ Domain logic for UTC and the Zeidon objects.
 Project name: ${project.name}
 """
 
+processResources.doLast {
+    println "This is where we generate .ts files"
+}
+
 configurations {
     repl
 }
