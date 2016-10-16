@@ -9,10 +9,11 @@ import { Configuration }   from './configuration';
 `
 })
 export class AppComponent { 
-  selectedConfiguration: Configuration = new Configuration( { 
+ selectedConfiguration: Configuration = new Configuration( { 
     Id: 100,
     Description: "Test Description",
     TargetTemperature: 160,
     ThermometerCount: 1
    } );
+
 }

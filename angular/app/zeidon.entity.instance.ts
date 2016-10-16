@@ -1,6 +1,6 @@
 export class ZeidonEntityInstance {
     // List of attributes
-    attributes = {};
+    protected attributes = {};
 
     constructor( initialize: Object ) {
         for ( let attr in initialize ) {

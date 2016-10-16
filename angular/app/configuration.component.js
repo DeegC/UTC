@@ -20,7 +20,7 @@ var ConfigurationComponent = (function () {
     ConfigurationComponent = __decorate([
         core_1.Component({
             selector: 'configuration-detail',
-            template: "\n  <div *ngIf=\"configuration\">\n    <h2>{{configuration.Description}} details!</h2>\n    <div><label>Id: </label>{{configuration.Id}}</div>\n    <div>\n      <label>name: </label>\n      <input [(ngModel)]=\"configuration.Description\" placeholder=\"Description\"/>\n    </div>\n  </div>\n"
+            template: "\n  <div *ngIf=\"configuration\">\n    <h2>{{configuration.Configuration.Description}} details!</h2>\n    <div><label>Id: </label>{{configuration.Configuration.Id}}</div>\n    <div>\n      <label>name: </label>\n      <input [(ngModel)]=\"configuration.Configuration.Description\" placeholder=\"Description\"/>\n    </div>\n  </div>\n"
         }), 
         __metadata('design:paramtypes', [])
     ], ConfigurationComponent);

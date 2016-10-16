@@ -5,11 +5,11 @@ import { Configuration } from './configuration';
   selector: 'configuration-detail',
   template: `
   <div *ngIf="configuration">
-    <h2>{{configuration.Description}} details!</h2>
-    <div><label>Id: </label>{{configuration.Id}}</div>
+    <h2>{{configuration.Configuration.Description}} details!</h2>
+    <div><label>Id: </label>{{configuration.Configuration.Id}}</div>
     <div>
       <label>name: </label>
-      <input [(ngModel)]="configuration.Description" placeholder="Description"/>
+      <input [(ngModel)]="configuration.Configuration.Description" placeholder="Description"/>
     </div>
   </div>
 `
