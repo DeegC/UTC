@@ -16,9 +16,28 @@ var AppComponent = (function () {
             Id: 100,
             Description: "Test Description",
             TargetTemperature: 160,
-            ThermometerCount: 1
+            ThermometerCount: 1,
+            ThermometerConfig: [
+                {
+                    Id: 11,
+                    Name: 'Pit',
+                    AlarmOn: false,
+                    fk_id_configuration: 100,
+                }
+            ],
         });
+        var c = this.selectedConfiguration.Configuration;
+        var t = c.ThermometerConfig;
+        var n = t.create();
+        var x = t[0];
+        x.AlarmOn;
     }
+    AppComponent.prototype.test = function () {
+        var c = this.selectedConfiguration.Configuration;
+        var t = c.ThermometerConfig;
+        var x = t[0];
+        x.AlarmOn;
+    };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'utc-app',

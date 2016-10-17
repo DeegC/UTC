@@ -9,11 +9,36 @@ import { Configuration }   from './configuration';
 `
 })
 export class AppComponent { 
- selectedConfiguration: Configuration = new Configuration( { 
-    Id: 100,
-    Description: "Test Description",
-    TargetTemperature: 160,
-    ThermometerCount: 1
-   } );
+ selectedConfiguration: Configuration;
 
+    constructor(  ) {
+      this.selectedConfiguration = new Configuration( { 
+        Id: 100,
+        Description: "Test Description",
+        TargetTemperature: 160,
+        ThermometerCount: 1,
+        ThermometerConfig: [
+          {
+            Id: 11,
+            Name: 'Pit',
+            AlarmOn: false,
+            fk_id_configuration: 100,
+          }
+        ],
+      } );
+
+     let c = this.selectedConfiguration.Configuration
+     let t = c.ThermometerConfig
+     let n = t.create()
+     let x = t[0]
+     x.AlarmOn
+      
+    }
+
+   test(): any {
+     let c = this.selectedConfiguration.Configuration
+     let t = c.ThermometerConfig
+     let x = t[0]
+     x.AlarmOn
+   }
 }

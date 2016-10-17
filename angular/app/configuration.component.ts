@@ -11,6 +11,7 @@ import { Configuration } from './configuration';
       <label>name: </label>
       <input [(ngModel)]="configuration.Configuration.Description" placeholder="Description"/>
     </div>
+    <div><label>Therm name </label>{{configuration.Configuration.ThermometerConfig[0].Name}}</div>
   </div>
 `
 })
