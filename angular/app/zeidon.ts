@@ -14,7 +14,7 @@ export class ObjectInstance {
     }
 
     protected rootEntityName(): string { throw "rootEntityName must be overridden" };
-    protected getPrototype( entityName: string ): any { throw "getPrototype must be overriden" };
+    public getPrototype( entityName: string ): any { throw "getPrototype must be overriden" };
 }
 
 export class EntityInstance {
@@ -23,7 +23,7 @@ export class EntityInstance {
 
     get attributes(): Object { throw "attributes() but be overridden" };
     get childEntities(): Object { throw "childEntities() but be overridden" };
-    protected createEmptyEntityArray() : EntityArray<EntityInstance> {
+    protected createEmptyEntityArray( oi: ObjectInstance) : EntityArray<EntityInstance> {
         throw "createEmptyEntityArray must be overridden"
     }
 
@@ -61,8 +61,7 @@ export class EntityInstance {
     protected getChildEntities( entityName: string): EntityArray<EntityInstance> {
         let entities = this.childEntityInstances[ entityName ];
         if ( entities == undefined ) {
-            entities = this.createEmptyEntityArray();
-            entities.oi = this.oi;
+            entities = this.createEmptyEntityArray( this.oi );
             this.childEntityInstances[ entityName ] = entities;
         }
 
@@ -90,6 +89,13 @@ export class EntityArray<T> extends Array<T> {
     entityPrototype : any;
     entityName: string;
     oi : ObjectInstance;
+
+    constructor( entityName: string, oi: ObjectInstance ) {
+        super()
+        this.entityName = entityName;
+        this.entityPrototype = oi.getPrototype( entityName );
+        this.oi = oi;
+    }
 
     create( initialize : Object = {} ): T {
         console.log("Creating entity " + this.entityName );

@@ -29,10 +29,8 @@ export class Configuration_Configuration extends zeidon.EntityInstance {
         };
     }
 
-    protected createEmptyEntityArray() : zeidon.EntityArray<Configuration_ThermometerConfig> {
-        let array = new zeidon.EntityArray<Configuration_ThermometerConfig>();
-        array.entityPrototype = Configuration_ThermometerConfig.prototype;
-        array.entityName = "ThermometerConfig";
+    protected createEmptyEntityArray( oi: zeidon.ObjectInstance) : zeidon.EntityArray<Configuration_ThermometerConfig> {
+        let array = new zeidon.EntityArray<Configuration_ThermometerConfig>( "ThermometerConfig", oi );
         return array;
     }
 

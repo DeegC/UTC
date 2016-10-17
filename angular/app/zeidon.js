@@ -57,7 +57,7 @@ var EntityInstance = (function () {
         configurable: true
     });
     ;
-    EntityInstance.prototype.createEmptyEntityArray = function () {
+    EntityInstance.prototype.createEmptyEntityArray = function (oi) {
         throw "createEmptyEntityArray must be overridden";
     };
     EntityInstance.prototype.setAttribute = function (attr, value, setIncrementals) {
@@ -72,8 +72,7 @@ var EntityInstance = (function () {
     EntityInstance.prototype.getChildEntities = function (entityName) {
         var entities = this.childEntityInstances[entityName];
         if (entities == undefined) {
-            entities = this.createEmptyEntityArray();
-            entities.oi = this.oi;
+            entities = this.createEmptyEntityArray(this.oi);
             this.childEntityInstances[entityName] = entities;
         }
         return entities;
@@ -98,8 +97,11 @@ exports.EntityInstance = EntityInstance;
 ;
 var EntityArray = (function (_super) {
     __extends(EntityArray, _super);
-    function EntityArray() {
-        _super.apply(this, arguments);
+    function EntityArray(entityName, oi) {
+        _super.call(this);
+        this.entityName = entityName;
+        this.entityPrototype = oi.getPrototype(entityName);
+        this.oi = oi;
     }
     EntityArray.prototype.create = function (initialize) {
         if (initialize === void 0) { initialize = {}; }

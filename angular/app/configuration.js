@@ -52,10 +52,8 @@ var Configuration_Configuration = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Configuration_Configuration.prototype.createEmptyEntityArray = function () {
-        var array = new zeidon.EntityArray();
-        array.entityPrototype = Configuration_ThermometerConfig.prototype;
-        array.entityName = "ThermometerConfig";
+    Configuration_Configuration.prototype.createEmptyEntityArray = function (oi) {
+        var array = new zeidon.EntityArray("ThermometerConfig", oi);
         return array;
     };
     Object.defineProperty(Configuration_Configuration.prototype, "Id", {
