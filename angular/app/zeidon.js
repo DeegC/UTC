@@ -4,8 +4,27 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ZeidonEntityInstance = (function () {
-    function ZeidonEntityInstance(initialize, oi) {
+var ObjectInstance = (function () {
+    function ObjectInstance(initialize) {
+        this.roots = [];
+        var root = this.createEntity(this.rootEntityName(), initialize);
+        this.roots.push(root);
+    }
+    ObjectInstance.prototype.createEntity = function (entityName, initialize) {
+        var proto = this.getPrototype(entityName);
+        var ei = Object.create(proto);
+        ei.constructor.apply(ei, [initialize, this]);
+        return ei;
+    };
+    ObjectInstance.prototype.rootEntityName = function () { throw "rootEntityName must be overridden"; };
+    ;
+    ObjectInstance.prototype.getPrototype = function (entityName) { throw "getPrototype must be overriden"; };
+    ;
+    return ObjectInstance;
+}());
+exports.ObjectInstance = ObjectInstance;
+var EntityInstance = (function () {
+    function EntityInstance(initialize, oi) {
         this.childEntityInstances = {};
         this.oi = oi;
         for (var attr in initialize) {
@@ -26,31 +45,31 @@ var ZeidonEntityInstance = (function () {
                 throw "Unknown initial value " + attr;
         }
     }
-    Object.defineProperty(ZeidonEntityInstance.prototype, "attributes", {
+    Object.defineProperty(EntityInstance.prototype, "attributes", {
         get: function () { throw "attributes() but be overridden"; },
         enumerable: true,
         configurable: true
     });
     ;
-    Object.defineProperty(ZeidonEntityInstance.prototype, "childEntities", {
+    Object.defineProperty(EntityInstance.prototype, "childEntities", {
         get: function () { throw "childEntities() but be overridden"; },
         enumerable: true,
         configurable: true
     });
     ;
-    ZeidonEntityInstance.prototype.createEmptyEntityArray = function () {
+    EntityInstance.prototype.createEmptyEntityArray = function () {
         throw "createEmptyEntityArray must be overridden";
     };
-    ZeidonEntityInstance.prototype.setAttribute = function (attr, value, setIncrementals) {
+    EntityInstance.prototype.setAttribute = function (attr, value, setIncrementals) {
         if (setIncrementals === void 0) { setIncrementals = true; }
         console.log("----setting " + attr + " to " + value);
         this["." + attr] = true;
         this["_" + attr] = value;
     };
-    ZeidonEntityInstance.prototype.getAttribute = function (attr) {
+    EntityInstance.prototype.getAttribute = function (attr) {
         return this["_" + attr];
     };
-    ZeidonEntityInstance.prototype.getChildEntities = function (entityName) {
+    EntityInstance.prototype.getChildEntities = function (entityName) {
         var entities = this.childEntityInstances[entityName];
         if (entities == undefined) {
             entities = this.createEmptyEntityArray();
@@ -59,7 +78,7 @@ var ZeidonEntityInstance = (function () {
         }
         return entities;
     };
-    ZeidonEntityInstance.prototype.toJSON = function () {
+    EntityInstance.prototype.toJSON = function () {
         console.log("json attributes = " + this.attributes);
         var json = {};
         for (var fieldName in this.attributes) {
@@ -73,9 +92,9 @@ var ZeidonEntityInstance = (function () {
         ;
         return json;
     };
-    return ZeidonEntityInstance;
+    return EntityInstance;
 }());
-exports.ZeidonEntityInstance = ZeidonEntityInstance;
+exports.EntityInstance = EntityInstance;
 ;
 var EntityArray = (function (_super) {
     __extends(EntityArray, _super);
@@ -93,4 +112,4 @@ var EntityArray = (function (_super) {
     return EntityArray;
 }(Array));
 exports.EntityArray = EntityArray;
-//# sourceMappingURL=zeidon.entity.instance.js.map
+//# sourceMappingURL=zeidon.js.map

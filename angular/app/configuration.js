@@ -4,17 +4,13 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var zeidon_object_instance_1 = require('./zeidon.object.instance');
-//import { ZeidonEntityInstance } from './zeidon.entity.instance';
-var zeidon = require('./zeidon.entity.instance');
+var zeidon = require('./zeidon');
 // Configuration LOD.
 var Configuration = (function (_super) {
     __extends(Configuration, _super);
-    function Configuration(initialize) {
-        _super.call(this, initialize);
+    function Configuration() {
+        _super.apply(this, arguments);
     }
-    Configuration.prototype.oiName = function () { return "Configuration"; };
-    ;
     Configuration.prototype.rootEntityName = function () { return "Configuration"; };
     ;
     Object.defineProperty(Configuration.prototype, "Configuration", {
@@ -28,7 +24,7 @@ var Configuration = (function (_super) {
         return prototypes[entityName];
     };
     return Configuration;
-}(zeidon_object_instance_1.ZeidonObjectInstance));
+}(zeidon.ObjectInstance));
 exports.Configuration = Configuration;
 var Configuration_Configuration = (function (_super) {
     __extends(Configuration_Configuration, _super);
@@ -103,7 +99,7 @@ var Configuration_Configuration = (function (_super) {
         configurable: true
     });
     return Configuration_Configuration;
-}(zeidon.ZeidonEntityInstance));
+}(zeidon.EntityInstance));
 exports.Configuration_Configuration = Configuration_Configuration;
 var Configuration_ThermometerConfig = (function (_super) {
     __extends(Configuration_ThermometerConfig, _super);
@@ -162,7 +158,7 @@ var Configuration_ThermometerConfig = (function (_super) {
     ;
     ;
     return Configuration_ThermometerConfig;
-}(zeidon.ZeidonEntityInstance));
+}(zeidon.EntityInstance));
 exports.Configuration_ThermometerConfig = Configuration_ThermometerConfig;
 var prototypes = {
     "Configuration": Configuration_Configuration.prototype,

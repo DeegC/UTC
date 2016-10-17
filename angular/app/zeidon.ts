@@ -1,16 +1,33 @@
-import { ZeidonObjectInstance } from './zeidon.object.instance';
+export class ObjectInstance {
+    protected roots = [];
 
-export class ZeidonEntityInstance {
-    protected oi: ZeidonObjectInstance;
+    constructor( initialize: Object ) {
+        let root = this.createEntity( this.rootEntityName(), initialize );
+        this.roots.push(root);
+    }
+
+    createEntity( entityName: string, initialize: Object ): EntityInstance {
+        let proto = this.getPrototype( entityName );
+        let ei = Object.create(proto);
+        ei.constructor.apply(ei, [initialize, this]);
+        return ei;
+    }
+
+    protected rootEntityName(): string { throw "rootEntityName must be overridden" };
+    protected getPrototype( entityName: string ): any { throw "getPrototype must be overriden" };
+}
+
+export class EntityInstance {
+    protected oi: ObjectInstance;
     private childEntityInstances = {};
 
     get attributes(): Object { throw "attributes() but be overridden" };
     get childEntities(): Object { throw "childEntities() but be overridden" };
-    protected createEmptyEntityArray() : EntityArray<ZeidonEntityInstance> {
+    protected createEmptyEntityArray() : EntityArray<EntityInstance> {
         throw "createEmptyEntityArray must be overridden"
     }
 
-    constructor( initialize: Object, oi: ZeidonObjectInstance ) {
+    constructor( initialize: Object, oi: ObjectInstance ) {
         this.oi = oi;
         for ( let attr in initialize ) {
             if ( this.attributes[attr] )
@@ -41,7 +58,7 @@ export class ZeidonEntityInstance {
         return this["_" + attr];
     }
 
-    protected getChildEntities( entityName: string): EntityArray<ZeidonEntityInstance> {
+    protected getChildEntities( entityName: string): EntityArray<EntityInstance> {
         let entities = this.childEntityInstances[ entityName ];
         if ( entities == undefined ) {
             entities = this.createEmptyEntityArray();
@@ -72,7 +89,7 @@ export class ZeidonEntityInstance {
 export class EntityArray<T> extends Array<T> {
     entityPrototype : any;
     entityName: string;
-    oi : ZeidonObjectInstance;
+    oi : ObjectInstance;
 
     create( initialize : Object = {} ): T {
         console.log("Creating entity " + this.entityName );

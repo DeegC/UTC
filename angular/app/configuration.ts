@@ -1,15 +1,7 @@
-import { ZeidonObjectInstance } from './zeidon.object.instance';
-//import { ZeidonEntityInstance } from './zeidon.entity.instance';
-import * as zeidon from './zeidon.entity.instance';
+import * as zeidon from './zeidon';
 
 // Configuration LOD.
-export class Configuration extends ZeidonObjectInstance {
-
-    constructor( initialize: Object ) {
-        super( initialize );
-    }
-
-    protected oiName(): string { return "Configuration" };
+export class Configuration extends zeidon.ObjectInstance {
     protected rootEntityName(): string { return "Configuration" };
 
     get Configuration(): Configuration_Configuration {
@@ -21,7 +13,7 @@ export class Configuration extends ZeidonObjectInstance {
     }
 }
 
-export class Configuration_Configuration extends zeidon.ZeidonEntityInstance {
+export class Configuration_Configuration extends zeidon.EntityInstance {
     get attributes() {
         return {
             Id: true,
@@ -62,7 +54,7 @@ export class Configuration_Configuration extends zeidon.ZeidonEntityInstance {
     }
 }
 
-export class Configuration_ThermometerConfig extends zeidon.ZeidonEntityInstance {
+export class Configuration_ThermometerConfig extends zeidon.EntityInstance {
     get attributes() {
         return {
             Id: true,
