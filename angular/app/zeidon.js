@@ -5,31 +5,47 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var ObjectInstance = (function () {
-    function ObjectInstance(initialize) {
-        this.roots = [];
-        var root = this.createEntity(this.rootEntityName(), initialize);
+    function ObjectInstance(initialize, options) {
+        if (initialize === void 0) { initialize = []; }
+        if (options === void 0) { options = {}; }
+        this.roots = new Array();
+        this.isUpdated = false;
+        var root = this.createEntity(this.rootEntityName(), initialize, options);
         this.roots.push(root);
     }
-    ObjectInstance.prototype.createEntity = function (entityName, initialize) {
+    ObjectInstance.prototype.createEntity = function (entityName, initialize, options) {
         var proto = this.getPrototype(entityName);
         var ei = Object.create(proto);
-        ei.constructor.apply(ei, [initialize, this]);
+        ei.constructor.apply(ei, [initialize, this, options]);
         return ei;
     };
     ObjectInstance.prototype.rootEntityName = function () { throw "rootEntityName must be overridden"; };
     ;
     ObjectInstance.prototype.getPrototype = function (entityName) { throw "getPrototype must be overriden"; };
     ;
+    ObjectInstance.prototype.toJSON = function () {
+        console.log("JSON for Configuration OI");
+        var jarray = [];
+        for (var _i = 0, _a = this.roots; _i < _a.length; _i++) {
+            var root = _a[_i];
+            jarray.push(root.toJSON());
+        }
+        ;
+        var json = {};
+        json[this.rootEntityName()] = jarray;
+        return json;
+    };
     return ObjectInstance;
 }());
 exports.ObjectInstance = ObjectInstance;
 var EntityInstance = (function () {
-    function EntityInstance(initialize, oi) {
+    function EntityInstance(initialize, oi, options) {
+        if (options === void 0) { options = {}; }
         this.childEntityInstances = {};
         this.oi = oi;
         for (var attr in initialize) {
             if (this.attributes[attr])
-                this.setAttribute(attr, initialize[attr]);
+                this.setAttribute(attr, initialize[attr], options);
             else if (this.childEntities[attr]) {
                 var init = initialize[attr];
                 if (!(init.constructor === Array)) {
@@ -57,11 +73,14 @@ var EntityInstance = (function () {
         configurable: true
     });
     ;
-    EntityInstance.prototype.setAttribute = function (attr, value, setIncrementals) {
-        if (setIncrementals === void 0) { setIncrementals = true; }
+    EntityInstance.prototype.setAttribute = function (attr, value, options) {
+        if (options === void 0) { options = {}; }
         console.log("----setting " + attr + " to " + value);
+        var internalName = "_" + attr;
+        if (this[internalName] == value)
+            return;
         this["." + attr] = true;
-        this["_" + attr] = value;
+        this[internalName] = value;
     };
     EntityInstance.prototype.getAttribute = function (attr) {
         return this["_" + attr];
@@ -86,6 +105,19 @@ var EntityInstance = (function () {
             }
         }
         ;
+        for (var entityName in this.childEntities) {
+            console.log("json entity = " + entityName);
+            var entities = this.getChildEntities(entityName);
+            if (entities.length == 0)
+                continue;
+            var entityInfo = this.childEntities[entityName];
+            if (entityInfo.cardMax == 1) {
+                json[entityName] = entities[0].toJSON();
+            }
+            else {
+                json[entityName] = entities.map(function (ei) { return ei.toJSON(); });
+            }
+        }
         return json;
     };
     return EntityInstance;

@@ -1,20 +1,34 @@
 export class ObjectInstance {
-    protected roots = [];
+    protected roots = new Array<EntityInstance>();
+    public isUpdated = false;
 
-    constructor( initialize: Object ) {
-        let root = this.createEntity( this.rootEntityName(), initialize );
+    constructor( initialize: Object = [], options: Object = {} ) {
+        let root = this.createEntity( this.rootEntityName(), initialize, options );
         this.roots.push(root);
     }
 
-    createEntity( entityName: string, initialize: Object ): EntityInstance {
+    createEntity( entityName: string, initialize: Object, options: Object ): EntityInstance {
         let proto = this.getPrototype( entityName );
         let ei = Object.create(proto);
-        ei.constructor.apply(ei, [initialize, this]);
+        ei.constructor.apply(ei, [initialize, this, options]);
         return ei;
     }
 
     protected rootEntityName(): string { throw "rootEntityName must be overridden" };
     public getPrototype( entityName: string ): any { throw "getPrototype must be overriden" };
+
+    public toJSON(): Object {
+        console.log("JSON for Configuration OI" );
+
+        let jarray = []; 
+        for ( let root of this.roots ) {
+            jarray.push( root.toJSON() );
+        };
+
+        let json = {};
+        json[ this.rootEntityName() ] = jarray;
+        return json;
+    }
 }
 
 export class EntityInstance {
@@ -24,11 +38,11 @@ export class EntityInstance {
     get attributes(): Object { throw "attributes() but be overridden" };
     get childEntities(): Object { throw "childEntities() but be overridden" };
 
-    constructor( initialize: Object, oi: ObjectInstance ) {
+    constructor( initialize: Object, oi: ObjectInstance, options: Object = {} ) {
         this.oi = oi;
         for ( let attr in initialize ) {
             if ( this.attributes[attr] )
-                this.setAttribute( attr, initialize[attr]);
+                this.setAttribute( attr, initialize[attr], options);
             else
             if ( this.childEntities[attr] ) {
                 let init = initialize[attr];
@@ -45,10 +59,14 @@ export class EntityInstance {
         }
     }
 
-    protected setAttribute( attr: string, value: any, setIncrementals = true ) {
+    protected setAttribute( attr: string, value: any, options: Object = {} ) {
         console.log("----setting " + attr + " to " + value);
+        let internalName = "_" + attr;
+        if ( this[ internalName ] == value )
+            return;
+
         this[ "." + attr ] = true;
-        this[ "_" + attr ] = value;
+        this[ internalName ] = value;
     }
 
     protected getAttribute( attr: string ): any {
@@ -77,6 +95,20 @@ export class EntityInstance {
                 }
             }
         };
+
+        for ( let entityName in this.childEntities ) {
+            console.log("json entity = " + entityName );
+            let entities = this.getChildEntities( entityName ); 
+            if ( entities.length == 0 )
+                continue;
+
+            let entityInfo = this.childEntities[ entityName ];
+            if ( entityInfo.cardMax == 1 ) {
+                json[ entityName ] =  entities[0].toJSON();
+            } else {
+                json[ entityName ] = entities.map( ei => ei.toJSON() );
+            }
+        }
 
         return json;
     }

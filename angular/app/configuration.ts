@@ -5,7 +5,7 @@ export class Configuration extends zeidon.ObjectInstance {
     protected rootEntityName(): string { return "Configuration" };
 
     get Configuration(): Configuration_Configuration {
-        return this.roots[0];
+        return this.roots[0] as Configuration_Configuration;
     }
 
     getPrototype( entityName: string ): any {
@@ -16,16 +16,16 @@ export class Configuration extends zeidon.ObjectInstance {
 export class Configuration_Configuration extends zeidon.EntityInstance {
     get attributes() {
         return {
-            Id: true,
-            Description: true,
-            TargetTemperature: true,
-            ThermometerCount: true
+            Id: {},
+            Description: {},
+            TargetTemperature: {},
+            ThermometerCount: {}
         };
     }
 
     get childEntities() {
         return {
-            ThermometerConfig: true
+            ThermometerConfig: { cardMax: undefined }
         };
     }
 
@@ -50,10 +50,10 @@ export class Configuration_Configuration extends zeidon.EntityInstance {
 export class Configuration_ThermometerConfig extends zeidon.EntityInstance {
     get attributes() {
         return {
-            Id: true,
-            Name: true,
-            AlarmOn: true,
-            fk_id_configuration: true
+            Id: {},
+            Name: {},
+            AlarmOn: {},
+            fk_id_configuration: {}
         };
     }
 
@@ -67,8 +67,8 @@ export class Configuration_ThermometerConfig extends zeidon.EntityInstance {
     get Name(): string { return this.getAttribute("Name") };
     set Name( value: string ) { this.setAttribute( "Name", value ) };
     
-    get AlarmOn(): string { return this.getAttribute("AlarmOn") };
-    set AlarmOn( value: string ) { this.setAttribute( "AlarmOn", value ) };
+    get AlarmOn(): boolean { return this.getAttribute("AlarmOn") };
+    set AlarmOn( value: boolean ) { this.setAttribute( "AlarmOn", value ) };
     
     get fk_id_configuration(): string { return this.getAttribute("fk_id_configuration") };
     set fk_id_configuration( value: string ) { this.setAttribute( "fk_id_configuration", value ) };

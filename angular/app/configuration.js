@@ -34,10 +34,10 @@ var Configuration_Configuration = (function (_super) {
     Object.defineProperty(Configuration_Configuration.prototype, "attributes", {
         get: function () {
             return {
-                Id: true,
-                Description: true,
-                TargetTemperature: true,
-                ThermometerCount: true
+                Id: {},
+                Description: {},
+                TargetTemperature: {},
+                ThermometerCount: {}
             };
         },
         enumerable: true,
@@ -46,7 +46,7 @@ var Configuration_Configuration = (function (_super) {
     Object.defineProperty(Configuration_Configuration.prototype, "childEntities", {
         get: function () {
             return {
-                ThermometerConfig: true
+                ThermometerConfig: { cardMax: undefined }
             };
         },
         enumerable: true,
@@ -103,10 +103,10 @@ var Configuration_ThermometerConfig = (function (_super) {
     Object.defineProperty(Configuration_ThermometerConfig.prototype, "attributes", {
         get: function () {
             return {
-                Id: true,
-                Name: true,
-                AlarmOn: true,
-                fk_id_configuration: true
+                Id: {},
+                Name: {},
+                AlarmOn: {},
+                fk_id_configuration: {}
             };
         },
         enumerable: true,

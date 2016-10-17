@@ -26,11 +26,10 @@ var AppComponent = (function () {
                 }
             ],
         });
-        var c = this.selectedConfiguration.Configuration;
-        var t = c.ThermometerConfig;
-        var n = t.create();
-        var x = t[0];
-        x.AlarmOn;
+        var tc = this.selectedConfiguration.Configuration.ThermometerConfig.create();
+        tc.AlarmOn = false;
+        tc.Name = "TestName";
+        console.log(JSON.stringify(this.selectedConfiguration, null, 2));
     }
     AppComponent = __decorate([
         core_1.Component({
