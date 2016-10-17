@@ -23,9 +23,6 @@ export class EntityInstance {
 
     get attributes(): Object { throw "attributes() but be overridden" };
     get childEntities(): Object { throw "childEntities() but be overridden" };
-    protected createEmptyEntityArray( oi: ObjectInstance) : EntityArray<EntityInstance> {
-        throw "createEmptyEntityArray must be overridden"
-    }
 
     constructor( initialize: Object, oi: ObjectInstance ) {
         this.oi = oi;
@@ -61,7 +58,7 @@ export class EntityInstance {
     protected getChildEntities( entityName: string): EntityArray<EntityInstance> {
         let entities = this.childEntityInstances[ entityName ];
         if ( entities == undefined ) {
-            entities = this.createEmptyEntityArray( this.oi );
+            entities = new EntityArray<EntityInstance>( entityName, this.oi );
             this.childEntityInstances[ entityName ] = entities;
         }
 

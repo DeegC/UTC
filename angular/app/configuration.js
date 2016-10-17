@@ -52,10 +52,6 @@ var Configuration_Configuration = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Configuration_Configuration.prototype.createEmptyEntityArray = function (oi) {
-        var array = new zeidon.EntityArray("ThermometerConfig", oi);
-        return array;
-    };
     Object.defineProperty(Configuration_Configuration.prototype, "Id", {
         get: function () { return this.getAttribute("Id"); },
         set: function (value) { this.setAttribute("Id", value); },

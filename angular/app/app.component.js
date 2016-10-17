@@ -32,12 +32,6 @@ var AppComponent = (function () {
         var x = t[0];
         x.AlarmOn;
     }
-    AppComponent.prototype.test = function () {
-        var c = this.selectedConfiguration.Configuration;
-        var t = c.ThermometerConfig;
-        var x = t[0];
-        x.AlarmOn;
-    };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'utc-app',

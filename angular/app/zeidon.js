@@ -57,9 +57,6 @@ var EntityInstance = (function () {
         configurable: true
     });
     ;
-    EntityInstance.prototype.createEmptyEntityArray = function (oi) {
-        throw "createEmptyEntityArray must be overridden";
-    };
     EntityInstance.prototype.setAttribute = function (attr, value, setIncrementals) {
         if (setIncrementals === void 0) { setIncrementals = true; }
         console.log("----setting " + attr + " to " + value);
@@ -72,7 +69,7 @@ var EntityInstance = (function () {
     EntityInstance.prototype.getChildEntities = function (entityName) {
         var entities = this.childEntityInstances[entityName];
         if (entities == undefined) {
-            entities = this.createEmptyEntityArray(this.oi);
+            entities = new EntityArray(entityName, this.oi);
             this.childEntityInstances[entityName] = entities;
         }
         return entities;

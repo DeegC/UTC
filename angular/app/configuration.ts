@@ -29,11 +29,6 @@ export class Configuration_Configuration extends zeidon.EntityInstance {
         };
     }
 
-    protected createEmptyEntityArray( oi: zeidon.ObjectInstance) : zeidon.EntityArray<Configuration_ThermometerConfig> {
-        let array = new zeidon.EntityArray<Configuration_ThermometerConfig>( "ThermometerConfig", oi );
-        return array;
-    }
-
     get Id(): string { return this.getAttribute("Id") };
     set Id( value: string ) { this.setAttribute( "Id", value ) };
 

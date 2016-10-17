@@ -32,13 +32,5 @@ export class AppComponent {
      let n = t.create()
      let x = t[0]
      x.AlarmOn
-      
     }
-
-   test(): any {
-     let c = this.selectedConfiguration.Configuration
-     let t = c.ThermometerConfig
-     let x = t[0]
-     x.AlarmOn
-   }
 }
