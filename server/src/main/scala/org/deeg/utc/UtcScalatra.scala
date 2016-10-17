@@ -101,6 +101,18 @@ class UtcScalatra extends ScalatraServlet with CorsSupport {
             params("string" )
         }
     }
+
+    get("/xod/:name") {
+        oe.forTask( "UTC" ) { task =>
+	    // Load the XOD
+            val xod = task.deserializeOi.setLodDef("ZeidonSystem", "tzzoxodo").fromAppResource( params("name" ) + ".XOD").activateFirst
+
+	    // Return it as JSON
+            val serialized = xod.serializeOi.asJson.toString()
+            task.log().debug( serialized )
+            serialized
+        }
+    }
     
     private def activate( f: (Task) => View ) = {
         oe.forTask( "UTC" ) { task =>
