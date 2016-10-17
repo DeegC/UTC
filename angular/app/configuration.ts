@@ -22,10 +22,6 @@ export class Configuration extends ZeidonObjectInstance {
 }
 
 export class Configuration_Configuration extends zeidon.ZeidonEntityInstance {
-    constructor( initialize: Object, oi: ZeidonObjectInstance ) {
-        super( initialize, oi );
-    }
-
     get attributes() {
         return {
             Id: true,
@@ -67,11 +63,6 @@ export class Configuration_Configuration extends zeidon.ZeidonEntityInstance {
 }
 
 export class Configuration_ThermometerConfig extends zeidon.ZeidonEntityInstance {
-
-    constructor( initialize: Object, oi: ZeidonObjectInstance ) {
-        super( initialize, oi );
-    }
-
     get attributes() {
         return {
             Id: true,

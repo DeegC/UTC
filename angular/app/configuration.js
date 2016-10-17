@@ -32,8 +32,8 @@ var Configuration = (function (_super) {
 exports.Configuration = Configuration;
 var Configuration_Configuration = (function (_super) {
     __extends(Configuration_Configuration, _super);
-    function Configuration_Configuration(initialize, oi) {
-        _super.call(this, initialize, oi);
+    function Configuration_Configuration() {
+        _super.apply(this, arguments);
     }
     Object.defineProperty(Configuration_Configuration.prototype, "attributes", {
         get: function () {
@@ -107,8 +107,8 @@ var Configuration_Configuration = (function (_super) {
 exports.Configuration_Configuration = Configuration_Configuration;
 var Configuration_ThermometerConfig = (function (_super) {
     __extends(Configuration_ThermometerConfig, _super);
-    function Configuration_ThermometerConfig(initialize, oi) {
-        _super.call(this, initialize, oi);
+    function Configuration_ThermometerConfig() {
+        _super.apply(this, arguments);
     }
     Object.defineProperty(Configuration_ThermometerConfig.prototype, "attributes", {
         get: function () {
