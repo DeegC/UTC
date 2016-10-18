@@ -30,6 +30,10 @@ var Configuration = (function (_super) {
     Configuration.prototype.getPrototype = function (entityName) {
         return entityPrototypes[entityName];
     };
+    Configuration.prototype.getEntityAttributes = function (entityName) {
+        return entityAttributes[entityName];
+    };
+    ;
     return Configuration;
 }(zeidon.ObjectInstance));
 exports.Configuration = Configuration;
@@ -38,18 +42,12 @@ var Configuration_Configuration = (function (_super) {
     function Configuration_Configuration() {
         _super.apply(this, arguments);
     }
-    Object.defineProperty(Configuration_Configuration.prototype, "attributes", {
-        get: function () {
-            return {
-                Id: {},
-                Description: {},
-                TargetTemperature: {},
-                ThermometerCount: {}
-            };
-        },
+    Object.defineProperty(Configuration_Configuration.prototype, "entityName", {
+        get: function () { return "Configuration"; },
         enumerable: true,
         configurable: true
     });
+    ;
     Object.defineProperty(Configuration_Configuration.prototype, "childEntities", {
         get: function () {
             return {
@@ -107,18 +105,12 @@ var Configuration_ThermometerConfig = (function (_super) {
     function Configuration_ThermometerConfig() {
         _super.apply(this, arguments);
     }
-    Object.defineProperty(Configuration_ThermometerConfig.prototype, "attributes", {
-        get: function () {
-            return {
-                Id: {},
-                Name: {},
-                AlarmOn: {},
-                fk_id_configuration: {}
-            };
-        },
+    Object.defineProperty(Configuration_ThermometerConfig.prototype, "entityName", {
+        get: function () { return "ThermometerConfig"; },
         enumerable: true,
         configurable: true
     });
+    ;
     Object.defineProperty(Configuration_ThermometerConfig.prototype, "childEntities", {
         get: function () {
             return {};
@@ -164,5 +156,19 @@ exports.Configuration_ThermometerConfig = Configuration_ThermometerConfig;
 var entityPrototypes = {
     "Configuration": Configuration_Configuration.prototype,
     "ThermometerConfig": Configuration_ThermometerConfig.prototype
+};
+var entityAttributes = {
+    Configuration: {
+        Id: {},
+        Description: {},
+        TargetTemperature: {},
+        ThermometerCount: {}
+    },
+    ThermometerConfig: {
+        Id: {},
+        Name: {},
+        AlarmOn: {},
+        fk_id_configuration: {}
+    }
 };
 //# sourceMappingURL=configuration.js.map

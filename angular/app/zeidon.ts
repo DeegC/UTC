@@ -19,6 +19,7 @@ export class ObjectInstance {
 
     protected rootEntityName(): string { throw "rootEntityName must be overridden" };
     public getPrototype( entityName: string ): any { throw "getPrototype must be overriden" };
+    public getEntityAttributes( entityName: string ): any { throw "getEntityAttributes must be overriden" };
 
     public toJSON(): Object {
         console.log("JSON for Configuration OI" );
@@ -38,8 +39,12 @@ export class EntityInstance {
     protected oi: ObjectInstance;
     private childEntityInstances = {};
 
-    get attributes(): Object { throw "attributes() but be overridden" };
-    get childEntities(): Object { throw "childEntities() but be overridden" };
+    protected get childEntities(): Object { throw "childEntities() but be overridden" };
+    protected get entityName(): string { throw "entityName() but be overridden" };
+
+    get attributes(): Object {
+        return this.oi.getEntityAttributes( this.entityName );   
+    }
 
     constructor( initialize: Object, oi: ObjectInstance, options: Object = {} ) {
         this.oi = oi;
@@ -63,7 +68,6 @@ export class EntityInstance {
     }
 
     protected setAttribute( attr: string, value: any, options: Object = {} ) {
-        console.log("----setting " + attr + " to " + value);
         let internalName = "_" + attr;
         if ( this[ internalName ] == value )
             return;
@@ -130,6 +134,9 @@ export class EntityArray<T> extends Array<T> {
         this.oi = oi;
     }
 
+    /** 
+     * Create an entity at the end of the current entity list.
+     */
     create( initialize : Object = {} ): T {
         console.log("Creating entity " + this.entityName );
         let ei = Object.create( this.entityPrototype );

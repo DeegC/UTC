@@ -27,6 +27,8 @@ var ObjectInstance = (function () {
     ;
     ObjectInstance.prototype.getPrototype = function (entityName) { throw "getPrototype must be overriden"; };
     ;
+    ObjectInstance.prototype.getEntityAttributes = function (entityName) { throw "getEntityAttributes must be overriden"; };
+    ;
     ObjectInstance.prototype.toJSON = function () {
         console.log("JSON for Configuration OI");
         var jarray = [];
@@ -65,21 +67,27 @@ var EntityInstance = (function () {
                 throw "Unknown initial value " + attr;
         }
     }
-    Object.defineProperty(EntityInstance.prototype, "attributes", {
-        get: function () { throw "attributes() but be overridden"; },
-        enumerable: true,
-        configurable: true
-    });
-    ;
     Object.defineProperty(EntityInstance.prototype, "childEntities", {
         get: function () { throw "childEntities() but be overridden"; },
         enumerable: true,
         configurable: true
     });
     ;
+    Object.defineProperty(EntityInstance.prototype, "entityName", {
+        get: function () { throw "entityName() but be overridden"; },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(EntityInstance.prototype, "attributes", {
+        get: function () {
+            return this.oi.getEntityAttributes(this.entityName);
+        },
+        enumerable: true,
+        configurable: true
+    });
     EntityInstance.prototype.setAttribute = function (attr, value, options) {
         if (options === void 0) { options = {}; }
-        console.log("----setting " + attr + " to " + value);
         var internalName = "_" + attr;
         if (this[internalName] == value)
             return;
@@ -137,6 +145,9 @@ var EntityArray = (function (_super) {
         this.entityPrototype = oi.getPrototype(entityName);
         this.oi = oi;
     }
+    /**
+     * Create an entity at the end of the current entity list.
+     */
     EntityArray.prototype.create = function (initialize) {
         if (initialize === void 0) { initialize = {}; }
         console.log("Creating entity " + this.entityName);
