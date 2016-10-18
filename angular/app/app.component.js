@@ -26,6 +26,20 @@ var AppComponent = (function () {
                 }
             ],
         });
+        this.configurationList = new configuration_1.Configuration([
+            {
+                Id: 100,
+                Description: "Configuration 1",
+                TargetTemperature: 225,
+                ThermometerCount: 1
+            },
+            {
+                Id: 101,
+                Description: "Configuration 2",
+                TargetTemperature: 200,
+                ThermometerCount: 1
+            }
+        ]);
         var tc = this.selectedConfiguration.Configuration$.ThermometerConfig.create();
         tc.AlarmOn = false;
         tc.Name = "TestName";
@@ -34,7 +48,8 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'utc-app',
-            template: "\n  <h1>Universal Temperature Controller</h1>\n  <configuration-detail [configuration]=\"selectedConfiguration\"></configuration-detail>\n"
+            template: "\n  <h1>Universal Temperature Controller</h1>\n  <ul class=\"configurations\">\n    <li *ngFor=\"let config of configurationList.Configuration\">\n      <span cass=\"badge\">{{config.Id}}</span> {{config.Description}}\n    </li>\n  </ul>\n  <configuration-detail [configuration]=\"selectedConfiguration\"></configuration-detail>\n",
+            styleUrls: ['app/configuration.css']
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);
