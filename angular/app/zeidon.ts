@@ -1,17 +1,20 @@
 export class ObjectInstance {
-    protected roots = new Array<EntityInstance>();
+    protected roots : EntityArray<EntityInstance>;
     public isUpdated = false;
 
-    constructor( initialize: Object = [], options: Object = {} ) {
-        let root = this.createEntity( this.rootEntityName(), initialize, options );
-        this.roots.push(root);
-    }
+    constructor( initialize = undefined, options: Object = {} ) {
+        if ( typeof initialize == "string" ) {
+            initialize = JSON.parse( initialize );
+        }
 
-    createEntity( entityName: string, initialize: Object, options: Object ): EntityInstance {
-        let proto = this.getPrototype( entityName );
-        let ei = Object.create(proto);
-        ei.constructor.apply(ei, [initialize, this, options]);
-        return ei;
+        this.roots = new EntityArray<EntityInstance>( this.rootEntityName(), this );
+        if ( initialize.constructor === Array ) {
+            for ( let i of initialize ) {
+                this.roots.create( i );
+            }
+        } else {
+            this.roots.create( initialize );
+        }
     }
 
     protected rootEntityName(): string { throw "rootEntityName must be overridden" };
@@ -47,7 +50,7 @@ export class EntityInstance {
             if ( this.childEntities[attr] ) {
                 let init = initialize[attr];
                 if ( ! ( init.constructor === Array ) ) {
-                    init = [ init ];  // If it's not an arry, wrap it.
+                    init = [ init ];  // If it's not an array, wrap it.
                 }
                 for ( let o of init ) {
                     let array = this.getChildEntities( attr );
@@ -118,6 +121,7 @@ export class EntityArray<T> extends Array<T> {
     entityPrototype : any;
     entityName: string;
     oi : ObjectInstance;
+    currentlySelected = 0;
 
     constructor( entityName: string, oi: ObjectInstance ) {
         super()
@@ -129,8 +133,13 @@ export class EntityArray<T> extends Array<T> {
     create( initialize : Object = {} ): T {
         console.log("Creating entity " + this.entityName );
         let ei = Object.create( this.entityPrototype );
-        ei.constructor.apply(ei, [ initialize] );
+        ei.constructor.apply(ei, [ initialize, this.oi] );
         this.push(ei);
+        this.currentlySelected = this.length - 1;
         return ei;
+    }
+
+    selected(): T {
+        return this[this.currentlySelected];
     }
 }

@@ -4,12 +4,16 @@ import * as zeidon from './zeidon';
 export class Configuration extends zeidon.ObjectInstance {
     protected rootEntityName(): string { return "Configuration" };
 
-    get Configuration(): Configuration_Configuration {
-        return this.roots[0] as Configuration_Configuration;
+    get Configuration(): zeidon.EntityArray<Configuration_Configuration> {
+        return this.roots as zeidon.EntityArray<Configuration_Configuration>;
+    }
+
+    get Configuration$(): Configuration_Configuration {
+        return this.roots.selected() as Configuration_Configuration;
     }
 
     getPrototype( entityName: string ): any {
-        return prototypes[ entityName ];
+        return entityPrototypes[ entityName ];
     }
 }
 
@@ -74,7 +78,7 @@ export class Configuration_ThermometerConfig extends zeidon.EntityInstance {
     set fk_id_configuration( value: string ) { this.setAttribute( "fk_id_configuration", value ) };
 }
 
-const prototypes = {
+const entityPrototypes = {
     "Configuration": Configuration_Configuration.prototype,
     "ThermometerConfig": Configuration_ThermometerConfig.prototype
 }

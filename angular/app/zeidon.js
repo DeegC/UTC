@@ -6,19 +6,23 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var ObjectInstance = (function () {
     function ObjectInstance(initialize, options) {
-        if (initialize === void 0) { initialize = []; }
+        if (initialize === void 0) { initialize = undefined; }
         if (options === void 0) { options = {}; }
-        this.roots = new Array();
         this.isUpdated = false;
-        var root = this.createEntity(this.rootEntityName(), initialize, options);
-        this.roots.push(root);
+        if (typeof initialize == "string") {
+            initialize = JSON.parse(initialize);
+        }
+        this.roots = new EntityArray(this.rootEntityName(), this);
+        if (initialize.constructor === Array) {
+            for (var _i = 0, initialize_1 = initialize; _i < initialize_1.length; _i++) {
+                var i = initialize_1[_i];
+                this.roots.create(i);
+            }
+        }
+        else {
+            this.roots.create(initialize);
+        }
     }
-    ObjectInstance.prototype.createEntity = function (entityName, initialize, options) {
-        var proto = this.getPrototype(entityName);
-        var ei = Object.create(proto);
-        ei.constructor.apply(ei, [initialize, this, options]);
-        return ei;
-    };
     ObjectInstance.prototype.rootEntityName = function () { throw "rootEntityName must be overridden"; };
     ;
     ObjectInstance.prototype.getPrototype = function (entityName) { throw "getPrototype must be overriden"; };
@@ -49,7 +53,7 @@ var EntityInstance = (function () {
             else if (this.childEntities[attr]) {
                 var init = initialize[attr];
                 if (!(init.constructor === Array)) {
-                    init = [init]; // If it's not an arry, wrap it.
+                    init = [init]; // If it's not an array, wrap it.
                 }
                 for (var _i = 0, init_1 = init; _i < init_1.length; _i++) {
                     var o = init_1[_i];
@@ -128,6 +132,7 @@ var EntityArray = (function (_super) {
     __extends(EntityArray, _super);
     function EntityArray(entityName, oi) {
         _super.call(this);
+        this.currentlySelected = 0;
         this.entityName = entityName;
         this.entityPrototype = oi.getPrototype(entityName);
         this.oi = oi;
@@ -136,9 +141,13 @@ var EntityArray = (function (_super) {
         if (initialize === void 0) { initialize = {}; }
         console.log("Creating entity " + this.entityName);
         var ei = Object.create(this.entityPrototype);
-        ei.constructor.apply(ei, [initialize]);
+        ei.constructor.apply(ei, [initialize, this.oi]);
         this.push(ei);
+        this.currentlySelected = this.length - 1;
         return ei;
+    };
+    EntityArray.prototype.selected = function () {
+        return this[this.currentlySelected];
     };
     return EntityArray;
 }(Array));

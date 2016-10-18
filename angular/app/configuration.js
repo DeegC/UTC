@@ -15,13 +15,20 @@ var Configuration = (function (_super) {
     ;
     Object.defineProperty(Configuration.prototype, "Configuration", {
         get: function () {
-            return this.roots[0];
+            return this.roots;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Configuration.prototype, "Configuration$", {
+        get: function () {
+            return this.roots.selected();
         },
         enumerable: true,
         configurable: true
     });
     Configuration.prototype.getPrototype = function (entityName) {
-        return prototypes[entityName];
+        return entityPrototypes[entityName];
     };
     return Configuration;
 }(zeidon.ObjectInstance));
@@ -154,7 +161,7 @@ var Configuration_ThermometerConfig = (function (_super) {
     return Configuration_ThermometerConfig;
 }(zeidon.EntityInstance));
 exports.Configuration_ThermometerConfig = Configuration_ThermometerConfig;
-var prototypes = {
+var entityPrototypes = {
     "Configuration": Configuration_Configuration.prototype,
     "ThermometerConfig": Configuration_ThermometerConfig.prototype
 };

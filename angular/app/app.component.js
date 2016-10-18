@@ -26,7 +26,7 @@ var AppComponent = (function () {
                 }
             ],
         });
-        var tc = this.selectedConfiguration.Configuration.ThermometerConfig.create();
+        var tc = this.selectedConfiguration.Configuration$.ThermometerConfig.create();
         tc.AlarmOn = false;
         tc.Name = "TestName";
         console.log(JSON.stringify(this.selectedConfiguration, null, 2));
@@ -34,7 +34,7 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'utc-app',
-            template: "\n  <h1>My First Angular App</h1>\n  <configuration-detail [configuration]=\"selectedConfiguration\"></configuration-detail>\n"
+            template: "\n  <h1>Universal Temperature Controller</h1>\n  <configuration-detail [configuration]=\"selectedConfiguration\"></configuration-detail>\n"
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);

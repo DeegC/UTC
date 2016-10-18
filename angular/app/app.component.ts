@@ -4,12 +4,13 @@ import { Configuration } from './configuration';
 @Component({
     selector: 'utc-app',
     template: `
-  <h1>My First Angular App</h1>
+  <h1>Universal Temperature Controller</h1>
   <configuration-detail [configuration]="selectedConfiguration"></configuration-detail>
 `
 })
 export class AppComponent {
     selectedConfiguration: Configuration;
+    configurationList: Configuration;
 
     constructor() {
         this.selectedConfiguration = new Configuration({
@@ -28,7 +29,7 @@ export class AppComponent {
         });
 
 
-        let tc = this.selectedConfiguration.Configuration.ThermometerConfig.create();
+        let tc = this.selectedConfiguration.Configuration$.ThermometerConfig.create();
         tc.AlarmOn = false;
         tc.Name = "TestName";
         console.log(JSON.stringify(this.selectedConfiguration, null, 2));
