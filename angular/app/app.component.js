@@ -12,20 +12,6 @@ var core_1 = require('@angular/core');
 var configuration_1 = require('./configuration');
 var AppComponent = (function () {
     function AppComponent() {
-        this.selectedConfiguration = new configuration_1.Configuration({
-            Id: 100,
-            Description: "Test Description",
-            TargetTemperature: 160,
-            ThermometerCount: 1,
-            ThermometerConfig: [
-                {
-                    Id: 11,
-                    Name: 'Pit',
-                    AlarmOn: false,
-                    fk_id_configuration: 100,
-                }
-            ],
-        });
         this.configurationList = new configuration_1.Configuration([
             {
                 Id: 100,
@@ -40,15 +26,31 @@ var AppComponent = (function () {
                 ThermometerCount: 1
             }
         ]);
-        var tc = this.selectedConfiguration.Configuration$.ThermometerConfig.create();
+    }
+    AppComponent.prototype.onSelect = function (config) {
+        this.selectedConfigOi = new configuration_1.Configuration({
+            Id: config.Id,
+            Description: "Test Description",
+            TargetTemperature: 160,
+            ThermometerCount: 1,
+            ThermometerConfig: [
+                {
+                    Id: 11,
+                    Name: 'Pit',
+                    AlarmOn: false,
+                    fk_id_configuration: 100,
+                }
+            ],
+        });
+        var tc = this.selectedConfigOi.Configuration$.ThermometerConfig.create();
         tc.AlarmOn = false;
         tc.Name = "TestName";
-        console.log(JSON.stringify(this.selectedConfiguration, null, 2));
-    }
+        console.log(JSON.stringify(this.selectedConfigOi, null, 2));
+    };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'utc-app',
-            template: "\n  <h1>Universal Temperature Controller</h1>\n  <ul class=\"configurations\">\n    <li *ngFor=\"let config of configurationList.Configuration\">\n      <span cass=\"badge\">{{config.Id}}</span> {{config.Description}}\n    </li>\n  </ul>\n  <configuration-detail [configuration]=\"selectedConfiguration\"></configuration-detail>\n",
+            template: "\n  <h1>Universal Temperature Controller</h1>\n  <ul class=\"configurations\">\n    <li *ngFor=\"let config of configurationList.Configuration\" \n         [class.selected]=\"selectedConfigOi && selectedConfigOi.Configuration$.Id == config.Id\"\n         (click)=\"onSelect(config)\">\n      <span class=\"badge\">{{config.Id}}</span> {{config.Description}}\n    </li>\n  </ul>\n  <configuration-detail [configuration]=\"selectedConfigOi\"></configuration-detail>\n",
             styleUrls: ['app/configuration.css']
         }), 
         __metadata('design:paramtypes', [])
