@@ -121,7 +121,7 @@ export class EntityInstance {
     }
 };
 
-export class EntityArray<T> extends Array<T> {
+export class EntityArray<EntityInstance> extends Array<EntityInstance> {
     entityPrototype : any;
     entityName: string;
     oi : ObjectInstance;
@@ -137,7 +137,7 @@ export class EntityArray<T> extends Array<T> {
     /** 
      * Create an entity at the end of the current entity list.
      */
-    create( initialize : Object = {} ): T {
+    create( initialize : Object = {} ): EntityInstance {
         console.log("Creating entity " + this.entityName );
         let ei = Object.create( this.entityPrototype );
         ei.constructor.apply(ei, [ initialize, this.oi] );
@@ -146,7 +146,7 @@ export class EntityArray<T> extends Array<T> {
         return ei;
     }
 
-    selected(): T {
+    selected(): EntityInstance {
         return this[this.currentlySelected];
     }
 }
