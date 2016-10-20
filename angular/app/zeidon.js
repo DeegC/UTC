@@ -27,7 +27,11 @@ var ObjectInstance = (function () {
     ;
     ObjectInstance.prototype.getPrototype = function (entityName) { throw "getPrototype must be overriden"; };
     ;
-    ObjectInstance.prototype.getEntityAttributes = function (entityName) { throw "getEntityAttributes must be overriden"; };
+    ObjectInstance.prototype.getLodDef = function () { throw "getLodDef must be overridden"; };
+    ;
+    ObjectInstance.prototype.getEntityAttributes = function (entityName) {
+        this.getLodDef().entities[entityName].attributes;
+    };
     ;
     ObjectInstance.prototype.toJSON = function () {
         console.log("JSON for Configuration OI");
@@ -50,16 +54,16 @@ var EntityInstance = (function () {
         this.childEntityInstances = {};
         this.oi = oi;
         for (var attr in initialize) {
-            if (this.attributes[attr])
+            if (this.attributeDefs[attr])
                 this.setAttribute(attr, initialize[attr], options);
-            else if (this.childEntities[attr]) {
+            else if (this.entityDef.childEntities[attr]) {
                 var init = initialize[attr];
                 if (!(init.constructor === Array)) {
                     init = [init]; // If it's not an array, wrap it.
                 }
                 for (var _i = 0, init_1 = init; _i < init_1.length; _i++) {
                     var o = init_1[_i];
-                    var array = this.getChildEntities(attr);
+                    var array = this.getChildEntityArray(attr);
                     array.create(o);
                 }
             }
@@ -67,21 +71,22 @@ var EntityInstance = (function () {
                 throw "Unknown initial value " + attr;
         }
     }
-    Object.defineProperty(EntityInstance.prototype, "childEntities", {
-        get: function () { throw "childEntities() but be overridden"; },
-        enumerable: true,
-        configurable: true
-    });
-    ;
     Object.defineProperty(EntityInstance.prototype, "entityName", {
         get: function () { throw "entityName() but be overridden"; },
         enumerable: true,
         configurable: true
     });
     ;
-    Object.defineProperty(EntityInstance.prototype, "attributes", {
+    Object.defineProperty(EntityInstance.prototype, "entityDef", {
         get: function () {
-            return this.oi.getEntityAttributes(this.entityName);
+            return this.oi.getLodDef().entities[this.entityName];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(EntityInstance.prototype, "attributeDefs", {
+        get: function () {
+            return this.entityDef.attributes;
         },
         enumerable: true,
         configurable: true
@@ -97,7 +102,7 @@ var EntityInstance = (function () {
     EntityInstance.prototype.getAttribute = function (attr) {
         return this["_" + attr];
     };
-    EntityInstance.prototype.getChildEntities = function (entityName) {
+    EntityInstance.prototype.getChildEntityArray = function (entityName) {
         var entities = this.childEntityInstances[entityName];
         if (entities == undefined) {
             entities = new EntityArray(entityName, this.oi);
@@ -106,23 +111,22 @@ var EntityInstance = (function () {
         return entities;
     };
     EntityInstance.prototype.toJSON = function () {
-        console.log("json attributes = " + this.attributes);
         var json = {};
-        for (var fieldName in this.attributes) {
-            if (this["_" + fieldName] || this["." + fieldName]) {
-                json[fieldName] = this["_" + fieldName];
-                if (this["." + fieldName]) {
-                    json["." + fieldName] = this["." + fieldName];
+        for (var attrName in this.attributeDefs) {
+            if (this["_" + attrName] || this["." + attrName]) {
+                json[attrName] = this["_" + attrName];
+                if (this["." + attrName]) {
+                    json["." + attrName] = this["." + attrName];
                 }
             }
         }
         ;
-        for (var entityName in this.childEntities) {
+        for (var entityName in this.entityDef.childEntities) {
             console.log("json entity = " + entityName);
-            var entities = this.getChildEntities(entityName);
+            var entities = this.getChildEntityArray(entityName);
             if (entities.length == 0)
                 continue;
-            var entityInfo = this.childEntities[entityName];
+            var entityInfo = this.entityDef.childEntities[entityName];
             if (entityInfo.cardMax == 1) {
                 json[entityName] = entities[0].toJSON();
             }
@@ -156,6 +160,14 @@ var EntityArray = (function (_super) {
         this.push(ei);
         this.currentlySelected = this.length - 1;
         return ei;
+    };
+    EntityArray.prototype.delete = function (index) {
+        var entityDef = this.oi.getLodDef().entities[this.entityName];
+        if (index == undefined)
+            index = this.currentlySelected;
+        if (!this.hiddenEntities)
+            this.hiddenEntities = new Array();
+        this.hiddenEntities.push(this[index]);
     };
     EntityArray.prototype.selected = function () {
         return this[this.currentlySelected];

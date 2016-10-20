@@ -30,8 +30,8 @@ var Configuration = (function (_super) {
     Configuration.prototype.getPrototype = function (entityName) {
         return entityPrototypes[entityName];
     };
-    Configuration.prototype.getEntityAttributes = function (entityName) {
-        return entityAttributes[entityName];
+    Configuration.prototype.getLodDef = function () {
+        return CONFIGURATION_LODDEF;
     };
     ;
     return Configuration;
@@ -48,15 +48,6 @@ var Configuration_Configuration = (function (_super) {
         configurable: true
     });
     ;
-    Object.defineProperty(Configuration_Configuration.prototype, "childEntities", {
-        get: function () {
-            return {
-                ThermometerConfig: { cardMax: undefined }
-            };
-        },
-        enumerable: true,
-        configurable: true
-    });
     Object.defineProperty(Configuration_Configuration.prototype, "Id", {
         get: function () { return this.getAttribute("Id"); },
         set: function (value) { this.setAttribute("Id", value); },
@@ -91,7 +82,7 @@ var Configuration_Configuration = (function (_super) {
     ;
     Object.defineProperty(Configuration_Configuration.prototype, "ThermometerConfig", {
         get: function () {
-            var entities = this.getChildEntities("ThermometerConfig");
+            var entities = this.getChildEntityArray("ThermometerConfig");
             return entities;
         },
         enumerable: true,
@@ -111,13 +102,6 @@ var Configuration_ThermometerConfig = (function (_super) {
         configurable: true
     });
     ;
-    Object.defineProperty(Configuration_ThermometerConfig.prototype, "childEntities", {
-        get: function () {
-            return {};
-        },
-        enumerable: true,
-        configurable: true
-    });
     Object.defineProperty(Configuration_ThermometerConfig.prototype, "Id", {
         get: function () { return this.getAttribute("Id"); },
         set: function (value) { this.setAttribute("Id", value); },
@@ -154,21 +138,36 @@ var Configuration_ThermometerConfig = (function (_super) {
 }(zeidon.EntityInstance));
 exports.Configuration_ThermometerConfig = Configuration_ThermometerConfig;
 var entityPrototypes = {
-    "Configuration": Configuration_Configuration.prototype,
-    "ThermometerConfig": Configuration_ThermometerConfig.prototype
+    Configuration: Configuration_Configuration.prototype,
+    ThermometerConfig: Configuration_ThermometerConfig.prototype
 };
-var entityAttributes = {
-    Configuration: {
-        Id: {},
-        Description: {},
-        TargetTemperature: {},
-        ThermometerCount: {}
-    },
-    ThermometerConfig: {
-        Id: {},
-        Name: {},
-        AlarmOn: {},
-        fk_id_configuration: {}
-    }
+var CONFIGURATION_LODDEF = {
+    name: "Configuration",
+    entities: {
+        Configuration: {
+            name: "Configuration",
+            create: true,
+            cardMax: undefined,
+            childEntities: { ThermometerConfig: {} },
+            attributes: {
+                Id: {},
+                Description: {},
+                TargetTemperature: {},
+                ThermometerCount: {}
+            }
+        },
+        ThermometerConfig: {
+            name: "ThermometerConfig",
+            create: true,
+            cardMax: Number.MAX_SAFE_INTEGER,
+            childEntities: {},
+            attributes: {
+                Id: {},
+                Name: {},
+                AlarmOn: {},
+                fk_id_configuration: {}
+            }
+        }
+    } // entities
 };
 //# sourceMappingURL=configuration.js.map

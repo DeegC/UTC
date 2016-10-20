@@ -19,7 +19,11 @@ export class ObjectInstance {
 
     protected rootEntityName(): string { throw "rootEntityName must be overridden" };
     public getPrototype( entityName: string ): any { throw "getPrototype must be overriden" };
-    public getEntityAttributes( entityName: string ): any { throw "getEntityAttributes must be overriden" };
+    public getLodDef(): any { throw "getLodDef must be overridden" };
+
+    public getEntityAttributes( entityName: string ): any { 
+        this.getLodDef().entities[ entityName ].attributes;
+    };
 
     public toJSON(): Object {
         console.log("JSON for Configuration OI" );
@@ -36,29 +40,32 @@ export class ObjectInstance {
 }
 
 export class EntityInstance {
-    protected oi: ObjectInstance;
+    public oi: ObjectInstance;
     private childEntityInstances = {};
 
-    protected get childEntities(): Object { throw "childEntities() but be overridden" };
-    protected get entityName(): string { throw "entityName() but be overridden" };
+    public get entityName(): string { throw "entityName() but be overridden" };
 
-    get attributes(): Object {
-        return this.oi.getEntityAttributes( this.entityName );   
+    public get entityDef(): any {
+        return this.oi.getLodDef().entities[ this.entityName ];
+    }
+
+    public get attributeDefs(): Object {
+        return this.entityDef.attributes;
     }
 
     constructor( initialize: Object, oi: ObjectInstance, options: Object = {} ) {
         this.oi = oi;
         for ( let attr in initialize ) {
-            if ( this.attributes[attr] )
+            if ( this.attributeDefs[attr] )
                 this.setAttribute( attr, initialize[attr], options);
             else
-            if ( this.childEntities[attr] ) {
+            if ( this.entityDef.childEntities[attr] ) {
                 let init = initialize[attr];
                 if ( ! ( init.constructor === Array ) ) {
                     init = [ init ];  // If it's not an array, wrap it.
                 }
                 for ( let o of init ) {
-                    let array = this.getChildEntities( attr );
+                    let array = this.getChildEntityArray( attr );
                     array.create( o );
                 }
             }
@@ -80,7 +87,7 @@ export class EntityInstance {
         return this["_" + attr];
     }
 
-    protected getChildEntities( entityName: string): EntityArray<EntityInstance> {
+    protected getChildEntityArray( entityName: string): EntityArray<EntityInstance> {
         let entities = this.childEntityInstances[ entityName ];
         if ( entities == undefined ) {
             entities = new EntityArray<EntityInstance>( entityName, this.oi );
@@ -91,25 +98,23 @@ export class EntityInstance {
     }
 
     public toJSON(): Object {
-        console.log("json attributes = " + this.attributes);
-
         let json = {};
-        for ( let fieldName in this.attributes ) {
-            if (this["_" + fieldName] || this["." + fieldName]) {
-                json[fieldName] = this["_" + fieldName];
-                if (this["." + fieldName]) {
-                    json["." + fieldName] = this["." + fieldName];
+        for ( let attrName in this.attributeDefs ) {
+            if (this["_" + attrName] || this["." + attrName]) {
+                json[attrName] = this["_" + attrName];
+                if (this["." + attrName]) {
+                    json["." + attrName] = this["." + attrName];
                 }
             }
         };
 
-        for ( let entityName in this.childEntities ) {
+        for ( let entityName in this.entityDef.childEntities ) {
             console.log("json entity = " + entityName );
-            let entities = this.getChildEntities( entityName ); 
+            let entities = this.getChildEntityArray( entityName ); 
             if ( entities.length == 0 )
                 continue;
 
-            let entityInfo = this.childEntities[ entityName ];
+            let entityInfo = this.entityDef.childEntities[ entityName ];
             if ( entityInfo.cardMax == 1 ) {
                 json[ entityName ] =  entities[0].toJSON();
             } else {
@@ -122,6 +127,7 @@ export class EntityInstance {
 };
 
 export class EntityArray<EntityInstance> extends Array<EntityInstance> {
+    hiddenEntities : Array<EntityInstance>;
     entityPrototype : any;
     entityName: string;
     oi : ObjectInstance;
@@ -144,6 +150,18 @@ export class EntityArray<EntityInstance> extends Array<EntityInstance> {
         this.push(ei);
         this.currentlySelected = this.length - 1;
         return ei;
+    }
+
+    delete( index? : number ) {
+        let entityDef = this.oi.getLodDef().entities[ this.entityName ];
+
+        if ( index == undefined )
+            index = this.currentlySelected;
+
+        if ( ! this.hiddenEntities )
+            this.hiddenEntities = new Array<EntityInstance>();
+
+        this.hiddenEntities.push( this[ index ] );
     }
 
     selected(): EntityInstance {

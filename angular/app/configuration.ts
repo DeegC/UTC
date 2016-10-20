@@ -16,18 +16,13 @@ export class Configuration extends zeidon.ObjectInstance {
         return entityPrototypes[entityName];
     }
 
-    public getEntityAttributes(entityName: string): any {
-        return entityAttributes[ entityName ];
+    public getLodDef() {
+        return CONFIGURATION_LODDEF;
     };
 }
 
 export class Configuration_Configuration extends zeidon.EntityInstance {
-    protected get entityName(): string { return "Configuration" };
-    protected get childEntities() {
-        return {
-            ThermometerConfig: { cardMax: undefined }
-        };
-    }
+    public get entityName(): string { return "Configuration" };
 
     get Id(): string { return this.getAttribute("Id") };
     set Id(value: string) { this.setAttribute("Id", value) };
@@ -42,16 +37,13 @@ export class Configuration_Configuration extends zeidon.EntityInstance {
     set ThermometerCount(value: string) { this.setAttribute("ThermometerCount", value) };
 
     get ThermometerConfig(): zeidon.EntityArray<Configuration_ThermometerConfig> {
-        let entities = this.getChildEntities("ThermometerConfig")
+        let entities = this.getChildEntityArray("ThermometerConfig")
         return entities as zeidon.EntityArray<Configuration_ThermometerConfig>;
     }
 }
 
 export class Configuration_ThermometerConfig extends zeidon.EntityInstance {
-    protected get entityName(): string { return "ThermometerConfig" };
-    protected get childEntities() {
-        return {};
-    }
+    public get entityName(): string { return "ThermometerConfig" };
 
     get Id(): string { return this.getAttribute("Id") };
     set Id(value: string) { this.setAttribute("Id", value) };
@@ -67,21 +59,36 @@ export class Configuration_ThermometerConfig extends zeidon.EntityInstance {
 }
 
 const entityPrototypes = {
-    "Configuration": Configuration_Configuration.prototype,
-    "ThermometerConfig": Configuration_ThermometerConfig.prototype
+    Configuration: Configuration_Configuration.prototype,
+    ThermometerConfig: Configuration_ThermometerConfig.prototype
 }
 
-const entityAttributes = {
-    Configuration: {
-        Id: {},
-        Description: {},
-        TargetTemperature: {},
-        ThermometerCount: {}
-    },
-    ThermometerConfig: {
-        Id: {},
-        Name: {},
-        AlarmOn: {},
-        fk_id_configuration: {}
-    }
+const CONFIGURATION_LODDEF = {
+    name: "Configuration",
+    entities: {
+        Configuration: {
+            name: "Configuration",
+            create: true,
+            cardMax: undefined,
+            childEntities: { ThermometerConfig: {} },
+            attributes: {
+                Id: {},
+                Description: {},
+                TargetTemperature: {},
+                ThermometerCount: {}
+            }
+        },
+        ThermometerConfig: {
+            name: "ThermometerConfig",
+            create: true,
+            cardMax: Number.MAX_SAFE_INTEGER,
+            childEntities: {},
+            attributes: {
+                Id: {},
+                Name: {},
+                AlarmOn: {},
+                fk_id_configuration: {}
+            }
+        }
+    } // entities
 }
