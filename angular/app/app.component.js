@@ -10,23 +10,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var configuration_1 = require('./configuration');
+var rest_service_1 = require('./rest.service');
 var AppComponent = (function () {
-    function AppComponent() {
-        this.configurationList = new configuration_1.Configuration([
-            {
-                Id: 100,
-                Description: "Configuration 1",
-                TargetTemperature: 225,
-                ThermometerCount: 1
-            },
-            {
-                Id: 101,
-                Description: "Configuration 2",
-                TargetTemperature: 200,
-                ThermometerCount: 1
-            }
-        ]);
+    function AppComponent(restService) {
+        this.restService = restService;
     }
+    AppComponent.prototype.ngOnInit = function () {
+        this.getConfigurationList();
+    };
+    AppComponent.prototype.getConfigurationList = function () {
+        var _this = this;
+        this.restService.getConfigurationList().then(function (configList) {
+            _this.configurationList = configList;
+        });
+    };
     AppComponent.prototype.onSelect = function (config) {
         this.selectedConfigOi = new configuration_1.Configuration({
             Id: config.Id,
@@ -50,10 +47,11 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'utc-app',
-            template: "\n  <h1>Universal Temperature Controller</h1>\n  <ul class=\"configurations\">\n    <li *ngFor=\"let config of configurationList.Configuration\" \n         [class.selected]=\"selectedConfigOi && selectedConfigOi.Configuration$.Id == config.Id\"\n         (click)=\"onSelect(config)\">\n      <span class=\"badge\">{{config.Id}}</span> {{config.Description}}\n    </li>\n  </ul>\n  <configuration-detail [configuration]=\"selectedConfigOi\"></configuration-detail>\n",
-            styleUrls: ['app/configuration.css']
+            template: "\n  <h1>Universal Temperature Controller</h1>\n  <div *ngIf=\"configurationList\">\n    <ul class=\"configurations\">\n        <li *ngFor=\"let config of configurationList.Configuration\" \n            [class.selected]=\"selectedConfigOi && selectedConfigOi.Configuration$.Id == config.Id\"\n            (click)=\"onSelect(config)\">\n        <span class=\"badge\">{{config.Id}}</span> {{config.Description}}\n        </li>\n    </ul>\n  </div>\n  <configuration-detail [configuration]=\"selectedConfigOi\"></configuration-detail>\n",
+            styleUrls: ['app/configuration.css'],
+            providers: [rest_service_1.RestService]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [rest_service_1.RestService])
     ], AppComponent);
     return AppComponent;
 }());
