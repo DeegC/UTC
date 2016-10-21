@@ -12,14 +12,38 @@ var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var forms_1 = require('@angular/forms');
 var app_component_1 = require('./app.component');
+var configuration_list_component_1 = require('./configuration-list.component');
 var configuration_component_1 = require('./configuration.component');
+var rest_service_1 = require('./rest.service');
+var session_component_1 = require('./session.component');
+var router_1 = require('@angular/router');
 var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule],
-            declarations: [app_component_1.AppComponent, configuration_component_1.ConfigurationComponent],
+            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule,
+                router_1.RouterModule.forRoot([
+                    {
+                        path: '',
+                        redirectTo: '/dashboard',
+                        pathMatch: 'full'
+                    },
+                    {
+                        path: 'configlist',
+                        component: configuration_list_component_1.ConfigurationListComponent
+                    },
+                    {
+                        path: 'session',
+                        component: session_component_1.SessionComponent
+                    }
+                ])
+            ],
+            declarations: [app_component_1.AppComponent,
+                configuration_list_component_1.ConfigurationListComponent,
+                configuration_component_1.ConfigurationComponent,
+                session_component_1.SessionComponent],
+            providers: [rest_service_1.RestService],
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])
