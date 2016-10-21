@@ -1,19 +1,23 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
+import { RouterModule }   from '@angular/router';
+import { HttpModule }    from '@angular/http';
+
 import { AppComponent }   from './app.component';
 import { ConfigurationListComponent }   from './configuration-list.component';
 import { ConfigurationComponent }   from './configuration.component';
 import { RestService }   from './rest.service';
 import { SessionComponent }   from './session.component';
-import { RouterModule }   from '@angular/router';
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule,
+  imports:      [ BrowserModule, 
+                  FormsModule,
+                  HttpModule,
                   RouterModule.forRoot([
                     {
                       path: '',
-                      redirectTo: '/dashboard',
+                      redirectTo: '/configlist',
                       pathMatch: 'full'
                     },
                     {

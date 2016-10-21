@@ -28,7 +28,7 @@ class UtcScalatra extends ScalatraServlet with CorsSupport {
     configuration.createDefaultConfiguration()
     
     options("/*") {
-        response.setHeader("Access-Control-Allow-Methods", "POST");
+        //response.setHeader("Access-Control-Allow-Methods", "GET,POST");
         response.setHeader("Access-Control-Allow-Headers", request.getHeader("Access-Control-Request-Headers"));
     }
 

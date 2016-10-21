@@ -9,12 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var http_1 = require('@angular/http');
+require('rxjs/add/operator/toPromise');
 var configuration_1 = require('./configuration');
 var RestService = (function () {
-    function RestService() {
+    function RestService(http) {
+        this.http = http;
     }
     RestService.prototype.getConfigurationList = function () {
-        return Promise.resolve(new configuration_1.Configuration([
+        var _this = this;
+        return this.http.get('http://localhost:8080/utc/Configuration')
+            .toPromise()
+            .then(function (response) { return _this.parseResponse(response); })
+            .catch(this.handleError);
+    };
+    RestService.prototype.parseResponse = function (response) {
+        var data = response.json().OIs;
+        var conf = new configuration_1.Configuration(data);
+        return new configuration_1.Configuration([
             {
                 Id: 100,
                 Description: "Configuration 1",
@@ -27,11 +39,14 @@ var RestService = (function () {
                 TargetTemperature: 200,
                 ThermometerCount: 1
             }
-        ]));
+        ]);
+    };
+    RestService.prototype.handleError = function () {
+        console.log("There was an error");
     };
     RestService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [http_1.Http])
     ], RestService);
     return RestService;
 }());

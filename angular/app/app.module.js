@@ -11,22 +11,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var forms_1 = require('@angular/forms');
+var router_1 = require('@angular/router');
+var http_1 = require('@angular/http');
 var app_component_1 = require('./app.component');
 var configuration_list_component_1 = require('./configuration-list.component');
 var configuration_component_1 = require('./configuration.component');
 var rest_service_1 = require('./rest.service');
 var session_component_1 = require('./session.component');
-var router_1 = require('@angular/router');
 var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule,
+            imports: [platform_browser_1.BrowserModule,
+                forms_1.FormsModule,
+                http_1.HttpModule,
                 router_1.RouterModule.forRoot([
                     {
                         path: '',
-                        redirectTo: '/dashboard',
+                        redirectTo: '/configlist',
                         pathMatch: 'full'
                     },
                     {
