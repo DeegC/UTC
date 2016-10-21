@@ -1,3 +1,11 @@
+export class Application {
+    lodDefs : Object;
+
+    constructor( lodDefs: Object ) {
+        this.lodDefs = lodDefs;
+    }
+}
+
 export class ObjectInstance {
     protected roots : EntityArray<EntityInstance>;
     public isUpdated = false;
@@ -8,6 +16,13 @@ export class ObjectInstance {
         }
 
         this.roots = new EntityArray<EntityInstance>( this.rootEntityName(), this );
+        if ( initialize.OIs ) {
+            // TODO: Someday we should handle multiple return OIs for for now
+            // we'll assume just one and hardcode '[0]'.
+            for ( let i of initialize.OIs[0][ this.rootEntityName() ] ) {
+                this.roots.create( i );
+            }
+        } else
         if ( initialize.constructor === Array ) {
             for ( let i of initialize ) {
                 this.roots.create( i );
@@ -70,7 +85,11 @@ export class EntityInstance {
                 }
             }
             else
-                throw "Unknown initial value " + attr;
+            if ( attr == ".meta" ) {
+                // Do nothing for now.
+            }
+            else
+                throw `Unknown attribute ${attr} for entity ${this.entityName}`;
         }
     }
 

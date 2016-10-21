@@ -71,13 +71,18 @@ class UtcScalatra extends ScalatraServlet with CorsSupport {
     }
 
     get("/:lod/:id") {
-        activate { task =>
+        oe.forTask( "UTC" ) { task =>
             val lodName = params( "lod" )
-            task.activate( lodName, qual =>
-              qual.where( _.root.key = params("id" ) ).readOnly
-            )
+            val view = task.activate( lodName, qb => {
+	        qb.where( _.root.key = params( "id" ) ) 
+            })
+
+            val serialized = view.serializeOi.asJson.withIncremental().toString()
+            task.log().debug( serialized )
+            serialized
         }
     }
+
 
     post("/:lod") {
         oe.forTask( "UTC" ) { task =>

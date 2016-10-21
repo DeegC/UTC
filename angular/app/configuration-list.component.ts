@@ -37,25 +37,9 @@ export class ConfigurationListComponent implements OnInit {
     }    
 
     onSelect(config: any): void {
-        this.selectedConfigOi = new Configuration({
-            Id: config.Id,
-            Description: "Test Description",
-            TargetTemperature: 160,
-            ThermometerCount: 1,
-            ThermometerConfig: [
-                {
-                    Id: 11,
-                    Name: 'Pit',
-                    AlarmOn: false,
-                    fk_id_configuration: 100,
-                }
-            ],
-        });
-
-        let tc = this.selectedConfigOi.Configuration$.ThermometerConfig.create();
-        tc.AlarmOn = false;
-        tc.Name = "TestName";
-        console.log(JSON.stringify(this.selectedConfigOi, null, 2));
+        this.restService.getConfiguration( config.Id ).then( configOi => {
+            this.selectedConfigOi = configOi; 
+        } );
     }
     
 }

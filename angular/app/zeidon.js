@@ -4,6 +4,13 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var Application = (function () {
+    function Application(lodDefs) {
+        this.lodDefs = lodDefs;
+    }
+    return Application;
+}());
+exports.Application = Application;
 var ObjectInstance = (function () {
     function ObjectInstance(initialize, options) {
         if (initialize === void 0) { initialize = undefined; }
@@ -13,9 +20,17 @@ var ObjectInstance = (function () {
             initialize = JSON.parse(initialize);
         }
         this.roots = new EntityArray(this.rootEntityName(), this);
-        if (initialize.constructor === Array) {
-            for (var _i = 0, initialize_1 = initialize; _i < initialize_1.length; _i++) {
-                var i = initialize_1[_i];
+        if (initialize.OIs) {
+            // TODO: Someday we should handle multiple return OIs for for now
+            // we'll assume just one and hardcode '[0]'.
+            for (var _i = 0, _a = initialize.OIs[0][this.rootEntityName()]; _i < _a.length; _i++) {
+                var i = _a[_i];
+                this.roots.create(i);
+            }
+        }
+        else if (initialize.constructor === Array) {
+            for (var _b = 0, initialize_1 = initialize; _b < initialize_1.length; _b++) {
+                var i = initialize_1[_b];
                 this.roots.create(i);
             }
         }
@@ -67,8 +82,10 @@ var EntityInstance = (function () {
                     array.create(o);
                 }
             }
+            else if (attr == ".meta") {
+            }
             else
-                throw "Unknown initial value " + attr;
+                throw "Unknown attribute " + attr + " for entity " + this.entityName;
         }
     }
     Object.defineProperty(EntityInstance.prototype, "entityName", {

@@ -7,19 +7,27 @@ import { Configuration } from './configuration';
 
 @Injectable()
 export class RestService {
-
+    restUrl = 'http://localhost:8080/utc';
     constructor(private http: Http) { }
     
     getConfigurationList(): Promise<Configuration>{
-        return this.http.get('http://localhost:8080/utc/Configuration')
+        return this.http.get(`${this.restUrl}/Configuration`)
                 .toPromise()
-                .then(response => this.parseResponse( response ) )
+                .then(response => this.parseConfigurationResponse( response ) )
                 .catch(this.handleError);
     }
 
-    parseResponse( response ): Configuration {
-        let data = response.json().OIs;
-        let conf = new Configuration( data );        
+    getConfiguration( id: number ): Promise<Configuration>{
+        return this.http.get(`${this.restUrl}/Configuration/${id}`)
+                .toPromise()
+                .then(response => this.parseConfigurationResponse( response ) )
+                .catch(this.handleError);
+    }
+
+    parseConfigurationResponse( response ): Configuration {
+        let data = response.json();
+        return new Configuration( data );
+/*                
         return new Configuration( [
             {
                 Id: 100,
@@ -34,9 +42,10 @@ export class RestService {
                 ThermometerCount: 1
             }
         ]);
+*/        
     }
 
-    handleError() {
-        console.log("There was an error" );
+    handleError( e ) {
+        console.log("There was an error: " + e );
     }
 }

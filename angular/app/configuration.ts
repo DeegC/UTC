@@ -13,11 +13,11 @@ export class Configuration extends zeidon.ObjectInstance {
     }
 
     getPrototype(entityName: string): any {
-        return entityPrototypes[entityName];
+        return ConfigurationEntityPrototypes[entityName];
     }
 
     public getLodDef() {
-        return CONFIGURATION_LODDEF;
+        return Configuration_LodDef;
     };
 }
 
@@ -53,17 +53,14 @@ export class Configuration_ThermometerConfig extends zeidon.EntityInstance {
 
     get AlarmOn(): boolean { return this.getAttribute("AlarmOn") };
     set AlarmOn(value: boolean) { this.setAttribute("AlarmOn", value) };
-
-    get fk_id_configuration(): string { return this.getAttribute("fk_id_configuration") };
-    set fk_id_configuration(value: string) { this.setAttribute("fk_id_configuration", value) };
 }
 
-const entityPrototypes = {
+const ConfigurationEntityPrototypes = {
     Configuration: Configuration_Configuration.prototype,
     ThermometerConfig: Configuration_ThermometerConfig.prototype
 }
 
-const CONFIGURATION_LODDEF = {
+export const Configuration_LodDef = {
     name: "Configuration",
     entities: {
         Configuration: {
@@ -75,6 +72,15 @@ const CONFIGURATION_LODDEF = {
                 Id: {},
                 Description: {},
                 TargetTemperature: {},
+                TemperatureUnit: {},
+                RecordTemperatures: {},
+                PidP: {},
+                PidI: {},
+                PidD: {},
+                MaxPWM: {},
+                TweetOn: {},
+                TweetPeriodInMinutes: {},
+                PwmFrequency: {},
                 ThermometerCount: {}
             }
         },

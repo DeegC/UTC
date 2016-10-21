@@ -28,10 +28,10 @@ var Configuration = (function (_super) {
         configurable: true
     });
     Configuration.prototype.getPrototype = function (entityName) {
-        return entityPrototypes[entityName];
+        return ConfigurationEntityPrototypes[entityName];
     };
     Configuration.prototype.getLodDef = function () {
-        return CONFIGURATION_LODDEF;
+        return exports.Configuration_LodDef;
     };
     ;
     return Configuration;
@@ -126,22 +126,14 @@ var Configuration_ThermometerConfig = (function (_super) {
     });
     ;
     ;
-    Object.defineProperty(Configuration_ThermometerConfig.prototype, "fk_id_configuration", {
-        get: function () { return this.getAttribute("fk_id_configuration"); },
-        set: function (value) { this.setAttribute("fk_id_configuration", value); },
-        enumerable: true,
-        configurable: true
-    });
-    ;
-    ;
     return Configuration_ThermometerConfig;
 }(zeidon.EntityInstance));
 exports.Configuration_ThermometerConfig = Configuration_ThermometerConfig;
-var entityPrototypes = {
+var ConfigurationEntityPrototypes = {
     Configuration: Configuration_Configuration.prototype,
     ThermometerConfig: Configuration_ThermometerConfig.prototype
 };
-var CONFIGURATION_LODDEF = {
+exports.Configuration_LodDef = {
     name: "Configuration",
     entities: {
         Configuration: {
@@ -153,6 +145,15 @@ var CONFIGURATION_LODDEF = {
                 Id: {},
                 Description: {},
                 TargetTemperature: {},
+                TemperatureUnit: {},
+                RecordTemperatures: {},
+                PidP: {},
+                PidI: {},
+                PidD: {},
+                MaxPWM: {},
+                TweetOn: {},
+                TweetPeriodInMinutes: {},
+                PwmFrequency: {},
                 ThermometerCount: {}
             }
         },

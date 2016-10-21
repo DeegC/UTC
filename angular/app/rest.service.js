@@ -15,34 +15,44 @@ var configuration_1 = require('./configuration');
 var RestService = (function () {
     function RestService(http) {
         this.http = http;
+        this.restUrl = 'http://localhost:8080/utc';
     }
     RestService.prototype.getConfigurationList = function () {
         var _this = this;
-        return this.http.get('http://localhost:8080/utc/Configuration')
+        return this.http.get(this.restUrl + "/Configuration")
             .toPromise()
-            .then(function (response) { return _this.parseResponse(response); })
+            .then(function (response) { return _this.parseConfigurationResponse(response); })
             .catch(this.handleError);
     };
-    RestService.prototype.parseResponse = function (response) {
-        var data = response.json().OIs;
-        var conf = new configuration_1.Configuration(data);
-        return new configuration_1.Configuration([
-            {
-                Id: 100,
-                Description: "Configuration 1",
-                TargetTemperature: 225,
-                ThermometerCount: 1
-            },
-            {
-                Id: 101,
-                Description: "Configuration 2",
-                TargetTemperature: 200,
-                ThermometerCount: 1
-            }
-        ]);
+    RestService.prototype.getConfiguration = function (id) {
+        var _this = this;
+        return this.http.get(this.restUrl + "/Configuration/" + id)
+            .toPromise()
+            .then(function (response) { return _this.parseConfigurationResponse(response); })
+            .catch(this.handleError);
     };
-    RestService.prototype.handleError = function () {
-        console.log("There was an error");
+    RestService.prototype.parseConfigurationResponse = function (response) {
+        var data = response.json();
+        return new configuration_1.Configuration(data);
+        /*
+                return new Configuration( [
+                    {
+                        Id: 100,
+                        Description: "Configuration 1",
+                        TargetTemperature: 225,
+                        ThermometerCount: 1
+                    },
+                    {
+                        Id: 101,
+                        Description: "Configuration 2",
+                        TargetTemperature: 200,
+                        ThermometerCount: 1
+                    }
+                ]);
+        */
+    };
+    RestService.prototype.handleError = function (e) {
+        console.log("There was an error: " + e);
     };
     RestService = __decorate([
         core_1.Injectable(), 

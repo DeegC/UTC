@@ -9,7 +9,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var configuration_1 = require('./configuration');
 var rest_service_1 = require('./rest.service');
 var ConfigurationListComponent = (function () {
     function ConfigurationListComponent(restService) {
@@ -25,24 +24,10 @@ var ConfigurationListComponent = (function () {
         });
     };
     ConfigurationListComponent.prototype.onSelect = function (config) {
-        this.selectedConfigOi = new configuration_1.Configuration({
-            Id: config.Id,
-            Description: "Test Description",
-            TargetTemperature: 160,
-            ThermometerCount: 1,
-            ThermometerConfig: [
-                {
-                    Id: 11,
-                    Name: 'Pit',
-                    AlarmOn: false,
-                    fk_id_configuration: 100,
-                }
-            ],
+        var _this = this;
+        this.restService.getConfiguration(config.Id).then(function (configOi) {
+            _this.selectedConfigOi = configOi;
         });
-        var tc = this.selectedConfigOi.Configuration$.ThermometerConfig.create();
-        tc.AlarmOn = false;
-        tc.Name = "TestName";
-        console.log(JSON.stringify(this.selectedConfigOi, null, 2));
     };
     ConfigurationListComponent = __decorate([
         core_1.Component({
