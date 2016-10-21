@@ -60,12 +60,6 @@ class UtcScalatra extends ScalatraServlet with CorsSupport {
                              params.getOrElse("page", "1").toInt,
                              params.getOrElse("getTotal", "false").toBoolean )
 
-            order.lodName match {
-                case "Product" => addProductParams( qual )
-                case "Order"   => addOrderParams( qual )
-                case _ =>
-            }
-
             qual.readOnly.activate()
         }
     }
@@ -73,9 +67,7 @@ class UtcScalatra extends ScalatraServlet with CorsSupport {
     get("/:lod/:id") {
         oe.forTask( "UTC" ) { task =>
             val lodName = params( "lod" )
-            val view = task.activate( lodName, qb => {
-	        qb.where( _.root.key = params( "id" ) ) 
-            })
+            val view = task.activate( lodName, _.where( _.root.key = params( "id" ) ) ) 
 
             val serialized = view.serializeOi.asJson.withIncremental().toString()
             task.log().debug( serialized )
