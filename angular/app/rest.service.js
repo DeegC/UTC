@@ -31,7 +31,19 @@ var RestService = (function () {
             .then(function (response) { return _this.parseConfigurationResponse(response); })
             .catch(this.handleError);
     };
+    RestService.prototype.saveConfiguration = function (configOi) {
+        var _this = this;
+        var body = JSON.stringify(configOi.toZeidonMeta());
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post(this.restUrl + "/Configuration", body, options)
+            .toPromise()
+            .then(function (response) { return _this.parseConfigurationResponse(response); })
+            .catch(this.handleError);
+    };
     RestService.prototype.parseConfigurationResponse = function (response) {
+        if (response == "{}")
+            return new configuration_1.Configuration(); // Return an empty config.
         var data = response.json();
         return new configuration_1.Configuration(data);
         /*

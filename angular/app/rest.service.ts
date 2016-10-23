@@ -1,5 +1,5 @@
 import { Injectable }    from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Headers, Http, RequestOptions } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -24,7 +24,20 @@ export class RestService {
                 .catch(this.handleError);
     }
 
+    saveConfiguration( configOi: Configuration ): Promise<Configuration> {
+        let body = JSON.stringify( configOi.toZeidonMeta() );
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        return this.http.post(`${this.restUrl}/Configuration`, body, options)
+            .toPromise()
+            .then(response => this.parseConfigurationResponse( response ) )
+            .catch(this.handleError);
+    }
+
     parseConfigurationResponse( response ): Configuration {
+        if ( response == "{}" )
+            return new Configuration(); // Return an empty config.
+
         let data = response.json();
         return new Configuration( data );
 /*                

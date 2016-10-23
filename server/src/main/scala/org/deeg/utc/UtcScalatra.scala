@@ -45,9 +45,9 @@ class UtcScalatra extends ScalatraServlet with CorsSupport {
     }
 
     get("/:lod") {
-        activate { task =>
-            val order = View( task ) basedOn params( "lod" )
-            val qual = order.buildQual()
+        oe.forTask( "UTC" ) { task =>
+            val view = View( task ) basedOn params( "lod" )
+            val qual = view.buildQual()
             
             if ( params.contains( "qual" ) ) {
               qual.setQualFromJson( params( "qual" ) )
@@ -61,23 +61,25 @@ class UtcScalatra extends ScalatraServlet with CorsSupport {
                              params.getOrElse("getTotal", "false").toBoolean )
 
             qual.readOnly.activate()
+            serializeResponse( view )
         }
     }
 
     get("/:lod/:id") {
         oe.forTask( "UTC" ) { task =>
             val lodName = params( "lod" )
-            val view = task.activate( lodName, _.where( _.root.key = params( "id" ) ) ) 
+            val view = task.newView( lodName )
+                           .activateWhere( _.root.key = params( "id" ) ) 
 
-            val serialized = view.serializeOi.asJson.withIncremental().toString()
-            task.log().debug( serialized )
-            serialized
+            view.Configuration.Description += "zzz"
+            serializeResponse( view )
         }
     }
 
-
+    // POST action will save the OI passed via the body.
     post("/:lod") {
         oe.forTask( "UTC" ) { task =>
+            task.log().debug( request.body )
             val view = task.deserializeOi()
                            .setLodDef( params( "lod") )
                            .setVersion("1")
@@ -101,29 +103,25 @@ class UtcScalatra extends ScalatraServlet with CorsSupport {
 
     get("/xod/:name") {
         oe.forTask( "UTC" ) { task =>
-	    // Load the XOD
+            // Load the XOD
             val xod = task.deserializeOi.setLodDef("ZeidonSystem", "tzzoxodo").fromAppResource( params("name" ) + ".XOD").activateFirst
 
-	    // Return it as JSON
+            // Return it as JSON
             val serialized = xod.serializeOi.asJson.toString()
             task.log().debug( serialized )
             serialized
         }
     }
-    
-    private def activate( f: (Task) => View ) = {
-        oe.forTask( "UTC" ) { task =>
-            val view = f( task )
-            if ( view.isEmpty )
-		"{}"
-            else {
-                val serialized = view.serializeOi.asJson.withIncremental().toString()
-                task.log().debug( serialized )
-                serialized
-            }
-        }
-    }
 
+    private def serializeResponse( view: View ) : String = {
+        if ( view.isEmpty )
+            return "{}"
+            
+        val serialized = view.serializeOi.asJson.withIncremental().toString()
+        task.log().debug(serialized)
+        return serialized
+    }
+    
     /**
      * Add some qualification for Product lod.
      */

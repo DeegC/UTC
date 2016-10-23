@@ -10,7 +10,7 @@ export class ObjectInstance {
     protected roots : EntityArray<EntityInstance>;
     public isUpdated = false;
 
-    constructor( initialize = undefined, options: Object = {} ) {
+    constructor( initialize = undefined, options: any = {} ) {
         if ( typeof initialize == "string" ) {
             initialize = JSON.parse( initialize );
         }
@@ -19,22 +19,33 @@ export class ObjectInstance {
         if ( initialize.OIs ) {
             // TODO: Someday we should handle multiple return OIs for for now
             // we'll assume just one and hardcode '[0]'.
+             let oimeta = initialize.OIs[0][ ".oimeta" ];
+
+             // If incrementals are set then set the constructor option to 
+             // not set the update flag when the attribute value is set.  The
+             // flags will be set by the incrementals.
+             if ( oimeta && oimeta.incremental ) {
+                 if ( options.dontSetUpdate == undefined )
+                    options.dontSetUpdate = true;
+             }
+
             for ( let i of initialize.OIs[0][ this.rootEntityName() ] ) {
-                this.roots.create( i );
+                this.roots.create( i, options );
             }
         } else
         if ( initialize.constructor === Array ) {
             for ( let i of initialize ) {
-                this.roots.create( i );
+                this.roots.create( i, options );
             }
         } else {
-            this.roots.create( initialize );
+            this.roots.create( initialize, options );
         }
     }
 
     protected rootEntityName(): string { throw "rootEntityName must be overridden" };
     public getPrototype( entityName: string ): any { throw "getPrototype must be overriden" };
     public getLodDef(): any { throw "getLodDef must be overridden" };
+    public getApplicationName(): String { throw "getApplicationName must be overriden" };
 
     public getEntityAttributes( entityName: string ): any { 
         this.getLodDef().entities[ entityName ].attributes;
@@ -52,10 +63,43 @@ export class ObjectInstance {
         json[ this.rootEntityName() ] = jarray;
         return json;
     }
+
+    /**
+     * Wrap the JSON for this object with Zeidon OI meta.
+     */
+    public toZeidonMeta() : Object {
+        let wrapper = {
+            ".meta": { version: "1" },
+            OIs : [ {
+                ".oimeta": {
+                    application: this.getApplicationName(),
+                    odName: this.getLodDef().name,
+                    incremental: true,
+                    readOnlyOi: false
+                }
+            }]
+
+        };
+
+        // Add the OI.
+        wrapper.OIs[0][ this.getLodDef().name ] = this.toJSON()[this.getLodDef().name ];
+
+        return wrapper;
+    }
 }
 
 export class EntityInstance {
     public oi: ObjectInstance;
+    public created = false;
+    public included = false;
+    public deleted = false;
+    public excluded = false;
+    public updated = false;
+
+    // If incomplete = true then this entity did not have all its children
+    // loaded and so cannot be deleted.
+    private incomplete = false;
+
     private childEntityInstances = {};
 
     public get entityName(): string { throw "entityName() but be overridden" };
@@ -68,12 +112,14 @@ export class EntityInstance {
         return this.entityDef.attributes;
     }
 
-    constructor( initialize: Object, oi: ObjectInstance, options: Object = {} ) {
+    constructor( initialize: Object, oi: ObjectInstance, options: any = {} ) {
         this.oi = oi;
         for ( let attr in initialize ) {
-            if ( this.attributeDefs[attr] )
+            if ( this.attributeDefs[attr] ) {
                 this.setAttribute( attr, initialize[attr], options);
-            else
+                continue;
+            }
+
             if ( this.entityDef.childEntities[attr] ) {
                 let init = initialize[attr];
                 if ( ! ( init.constructor === Array ) ) {
@@ -81,25 +127,50 @@ export class EntityInstance {
                 }
                 for ( let o of init ) {
                     let array = this.getChildEntityArray( attr );
-                    array.create( o );
+                    array.create( o, options );
+                }
+                continue;
+            }
+
+            if ( attr == ".meta" ) {
+                let meta = initialize[attr];
+                if ( meta.incremntal )
+                    options.includesIncremntal  = true;
+                if ( meta.readOnlyOi )
+                    options.readOnlyOi = true;
+
+                continue;
+            }
+
+            if ( attr.startsWith(".") ) {
+                let metaName = attr.substr(1); // Remove leading "."
+                if ( this.attributeDefs[metaName] ) {
+                    this[ attr ] = initialize[ attr ];
+                    continue;
                 }
             }
-            else
-            if ( attr == ".meta" ) {
-                // Do nothing for now.
-            }
-            else
-                throw `Unknown attribute ${attr} for entity ${this.entityName}`;
+
+            throw `Unknown attribute ${attr} for entity ${this.entityName}`;
         }
     }
 
-    protected setAttribute( attr: string, value: any, options: Object = {} ) {
+    protected setAttribute( attr: string, value: any, options: any = {} ) {
         let internalName = "_" + attr;
         if ( this[ internalName ] == value )
             return;
 
-        this[ "." + attr ] = true;
         this[ internalName ] = value;
+
+        if ( options.dontSetUpdate )
+            return;
+
+        let metaAttr = "." + attr;
+        if ( ! this[ metaAttr ] )
+            this[ metaAttr ] = {} as any;
+
+        this[ metaAttr ].updated = true;
+        this.oi.isUpdated = true;
+        this.updated = true;
     }
 
     protected getAttribute( attr: string ): any {
@@ -116,8 +187,38 @@ export class EntityInstance {
         return entities;
     }
 
+    private buildIncrementalStr(): string {
+        let str = "";
+
+        if ( this.updated )
+            str += 'U';
+
+        if ( this.created )
+            str += 'C';
+
+        if ( this.deleted )
+            str += 'D';
+
+        if ( this.included )
+            str += 'I';
+
+        if ( this.excluded )
+            str += 'X';
+
+        return str;
+    }
+
     public toJSON(): Object {
         let json = {};
+
+        let meta = {} as any;
+        let incrementals = this.buildIncrementalStr();
+        if ( incrementals != "" )
+            meta.incrementals = incrementals;
+
+        if ( Object.keys( meta ).length > 0 )
+            json[ ".meta" ] = meta;
+
         for ( let attrName in this.attributeDefs ) {
             if (this["_" + attrName] || this["." + attrName]) {
                 json[attrName] = this["_" + attrName];
@@ -162,10 +263,10 @@ export class EntityArray<EntityInstance> extends Array<EntityInstance> {
     /** 
      * Create an entity at the end of the current entity list.
      */
-    create( initialize : Object = {} ): EntityInstance {
+    create( initialize : Object = {}, options: any = {} ): EntityInstance {
         console.log("Creating entity " + this.entityName );
         let ei = Object.create( this.entityPrototype );
-        ei.constructor.apply(ei, [ initialize, this.oi] );
+        ei.constructor.apply(ei, [ initialize, this.oi, options] );
         this.push(ei);
         this.currentlySelected = this.length - 1;
         return ei;

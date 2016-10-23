@@ -12,6 +12,8 @@ export class Configuration extends zeidon.ObjectInstance {
         return this.roots.selected() as Configuration_Configuration;
     }
 
+    public getApplicationName(): String { return "UTC" };
+
     getPrototype(entityName: string): any {
         return ConfigurationEntityPrototypes[entityName];
     }

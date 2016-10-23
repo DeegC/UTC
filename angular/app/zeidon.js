@@ -23,19 +23,27 @@ var ObjectInstance = (function () {
         if (initialize.OIs) {
             // TODO: Someday we should handle multiple return OIs for for now
             // we'll assume just one and hardcode '[0]'.
+            var oimeta = initialize.OIs[0][".oimeta"];
+            // If incrementals are set then set the constructor option to 
+            // not set the update flag when the attribute value is set.  The
+            // flags will be set by the incrementals.
+            if (oimeta && oimeta.incremental) {
+                if (options.dontSetUpdate == undefined)
+                    options.dontSetUpdate = true;
+            }
             for (var _i = 0, _a = initialize.OIs[0][this.rootEntityName()]; _i < _a.length; _i++) {
                 var i = _a[_i];
-                this.roots.create(i);
+                this.roots.create(i, options);
             }
         }
         else if (initialize.constructor === Array) {
             for (var _b = 0, initialize_1 = initialize; _b < initialize_1.length; _b++) {
                 var i = initialize_1[_b];
-                this.roots.create(i);
+                this.roots.create(i, options);
             }
         }
         else {
-            this.roots.create(initialize);
+            this.roots.create(initialize, options);
         }
     }
     ObjectInstance.prototype.rootEntityName = function () { throw "rootEntityName must be overridden"; };
@@ -43,6 +51,8 @@ var ObjectInstance = (function () {
     ObjectInstance.prototype.getPrototype = function (entityName) { throw "getPrototype must be overriden"; };
     ;
     ObjectInstance.prototype.getLodDef = function () { throw "getLodDef must be overridden"; };
+    ;
+    ObjectInstance.prototype.getApplicationName = function () { throw "getApplicationName must be overriden"; };
     ;
     ObjectInstance.prototype.getEntityAttributes = function (entityName) {
         this.getLodDef().entities[entityName].attributes;
@@ -60,18 +70,47 @@ var ObjectInstance = (function () {
         json[this.rootEntityName()] = jarray;
         return json;
     };
+    /**
+     * Wrap the JSON for this object with Zeidon OI meta.
+     */
+    ObjectInstance.prototype.toZeidonMeta = function () {
+        var wrapper = {
+            ".meta": { version: "1" },
+            OIs: [{
+                    ".oimeta": {
+                        application: this.getApplicationName(),
+                        odName: this.getLodDef().name,
+                        incremental: true,
+                        readOnlyOi: false
+                    }
+                }]
+        };
+        // Add the OI.
+        wrapper.OIs[0][this.getLodDef().name] = this.toJSON()[this.getLodDef().name];
+        return wrapper;
+    };
     return ObjectInstance;
 }());
 exports.ObjectInstance = ObjectInstance;
 var EntityInstance = (function () {
     function EntityInstance(initialize, oi, options) {
         if (options === void 0) { options = {}; }
+        this.created = false;
+        this.included = false;
+        this.deleted = false;
+        this.excluded = false;
+        this.updated = false;
+        // If incomplete = true then this entity did not have all its children
+        // loaded and so cannot be deleted.
+        this.incomplete = false;
         this.childEntityInstances = {};
         this.oi = oi;
         for (var attr in initialize) {
-            if (this.attributeDefs[attr])
+            if (this.attributeDefs[attr]) {
                 this.setAttribute(attr, initialize[attr], options);
-            else if (this.entityDef.childEntities[attr]) {
+                continue;
+            }
+            if (this.entityDef.childEntities[attr]) {
                 var init = initialize[attr];
                 if (!(init.constructor === Array)) {
                     init = [init]; // If it's not an array, wrap it.
@@ -79,13 +118,26 @@ var EntityInstance = (function () {
                 for (var _i = 0, init_1 = init; _i < init_1.length; _i++) {
                     var o = init_1[_i];
                     var array = this.getChildEntityArray(attr);
-                    array.create(o);
+                    array.create(o, options);
+                }
+                continue;
+            }
+            if (attr == ".meta") {
+                var meta = initialize[attr];
+                if (meta.incremntal)
+                    options.includesIncremntal = true;
+                if (meta.readOnlyOi)
+                    options.readOnlyOi = true;
+                continue;
+            }
+            if (attr.startsWith(".")) {
+                var metaName = attr.substr(1); // Remove leading "."
+                if (this.attributeDefs[metaName]) {
+                    this[attr] = initialize[attr];
+                    continue;
                 }
             }
-            else if (attr == ".meta") {
-            }
-            else
-                throw "Unknown attribute " + attr + " for entity " + this.entityName;
+            throw "Unknown attribute " + attr + " for entity " + this.entityName;
         }
     }
     Object.defineProperty(EntityInstance.prototype, "entityName", {
@@ -113,8 +165,15 @@ var EntityInstance = (function () {
         var internalName = "_" + attr;
         if (this[internalName] == value)
             return;
-        this["." + attr] = true;
         this[internalName] = value;
+        if (options.dontSetUpdate)
+            return;
+        var metaAttr = "." + attr;
+        if (!this[metaAttr])
+            this[metaAttr] = {};
+        this[metaAttr].updated = true;
+        this.oi.isUpdated = true;
+        this.updated = true;
     };
     EntityInstance.prototype.getAttribute = function (attr) {
         return this["_" + attr];
@@ -127,8 +186,28 @@ var EntityInstance = (function () {
         }
         return entities;
     };
+    EntityInstance.prototype.buildIncrementalStr = function () {
+        var str = "";
+        if (this.updated)
+            str += 'U';
+        if (this.created)
+            str += 'C';
+        if (this.deleted)
+            str += 'D';
+        if (this.included)
+            str += 'I';
+        if (this.excluded)
+            str += 'X';
+        return str;
+    };
     EntityInstance.prototype.toJSON = function () {
         var json = {};
+        var meta = {};
+        var incrementals = this.buildIncrementalStr();
+        if (incrementals != "")
+            meta.incrementals = incrementals;
+        if (Object.keys(meta).length > 0)
+            json[".meta"] = meta;
         for (var attrName in this.attributeDefs) {
             if (this["_" + attrName] || this["." + attrName]) {
                 json[attrName] = this["_" + attrName];
@@ -169,11 +248,12 @@ var EntityArray = (function (_super) {
     /**
      * Create an entity at the end of the current entity list.
      */
-    EntityArray.prototype.create = function (initialize) {
+    EntityArray.prototype.create = function (initialize, options) {
         if (initialize === void 0) { initialize = {}; }
+        if (options === void 0) { options = {}; }
         console.log("Creating entity " + this.entityName);
         var ei = Object.create(this.entityPrototype);
-        ei.constructor.apply(ei, [initialize, this.oi]);
+        ei.constructor.apply(ei, [initialize, this.oi, options]);
         this.push(ei);
         this.currentlySelected = this.length - 1;
         return ei;

@@ -27,6 +27,8 @@ var Configuration = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Configuration.prototype.getApplicationName = function () { return "UTC"; };
+    ;
     Configuration.prototype.getPrototype = function (entityName) {
         return ConfigurationEntityPrototypes[entityName];
     };
