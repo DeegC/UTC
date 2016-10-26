@@ -96,6 +96,9 @@ export class EntityInstance {
     public excluded = false;
     public updated = false;
 
+    public attributes: any = {};
+    public workAttributes: any = {};
+
     // If incomplete = true then this entity did not have all its children
     // loaded and so cannot be deleted.
     private incomplete = false;
@@ -155,26 +158,39 @@ export class EntityInstance {
     }
 
     protected setAttribute( attr: string, value: any, options: any = {} ) {
-        let internalName = "_" + attr;
-        if ( this[ internalName ] == value )
+        let attribs = this.getAttribHash( attr );
+
+        if ( attribs[ attr ] == value )
             return;
 
-        this[ internalName ] = value;
+        attribs[ attr ] = value;
 
         if ( options.dontSetUpdate )
             return;
 
         let metaAttr = "." + attr;
-        if ( ! this[ metaAttr ] )
-            this[ metaAttr ] = {} as any;
+        if ( ! attribs[ metaAttr ] )
+            attribs[ metaAttr ] = {} as any;
 
-        this[ metaAttr ].updated = true;
+        attribs[ metaAttr ].updated = true;
         this.oi.isUpdated = true;
         this.updated = true;
     }
 
     protected getAttribute( attr: string ): any {
-        return this["_" + attr];
+        let attribs = this.getAttribHash( attr );
+        return attribs[attr];
+    }
+
+    public isAttributeUpdated( attr: string ): boolean {
+        let attribs = this.getAttribHash( attr );
+        let metaName = "." + attr;
+        return ( attribs[metaName ] && attribs[metaName].updated );
+    }
+
+    private getAttribHash( attr: string ): any {
+        // TODO: This should return attributes or workAttributes.
+        return this.attributes;
     }
 
     protected getChildEntityArray( entityName: string): EntityArray<EntityInstance> {
@@ -220,10 +236,10 @@ export class EntityInstance {
             json[ ".meta" ] = meta;
 
         for ( let attrName in this.attributeDefs ) {
-            if (this["_" + attrName] || this["." + attrName]) {
-                json[attrName] = this["_" + attrName];
-                if (this["." + attrName]) {
-                    json["." + attrName] = this["." + attrName];
+            if ( this.getAttribute( attrName ) || this.isAttributeUpdated( attrName ) ) {
+                json[attrName] = this.getAttribute( attrName );
+                if (this.isAttributeUpdated( attrName ) ) {
+                    json["." + attrName] = { updated: true };
                 }
             }
         };

@@ -100,6 +100,8 @@ var EntityInstance = (function () {
         this.deleted = false;
         this.excluded = false;
         this.updated = false;
+        this.attributes = {};
+        this.workAttributes = {};
         // If incomplete = true then this entity did not have all its children
         // loaded and so cannot be deleted.
         this.incomplete = false;
@@ -162,21 +164,31 @@ var EntityInstance = (function () {
     });
     EntityInstance.prototype.setAttribute = function (attr, value, options) {
         if (options === void 0) { options = {}; }
-        var internalName = "_" + attr;
-        if (this[internalName] == value)
+        var attribs = this.getAttribHash(attr);
+        if (attribs[attr] == value)
             return;
-        this[internalName] = value;
+        attribs[attr] = value;
         if (options.dontSetUpdate)
             return;
         var metaAttr = "." + attr;
-        if (!this[metaAttr])
-            this[metaAttr] = {};
-        this[metaAttr].updated = true;
+        if (!attribs[metaAttr])
+            attribs[metaAttr] = {};
+        attribs[metaAttr].updated = true;
         this.oi.isUpdated = true;
         this.updated = true;
     };
     EntityInstance.prototype.getAttribute = function (attr) {
-        return this["_" + attr];
+        var attribs = this.getAttribHash(attr);
+        return attribs[attr];
+    };
+    EntityInstance.prototype.isAttributeUpdated = function (attr) {
+        var attribs = this.getAttribHash(attr);
+        var metaName = "." + attr;
+        return (attribs[metaName] && attribs[metaName].updated);
+    };
+    EntityInstance.prototype.getAttribHash = function (attr) {
+        // TODO: This should return attributes or workAttributes.
+        return this.attributes;
     };
     EntityInstance.prototype.getChildEntityArray = function (entityName) {
         var entities = this.childEntityInstances[entityName];
@@ -209,10 +221,10 @@ var EntityInstance = (function () {
         if (Object.keys(meta).length > 0)
             json[".meta"] = meta;
         for (var attrName in this.attributeDefs) {
-            if (this["_" + attrName] || this["." + attrName]) {
-                json[attrName] = this["_" + attrName];
-                if (this["." + attrName]) {
-                    json["." + attrName] = this["." + attrName];
+            if (this.getAttribute(attrName) || this.isAttributeUpdated(attrName)) {
+                json[attrName] = this.getAttribute(attrName);
+                if (this.isAttributeUpdated(attrName)) {
+                    json["." + attrName] = { updated: true };
                 }
             }
         }
