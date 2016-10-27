@@ -135,7 +135,8 @@ var EntityInstance = (function () {
             if (attr.startsWith(".")) {
                 var metaName = attr.substr(1); // Remove leading "."
                 if (this.attributeDefs[metaName]) {
-                    this[attr] = initialize[attr];
+                    var attribs = this.getAttribHash(metaName);
+                    attribs[attr] = initialize[attr];
                     continue;
                 }
             }

@@ -133,7 +133,7 @@ var Configuration_ThermometerConfig = (function (_super) {
 exports.Configuration_ThermometerConfig = Configuration_ThermometerConfig;
 var ConfigurationEntityPrototypes = {
     Configuration: Configuration_Configuration.prototype,
-    ThermometerConfig: Configuration_ThermometerConfig.prototype
+    ThermometerConfig: Configuration_ThermometerConfig.prototype,
 };
 exports.Configuration_LodDef = {
     name: "Configuration",

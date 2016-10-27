@@ -148,7 +148,8 @@ export class EntityInstance {
             if ( attr.startsWith(".") ) {
                 let metaName = attr.substr(1); // Remove leading "."
                 if ( this.attributeDefs[metaName] ) {
-                    this[ attr ] = initialize[ attr ];
+                    let attribs = this.getAttribHash( metaName );
+                    attribs[ attr ] = initialize[ attr ];
                     continue;
                 }
             }

@@ -59,7 +59,7 @@ export class Configuration_ThermometerConfig extends zeidon.EntityInstance {
 
 const ConfigurationEntityPrototypes = {
     Configuration: Configuration_Configuration.prototype,
-    ThermometerConfig: Configuration_ThermometerConfig.prototype
+    ThermometerConfig: Configuration_ThermometerConfig.prototype,
 }
 
 export const Configuration_LodDef = {
