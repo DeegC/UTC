@@ -4,12 +4,9 @@ Domain logic for UTC and the Zeidon objects.
 Project name: ${project.name}
 """
 
-processResources.doLast {
-    println "This is where we generate .ts files"
-}
-
 configurations {
     repl
+    generateTypescriptFiles
 }
 
 // In this section you declare the dependencies for your production and test code
@@ -30,7 +27,30 @@ dependencies {
 
     repl 'org.scala-lang:scala-compiler:2.11.8'
     repl 'jline:jline:2.13'
+
+    generateTypescriptFiles 'com.quinsoft.zeidon:javascript:1.4.1-SNAPSHOT'
+    generateTypescriptFiles  group: 'ch.qos.logback', name: 'logback-classic', version: '1.+'
 }
+
+task generateTypescriptFiles( type: JavaExec ) {
+    description 'Generates Typescript files for each LOD.'
+    
+    def xodDir = file("src/main/resources/utc/bin")
+    def typescriptDir = file("build/xod")
+
+    // Set up properties so this only gets executed if an XOD has changed.
+    outputs.upToDateSpec = new org.gradle.api.specs.AndSpec()
+    inputs.files "$xodDir/Configuration.XOD"
+    outputs.files typescriptDir
+
+    main = "com.quinsoft.zeidon.javascript.GenerateXodsForTypescript"
+    classpath( configurations.generateTypescriptFiles, sourceSets.main.runtimeClasspath, '../conf' )
+    standardInput System.in
+    args( 'UTC', typescriptDir )
+    jvmArgs( '-Xdebug', '-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n' )
+}
+
+jar.dependsOn generateTypescriptFiles
 
 task repl(type:JavaExec) {
 
@@ -39,13 +59,12 @@ task repl(type:JavaExec) {
   File.createTempFile("temp",".tmp").with {
     deleteOnExit()
     write '''
-import com.quinsoft.zeidon.standardoe.JavaObjectEngine
-import com.quinsoft.zeidon.scala._
+       import com.quinsoft.zeidon.standardoe.JavaObjectEngine
+       import com.quinsoft.zeidon.scala._
 
-val oe = JavaObjectEngine.getInstance()
-val task = oe.createTask("UTC")
-    
-'''
+       val oe = JavaObjectEngine.getInstance()
+       val task = oe.createTask("UTC")
+    '''
     initFile = absolutePath
   }
 
