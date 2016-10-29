@@ -36,7 +36,7 @@ task generateTypescriptFiles( type: JavaExec ) {
     description 'Generates Typescript files for each LOD.'
     
     def xodDir = file("src/main/resources/utc/bin")
-    def typescriptDir = file("build/xod")
+    def typescriptDir = file("../angular/app")
 
     // Set up properties so this only gets executed if an XOD has changed.
     outputs.upToDateSpec = new org.gradle.api.specs.AndSpec()
@@ -53,7 +53,8 @@ task generateTypescriptFiles( type: JavaExec ) {
 jar.dependsOn generateTypescriptFiles
 
 task repl(type:JavaExec) {
-
+  description "Fire up the Scala REPL, start the Zeidon JOE, and create a task."
+  
   def initFile = ''
 
   File.createTempFile("temp",".tmp").with {
