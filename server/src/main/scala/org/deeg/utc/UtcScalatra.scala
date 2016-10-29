@@ -71,7 +71,6 @@ class UtcScalatra extends ScalatraServlet with CorsSupport {
             val view = task.newView( lodName )
                            .activateWhere( _.root.key = params( "id" ) ) 
 
-            view.Configuration.Description += "zzz"
             serializeResponse( view )
         }
     }

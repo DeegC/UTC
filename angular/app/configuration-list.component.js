@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var Configuration_1 = require('./Configuration');
 var rest_service_1 = require('./rest.service');
 var ConfigurationListComponent = (function () {
     function ConfigurationListComponent(restService) {
@@ -29,10 +30,13 @@ var ConfigurationListComponent = (function () {
             _this.selectedConfigOi = configOi;
         });
     };
+    ConfigurationListComponent.prototype.newConfiguration = function () {
+        this.selectedConfigOi = new Configuration_1.Configuration({ ThermometerConfig: {} });
+    };
     ConfigurationListComponent = __decorate([
         core_1.Component({
             selector: 'configuration-list',
-            template: "\n  <div *ngIf=\"configurationList\">\n    <ul class=\"configurations\">\n        <li *ngFor=\"let config of configurationList.Configuration\" \n            [class.selected]=\"selectedConfigOi && selectedConfigOi.Configuration$.Id == config.Id\"\n            (click)=\"onSelect(config)\">\n        <span class=\"badge\">{{config.Id}}</span> {{config.Description}}\n        </li>\n    </ul>\n  </div>\n  <configuration-detail [configuration]=\"selectedConfigOi\"></configuration-detail>\n",
+            template: "\n  <div *ngIf=\"configurationList\">\n    <ul class=\"configurations\">\n        <li *ngFor=\"let config of configurationList.Configuration\" \n            [class.selected]=\"selectedConfigOi && selectedConfigOi.Configuration$.Id == config.Id\"\n            (click)=\"onSelect(config)\">\n        <span class=\"badge\">{{config.Id}}</span> {{config.Description}}\n        </li>\n    </ul>\n  </div>\n  <button (click)=\"newConfiguration()\">\n        New Configuration\n  </button>\n  <configuration-detail [configuration]=\"selectedConfigOi\"></configuration-detail>\n",
             styleUrls: ['app/configuration.css'],
             providers: [rest_service_1.RestService]
         }), 

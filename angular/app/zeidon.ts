@@ -10,36 +10,8 @@ export class ObjectInstance {
     protected roots : EntityArray<EntityInstance>;
     public isUpdated = false;
 
-    constructor( initialize = undefined, options: any = {} ) {
-        if ( typeof initialize == "string" ) {
-            initialize = JSON.parse( initialize );
-        }
-
-        this.roots = new EntityArray<EntityInstance>( this.rootEntityName(), this );
-        if ( initialize.OIs ) {
-            // TODO: Someday we should handle multiple return OIs for for now
-            // we'll assume just one and hardcode '[0]'.
-             let oimeta = initialize.OIs[0][ ".oimeta" ];
-
-             // If incrementals are set then set the constructor option to 
-             // not set the update flag when the attribute value is set.  The
-             // flags will be set by the incrementals.
-             if ( oimeta && oimeta.incremental ) {
-                 if ( options.dontSetUpdate == undefined )
-                    options.dontSetUpdate = true;
-             }
-
-            for ( let i of initialize.OIs[0][ this.rootEntityName() ] ) {
-                this.roots.create( i, options );
-            }
-        } else
-        if ( initialize.constructor === Array ) {
-            for ( let i of initialize ) {
-                this.roots.create( i, options );
-            }
-        } else {
-            this.roots.create( initialize, options );
-        }
+    constructor( initialize = undefined, options: CreateOptions = DEFAULT_CREATE_OPTIONS ) {
+        this.createFromJson( initialize, options );
     }
 
     protected rootEntityName(): string { throw "rootEntityName must be overridden" };
@@ -86,6 +58,54 @@ export class ObjectInstance {
 
         return wrapper;
     }
+
+    activate( options: ActivateOptions ): Promise<ObjectInstance> {
+        let lodName = this.getLodDef.name;
+        return options.http.get(`${options.restUrl}/$lodName`)
+                .toPromise()
+                .then(response => this.createFromJson( response, DEFAULT_CREATE_OPTIONS ) )
+                .catch(this.handleActivateError);
+    }
+
+    private createFromJson( initialize, options: CreateOptions ) {
+        if ( typeof initialize == "string" ) {
+            initialize = JSON.parse( initialize );
+        }
+
+        this.roots = new EntityArray<EntityInstance>( this.rootEntityName(), this );
+        if ( ! initialize ) {
+            this.roots.create( initialize, options );
+        }
+        else
+        if ( initialize.OIs ) {
+            // TODO: Someday we should handle multiple return OIs for for now
+            // we'll assume just one and hardcode '[0]'.
+             let oimeta = initialize.OIs[0][ ".oimeta" ];
+
+             // If incrementals are set then set the constructor option to 
+             // not set the update flag when the attribute value is set.  The
+             // flags will be set by the incrementals.
+             if ( oimeta && oimeta.incremental ) {
+                 if ( options.incrementalsSpecified == undefined )
+                    options.incrementalsSpecified = true;
+             }
+
+            for ( let i of initialize.OIs[0][ this.rootEntityName() ] ) {
+                this.roots.create( i, options );
+            }
+        } else
+        if ( initialize.constructor === Array ) {
+            for ( let i of initialize ) {
+                this.roots.create( i, options );
+            }
+        } else {
+            this.roots.create( initialize, options );
+        }
+    }
+    
+    private handleActivateError( e ) {
+        console.log("There was an error: " + e );
+    }
 }
 
 export class EntityInstance {
@@ -115,7 +135,7 @@ export class EntityInstance {
         return this.entityDef.attributes;
     }
 
-    constructor( initialize: Object, oi: ObjectInstance, options: any = {} ) {
+    constructor( initialize: Object, oi: ObjectInstance, options: CreateOptions = DEFAULT_CREATE_OPTIONS ) {
         this.oi = oi;
         for ( let attr in initialize ) {
             if ( this.attributeDefs[attr] ) {
@@ -138,7 +158,7 @@ export class EntityInstance {
             if ( attr == ".meta" ) {
                 let meta = initialize[attr];
                 if ( meta.incremntal )
-                    options.includesIncremntal  = true;
+                    options.incrementalsSpecified  = true;
                 if ( meta.readOnlyOi )
                     options.readOnlyOi = true;
 
@@ -154,11 +174,19 @@ export class EntityInstance {
                 }
             }
 
-            throw `Unknown attribute ${attr} for entity ${this.entityName}`;
+            error( `Unknown attribute ${attr} for entity ${this.entityName}` );
         }
     }
 
-    protected setAttribute( attr: string, value: any, options: any = {} ) {
+    protected setAttribute( attr: string, value: any, options: CreateOptions = DEFAULT_CREATE_OPTIONS ) {
+        let attributeDef = this.attributeDefs[ attr ];
+
+        if ( ! attributeDef )
+            error( `Attribute ${attr} is unknown for entity ${this.entityDef.name}` );
+
+        if ( ! attributeDef.update && ! options.incrementalsSpecified )
+            error( `Attribute ${this.entityDef.name}.${attr} is read only` );
+
         let attribs = this.getAttribHash( attr );
 
         if ( attribs[ attr ] == value )
@@ -166,7 +194,7 @@ export class EntityInstance {
 
         attribs[ attr ] = value;
 
-        if ( options.dontSetUpdate )
+        if ( options.incrementalsSpecified )
             return;
 
         let metaAttr = "." + attr;
@@ -280,7 +308,7 @@ export class EntityArray<EntityInstance> extends Array<EntityInstance> {
     /** 
      * Create an entity at the end of the current entity list.
      */
-    create( initialize : Object = {}, options: any = {} ): EntityInstance {
+    create( initialize : Object = {}, options: CreateOptions = DEFAULT_CREATE_OPTIONS ): EntityInstance {
         console.log("Creating entity " + this.entityName );
         let ei = Object.create( this.entityPrototype );
         ei.constructor.apply(ei, [ initialize, this.oi, options] );
@@ -304,4 +332,33 @@ export class EntityArray<EntityInstance> extends Array<EntityInstance> {
     selected(): EntityInstance {
         return this[this.currentlySelected];
     }
+}
+
+export class CreateOptions {
+    incrementalsSpecified = undefined;
+    readOnlyOi = false;
+}
+const DEFAULT_CREATE_OPTIONS = new CreateOptions();
+
+export class CommitOptions {
+    http: any;
+    restUrl: string;
+}
+
+export class ActivateOptions {
+    http: any;
+    restUrl: string;
+}
+
+let error = function ( message: string ) {
+   var e = new Error('dummy');
+   var stack = e.stack.replace(/^[^\(]+?[\n$]/gm, '')
+      .replace(/^\s+at\s+/gm, '')
+      .replace(/^Object.<anonymous>\s*\(/gm, '{anonymous}()@')
+      .split('\n');
+    console.log(stack.join("\n"));
+
+    console.log( message );
+    alert( message );
+    throw message;
 }

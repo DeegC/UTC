@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 require('rxjs/add/operator/toPromise');
-var configuration_1 = require('./configuration');
+var Configuration_1 = require('./Configuration');
 var RestService = (function () {
     function RestService(http) {
         this.http = http;
@@ -43,9 +43,9 @@ var RestService = (function () {
     };
     RestService.prototype.parseConfigurationResponse = function (response) {
         if (response == "{}")
-            return new configuration_1.Configuration(); // Return an empty config.
+            return new Configuration_1.Configuration(); // Return an empty config.
         var data = response.json();
-        return new configuration_1.Configuration(data);
+        return new Configuration_1.Configuration(data);
         /*
                 return new Configuration( [
                     {

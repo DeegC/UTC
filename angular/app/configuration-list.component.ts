@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { Configuration } from './configuration';
+import { Configuration } from './Configuration';
 import { RestService } from './rest.service';
 
 @Component({
@@ -15,6 +15,9 @@ import { RestService } from './rest.service';
         </li>
     </ul>
   </div>
+  <button (click)="newConfiguration()">
+        New Configuration
+  </button>
   <configuration-detail [configuration]="selectedConfigOi"></configuration-detail>
 `,
     styleUrls: ['app/configuration.css'],
@@ -42,4 +45,7 @@ export class ConfigurationListComponent implements OnInit {
         } );
     }
     
+    newConfiguration(): void {
+        this.selectedConfigOi = new Configuration( { ThermometerConfig: {} } );
+    }
 }

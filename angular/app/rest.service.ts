@@ -1,15 +1,15 @@
 import { Injectable }    from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
-
 import 'rxjs/add/operator/toPromise';
 
-import { Configuration } from './configuration';
+import { Configuration } from './Configuration';
+import * as zeidon from './zeidon';
 
 @Injectable()
 export class RestService {
     restUrl = 'http://localhost:8080/utc';
     constructor(private http: Http) { }
-    
+
     getConfigurationList(): Promise<Configuration>{
         return this.http.get(`${this.restUrl}/Configuration`)
                 .toPromise()

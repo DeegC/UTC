@@ -14,37 +14,9 @@ exports.Application = Application;
 var ObjectInstance = (function () {
     function ObjectInstance(initialize, options) {
         if (initialize === void 0) { initialize = undefined; }
-        if (options === void 0) { options = {}; }
+        if (options === void 0) { options = DEFAULT_CREATE_OPTIONS; }
         this.isUpdated = false;
-        if (typeof initialize == "string") {
-            initialize = JSON.parse(initialize);
-        }
-        this.roots = new EntityArray(this.rootEntityName(), this);
-        if (initialize.OIs) {
-            // TODO: Someday we should handle multiple return OIs for for now
-            // we'll assume just one and hardcode '[0]'.
-            var oimeta = initialize.OIs[0][".oimeta"];
-            // If incrementals are set then set the constructor option to 
-            // not set the update flag when the attribute value is set.  The
-            // flags will be set by the incrementals.
-            if (oimeta && oimeta.incremental) {
-                if (options.dontSetUpdate == undefined)
-                    options.dontSetUpdate = true;
-            }
-            for (var _i = 0, _a = initialize.OIs[0][this.rootEntityName()]; _i < _a.length; _i++) {
-                var i = _a[_i];
-                this.roots.create(i, options);
-            }
-        }
-        else if (initialize.constructor === Array) {
-            for (var _b = 0, initialize_1 = initialize; _b < initialize_1.length; _b++) {
-                var i = initialize_1[_b];
-                this.roots.create(i, options);
-            }
-        }
-        else {
-            this.roots.create(initialize, options);
-        }
+        this.createFromJson(initialize, options);
     }
     ObjectInstance.prototype.rootEntityName = function () { throw "rootEntityName must be overridden"; };
     ;
@@ -89,12 +61,57 @@ var ObjectInstance = (function () {
         wrapper.OIs[0][this.getLodDef().name] = this.toJSON()[this.getLodDef().name];
         return wrapper;
     };
+    ObjectInstance.prototype.activate = function (options) {
+        var _this = this;
+        var lodName = this.getLodDef.name;
+        return options.http.get(options.restUrl + "/$lodName")
+            .toPromise()
+            .then(function (response) { return _this.createFromJson(response, DEFAULT_CREATE_OPTIONS); })
+            .catch(this.handleActivateError);
+    };
+    ObjectInstance.prototype.createFromJson = function (initialize, options) {
+        if (typeof initialize == "string") {
+            initialize = JSON.parse(initialize);
+        }
+        this.roots = new EntityArray(this.rootEntityName(), this);
+        if (!initialize) {
+            this.roots.create(initialize, options);
+        }
+        else if (initialize.OIs) {
+            // TODO: Someday we should handle multiple return OIs for for now
+            // we'll assume just one and hardcode '[0]'.
+            var oimeta = initialize.OIs[0][".oimeta"];
+            // If incrementals are set then set the constructor option to 
+            // not set the update flag when the attribute value is set.  The
+            // flags will be set by the incrementals.
+            if (oimeta && oimeta.incremental) {
+                if (options.incrementalsSpecified == undefined)
+                    options.incrementalsSpecified = true;
+            }
+            for (var _i = 0, _a = initialize.OIs[0][this.rootEntityName()]; _i < _a.length; _i++) {
+                var i = _a[_i];
+                this.roots.create(i, options);
+            }
+        }
+        else if (initialize.constructor === Array) {
+            for (var _b = 0, initialize_1 = initialize; _b < initialize_1.length; _b++) {
+                var i = initialize_1[_b];
+                this.roots.create(i, options);
+            }
+        }
+        else {
+            this.roots.create(initialize, options);
+        }
+    };
+    ObjectInstance.prototype.handleActivateError = function (e) {
+        console.log("There was an error: " + e);
+    };
     return ObjectInstance;
 }());
 exports.ObjectInstance = ObjectInstance;
 var EntityInstance = (function () {
     function EntityInstance(initialize, oi, options) {
-        if (options === void 0) { options = {}; }
+        if (options === void 0) { options = DEFAULT_CREATE_OPTIONS; }
         this.created = false;
         this.included = false;
         this.deleted = false;
@@ -127,7 +144,7 @@ var EntityInstance = (function () {
             if (attr == ".meta") {
                 var meta = initialize[attr];
                 if (meta.incremntal)
-                    options.includesIncremntal = true;
+                    options.incrementalsSpecified = true;
                 if (meta.readOnlyOi)
                     options.readOnlyOi = true;
                 continue;
@@ -140,7 +157,7 @@ var EntityInstance = (function () {
                     continue;
                 }
             }
-            throw "Unknown attribute " + attr + " for entity " + this.entityName;
+            error("Unknown attribute " + attr + " for entity " + this.entityName);
         }
     }
     Object.defineProperty(EntityInstance.prototype, "entityName", {
@@ -164,12 +181,17 @@ var EntityInstance = (function () {
         configurable: true
     });
     EntityInstance.prototype.setAttribute = function (attr, value, options) {
-        if (options === void 0) { options = {}; }
+        if (options === void 0) { options = DEFAULT_CREATE_OPTIONS; }
+        var attributeDef = this.attributeDefs[attr];
+        if (!attributeDef)
+            error("Attribute " + attr + " is unknown for entity " + this.entityDef.name);
+        if (!attributeDef.update && !options.incrementalsSpecified)
+            error("Attribute " + this.entityDef.name + "." + attr + " is read only");
         var attribs = this.getAttribHash(attr);
         if (attribs[attr] == value)
             return;
         attribs[attr] = value;
-        if (options.dontSetUpdate)
+        if (options.incrementalsSpecified)
             return;
         var metaAttr = "." + attr;
         if (!attribs[metaAttr])
@@ -263,7 +285,7 @@ var EntityArray = (function (_super) {
      */
     EntityArray.prototype.create = function (initialize, options) {
         if (initialize === void 0) { initialize = {}; }
-        if (options === void 0) { options = {}; }
+        if (options === void 0) { options = DEFAULT_CREATE_OPTIONS; }
         console.log("Creating entity " + this.entityName);
         var ei = Object.create(this.entityPrototype);
         ei.constructor.apply(ei, [initialize, this.oi, options]);
@@ -285,4 +307,36 @@ var EntityArray = (function (_super) {
     return EntityArray;
 }(Array));
 exports.EntityArray = EntityArray;
+var CreateOptions = (function () {
+    function CreateOptions() {
+        this.incrementalsSpecified = undefined;
+        this.readOnlyOi = false;
+    }
+    return CreateOptions;
+}());
+exports.CreateOptions = CreateOptions;
+var DEFAULT_CREATE_OPTIONS = new CreateOptions();
+var CommitOptions = (function () {
+    function CommitOptions() {
+    }
+    return CommitOptions;
+}());
+exports.CommitOptions = CommitOptions;
+var ActivateOptions = (function () {
+    function ActivateOptions() {
+    }
+    return ActivateOptions;
+}());
+exports.ActivateOptions = ActivateOptions;
+var error = function (message) {
+    var e = new Error('dummy');
+    var stack = e.stack.replace(/^[^\(]+?[\n$]/gm, '')
+        .replace(/^\s+at\s+/gm, '')
+        .replace(/^Object.<anonymous>\s*\(/gm, '{anonymous}()@')
+        .split('\n');
+    console.log(stack.join("\n"));
+    console.log(message);
+    alert(message);
+    throw message;
+};
 //# sourceMappingURL=zeidon.js.map
