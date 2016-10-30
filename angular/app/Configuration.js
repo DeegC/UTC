@@ -40,6 +40,10 @@ var Configuration = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Configuration.activate = function (options) {
+        if (options === void 0) { options = undefined; }
+        return zeidon.ObjectInstance.activateOi(new Configuration(), options);
+    };
     return Configuration;
 }(zeidon.ObjectInstance));
 exports.Configuration = Configuration;

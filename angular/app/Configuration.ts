@@ -27,6 +27,10 @@ export class Configuration extends zeidon.ObjectInstance {
     get Configuration$(): Configuration_Configuration {
         return this.roots.selected() as Configuration_Configuration;
     }
+
+    public static activate( options: zeidon.ActivateOptions = undefined ): Promise<Configuration> {
+        return zeidon.ObjectInstance.activateOi( new Configuration(), options );
+    }
 }
 
 

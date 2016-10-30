@@ -9,29 +9,31 @@ import * as zeidon from './zeidon';
 export class RestService {
     restUrl = 'http://localhost:8080/utc';
     constructor(private http: Http) { }
+    baseOptions = new zeidon.ActivateOptions( { 
+        restUrl: this.restUrl,
+        http: this.http,
+        errorHandler: this.handleError, 
+    });
 
     getConfigurationList(): Promise<Configuration>{
-        return this.http.get(`${this.restUrl}/Configuration`)
-                .toPromise()
-                .then(response => this.parseConfigurationResponse( response ) )
-                .catch(this.handleError);
+        return Configuration.activate( this.baseOptions );
     }
 
-    getConfiguration( id: number ): Promise<Configuration>{
-        return this.http.get(`${this.restUrl}/Configuration/${id}`)
-                .toPromise()
-                .then(response => this.parseConfigurationResponse( response ) )
-                .catch(this.handleError);
+    getConfiguration( id : number ): Promise<Configuration>{
+        let options = this.baseOptions.clone();
+        options.id = id;
+        return Configuration.activate( options );
     }
 
     saveConfiguration( configOi: Configuration ): Promise<Configuration> {
-        let body = JSON.stringify( configOi.toZeidonMeta() );
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
-        return this.http.post(`${this.restUrl}/Configuration`, body, options)
-            .toPromise()
-            .then(response => this.parseConfigurationResponse( response ) )
-            .catch(this.handleError);
+        return configOi.commit( this.baseOptions );
+        // let body = JSON.stringify( configOi.toZeidonMeta() );
+        // let headers = new Headers({ 'Content-Type': 'application/json' });
+        // let options = new RequestOptions({ headers: headers });
+        // return this.http.post(`${this.restUrl}/Configuration`, body, options)
+        //     .toPromise()
+        //     .then(response => this.parseConfigurationResponse( response ) )
+        //     .catch(this.handleError);
     }
 
     parseConfigurationResponse( response ): Configuration {

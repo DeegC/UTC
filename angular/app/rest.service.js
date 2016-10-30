@@ -12,34 +12,34 @@ var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 require('rxjs/add/operator/toPromise');
 var Configuration_1 = require('./Configuration');
+var zeidon = require('./zeidon');
 var RestService = (function () {
     function RestService(http) {
         this.http = http;
         this.restUrl = 'http://localhost:8080/utc';
+        this.baseOptions = new zeidon.ActivateOptions({
+            restUrl: this.restUrl,
+            http: this.http,
+            errorHandler: this.handleError,
+        });
     }
     RestService.prototype.getConfigurationList = function () {
-        var _this = this;
-        return this.http.get(this.restUrl + "/Configuration")
-            .toPromise()
-            .then(function (response) { return _this.parseConfigurationResponse(response); })
-            .catch(this.handleError);
+        return Configuration_1.Configuration.activate(this.baseOptions);
     };
     RestService.prototype.getConfiguration = function (id) {
-        var _this = this;
-        return this.http.get(this.restUrl + "/Configuration/" + id)
-            .toPromise()
-            .then(function (response) { return _this.parseConfigurationResponse(response); })
-            .catch(this.handleError);
+        var options = this.baseOptions.clone();
+        options.id = id;
+        return Configuration_1.Configuration.activate(options);
     };
     RestService.prototype.saveConfiguration = function (configOi) {
-        var _this = this;
-        var body = JSON.stringify(configOi.toZeidonMeta());
-        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
-        var options = new http_1.RequestOptions({ headers: headers });
-        return this.http.post(this.restUrl + "/Configuration", body, options)
-            .toPromise()
-            .then(function (response) { return _this.parseConfigurationResponse(response); })
-            .catch(this.handleError);
+        return configOi.commit(this.baseOptions);
+        // let body = JSON.stringify( configOi.toZeidonMeta() );
+        // let headers = new Headers({ 'Content-Type': 'application/json' });
+        // let options = new RequestOptions({ headers: headers });
+        // return this.http.post(`${this.restUrl}/Configuration`, body, options)
+        //     .toPromise()
+        //     .then(response => this.parseConfigurationResponse( response ) )
+        //     .catch(this.handleError);
     };
     RestService.prototype.parseConfigurationResponse = function (response) {
         if (response == "{}")

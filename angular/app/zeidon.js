@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var http_1 = require('@angular/http');
 var Application = (function () {
     function Application(lodDefs) {
         this.lodDefs = lodDefs;
@@ -61,13 +62,45 @@ var ObjectInstance = (function () {
         wrapper.OIs[0][this.getLodDef().name] = this.toJSON()[this.getLodDef().name];
         return wrapper;
     };
-    ObjectInstance.prototype.activate = function (options) {
-        var _this = this;
-        var lodName = this.getLodDef.name;
-        return options.http.get(options.restUrl + "/$lodName")
+    ObjectInstance.activateOi = function (oi, options) {
+        var lodName = oi.getLodDef().name;
+        var errorHandler = options.errorHandler || oi.handleActivateError;
+        var url = options.restUrl + "/" + lodName;
+        if (options.id) {
+            url = url + "/" + options.id; // Add the id to the URL.
+            return options.http.get(url)
+                .toPromise()
+                .then(function (response) { return oi.createFromJson(response.json(), DEFAULT_CREATE_OPTIONS); })
+                .catch(errorHandler);
+        }
+        // If we get here there's no qualification.  Set rootOnly if it's not.
+        if (options.rootOnly == undefined) {
+            options = new ActivateOptions(options);
+            options.rootOnly = true;
+        }
+        return options.http.get(url)
             .toPromise()
-            .then(function (response) { return _this.createFromJson(response, DEFAULT_CREATE_OPTIONS); })
-            .catch(this.handleActivateError);
+            .then(function (response) { return oi.createFromJson(response.json(), DEFAULT_CREATE_OPTIONS); })
+            .catch(errorHandler);
+    };
+    ObjectInstance.prototype.commit = function (options) {
+        var _this = this;
+        var lodName = this.getLodDef().name;
+        var body = JSON.stringify(this.toZeidonMeta());
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var reqOptions = new http_1.RequestOptions({ headers: headers });
+        var errorHandler = options.errorHandler || this.handleActivateError;
+        var url = options.restUrl + "/" + lodName;
+        return options.http.post(url, body, options)
+            .toPromise()
+            .then(function (response) { return _this.parseCommitResponse(response); })
+            .catch(errorHandler);
+    };
+    ObjectInstance.prototype.parseCommitResponse = function (response) {
+        if (response == "{}")
+            return this.createFromJson(undefined, DEFAULT_CREATE_OPTIONS);
+        var data = response.json();
+        return this.createFromJson(data, DEFAULT_CREATE_OPTIONS);
     };
     ObjectInstance.prototype.createFromJson = function (initialize, options) {
         if (typeof initialize == "string") {
@@ -85,8 +118,12 @@ var ObjectInstance = (function () {
             // not set the update flag when the attribute value is set.  The
             // flags will be set by the incrementals.
             if (oimeta && oimeta.incremental) {
-                if (options.incrementalsSpecified == undefined)
+                if (options.incrementalsSpecified == undefined) {
+                    // We're going to change the options so create a new one so we
+                    // don't override the original one.
+                    options = new CreateOptions(options);
                     options.incrementalsSpecified = true;
+                }
             }
             for (var _i = 0, _a = initialize.OIs[0][this.rootEntityName()]; _i < _a.length; _i++) {
                 var i = _a[_i];
@@ -102,6 +139,7 @@ var ObjectInstance = (function () {
         else {
             this.roots.create(initialize, options);
         }
+        return this;
     };
     ObjectInstance.prototype.handleActivateError = function (e) {
         console.log("There was an error: " + e);
@@ -182,6 +220,7 @@ var EntityInstance = (function () {
     });
     EntityInstance.prototype.setAttribute = function (attr, value, options) {
         if (options === void 0) { options = DEFAULT_CREATE_OPTIONS; }
+        console.log("Setting attribute " + attr);
         var attributeDef = this.attributeDefs[attr];
         if (!attributeDef)
             error("Attribute " + attr + " is unknown for entity " + this.entityDef.name);
@@ -307,26 +346,52 @@ var EntityArray = (function (_super) {
     return EntityArray;
 }(Array));
 exports.EntityArray = EntityArray;
-var CreateOptions = (function () {
+var OptionsConstructor = (function () {
+    function OptionsConstructor(initialize) {
+        if (initialize === void 0) { initialize = undefined; }
+        for (var i in initialize) {
+            this[i] = initialize[i];
+        }
+    }
+    return OptionsConstructor;
+}());
+var CreateOptions = (function (_super) {
+    __extends(CreateOptions, _super);
     function CreateOptions() {
+        _super.apply(this, arguments);
         this.incrementalsSpecified = undefined;
         this.readOnlyOi = false;
     }
     return CreateOptions;
-}());
+}(OptionsConstructor));
 exports.CreateOptions = CreateOptions;
-var DEFAULT_CREATE_OPTIONS = new CreateOptions();
-var CommitOptions = (function () {
+var DEFAULT_CREATE_OPTIONS = new CreateOptions({ incrementalsSpecified: false, readOnlyOi: false });
+var CommonOptions = (function (_super) {
+    __extends(CommonOptions, _super);
+    function CommonOptions() {
+        _super.apply(this, arguments);
+    }
+    return CommonOptions;
+}(OptionsConstructor));
+var CommitOptions = (function (_super) {
+    __extends(CommitOptions, _super);
     function CommitOptions() {
+        _super.apply(this, arguments);
     }
     return CommitOptions;
-}());
+}(CommonOptions));
 exports.CommitOptions = CommitOptions;
-var ActivateOptions = (function () {
+var ActivateOptions = (function (_super) {
+    __extends(ActivateOptions, _super);
     function ActivateOptions() {
+        _super.apply(this, arguments);
     }
+    // Quick and easy way to create a new instance of options with same values.
+    ActivateOptions.prototype.clone = function () {
+        return new ActivateOptions(this);
+    };
     return ActivateOptions;
-}());
+}(CommonOptions));
 exports.ActivateOptions = ActivateOptions;
 var error = function (message) {
     var e = new Error('dummy');

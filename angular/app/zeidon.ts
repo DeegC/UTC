@@ -1,3 +1,5 @@
+import { Headers, Http, RequestOptions } from '@angular/http';
+
 export class Application {
     lodDefs : Object;
 
@@ -19,7 +21,7 @@ export class ObjectInstance {
     public getLodDef(): any { throw "getLodDef must be overridden" };
     public getApplicationName(): String { throw "getApplicationName must be overriden" };
 
-    public getEntityAttributes( entityName: string ): any { 
+    public getEntityAttributes( entityName: string ): any {
         this.getLodDef().entities[ entityName ].attributes;
     };
 
@@ -59,15 +61,54 @@ export class ObjectInstance {
         return wrapper;
     }
 
-    activate( options: ActivateOptions ): Promise<ObjectInstance> {
-        let lodName = this.getLodDef.name;
-        return options.http.get(`${options.restUrl}/$lodName`)
+    public static activateOi( oi: ObjectInstance, options: ActivateOptions ): Promise<ObjectInstance> {
+        let lodName = oi.getLodDef().name;
+        let errorHandler = options.errorHandler || oi.handleActivateError;
+        let url = `${options.restUrl}/${lodName}`;
+
+        if ( options.id ) {
+            url = `${url}/${options.id}`; // Add the id to the URL.
+            return options.http.get( url )
+                    .toPromise()
+                    .then(response => oi.createFromJson( response.json(), DEFAULT_CREATE_OPTIONS ) )
+                    .catch( errorHandler );
+        }
+
+        // If we get here there's no qualification.  Set rootOnly if it's not.
+        if ( options.rootOnly == undefined ) {
+            options = new ActivateOptions( options );
+            options.rootOnly = true;
+        }
+
+        return options.http.get( url )
                 .toPromise()
-                .then(response => this.createFromJson( response, DEFAULT_CREATE_OPTIONS ) )
-                .catch(this.handleActivateError);
+                .then(response => oi.createFromJson( response.json(), DEFAULT_CREATE_OPTIONS ) )
+                .catch( errorHandler );
     }
 
-    private createFromJson( initialize, options: CreateOptions ) {
+    public commit( options: CommitOptions ) {
+        let lodName = this.getLodDef().name;
+        let body = JSON.stringify( this.toZeidonMeta() );
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let reqOptions = new RequestOptions({ headers: headers });
+        let errorHandler = options.errorHandler || this.handleActivateError;
+        let url = `${options.restUrl}/${lodName}`;
+
+        return options.http.post( url, body, options)
+            .toPromise()
+            .then(response => this.parseCommitResponse( response ) )
+            .catch( errorHandler );
+    }
+
+    parseCommitResponse( response ): ObjectInstance {
+        if ( response == "{}" )
+            return this.createFromJson( undefined, DEFAULT_CREATE_OPTIONS );
+
+        let data = response.json();
+        return this.createFromJson( data, DEFAULT_CREATE_OPTIONS );
+    }
+
+    private createFromJson( initialize, options: CreateOptions ): ObjectInstance {
         if ( typeof initialize == "string" ) {
             initialize = JSON.parse( initialize );
         }
@@ -86,8 +127,12 @@ export class ObjectInstance {
              // not set the update flag when the attribute value is set.  The
              // flags will be set by the incrementals.
              if ( oimeta && oimeta.incremental ) {
-                 if ( options.incrementalsSpecified == undefined )
-                    options.incrementalsSpecified = true;
+                 if ( options.incrementalsSpecified == undefined ) {
+                     // We're going to change the options so create a new one so we
+                     // don't override the original one.
+                     options = new CreateOptions( options );
+                     options.incrementalsSpecified = true;
+                 }
              }
 
             for ( let i of initialize.OIs[0][ this.rootEntityName() ] ) {
@@ -101,6 +146,8 @@ export class ObjectInstance {
         } else {
             this.roots.create( initialize, options );
         }
+
+        return this;
     }
     
     private handleActivateError( e ) {
@@ -179,6 +226,7 @@ export class EntityInstance {
     }
 
     protected setAttribute( attr: string, value: any, options: CreateOptions = DEFAULT_CREATE_OPTIONS ) {
+        console.log( `Setting attribute ${attr}`)
         let attributeDef = this.attributeDefs[ attr ];
 
         if ( ! attributeDef )
@@ -334,20 +382,46 @@ export class EntityArray<EntityInstance> extends Array<EntityInstance> {
     }
 }
 
-export class CreateOptions {
-    incrementalsSpecified = undefined;
-    readOnlyOi = false;
-}
-const DEFAULT_CREATE_OPTIONS = new CreateOptions();
-
-export class CommitOptions {
-    http: any;
-    restUrl: string;
+class OptionsConstructor {
+    constructor( initialize = undefined ) {
+        for ( let i in initialize ) {
+            this[i] = initialize[i];
+        }
+    }
 }
 
-export class ActivateOptions {
-    http: any;
+export class CreateOptions extends OptionsConstructor {
+    incrementalsSpecified? : boolean = undefined;
+    readOnlyOi? : boolean = false;
+}
+const DEFAULT_CREATE_OPTIONS = new CreateOptions( { incrementalsSpecified: false, readOnlyOi: false } );
+
+class CommonOptions extends OptionsConstructor {
+    // HTTP object for making HTTP calls.
+    http: Http;
+
+    // URL for handling the REST calls.
     restUrl: string;
+
+    // Error handler called if there is an error.
+    errorHandler?: (error:any) => void;
+}
+
+export class CommitOptions extends CommonOptions{
+}
+
+export class ActivateOptions extends CommonOptions {
+    // If specified, then the OI will be activated using this root ID.
+    id?: any;
+
+    // If true then only load the roots.  If undefined then it assumed to be
+    // true if there is no qualification.
+    rootOnly? : boolean;
+
+    // Quick and easy way to create a new instance of options with same values.
+    public clone?() : ActivateOptions {
+        return new ActivateOptions( this );
+    }
 }
 
 let error = function ( message: string ) {
