@@ -18,8 +18,21 @@ var configuration_list_component_1 = require('./configuration-list.component');
 var configuration_component_1 = require('./configuration.component');
 var rest_service_1 = require('./rest.service');
 var session_component_1 = require('./session.component');
+var zeidon = require('./zeidon');
 var AppModule = (function () {
-    function AppModule() {
+    function AppModule(http) {
+        // Set up some default Zeidon options.
+        this.http = http;
+        var defaultActivateOptions = new zeidon.ActivateOptions({
+            restUrl: 'http://localhost:8080/utc',
+            http: this.http,
+        });
+        window.ZeidonActivateOptions = defaultActivateOptions;
+        var defaultCommitOptions = new zeidon.CommitOptions({
+            restUrl: 'http://localhost:8080/utc',
+            http: this.http,
+        });
+        window.ZeidonCommitOptions = defaultCommitOptions;
     }
     AppModule = __decorate([
         core_1.NgModule({
@@ -49,7 +62,7 @@ var AppModule = (function () {
             providers: [rest_service_1.RestService],
             bootstrap: [app_component_1.AppComponent]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [http_1.Http])
     ], AppModule);
     return AppModule;
 }());

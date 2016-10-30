@@ -27,10 +27,6 @@ var ObjectInstance = (function () {
     ;
     ObjectInstance.prototype.getApplicationName = function () { throw "getApplicationName must be overriden"; };
     ;
-    ObjectInstance.prototype.getEntityAttributes = function (entityName) {
-        this.getLodDef().entities[entityName].attributes;
-    };
-    ;
     ObjectInstance.prototype.toJSON = function () {
         console.log("JSON for Configuration OI");
         var jarray = [];
@@ -44,7 +40,7 @@ var ObjectInstance = (function () {
         return json;
     };
     /**
-     * Wrap the JSON for this object with Zeidon OI meta.
+     * Wrap the JSON for this object with Zeidon OI meta.  Used for committing.
      */
     ObjectInstance.prototype.toZeidonMeta = function () {
         var wrapper = {
@@ -63,6 +59,12 @@ var ObjectInstance = (function () {
         return wrapper;
     };
     ObjectInstance.activateOi = function (oi, options) {
+        if (options == undefined) {
+            options = window.ZeidonActivateOptions;
+        }
+        if (options == undefined) {
+            error("ActivateOptions must be specified in the activate call or in window object");
+        }
         var lodName = oi.getLodDef().name;
         var errorHandler = options.errorHandler || oi.handleActivateError;
         var url = options.restUrl + "/" + lodName;
@@ -75,7 +77,7 @@ var ObjectInstance = (function () {
         }
         // If we get here there's no qualification.  Set rootOnly if it's not.
         if (options.rootOnly == undefined) {
-            options = new ActivateOptions(options);
+            options = options.clone();
             options.rootOnly = true;
         }
         return options.http.get(url)
@@ -85,6 +87,12 @@ var ObjectInstance = (function () {
     };
     ObjectInstance.prototype.commit = function (options) {
         var _this = this;
+        if (options == undefined) {
+            options = window.ZeidonCommitOptions;
+        }
+        if (options == undefined) {
+            error("CommitOptions must be specified in the activate call or in localStorage");
+        }
         var lodName = this.getLodDef().name;
         var body = JSON.stringify(this.toZeidonMeta());
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
@@ -121,7 +129,7 @@ var ObjectInstance = (function () {
                 if (options.incrementalsSpecified == undefined) {
                     // We're going to change the options so create a new one so we
                     // don't override the original one.
-                    options = new CreateOptions(options);
+                    options = options.clone();
                     options.incrementalsSpecified = true;
                 }
             }
@@ -353,6 +361,16 @@ var OptionsConstructor = (function () {
             this[i] = initialize[i];
         }
     }
+    OptionsConstructor.prototype.toString = function () {
+        return JSON.stringify(this);
+    };
+    // Quick and easy way to create a new instance of options with same values.
+    OptionsConstructor.prototype.clone = function () {
+        var proto = Object.getPrototypeOf(this);
+        var options = Object.create(proto);
+        options.constructor.apply(options, [this]);
+        return options;
+    };
     return OptionsConstructor;
 }());
 var CreateOptions = (function (_super) {
@@ -386,10 +404,6 @@ var ActivateOptions = (function (_super) {
     function ActivateOptions() {
         _super.apply(this, arguments);
     }
-    // Quick and easy way to create a new instance of options with same values.
-    ActivateOptions.prototype.clone = function () {
-        return new ActivateOptions(this);
-    };
     return ActivateOptions;
 }(CommonOptions));
 exports.ActivateOptions = ActivateOptions;

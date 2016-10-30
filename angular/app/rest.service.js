@@ -24,7 +24,7 @@ var RestService = (function () {
         });
     }
     RestService.prototype.getConfigurationList = function () {
-        return Configuration_1.Configuration.activate(this.baseOptions);
+        return Configuration_1.Configuration.activate();
     };
     RestService.prototype.getConfiguration = function (id) {
         var options = this.baseOptions.clone();
@@ -33,35 +33,6 @@ var RestService = (function () {
     };
     RestService.prototype.saveConfiguration = function (configOi) {
         return configOi.commit(this.baseOptions);
-        // let body = JSON.stringify( configOi.toZeidonMeta() );
-        // let headers = new Headers({ 'Content-Type': 'application/json' });
-        // let options = new RequestOptions({ headers: headers });
-        // return this.http.post(`${this.restUrl}/Configuration`, body, options)
-        //     .toPromise()
-        //     .then(response => this.parseConfigurationResponse( response ) )
-        //     .catch(this.handleError);
-    };
-    RestService.prototype.parseConfigurationResponse = function (response) {
-        if (response == "{}")
-            return new Configuration_1.Configuration(); // Return an empty config.
-        var data = response.json();
-        return new Configuration_1.Configuration(data);
-        /*
-                return new Configuration( [
-                    {
-                        Id: 100,
-                        Description: "Configuration 1",
-                        TargetTemperature: 225,
-                        ThermometerCount: 1
-                    },
-                    {
-                        Id: 101,
-                        Description: "Configuration 2",
-                        TargetTemperature: 200,
-                        ThermometerCount: 1
-                    }
-                ]);
-        */
     };
     RestService.prototype.handleError = function (e) {
         console.log("There was an error: " + e);

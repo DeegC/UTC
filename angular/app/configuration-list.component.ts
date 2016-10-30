@@ -34,7 +34,10 @@ export class ConfigurationListComponent implements OnInit {
     }    
 
     getConfigurationList(): void {
-        this.restService.getConfigurationList().then( configList => {
+        let options = this.baseOptions.clone();
+        options.id = id;
+        return Configuration.activate( options );
+        Configuration.activate().then( configList => {
             this.configurationList = configList; 
         } );
     }    

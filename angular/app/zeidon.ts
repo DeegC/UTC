@@ -21,10 +21,6 @@ export class ObjectInstance {
     public getLodDef(): any { throw "getLodDef must be overridden" };
     public getApplicationName(): String { throw "getApplicationName must be overriden" };
 
-    public getEntityAttributes( entityName: string ): any {
-        this.getLodDef().entities[ entityName ].attributes;
-    };
-
     public toJSON(): Object {
         console.log("JSON for Configuration OI" );
 
@@ -39,9 +35,9 @@ export class ObjectInstance {
     }
 
     /**
-     * Wrap the JSON for this object with Zeidon OI meta.
+     * Wrap the JSON for this object with Zeidon OI meta.  Used for committing.
      */
-    public toZeidonMeta() : Object {
+    toZeidonMeta() : Object {
         let wrapper = {
             ".meta": { version: "1" },
             OIs : [ {
@@ -61,7 +57,15 @@ export class ObjectInstance {
         return wrapper;
     }
 
-    public static activateOi( oi: ObjectInstance, options: ActivateOptions ): Promise<ObjectInstance> {
+    public static activateOi( oi: ObjectInstance, options?: ActivateOptions ): Promise<ObjectInstance> {
+        if ( options == undefined ){
+            options = (<any>window).ZeidonActivateOptions;
+        }
+
+        if ( options == undefined ){
+            error( "ActivateOptions must be specified in the activate call or in window object" );
+        }
+
         let lodName = oi.getLodDef().name;
         let errorHandler = options.errorHandler || oi.handleActivateError;
         let url = `${options.restUrl}/${lodName}`;
@@ -76,7 +80,7 @@ export class ObjectInstance {
 
         // If we get here there's no qualification.  Set rootOnly if it's not.
         if ( options.rootOnly == undefined ) {
-            options = new ActivateOptions( options );
+            options = options.clone();
             options.rootOnly = true;
         }
 
@@ -86,7 +90,15 @@ export class ObjectInstance {
                 .catch( errorHandler );
     }
 
-    public commit( options: CommitOptions ) {
+    public commit( options: CommitOptions ): Promise<this> {
+        if ( options == undefined ){
+            options = (<any>window).ZeidonCommitOptions;
+        }
+
+        if ( options == undefined ){
+            error( "CommitOptions must be specified in the activate call or in localStorage" );
+        }
+
         let lodName = this.getLodDef().name;
         let body = JSON.stringify( this.toZeidonMeta() );
         let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -100,7 +112,7 @@ export class ObjectInstance {
             .catch( errorHandler );
     }
 
-    parseCommitResponse( response ): ObjectInstance {
+    parseCommitResponse( response ): this {
         if ( response == "{}" )
             return this.createFromJson( undefined, DEFAULT_CREATE_OPTIONS );
 
@@ -108,7 +120,7 @@ export class ObjectInstance {
         return this.createFromJson( data, DEFAULT_CREATE_OPTIONS );
     }
 
-    private createFromJson( initialize, options: CreateOptions ): ObjectInstance {
+    private createFromJson( initialize, options: CreateOptions ): this {
         if ( typeof initialize == "string" ) {
             initialize = JSON.parse( initialize );
         }
@@ -130,7 +142,7 @@ export class ObjectInstance {
                  if ( options.incrementalsSpecified == undefined ) {
                      // We're going to change the options so create a new one so we
                      // don't override the original one.
-                     options = new CreateOptions( options );
+                     options = options.clone();
                      options.incrementalsSpecified = true;
                  }
              }
@@ -388,6 +400,18 @@ class OptionsConstructor {
             this[i] = initialize[i];
         }
     }
+
+    public toString(): string {
+        return JSON.stringify( this );
+    }
+
+    // Quick and easy way to create a new instance of options with same values.
+    public clone() : this {
+        let proto = Object.getPrototypeOf( this );
+        let options = Object.create( proto );
+        options.constructor.apply(options, [ this ] );
+        return options;
+    }
 }
 
 export class CreateOptions extends OptionsConstructor {
@@ -417,11 +441,6 @@ export class ActivateOptions extends CommonOptions {
     // If true then only load the roots.  If undefined then it assumed to be
     // true if there is no qualification.
     rootOnly? : boolean;
-
-    // Quick and easy way to create a new instance of options with same values.
-    public clone?() : ActivateOptions {
-        return new ActivateOptions( this );
-    }
 }
 
 let error = function ( message: string ) {

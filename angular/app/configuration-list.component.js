@@ -20,7 +20,10 @@ var ConfigurationListComponent = (function () {
     };
     ConfigurationListComponent.prototype.getConfigurationList = function () {
         var _this = this;
-        this.restService.getConfigurationList().then(function (configList) {
+        var options = this.baseOptions.clone();
+        options.id = id;
+        return Configuration_1.Configuration.activate(options);
+        Configuration_1.Configuration.activate().then(function (configList) {
             _this.configurationList = configList;
         });
     };
