@@ -474,17 +474,21 @@ export class ZeidonConfiguration {
     }
 
     getActivator() : Activator { return this.activator; }
-    getCommitter() : Committer { return this.committer }
+    getCommitter() : Committer { return this.committer; }
 }
 
 export let ZeidonRestUrl = new OpaqueToken('zeidon.rest.url');
 
 @Injectable()
-export class ZeidonRestConfiguration extends ZeidonConfiguration {
+export class ZeidonRestValues {
+    restUrl: string;
+}
 
-    constructor( @Inject(ZeidonRestUrl) url: string, private http: Http ) {
-        super( new RestActivator( url, http ), new RestCommitter( url, http ) );
-        console.log("--- ZeidonRestConfiguration --- " + url );
+@Injectable()
+export class ZeidonRestConfiguration extends ZeidonConfiguration {
+    constructor( private values: ZeidonRestValues, private http: Http ) {
+        super( new RestActivator( values.restUrl, http ), new RestCommitter( values.restUrl, http ) );
+        console.log("--- ZeidonRestConfiguration --- " + values.restUrl );
     }
 }
 

@@ -11,6 +11,9 @@ import { RestService }   from './rest.service';
 import { SessionComponent }   from './session.component';
 import * as zeidon from './zeidon';
 
+const REST_VALUES: zeidon.ZeidonRestValues = {
+  restUrl: "http://localhost:8080/utc"
+};
 
 @NgModule({
   imports:      [ BrowserModule, 
@@ -37,7 +40,7 @@ import * as zeidon from './zeidon';
                   ConfigurationComponent,
                   SessionComponent ],
   providers: [ RestService,
-               { provide: zeidon.ZeidonRestUrl, useValue: "http://localhost:8080/utc" },
+               { provide: zeidon.ZeidonRestValues, useValue: REST_VALUES },
                { provide: zeidon.ZeidonConfiguration, useClass: zeidon.ZeidonRestConfiguration },
              ],
   bootstrap: [ AppComponent ]

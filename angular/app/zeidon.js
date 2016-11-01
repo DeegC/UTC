@@ -13,9 +13,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 var http_1 = require('@angular/http');
 var core_1 = require('@angular/core');
 var core_2 = require('@angular/core');
@@ -470,17 +467,27 @@ var ZeidonConfiguration = (function () {
 }());
 exports.ZeidonConfiguration = ZeidonConfiguration;
 exports.ZeidonRestUrl = new core_1.OpaqueToken('zeidon.rest.url');
+var ZeidonRestValues = (function () {
+    function ZeidonRestValues() {
+    }
+    ZeidonRestValues = __decorate([
+        core_2.Injectable(), 
+        __metadata('design:paramtypes', [])
+    ], ZeidonRestValues);
+    return ZeidonRestValues;
+}());
+exports.ZeidonRestValues = ZeidonRestValues;
 var ZeidonRestConfiguration = (function (_super) {
     __extends(ZeidonRestConfiguration, _super);
-    function ZeidonRestConfiguration(url, http) {
-        _super.call(this, new RestActivator(url, http), new RestCommitter(url, http));
+    function ZeidonRestConfiguration(values, http) {
+        _super.call(this, new RestActivator(values.restUrl, http), new RestCommitter(values.restUrl, http));
+        this.values = values;
         this.http = http;
-        console.log("--- ZeidonRestConfiguration --- " + url);
+        console.log("--- ZeidonRestConfiguration --- " + values.restUrl);
     }
     ZeidonRestConfiguration = __decorate([
-        core_2.Injectable(),
-        __param(0, core_2.Inject(exports.ZeidonRestUrl)), 
-        __metadata('design:paramtypes', [String, http_1.Http])
+        core_2.Injectable(), 
+        __metadata('design:paramtypes', [ZeidonRestValues, http_1.Http])
     ], ZeidonRestConfiguration);
     return ZeidonRestConfiguration;
 }(ZeidonConfiguration));
