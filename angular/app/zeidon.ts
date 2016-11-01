@@ -195,7 +195,7 @@ export class EntityInstance {
     }
 
     protected setAttribute( attr: string, value: any, options: CreateOptions = DEFAULT_CREATE_OPTIONS ) {
-        console.log( `Setting attribute ${attr}`)
+    //    console.log( `Setting attribute ${attr}`)
         let attributeDef = this.attributeDefs[ attr ];
 
         if ( ! attributeDef )
@@ -326,7 +326,7 @@ export class EntityArray<EntityInstance> extends Array<EntityInstance> {
      * Create an entity at the end of the current entity list.
      */
     create( initialize : Object = {}, options: CreateOptions = DEFAULT_CREATE_OPTIONS ): EntityInstance {
-        console.log("Creating entity " + this.entityName );
+    //    console.log("Creating entity " + this.entityName );
         let ei = Object.create( this.entityPrototype );
         ei.constructor.apply(ei, [ initialize, this.oi, options] );
         this.push(ei);
@@ -344,6 +344,7 @@ export class EntityArray<EntityInstance> extends Array<EntityInstance> {
             this.hiddenEntities = new Array<EntityInstance>();
 
         this.hiddenEntities.push( this[ index ] );
+        throw "Still needs implemnting";
     }
 
     selected(): EntityInstance {
@@ -377,11 +378,6 @@ export class CreateOptions extends OptionsConstructor {
 }
 const DEFAULT_CREATE_OPTIONS = new CreateOptions( { incrementalsSpecified: false, readOnlyOi: false } );
 
-export interface AppConfig {
-  apiEndpoint: string;
-  title: string;
-}
-
 @Injectable()
 export class Activator {
     activateOi( oi: ObjectInstance, options?: ActivateOptions ): Promise<ObjectInstance> {
@@ -394,9 +390,8 @@ export class Activator {
 
 @Injectable()
 export class RestActivator {
-    constructor( private restUrl: string, private http: Http ) {
-        console.log("--- RestActivator --- " );
-    }
+    constructor( private restUrl: string, private http: Http ) {}
+
     activateOi( oi: ObjectInstance, options?: ActivateOptions ): Promise<ObjectInstance> {
         if ( options == undefined )
             options = new ActivateOptions();
@@ -438,9 +433,7 @@ export class Committer {
 
 @Injectable()
 export class RestCommitter implements Committer {
-    constructor( private restUrl: string, private http: Http ) {
-        console.log("--- RestCommitter --- " );
-    }
+    constructor( private restUrl: string, private http: Http ) {}
 
     commitOi( oi: ObjectInstance, options?: CommitOptions ): Promise<ObjectInstance> {
         let lodName = oi.getLodDef().name;
@@ -469,7 +462,7 @@ export class RestCommitter implements Committer {
 @Injectable()
 export class ZeidonConfiguration {
     constructor( private activator: Activator, private committer: Committer ) {
-        console.log("--- ZeidonConfiguration --- " );
+        // Set the private global variable to this configuration.
         configurationInstance = this;
     }
 
@@ -477,8 +470,9 @@ export class ZeidonConfiguration {
     getCommitter() : Committer { return this.committer; }
 }
 
-export let ZeidonRestUrl = new OpaqueToken('zeidon.rest.url');
-
+/**
+ * These are the values for configuring Zeidon to use a REST server for activate/commits.
+ */
 @Injectable()
 export class ZeidonRestValues {
     restUrl: string;
@@ -487,7 +481,8 @@ export class ZeidonRestValues {
 @Injectable()
 export class ZeidonRestConfiguration extends ZeidonConfiguration {
     constructor( private values: ZeidonRestValues, private http: Http ) {
-        super( new RestActivator( values.restUrl, http ), new RestCommitter( values.restUrl, http ) );
+        super( new RestActivator( values.restUrl, http ), 
+               new RestCommitter( values.restUrl, http ) );
         console.log("--- ZeidonRestConfiguration --- " + values.restUrl );
     }
 }

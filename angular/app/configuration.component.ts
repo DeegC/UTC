@@ -5,15 +5,15 @@ import { RestService } from './rest.service';
 @Component({
   selector: 'configuration-detail',
   template: `
-  <div *ngIf="configuration">
+  <div *ngIf="configOi">
     <h2>Configuration Details</h2>
-    <div><label>Id: </label>{{configuration.Configuration$.Id}}</div>
+    <div><label>Id: </label>{{configOi.Configuration$.Id}}</div>
     <div>
       <label>Description: </label>
-      <input [(ngModel)]="configuration.Configuration$.Description" placeholder="Description"/>
+      <input [(ngModel)]="configOi.Configuration$.Description" placeholder="Description"/>
     </div>
     <h3>Thermometers</h3>
-    <div *ngFor="let therm of configuration.Configuration$.ThermometerConfig" >
+    <div *ngFor="let therm of configOi.Configuration$.ThermometerConfig" >
       <div>
         <label>name: </label>
         <input [(ngModel)]="therm.Name" placeholder="name"/>
@@ -28,12 +28,11 @@ import { RestService } from './rest.service';
 })
 export class ConfigurationComponent {
     @Input()
-    configuration: Configuration;
+    configOi: Configuration;
 
     constructor( private restService: RestService ) { }
 
     save(): void {
-        this.restService.saveConfiguration( this.configuration)
-                        .then( config => this.configuration = config ); 
+        this.configOi.commit().then( config => this.configOi = config ); 
     }
 }

@@ -20,7 +20,7 @@ import * as zeidon from './zeidon';
   <button (click)="newConfiguration()">
         New Configuration
   </button>
-  <configuration-detail [configuration]="selectedConfigOi"></configuration-detail>
+  <configuration-detail [configOi]="selectedConfigOi"></configuration-detail>
 `,
     styleUrls: ['app/configuration.css'],
     providers: [RestService]
@@ -49,6 +49,7 @@ export class ConfigurationListComponent implements OnInit {
     }
     
     newConfiguration(): void {
+        // Instantiate a new Configuration with a single ThermometerConfig.
         this.selectedConfigOi = new Configuration( { ThermometerConfig: {} } );
     }
 }

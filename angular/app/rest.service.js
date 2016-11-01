@@ -11,35 +11,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 require('rxjs/add/operator/toPromise');
-var Configuration_1 = require('./Configuration');
 var zeidon = require('./zeidon');
 var RestService = (function () {
-    function RestService(http) {
+    function RestService(http, values) {
         this.http = http;
-        this.restUrl = 'http://localhost:8080/utc';
-        this.baseOptions = new zeidon.ActivateOptions({
-            restUrl: this.restUrl,
-            http: this.http,
-            errorHandler: this.handleError,
-        });
+        this.values = values;
     }
-    RestService.prototype.getConfigurationList = function () {
-        return Configuration_1.Configuration.activate();
-    };
-    RestService.prototype.getConfiguration = function (id) {
-        var options = this.baseOptions.clone();
-        options.id = id;
-        return Configuration_1.Configuration.activate(options);
-    };
-    RestService.prototype.saveConfiguration = function (configOi) {
-        return configOi.commit(this.baseOptions);
-    };
     RestService.prototype.handleError = function (e) {
         console.log("There was an error: " + e);
     };
     RestService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [http_1.Http, zeidon.ZeidonRestValues])
     ], RestService);
     return RestService;
 }());

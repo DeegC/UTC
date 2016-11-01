@@ -33,12 +33,13 @@ var ConfigurationListComponent = (function () {
         });
     };
     ConfigurationListComponent.prototype.newConfiguration = function () {
+        // Instantiate a new Configuration with a single ThermometerConfig.
         this.selectedConfigOi = new Configuration_1.Configuration({ ThermometerConfig: {} });
     };
     ConfigurationListComponent = __decorate([
         core_1.Component({
             selector: 'configuration-list',
-            template: "\n  <div *ngIf=\"configurationList\">\n    <ul class=\"configurations\">\n        <li *ngFor=\"let config of configurationList.Configuration\" \n            [class.selected]=\"selectedConfigOi && selectedConfigOi.Configuration$.Id == config.Id\"\n            (click)=\"onSelect(config)\">\n        <span class=\"badge\">{{config.Id}}</span> {{config.Description}}\n        </li>\n    </ul>\n  </div>\n  <button (click)=\"newConfiguration()\">\n        New Configuration\n  </button>\n  <configuration-detail [configuration]=\"selectedConfigOi\"></configuration-detail>\n",
+            template: "\n  <div *ngIf=\"configurationList\">\n    <ul class=\"configurations\">\n        <li *ngFor=\"let config of configurationList.Configuration\" \n            [class.selected]=\"selectedConfigOi && selectedConfigOi.Configuration$.Id == config.Id\"\n            (click)=\"onSelect(config)\">\n        <span class=\"badge\">{{config.Id}}</span> {{config.Description}}\n        </li>\n    </ul>\n  </div>\n  <button (click)=\"newConfiguration()\">\n        New Configuration\n  </button>\n  <configuration-detail [configOi]=\"selectedConfigOi\"></configuration-detail>\n",
             styleUrls: ['app/configuration.css'],
             providers: [rest_service_1.RestService]
         }), 

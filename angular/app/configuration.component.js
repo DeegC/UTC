@@ -17,17 +17,16 @@ var ConfigurationComponent = (function () {
     }
     ConfigurationComponent.prototype.save = function () {
         var _this = this;
-        this.restService.saveConfiguration(this.configuration)
-            .then(function (config) { return _this.configuration = config; });
+        this.configOi.commit().then(function (config) { return _this.configOi = config; });
     };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Configuration_1.Configuration)
-    ], ConfigurationComponent.prototype, "configuration", void 0);
+    ], ConfigurationComponent.prototype, "configOi", void 0);
     ConfigurationComponent = __decorate([
         core_1.Component({
             selector: 'configuration-detail',
-            template: "\n  <div *ngIf=\"configuration\">\n    <h2>Configuration Details</h2>\n    <div><label>Id: </label>{{configuration.Configuration$.Id}}</div>\n    <div>\n      <label>Description: </label>\n      <input [(ngModel)]=\"configuration.Configuration$.Description\" placeholder=\"Description\"/>\n    </div>\n    <h3>Thermometers</h3>\n    <div *ngFor=\"let therm of configuration.Configuration$.ThermometerConfig\" >\n      <div>\n        <label>name: </label>\n        <input [(ngModel)]=\"therm.Name\" placeholder=\"name\"/>\n      </div>\n      <div><label>Therm name </label>{{therm.Name}}</div>\n    </div>\n    <button (click)=\"save()\">\n      Save\n    </button>\n    </div>\n"
+            template: "\n  <div *ngIf=\"configOi\">\n    <h2>Configuration Details</h2>\n    <div><label>Id: </label>{{configOi.Configuration$.Id}}</div>\n    <div>\n      <label>Description: </label>\n      <input [(ngModel)]=\"configOi.Configuration$.Description\" placeholder=\"Description\"/>\n    </div>\n    <h3>Thermometers</h3>\n    <div *ngFor=\"let therm of configOi.Configuration$.ThermometerConfig\" >\n      <div>\n        <label>name: </label>\n        <input [(ngModel)]=\"therm.Name\" placeholder=\"name\"/>\n      </div>\n      <div><label>Therm name </label>{{therm.Name}}</div>\n    </div>\n    <button (click)=\"save()\">\n      Save\n    </button>\n    </div>\n"
         }), 
         __metadata('design:paramtypes', [rest_service_1.RestService])
     ], ConfigurationComponent);

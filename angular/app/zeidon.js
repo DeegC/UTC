@@ -15,7 +15,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var http_1 = require('@angular/http');
 var core_1 = require('@angular/core');
-var core_2 = require('@angular/core');
 var configurationInstance = undefined;
 var Application = (function () {
     function Application(lodDefs) {
@@ -200,7 +199,7 @@ var EntityInstance = (function () {
     });
     EntityInstance.prototype.setAttribute = function (attr, value, options) {
         if (options === void 0) { options = DEFAULT_CREATE_OPTIONS; }
-        console.log("Setting attribute " + attr);
+        //    console.log( `Setting attribute ${attr}`)
         var attributeDef = this.attributeDefs[attr];
         if (!attributeDef)
             error("Attribute " + attr + " is unknown for entity " + this.entityDef.name);
@@ -305,7 +304,7 @@ var EntityArray = (function (_super) {
     EntityArray.prototype.create = function (initialize, options) {
         if (initialize === void 0) { initialize = {}; }
         if (options === void 0) { options = DEFAULT_CREATE_OPTIONS; }
-        console.log("Creating entity " + this.entityName);
+        //    console.log("Creating entity " + this.entityName );
         var ei = Object.create(this.entityPrototype);
         ei.constructor.apply(ei, [initialize, this.oi, options]);
         this.push(ei);
@@ -319,6 +318,7 @@ var EntityArray = (function (_super) {
         if (!this.hiddenEntities)
             this.hiddenEntities = new Array();
         this.hiddenEntities.push(this[index]);
+        throw "Still needs implemnting";
     };
     EntityArray.prototype.selected = function () {
         return this[this.currentlySelected];
@@ -363,7 +363,7 @@ var Activator = (function () {
         throw "activateOi has not been implemented";
     };
     Activator = __decorate([
-        core_2.Injectable(), 
+        core_1.Injectable(), 
         __metadata('design:paramtypes', [])
     ], Activator);
     return Activator;
@@ -373,7 +373,6 @@ var RestActivator = (function () {
     function RestActivator(restUrl, http) {
         this.restUrl = restUrl;
         this.http = http;
-        console.log("--- RestActivator --- ");
     }
     RestActivator.prototype.activateOi = function (oi, options) {
         if (options == undefined)
@@ -399,7 +398,7 @@ var RestActivator = (function () {
             .catch(errorHandler);
     };
     RestActivator = __decorate([
-        core_2.Injectable(), 
+        core_1.Injectable(), 
         __metadata('design:paramtypes', [String, http_1.Http])
     ], RestActivator);
     return RestActivator;
@@ -412,7 +411,7 @@ var Committer = (function () {
         throw "commitOi has not been implemented";
     };
     Committer = __decorate([
-        core_2.Injectable(), 
+        core_1.Injectable(), 
         __metadata('design:paramtypes', [])
     ], Committer);
     return Committer;
@@ -422,7 +421,6 @@ var RestCommitter = (function () {
     function RestCommitter(restUrl, http) {
         this.restUrl = restUrl;
         this.http = http;
-        console.log("--- RestCommitter --- ");
     }
     RestCommitter.prototype.commitOi = function (oi, options) {
         var _this = this;
@@ -444,7 +442,7 @@ var RestCommitter = (function () {
         return oi.createFromJson(data, DEFAULT_CREATE_OPTIONS);
     };
     RestCommitter = __decorate([
-        core_2.Injectable(), 
+        core_1.Injectable(), 
         __metadata('design:paramtypes', [String, http_1.Http])
     ], RestCommitter);
     return RestCommitter;
@@ -454,24 +452,26 @@ var ZeidonConfiguration = (function () {
     function ZeidonConfiguration(activator, committer) {
         this.activator = activator;
         this.committer = committer;
-        console.log("--- ZeidonConfiguration --- ");
+        // Set the private global variable to this configuration.
         configurationInstance = this;
     }
     ZeidonConfiguration.prototype.getActivator = function () { return this.activator; };
     ZeidonConfiguration.prototype.getCommitter = function () { return this.committer; };
     ZeidonConfiguration = __decorate([
-        core_2.Injectable(), 
+        core_1.Injectable(), 
         __metadata('design:paramtypes', [Activator, Committer])
     ], ZeidonConfiguration);
     return ZeidonConfiguration;
 }());
 exports.ZeidonConfiguration = ZeidonConfiguration;
-exports.ZeidonRestUrl = new core_1.OpaqueToken('zeidon.rest.url');
+/**
+ * These are the values for configuring Zeidon to use a REST server for activate/commits.
+ */
 var ZeidonRestValues = (function () {
     function ZeidonRestValues() {
     }
     ZeidonRestValues = __decorate([
-        core_2.Injectable(), 
+        core_1.Injectable(), 
         __metadata('design:paramtypes', [])
     ], ZeidonRestValues);
     return ZeidonRestValues;
@@ -486,7 +486,7 @@ var ZeidonRestConfiguration = (function (_super) {
         console.log("--- ZeidonRestConfiguration --- " + values.restUrl);
     }
     ZeidonRestConfiguration = __decorate([
-        core_2.Injectable(), 
+        core_1.Injectable(), 
         __metadata('design:paramtypes', [ZeidonRestValues, http_1.Http])
     ], ZeidonRestConfiguration);
     return ZeidonRestConfiguration;
