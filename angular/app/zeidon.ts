@@ -61,7 +61,7 @@ export class ObjectInstance {
         return wrapper;
     }
 
-    public static activateOi( oi: ObjectInstance, options?: ActivateOptions ): Promise<ObjectInstance> {
+    protected static activateOi( oi: ObjectInstance, options?: ActivateOptions ): Promise<ObjectInstance> {
         let config = configurationInstance;
         if ( ! config )
             error( "ZeidonConfiguration not properly initiated.")
