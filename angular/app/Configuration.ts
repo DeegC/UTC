@@ -1,6 +1,6 @@
 
 /*
-  Generated from LOD Configuration on 2016-10-28T07:40:13.422
+  Generated from LOD Configuration on 2016-10-30T00:14:11.304
 
 */
 import * as zeidon from './zeidon';
@@ -28,7 +28,7 @@ export class Configuration extends zeidon.ObjectInstance {
         return this.roots.selected() as Configuration_Configuration;
     }
 
-    public static activate( options: zeidon.ActivateOptions = undefined ): Promise<Configuration> {
+    public static activate( options?: zeidon.ActivateOptions ): Promise<Configuration> {
         return zeidon.ObjectInstance.activateOi( new Configuration(), options );
     }
 }

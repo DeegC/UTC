@@ -1,4 +1,8 @@
 import { Headers, Http, RequestOptions } from '@angular/http';
+import { OpaqueToken } from '@angular/core';
+import { Injectable, Inject }    from '@angular/core';
+
+let configurationInstance: ZeidonConfiguration = undefined;
 
 export class Application {
     lodDefs : Object;
@@ -58,69 +62,22 @@ export class ObjectInstance {
     }
 
     public static activateOi( oi: ObjectInstance, options?: ActivateOptions ): Promise<ObjectInstance> {
-        if ( options == undefined ){
-            options = (<any>window).ZeidonActivateOptions;
-        }
+        let config = configurationInstance;
+        if ( ! config )
+            error( "ZeidonConfiguration not properly initiated.")
 
-        if ( options == undefined ){
-            error( "ActivateOptions must be specified in the activate call or in window object" );
-        }
-
-        let lodName = oi.getLodDef().name;
-        let errorHandler = options.errorHandler || oi.handleActivateError;
-        let url = `${options.restUrl}/${lodName}`;
-
-        if ( options.id ) {
-            url = `${url}/${options.id}`; // Add the id to the URL.
-            return options.http.get( url )
-                    .toPromise()
-                    .then(response => oi.createFromJson( response.json(), DEFAULT_CREATE_OPTIONS ) )
-                    .catch( errorHandler );
-        }
-
-        // If we get here there's no qualification.  Set rootOnly if it's not.
-        if ( options.rootOnly == undefined ) {
-            options = options.clone();
-            options.rootOnly = true;
-        }
-
-        return options.http.get( url )
-                .toPromise()
-                .then(response => oi.createFromJson( response.json(), DEFAULT_CREATE_OPTIONS ) )
-                .catch( errorHandler );
+        return config.getActivator().activateOi( oi, options );
     }
 
-    public commit( options: CommitOptions ): Promise<this> {
-        if ( options == undefined ){
-            options = (<any>window).ZeidonCommitOptions;
-        }
+    public commit( options?: CommitOptions ): Promise<this> {
+        let config = configurationInstance;
+        if ( ! config )
+            error( "ZeidonConfiguration not properly initiated.")
 
-        if ( options == undefined ){
-            error( "CommitOptions must be specified in the activate call or in localStorage" );
-        }
-
-        let lodName = this.getLodDef().name;
-        let body = JSON.stringify( this.toZeidonMeta() );
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let reqOptions = new RequestOptions({ headers: headers });
-        let errorHandler = options.errorHandler || this.handleActivateError;
-        let url = `${options.restUrl}/${lodName}`;
-
-        return options.http.post( url, body, options)
-            .toPromise()
-            .then(response => this.parseCommitResponse( response ) )
-            .catch( errorHandler );
+        return config.getCommitter().commitOi( this, options );
     }
 
-    parseCommitResponse( response ): this {
-        if ( response == "{}" )
-            return this.createFromJson( undefined, DEFAULT_CREATE_OPTIONS );
-
-        let data = response.json();
-        return this.createFromJson( data, DEFAULT_CREATE_OPTIONS );
-    }
-
-    private createFromJson( initialize, options: CreateOptions ): this {
+    createFromJson( initialize, options: CreateOptions ): this {
         if ( typeof initialize == "string" ) {
             initialize = JSON.parse( initialize );
         }
@@ -162,7 +119,7 @@ export class ObjectInstance {
         return this;
     }
     
-    private handleActivateError( e ) {
+    handleActivateError( e ) {
         console.log("There was an error: " + e );
     }
 }
@@ -420,21 +377,128 @@ export class CreateOptions extends OptionsConstructor {
 }
 const DEFAULT_CREATE_OPTIONS = new CreateOptions( { incrementalsSpecified: false, readOnlyOi: false } );
 
-class CommonOptions extends OptionsConstructor {
-    // HTTP object for making HTTP calls.
-    http: Http;
+export interface AppConfig {
+  apiEndpoint: string;
+  title: string;
+}
 
-    // URL for handling the REST calls.
-    restUrl: string;
+@Injectable()
+export class Activator {
+    activateOi( oi: ObjectInstance, options?: ActivateOptions ): Promise<ObjectInstance> {
+        throw "activateOi has not been implemented"
+    }
 
     // Error handler called if there is an error.
     errorHandler?: (error:any) => void;
 }
 
-export class CommitOptions extends CommonOptions{
+@Injectable()
+export class RestActivator {
+    constructor( private restUrl: string, private http: Http ) {
+        console.log("--- RestActivator --- " );
+    }
+    activateOi( oi: ObjectInstance, options?: ActivateOptions ): Promise<ObjectInstance> {
+        if ( options == undefined )
+            options = new ActivateOptions();
+
+        let lodName = oi.getLodDef().name;
+        let errorHandler = oi.handleActivateError;
+        let url = `${this.restUrl}/${lodName}`;
+
+        if ( options.id ) {
+            url = `${url}/${options.id}`; // Add the id to the URL.
+            return this.http.get( url )
+                    .toPromise()
+                    .then(response => oi.createFromJson( response.json(), DEFAULT_CREATE_OPTIONS ) )
+                    .catch( errorHandler );
+        }
+
+        // If we get here there's no qualification.  Set rootOnly if it's not.
+        if ( options.rootOnly == undefined ) {
+            options = options.clone();
+            options.rootOnly = true;
+        }
+
+        return this.http.get( url )
+                .toPromise()
+                .then(response => oi.createFromJson( response.json(), DEFAULT_CREATE_OPTIONS ) )
+                .catch( errorHandler );
+    }
 }
 
-export class ActivateOptions extends CommonOptions {
+@Injectable()
+export class Committer {
+    commitOi( oi: ObjectInstance, options?: CommitOptions ): Promise<ObjectInstance>{
+        throw "commitOi has not been implemented"
+    }
+
+    // Error handler called if there is an error.
+    errorHandler?: (error:any) => void;
+}
+
+@Injectable()
+export class RestCommitter implements Committer {
+    constructor( private restUrl: string, private http: Http ) {
+        console.log("--- RestCommitter --- " );
+    }
+
+    commitOi( oi: ObjectInstance, options?: CommitOptions ): Promise<ObjectInstance> {
+        let lodName = oi.getLodDef().name;
+        let body = JSON.stringify( oi.toZeidonMeta() );
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let reqOptions = new RequestOptions({ headers: headers });
+        let errorHandler = oi.handleActivateError ;
+        let url = `${this.restUrl}/${lodName}`;
+
+        return this.http.post( url, body, reqOptions)
+            .toPromise()
+            .then(response => this.parseCommitResponse( oi, response ) )
+            .catch( errorHandler );
+    }
+
+    parseCommitResponse( oi: ObjectInstance, response ): ObjectInstance {
+        if ( response == "{}" )
+            return oi.createFromJson( undefined, DEFAULT_CREATE_OPTIONS );
+
+        let data = response.json();
+        return oi.createFromJson( data, DEFAULT_CREATE_OPTIONS );
+    }
+
+}
+
+@Injectable()
+export class ZeidonConfiguration {
+    constructor( private activator: Activator, private committer: Committer ) {
+        console.log("--- ZeidonConfiguration --- " );
+    }
+
+    getActivator() : Activator { return this.activator; }
+    getCommitter() : Committer { return this.committer }
+}
+
+export let ZeidonRestUrl = new OpaqueToken('zeidon.rest.url');
+
+@Injectable()
+export class ZeidonRestConfiguration extends ZeidonConfiguration {
+
+    constructor( @Inject(ZeidonRestUrl) url: string, private http: Http ) {
+        super( new RestActivator( url, http ), new RestCommitter( url, http ) );
+        console.log("--- ZeidonConfiguration --- " + url );
+    }
+}
+
+@Injectable()
+export class ZeidonService {
+    constructor( private config: ZeidonConfiguration ) {
+        console.log("--- ZeidonService --- " );
+        configurationInstance = config;
+    }
+}
+
+export class CommitOptions extends OptionsConstructor {
+}
+
+export class ActivateOptions extends OptionsConstructor {
     // If specified, then the OI will be activated using this root ID.
     id?: any;
 
@@ -452,6 +516,6 @@ let error = function ( message: string ) {
     console.log(stack.join("\n"));
 
     console.log( message );
-    alert( message );
+    //alert( message );
     throw message;
 }

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Configuration } from './Configuration';
+import { Configuration_Configuration } from './Configuration';
 import { RestService } from './rest.service';
+import * as zeidon from './zeidon';
 
 @Component({
     selector: 'configuration-list',
@@ -34,16 +36,14 @@ export class ConfigurationListComponent implements OnInit {
     }    
 
     getConfigurationList(): void {
-        let options = this.baseOptions.clone();
-        options.id = id;
-        return Configuration.activate( options );
         Configuration.activate().then( configList => {
             this.configurationList = configList; 
         } );
     }    
 
-    onSelect(config: any): void {
-        this.restService.getConfiguration( config.Id ).then( configOi => {
+    onSelect(config: Configuration_Configuration): void {
+        let options = new zeidon.ActivateOptions( { id: config.Id } );
+        Configuration.activate( options ).then( configOi => {
             this.selectedConfigOi = configOi; 
         } );
     }

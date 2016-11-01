@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /*
-  Generated from LOD Configuration on 2016-10-28T07:40:13.422
+  Generated from LOD Configuration on 2016-10-30T00:14:11.304
 
 */
 var zeidon = require('./zeidon');
@@ -41,7 +41,6 @@ var Configuration = (function (_super) {
         configurable: true
     });
     Configuration.activate = function (options) {
-        if (options === void 0) { options = undefined; }
         return zeidon.ObjectInstance.activateOi(new Configuration(), options);
     };
     return Configuration;

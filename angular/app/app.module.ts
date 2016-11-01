@@ -11,6 +11,7 @@ import { RestService }   from './rest.service';
 import { SessionComponent }   from './session.component';
 import * as zeidon from './zeidon';
 
+
 @NgModule({
   imports:      [ BrowserModule, 
                   FormsModule,
@@ -35,24 +36,17 @@ import * as zeidon from './zeidon';
                   ConfigurationListComponent, 
                   ConfigurationComponent,
                   SessionComponent ],
-  providers: [ RestService ],
-  bootstrap:    [ AppComponent ]
+  providers: [ RestService,
+             //  { provide: zeidon.ZEIDON_CONFIG, useValue: ZEIDON_CONFIG } 
+               { provide: zeidon.ZeidonRestUrl, useValue: "http://localhost:8080/utc" },
+               { provide: zeidon.ZeidonConfiguration, useClass: zeidon.ZeidonRestConfiguration },
+               zeidon.ZeidonService,
+             ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { 
-    constructor(private http: Http) {
+  constructor( private zeidonService: zeidon.ZeidonService ) {
+    console.log( zeidonService );
+  }
 
-      // Set up some default Zeidon options.
-      
-      let defaultActivateOptions = new zeidon.ActivateOptions( { 
-          restUrl: 'http://localhost:8080/utc',
-          http: this.http,
-      });
-      (<any>window).ZeidonActivateOptions = defaultActivateOptions;
-
-      let defaultCommitOptions = new zeidon.CommitOptions( { 
-          restUrl: 'http://localhost:8080/utc',
-          http: this.http,
-      });
-      (<any>window).ZeidonCommitOptions = defaultCommitOptions;
-    }
 }

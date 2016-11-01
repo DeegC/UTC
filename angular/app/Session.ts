@@ -1,6 +1,6 @@
 
 /*
-  Generated from LOD Session on 2016-10-28T07:40:13.446
+  Generated from LOD Session on 2016-10-30T00:14:11.326
 
 */
 import * as zeidon from './zeidon';
@@ -26,6 +26,10 @@ export class Session extends zeidon.ObjectInstance {
 
     get Session$(): Session_Session {
         return this.roots.selected() as Session_Session;
+    }
+
+    public static activate( options?: zeidon.ActivateOptions ): Promise<Session> {
+        return zeidon.ObjectInstance.activateOi( new Session(), options );
     }
 }
 

@@ -4,7 +4,22 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 var http_1 = require('@angular/http');
+var core_1 = require('@angular/core');
+var core_2 = require('@angular/core');
+var configurationInstance = undefined;
 var Application = (function () {
     function Application(lodDefs) {
         this.lodDefs = lodDefs;
@@ -59,56 +74,16 @@ var ObjectInstance = (function () {
         return wrapper;
     };
     ObjectInstance.activateOi = function (oi, options) {
-        if (options == undefined) {
-            options = window.ZeidonActivateOptions;
-        }
-        if (options == undefined) {
-            error("ActivateOptions must be specified in the activate call or in window object");
-        }
-        var lodName = oi.getLodDef().name;
-        var errorHandler = options.errorHandler || oi.handleActivateError;
-        var url = options.restUrl + "/" + lodName;
-        if (options.id) {
-            url = url + "/" + options.id; // Add the id to the URL.
-            return options.http.get(url)
-                .toPromise()
-                .then(function (response) { return oi.createFromJson(response.json(), DEFAULT_CREATE_OPTIONS); })
-                .catch(errorHandler);
-        }
-        // If we get here there's no qualification.  Set rootOnly if it's not.
-        if (options.rootOnly == undefined) {
-            options = options.clone();
-            options.rootOnly = true;
-        }
-        return options.http.get(url)
-            .toPromise()
-            .then(function (response) { return oi.createFromJson(response.json(), DEFAULT_CREATE_OPTIONS); })
-            .catch(errorHandler);
+        var config = configurationInstance;
+        if (!config)
+            error("ZeidonConfiguration not properly initiated.");
+        return config.getActivator().activateOi(oi, options);
     };
     ObjectInstance.prototype.commit = function (options) {
-        var _this = this;
-        if (options == undefined) {
-            options = window.ZeidonCommitOptions;
-        }
-        if (options == undefined) {
-            error("CommitOptions must be specified in the activate call or in localStorage");
-        }
-        var lodName = this.getLodDef().name;
-        var body = JSON.stringify(this.toZeidonMeta());
-        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
-        var reqOptions = new http_1.RequestOptions({ headers: headers });
-        var errorHandler = options.errorHandler || this.handleActivateError;
-        var url = options.restUrl + "/" + lodName;
-        return options.http.post(url, body, options)
-            .toPromise()
-            .then(function (response) { return _this.parseCommitResponse(response); })
-            .catch(errorHandler);
-    };
-    ObjectInstance.prototype.parseCommitResponse = function (response) {
-        if (response == "{}")
-            return this.createFromJson(undefined, DEFAULT_CREATE_OPTIONS);
-        var data = response.json();
-        return this.createFromJson(data, DEFAULT_CREATE_OPTIONS);
+        var config = configurationInstance;
+        if (!config)
+            error("ZeidonConfiguration not properly initiated.");
+        return config.getCommitter().commitOi(this, options);
     };
     ObjectInstance.prototype.createFromJson = function (initialize, options) {
         if (typeof initialize == "string") {
@@ -384,20 +359,151 @@ var CreateOptions = (function (_super) {
 }(OptionsConstructor));
 exports.CreateOptions = CreateOptions;
 var DEFAULT_CREATE_OPTIONS = new CreateOptions({ incrementalsSpecified: false, readOnlyOi: false });
-var CommonOptions = (function (_super) {
-    __extends(CommonOptions, _super);
-    function CommonOptions() {
-        _super.apply(this, arguments);
+var Activator = (function () {
+    function Activator() {
     }
-    return CommonOptions;
-}(OptionsConstructor));
+    Activator.prototype.activateOi = function (oi, options) {
+        throw "activateOi has not been implemented";
+    };
+    Activator = __decorate([
+        core_2.Injectable(), 
+        __metadata('design:paramtypes', [])
+    ], Activator);
+    return Activator;
+}());
+exports.Activator = Activator;
+var RestActivator = (function () {
+    function RestActivator(restUrl, http) {
+        this.restUrl = restUrl;
+        this.http = http;
+        console.log("--- RestActivator --- ");
+    }
+    RestActivator.prototype.activateOi = function (oi, options) {
+        if (options == undefined)
+            options = new ActivateOptions();
+        var lodName = oi.getLodDef().name;
+        var errorHandler = oi.handleActivateError;
+        var url = this.restUrl + "/" + lodName;
+        if (options.id) {
+            url = url + "/" + options.id; // Add the id to the URL.
+            return this.http.get(url)
+                .toPromise()
+                .then(function (response) { return oi.createFromJson(response.json(), DEFAULT_CREATE_OPTIONS); })
+                .catch(errorHandler);
+        }
+        // If we get here there's no qualification.  Set rootOnly if it's not.
+        if (options.rootOnly == undefined) {
+            options = options.clone();
+            options.rootOnly = true;
+        }
+        return this.http.get(url)
+            .toPromise()
+            .then(function (response) { return oi.createFromJson(response.json(), DEFAULT_CREATE_OPTIONS); })
+            .catch(errorHandler);
+    };
+    RestActivator = __decorate([
+        core_2.Injectable(), 
+        __metadata('design:paramtypes', [String, http_1.Http])
+    ], RestActivator);
+    return RestActivator;
+}());
+exports.RestActivator = RestActivator;
+var Committer = (function () {
+    function Committer() {
+    }
+    Committer.prototype.commitOi = function (oi, options) {
+        throw "commitOi has not been implemented";
+    };
+    Committer = __decorate([
+        core_2.Injectable(), 
+        __metadata('design:paramtypes', [])
+    ], Committer);
+    return Committer;
+}());
+exports.Committer = Committer;
+var RestCommitter = (function () {
+    function RestCommitter(restUrl, http) {
+        this.restUrl = restUrl;
+        this.http = http;
+        console.log("--- RestCommitter --- ");
+    }
+    RestCommitter.prototype.commitOi = function (oi, options) {
+        var _this = this;
+        var lodName = oi.getLodDef().name;
+        var body = JSON.stringify(oi.toZeidonMeta());
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var reqOptions = new http_1.RequestOptions({ headers: headers });
+        var errorHandler = oi.handleActivateError;
+        var url = this.restUrl + "/" + lodName;
+        return this.http.post(url, body, reqOptions)
+            .toPromise()
+            .then(function (response) { return _this.parseCommitResponse(oi, response); })
+            .catch(errorHandler);
+    };
+    RestCommitter.prototype.parseCommitResponse = function (oi, response) {
+        if (response == "{}")
+            return oi.createFromJson(undefined, DEFAULT_CREATE_OPTIONS);
+        var data = response.json();
+        return oi.createFromJson(data, DEFAULT_CREATE_OPTIONS);
+    };
+    RestCommitter = __decorate([
+        core_2.Injectable(), 
+        __metadata('design:paramtypes', [String, http_1.Http])
+    ], RestCommitter);
+    return RestCommitter;
+}());
+exports.RestCommitter = RestCommitter;
+var ZeidonConfiguration = (function () {
+    function ZeidonConfiguration(activator, committer) {
+        this.activator = activator;
+        this.committer = committer;
+        console.log("--- ZeidonConfiguration --- ");
+    }
+    ZeidonConfiguration.prototype.getActivator = function () { return this.activator; };
+    ZeidonConfiguration.prototype.getCommitter = function () { return this.committer; };
+    ZeidonConfiguration = __decorate([
+        core_2.Injectable(), 
+        __metadata('design:paramtypes', [Activator, Committer])
+    ], ZeidonConfiguration);
+    return ZeidonConfiguration;
+}());
+exports.ZeidonConfiguration = ZeidonConfiguration;
+exports.ZeidonRestUrl = new core_1.OpaqueToken('zeidon.rest.url');
+var ZeidonRestConfiguration = (function (_super) {
+    __extends(ZeidonRestConfiguration, _super);
+    function ZeidonRestConfiguration(url, http) {
+        _super.call(this, new RestActivator(url, http), new RestCommitter(url, http));
+        this.http = http;
+        console.log("--- ZeidonConfiguration --- " + url);
+    }
+    ZeidonRestConfiguration = __decorate([
+        core_2.Injectable(),
+        __param(0, core_2.Inject(exports.ZeidonRestUrl)), 
+        __metadata('design:paramtypes', [String, http_1.Http])
+    ], ZeidonRestConfiguration);
+    return ZeidonRestConfiguration;
+}(ZeidonConfiguration));
+exports.ZeidonRestConfiguration = ZeidonRestConfiguration;
+var ZeidonService = (function () {
+    function ZeidonService(config) {
+        this.config = config;
+        console.log("--- ZeidonService --- ");
+        configurationInstance = config;
+    }
+    ZeidonService = __decorate([
+        core_2.Injectable(), 
+        __metadata('design:paramtypes', [ZeidonConfiguration])
+    ], ZeidonService);
+    return ZeidonService;
+}());
+exports.ZeidonService = ZeidonService;
 var CommitOptions = (function (_super) {
     __extends(CommitOptions, _super);
     function CommitOptions() {
         _super.apply(this, arguments);
     }
     return CommitOptions;
-}(CommonOptions));
+}(OptionsConstructor));
 exports.CommitOptions = CommitOptions;
 var ActivateOptions = (function (_super) {
     __extends(ActivateOptions, _super);
@@ -405,7 +511,7 @@ var ActivateOptions = (function (_super) {
         _super.apply(this, arguments);
     }
     return ActivateOptions;
-}(CommonOptions));
+}(OptionsConstructor));
 exports.ActivateOptions = ActivateOptions;
 var error = function (message) {
     var e = new Error('dummy');
@@ -415,7 +521,7 @@ var error = function (message) {
         .split('\n');
     console.log(stack.join("\n"));
     console.log(message);
-    alert(message);
+    //alert( message );
     throw message;
 };
 //# sourceMappingURL=zeidon.js.map

@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /*
-  Generated from LOD Session on 2016-10-28T07:40:13.446
+  Generated from LOD Session on 2016-10-30T00:14:11.326
 
 */
 var zeidon = require('./zeidon');
@@ -40,6 +40,9 @@ var Session = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Session.activate = function (options) {
+        return zeidon.ObjectInstance.activateOi(new Session(), options);
+    };
     return Session;
 }(zeidon.ObjectInstance));
 exports.Session = Session;

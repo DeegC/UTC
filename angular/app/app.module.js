@@ -20,19 +20,9 @@ var rest_service_1 = require('./rest.service');
 var session_component_1 = require('./session.component');
 var zeidon = require('./zeidon');
 var AppModule = (function () {
-    function AppModule(http) {
-        // Set up some default Zeidon options.
-        this.http = http;
-        var defaultActivateOptions = new zeidon.ActivateOptions({
-            restUrl: 'http://localhost:8080/utc',
-            http: this.http,
-        });
-        window.ZeidonActivateOptions = defaultActivateOptions;
-        var defaultCommitOptions = new zeidon.CommitOptions({
-            restUrl: 'http://localhost:8080/utc',
-            http: this.http,
-        });
-        window.ZeidonCommitOptions = defaultCommitOptions;
+    function AppModule(zeidonService) {
+        this.zeidonService = zeidonService;
+        console.log(zeidonService);
     }
     AppModule = __decorate([
         core_1.NgModule({
@@ -59,10 +49,15 @@ var AppModule = (function () {
                 configuration_list_component_1.ConfigurationListComponent,
                 configuration_component_1.ConfigurationComponent,
                 session_component_1.SessionComponent],
-            providers: [rest_service_1.RestService],
+            providers: [rest_service_1.RestService,
+                //  { provide: zeidon.ZEIDON_CONFIG, useValue: ZEIDON_CONFIG } 
+                { provide: zeidon.ZeidonRestUrl, useValue: "http://localhost:8080/utc" },
+                { provide: zeidon.ZeidonConfiguration, useClass: zeidon.ZeidonRestConfiguration },
+                zeidon.ZeidonService,
+            ],
             bootstrap: [app_component_1.AppComponent]
         }), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [zeidon.ZeidonService])
     ], AppModule);
     return AppModule;
 }());
