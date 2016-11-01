@@ -470,6 +470,7 @@ export class RestCommitter implements Committer {
 export class ZeidonConfiguration {
     constructor( private activator: Activator, private committer: Committer ) {
         console.log("--- ZeidonConfiguration --- " );
+        configurationInstance = this;
     }
 
     getActivator() : Activator { return this.activator; }
@@ -483,15 +484,7 @@ export class ZeidonRestConfiguration extends ZeidonConfiguration {
 
     constructor( @Inject(ZeidonRestUrl) url: string, private http: Http ) {
         super( new RestActivator( url, http ), new RestCommitter( url, http ) );
-        console.log("--- ZeidonConfiguration --- " + url );
-    }
-}
-
-@Injectable()
-export class ZeidonService {
-    constructor( private config: ZeidonConfiguration ) {
-        console.log("--- ZeidonService --- " );
-        configurationInstance = config;
+        console.log("--- ZeidonRestConfiguration --- " + url );
     }
 }
 

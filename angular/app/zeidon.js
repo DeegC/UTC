@@ -458,6 +458,7 @@ var ZeidonConfiguration = (function () {
         this.activator = activator;
         this.committer = committer;
         console.log("--- ZeidonConfiguration --- ");
+        configurationInstance = this;
     }
     ZeidonConfiguration.prototype.getActivator = function () { return this.activator; };
     ZeidonConfiguration.prototype.getCommitter = function () { return this.committer; };
@@ -474,7 +475,7 @@ var ZeidonRestConfiguration = (function (_super) {
     function ZeidonRestConfiguration(url, http) {
         _super.call(this, new RestActivator(url, http), new RestCommitter(url, http));
         this.http = http;
-        console.log("--- ZeidonConfiguration --- " + url);
+        console.log("--- ZeidonRestConfiguration --- " + url);
     }
     ZeidonRestConfiguration = __decorate([
         core_2.Injectable(),
@@ -484,19 +485,6 @@ var ZeidonRestConfiguration = (function (_super) {
     return ZeidonRestConfiguration;
 }(ZeidonConfiguration));
 exports.ZeidonRestConfiguration = ZeidonRestConfiguration;
-var ZeidonService = (function () {
-    function ZeidonService(config) {
-        this.config = config;
-        console.log("--- ZeidonService --- ");
-        configurationInstance = config;
-    }
-    ZeidonService = __decorate([
-        core_2.Injectable(), 
-        __metadata('design:paramtypes', [ZeidonConfiguration])
-    ], ZeidonService);
-    return ZeidonService;
-}());
-exports.ZeidonService = ZeidonService;
 var CommitOptions = (function (_super) {
     __extends(CommitOptions, _super);
     function CommitOptions() {

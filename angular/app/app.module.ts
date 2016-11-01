@@ -37,16 +37,12 @@ import * as zeidon from './zeidon';
                   ConfigurationComponent,
                   SessionComponent ],
   providers: [ RestService,
-             //  { provide: zeidon.ZEIDON_CONFIG, useValue: ZEIDON_CONFIG } 
                { provide: zeidon.ZeidonRestUrl, useValue: "http://localhost:8080/utc" },
                { provide: zeidon.ZeidonConfiguration, useClass: zeidon.ZeidonRestConfiguration },
-               zeidon.ZeidonService,
              ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { 
-  constructor( private zeidonService: zeidon.ZeidonService ) {
-    console.log( zeidonService );
-  }
-
+  // This constructor is required to force Angular injector to load the ZeidonConfiguration.
+  constructor( private zeidonConfig: zeidon.ZeidonConfiguration ) {}
 }

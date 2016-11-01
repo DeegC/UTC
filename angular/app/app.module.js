@@ -20,9 +20,9 @@ var rest_service_1 = require('./rest.service');
 var session_component_1 = require('./session.component');
 var zeidon = require('./zeidon');
 var AppModule = (function () {
-    function AppModule(zeidonService) {
-        this.zeidonService = zeidonService;
-        console.log(zeidonService);
+    // This constructor is required to force Angular injector to load the ZeidonConfiguration.
+    function AppModule(zeidonConfig) {
+        this.zeidonConfig = zeidonConfig;
     }
     AppModule = __decorate([
         core_1.NgModule({
@@ -50,14 +50,12 @@ var AppModule = (function () {
                 configuration_component_1.ConfigurationComponent,
                 session_component_1.SessionComponent],
             providers: [rest_service_1.RestService,
-                //  { provide: zeidon.ZEIDON_CONFIG, useValue: ZEIDON_CONFIG } 
                 { provide: zeidon.ZeidonRestUrl, useValue: "http://localhost:8080/utc" },
                 { provide: zeidon.ZeidonConfiguration, useClass: zeidon.ZeidonRestConfiguration },
-                zeidon.ZeidonService,
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 
-        __metadata('design:paramtypes', [zeidon.ZeidonService])
+        __metadata('design:paramtypes', [zeidon.ZeidonConfiguration])
     ], AppModule);
     return AppModule;
 }());
