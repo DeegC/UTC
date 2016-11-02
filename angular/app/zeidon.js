@@ -41,7 +41,7 @@ var ObjectInstance = (function () {
     ObjectInstance.prototype.toJSON = function () {
         console.log("JSON for Configuration OI");
         var jarray = [];
-        for (var _i = 0, _a = this.roots; _i < _a.length; _i++) {
+        for (var _i = 0, _a = this.roots.allEntities(); _i < _a.length; _i++) {
             var root = _a[_i];
             jarray.push(root.toJSON());
         }
@@ -127,7 +127,7 @@ var ObjectInstance = (function () {
 }());
 exports.ObjectInstance = ObjectInstance;
 var EntityInstance = (function () {
-    function EntityInstance(initialize, oi, options) {
+    function EntityInstance(initialize, oi, parentArray, options) {
         if (options === void 0) { options = DEFAULT_CREATE_OPTIONS; }
         this.created = false;
         this.included = false;
@@ -139,8 +139,12 @@ var EntityInstance = (function () {
         // If incomplete = true then this entity did not have all its children
         // loaded and so cannot be deleted.
         this.incomplete = false;
+        // Map of child entities and the array associated with each one.
+        // Key: entityName
+        // Value: EntityArray.
         this.childEntityInstances = {};
         this.oi = oi;
+        this.parentArray = parentArray;
         for (var attr in initialize) {
             if (this.attributeDefs[attr]) {
                 this.setAttribute(attr, initialize[attr], options);
@@ -184,16 +188,12 @@ var EntityInstance = (function () {
     });
     ;
     Object.defineProperty(EntityInstance.prototype, "entityDef", {
-        get: function () {
-            return this.oi.getLodDef().entities[this.entityName];
-        },
+        get: function () { return this.oi.getLodDef().entities[this.entityName]; },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(EntityInstance.prototype, "attributeDefs", {
-        get: function () {
-            return this.entityDef.attributes;
-        },
+        get: function () { return this.entityDef.attributes; },
         enumerable: true,
         configurable: true
     });
@@ -203,8 +203,13 @@ var EntityInstance = (function () {
         var attributeDef = this.attributeDefs[attr];
         if (!attributeDef)
             error("Attribute " + attr + " is unknown for entity " + this.entityDef.name);
-        if (!attributeDef.update && !options.incrementalsSpecified)
-            error("Attribute " + this.entityDef.name + "." + attr + " is read only");
+        // Perform some validations unless incrementals are specified.
+        if (!options.incrementalsSpecified) {
+            if (!attributeDef.update)
+                error("Attribute " + this.entityDef.name + "." + attr + " is read only");
+            if (this.deleted || this.excluded)
+                error("Can't set attribute for hidden EntityInstance: " + this.entityDef.name + "." + attr);
+        }
         var attribs = this.getAttribHash(attr);
         if (attribs[attr] == value)
             return;
@@ -229,7 +234,11 @@ var EntityInstance = (function () {
     };
     EntityInstance.prototype.getAttribHash = function (attr) {
         // TODO: This should return attributes or workAttributes.
-        return this.attributes;
+        var attributeDef = this.attributeDefs[attr];
+        if (attributeDef.persistent)
+            return this.attributes;
+        else
+            return this.workAttributes;
     };
     EntityInstance.prototype.getChildEntityArray = function (entityName) {
         var entities = this.childEntityInstances[entityName];
@@ -238,6 +247,11 @@ var EntityInstance = (function () {
             this.childEntityInstances[entityName] = entities;
         }
         return entities;
+    };
+    EntityInstance.prototype.delete = function () {
+        var _this = this;
+        var idx = this.parentArray.findIndex(function (ei) { return ei === _this; });
+        this.parentArray.delete(idx);
     };
     EntityInstance.prototype.buildIncrementalStr = function () {
         var str = "";
@@ -272,7 +286,7 @@ var EntityInstance = (function () {
         ;
         for (var entityName in this.entityDef.childEntities) {
             console.log("json entity = " + entityName);
-            var entities = this.getChildEntityArray(entityName);
+            var entities = this.getChildEntityArray(entityName).allEntities();
             if (entities.length == 0)
                 continue;
             var entityInfo = this.entityDef.childEntities[entityName];
@@ -295,9 +309,13 @@ var EntityArray = (function (_super) {
         _super.call(this);
         this.currentlySelected = 0;
         this.entityName = entityName;
-        this.entityPrototype = oi.getPrototype(entityName);
         this.oi = oi;
     }
+    Object.defineProperty(EntityArray.prototype, "entityDef", {
+        get: function () { return this.oi.getLodDef().entities[this.entityName]; },
+        enumerable: true,
+        configurable: true
+    });
     /**
      * Create an entity at the end of the current entity list.
      */
@@ -305,25 +323,73 @@ var EntityArray = (function (_super) {
         if (initialize === void 0) { initialize = {}; }
         if (options === void 0) { options = DEFAULT_CREATE_OPTIONS; }
         //    console.log("Creating entity " + this.entityName );
-        var ei = Object.create(this.entityPrototype);
+        var ei = Object.create(this.oi.getPrototype(this.entityName));
         ei.constructor.apply(ei, [initialize, this.oi, options]);
         this.push(ei);
         this.currentlySelected = this.length - 1;
         return ei;
     };
+    EntityArray.prototype.validateExclude = function () {
+        if (!this.entityDef.excludable)
+            error("Entity " + this.entityDef.name + " does not have delete authority.");
+    };
+    EntityArray.prototype.excludeAll = function () {
+        this.validateExclude();
+        if (_super.prototype.length == 0)
+            return;
+        this.hiddenEntities = this.hiddenEntities.concat(this);
+        for (var _i = 0, _a = this; _i < _a.length; _i++) {
+            var ei = _a[_i];
+            ei.excluded = true;
+        }
+        this.oi.isUpdated = true;
+        _super.prototype.length = 0;
+    };
+    EntityArray.prototype.validateDelete = function () {
+        if (!this.entityDef.deletable)
+            error("Entity " + this.entityDef.name + " does not have delete authority.");
+    };
+    EntityArray.prototype.deleteAll = function () {
+        this.validateDelete();
+        if (_super.prototype.length == 0)
+            return;
+        this.hiddenEntities = this.hiddenEntities.concat(this);
+        for (var _i = 0, _a = this; _i < _a.length; _i++) {
+            var ei = _a[_i];
+            this.deleteEntity(ei);
+        }
+        _super.prototype.length = 0;
+    };
     EntityArray.prototype.delete = function (index) {
-        var entityDef = this.oi.getLodDef().entities[this.entityName];
+        this.validateDelete();
         if (index == undefined)
             index = this.currentlySelected;
         if (!this.hiddenEntities)
             this.hiddenEntities = new Array();
-        var ei = new EntityInstance({}, this.oi);
-        ei = this.splice(index, 1)[0];
-        ei.deleted = true;
+        var ei = this.splice(index, 1)[0];
         this.hiddenEntities.push(ei);
+        this.deleteEntity(ei);
+    };
+    EntityArray.prototype.deleteEntity = function (ei) {
+        ei.deleted = true;
+        ei.oi.isUpdated = true;
+        var entityDef = ei.entityDef;
+        for (var _i = 0, _a = entityDef.childEntities; _i < _a.length; _i++) {
+            var child = _a[_i];
+            if (child.parentDelete)
+                ei.getChildEntityArray(entityDef.name).deleteAll();
+            else
+                ei.getChildEntityArray(entityDef.name).excludeAll();
+        }
     };
     EntityArray.prototype.selected = function () {
         return this[this.currentlySelected];
+    };
+    /**
+     * Returns all entity instances, including hidden ones.
+     */
+    EntityArray.prototype.allEntities = function () {
+        return this.concat(this.hiddenEntities);
     };
     return EntityArray;
 }(Array));

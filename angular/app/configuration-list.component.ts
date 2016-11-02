@@ -48,6 +48,13 @@ export class ConfigurationListComponent implements OnInit {
         } );
     }
     
+    onDelete( config: Configuration_Configuration ): void {
+        config.delete();
+        this.configurationList.commit().then( configOi => {
+            this.selectedConfigOi = configOi; 
+        } );
+    }
+
     newConfiguration(): void {
         // Instantiate a new Configuration with a single ThermometerConfig.
         this.selectedConfigOi = new Configuration( { ThermometerConfig: {} } );

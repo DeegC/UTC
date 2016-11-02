@@ -29,7 +29,7 @@ export class ObjectInstance {
         console.log("JSON for Configuration OI" );
 
         let jarray = []; 
-        for ( let root of this.roots ) {
+        for ( let root of this.roots.allEntities() ) {
             jarray.push( root.toJSON() );
         };
 
@@ -139,20 +139,25 @@ export class EntityInstance {
     // loaded and so cannot be deleted.
     private incomplete = false;
 
+    // Map of child entities and the array associated with each one.
+    // Key: entityName
+    // Value: EntityArray.
     private childEntityInstances = {};
 
+    // This is the EntityArray of the parent EI that stores 'this'.
+    private parentArray: EntityArray<EntityInstance>;
+
     public get entityName(): string { throw "entityName() but be overridden" };
+    public get entityDef(): any { return this.oi.getLodDef().entities[ this.entityName ];}
+    public get attributeDefs(): Object { return this.entityDef.attributes; }
 
-    public get entityDef(): any {
-        return this.oi.getLodDef().entities[ this.entityName ];
-    }
-
-    public get attributeDefs(): Object {
-        return this.entityDef.attributes;
-    }
-
-    constructor( initialize: Object, oi: ObjectInstance, options: CreateOptions = DEFAULT_CREATE_OPTIONS ) {
+    constructor( initialize:  Object, 
+                 oi:          ObjectInstance, 
+                 parentArray: EntityArray<EntityInstance>, 
+                 options:     CreateOptions = DEFAULT_CREATE_OPTIONS ) {                     
         this.oi = oi;
+        this.parentArray = parentArray;
+
         for ( let attr in initialize ) {
             if ( this.attributeDefs[attr] ) {
                 this.setAttribute( attr, initialize[attr], options);
@@ -201,8 +206,14 @@ export class EntityInstance {
         if ( ! attributeDef )
             error( `Attribute ${attr} is unknown for entity ${this.entityDef.name}` );
 
-        if ( ! attributeDef.update && ! options.incrementalsSpecified )
-            error( `Attribute ${this.entityDef.name}.${attr} is read only` );
+        // Perform some validations unless incrementals are specified.
+        if ( ! options.incrementalsSpecified ) {
+            if ( ! attributeDef.update )
+                error( `Attribute ${this.entityDef.name}.${attr} is read only` );
+
+            if ( this.deleted || this.excluded )
+                error( `Can't set attribute for hidden EntityInstance: ${this.entityDef.name}.${attr}` );
+        }
 
         let attribs = this.getAttribHash( attr );
 
@@ -236,10 +247,14 @@ export class EntityInstance {
 
     private getAttribHash( attr: string ): any {
         // TODO: This should return attributes or workAttributes.
-        return this.attributes;
+        let attributeDef = this.attributeDefs[ attr ];
+        if ( attributeDef.persistent )
+            return this.attributes;
+        else
+            return this.workAttributes;
     }
 
-    protected getChildEntityArray( entityName: string): EntityArray<EntityInstance> {
+    getChildEntityArray( entityName: string): EntityArray<this> {
         let entities = this.childEntityInstances[ entityName ];
         if ( entities == undefined ) {
             entities = new EntityArray<EntityInstance>( entityName, this.oi );
@@ -247,6 +262,11 @@ export class EntityInstance {
         }
 
         return entities;
+    }
+
+    delete() {
+        let idx = this.parentArray.findIndex( ei => ei === this );
+        this.parentArray.delete( idx );
     }
 
     private buildIncrementalStr(): string {
@@ -292,7 +312,7 @@ export class EntityInstance {
 
         for ( let entityName in this.entityDef.childEntities ) {
             console.log("json entity = " + entityName );
-            let entities = this.getChildEntityArray( entityName ); 
+            let entities = this.getChildEntityArray( entityName ).allEntities(); 
             if ( entities.length == 0 )
                 continue;
 
@@ -308,9 +328,8 @@ export class EntityInstance {
     }
 };
 
-export class EntityArray<EntityInstance> extends Array<EntityInstance> {
-    hiddenEntities : Array<EntityInstance>;
-    entityPrototype : any;
+export class EntityArray<T extends EntityInstance> extends Array<T> {
+    hiddenEntities : Array<T>;
     entityName: string;
     oi : ObjectInstance;
     currentlySelected = 0;
@@ -318,39 +337,95 @@ export class EntityArray<EntityInstance> extends Array<EntityInstance> {
     constructor( entityName: string, oi: ObjectInstance ) {
         super()
         this.entityName = entityName;
-        this.entityPrototype = oi.getPrototype( entityName );
         this.oi = oi;
     }
+
+    private get entityDef() { return this.oi.getLodDef().entities[ this.entityName ]; }
 
     /** 
      * Create an entity at the end of the current entity list.
      */
     create( initialize : Object = {}, options: CreateOptions = DEFAULT_CREATE_OPTIONS ): EntityInstance {
     //    console.log("Creating entity " + this.entityName );
-        let ei = Object.create( this.entityPrototype );
+        let ei = Object.create( this.oi.getPrototype( this.entityName ) );
         ei.constructor.apply(ei, [ initialize, this.oi, options] );
         this.push(ei);
         this.currentlySelected = this.length - 1;
         return ei;
     }
 
+    private validateExclude() {
+        if ( ! this.entityDef.excludable )
+            error( `Entity ${this.entityDef.name} does not have delete authority.` );
+    }
+
+    excludeAll() {
+        this.validateExclude();
+        if ( super.length == 0 )
+            return;
+
+        this.hiddenEntities = this.hiddenEntities.concat( this );
+        for ( let ei of this )
+            (<any>ei).excluded = true;
+
+        this.oi.isUpdated = true;
+        super.length = 0;
+    }
+
+    private validateDelete() {
+        if ( ! this.entityDef.deletable )
+            error( `Entity ${this.entityDef.name} does not have delete authority.` );
+    }
+
+    deleteAll() {
+        this.validateDelete();
+        if ( super.length == 0 )
+            return;
+
+        this.hiddenEntities = this.hiddenEntities.concat( this );
+        for ( let ei of this )
+            this.deleteEntity( ei );
+
+        super.length = 0;
+
+    }
+
     delete( index? : number ) {
-        let entityDef = this.oi.getLodDef().entities[ this.entityName ];
+        this.validateDelete();
 
         if ( index == undefined )
             index = this.currentlySelected;
 
         if ( ! this.hiddenEntities )
-            this.hiddenEntities = new Array<EntityInstance>();
+            this.hiddenEntities = new Array<T>();
 
-        let ei = new EntityInstance( {}, this.oi );
-        ei = this.splice( index, 1 )[0];
-        ei.deleted = true;
+        let ei = this.splice( index, 1 )[0];
         this.hiddenEntities.push( ei );
+
+        this.deleteEntity( ei as any );
+    }
+
+    private deleteEntity ( ei: EntityInstance ) {
+        ei.deleted = true;
+        ei.oi.isUpdated = true;
+        let entityDef = ei.entityDef;
+        for ( let child of entityDef.childEntities ) {
+            if ( child.parentDelete )
+                ei.getChildEntityArray( entityDef.name ).deleteAll();
+            else
+                ei.getChildEntityArray( entityDef.name ).excludeAll();
+        }
     }
 
     selected(): EntityInstance {
         return this[this.currentlySelected];
+    }
+
+    /**
+     * Returns all entity instances, including hidden ones.
+     */
+    allEntities(): Array<EntityInstance> {
+        return this.concat( this.hiddenEntities );
     }
 }
 

@@ -32,6 +32,13 @@ var ConfigurationListComponent = (function () {
             _this.selectedConfigOi = configOi;
         });
     };
+    ConfigurationListComponent.prototype.onDelete = function (config) {
+        var _this = this;
+        config.delete();
+        this.configurationList.commit().then(function (configOi) {
+            _this.selectedConfigOi = configOi;
+        });
+    };
     ConfigurationListComponent.prototype.newConfiguration = function () {
         // Instantiate a new Configuration with a single ThermometerConfig.
         this.selectedConfigOi = new Configuration_1.Configuration({ ThermometerConfig: {} });

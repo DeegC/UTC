@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /*
-  Generated from LOD Configuration on 2016-10-30T00:14:11.304
+  Generated from LOD Configuration on 2016-11-02T18:21:46.922
 
 */
 var zeidon = require('./zeidon');
@@ -171,8 +171,7 @@ var Configuration_Configuration = (function (_super) {
     ;
     Object.defineProperty(Configuration_Configuration.prototype, "ThermometerConfig", {
         get: function () {
-            var entities = this.getChildEntityArray("ThermometerConfig");
-            return entities;
+            return this.getChildEntityArray("ThermometerConfig");
         },
         enumerable: true,
         configurable: true
@@ -253,6 +252,13 @@ exports.Configuration_LodDef = {
             name: "Configuration",
             create: true,
             cardMax: 0,
+            hasInit: false,
+            creatable: true,
+            includable: false,
+            deletable: true,
+            excludable: false,
+            updatable: true,
+            parentDelete: true,
             childEntities: {
                 ThermometerConfig: {},
             },
@@ -265,6 +271,7 @@ exports.Configuration_LodDef = {
                     key: true,
                     update: true,
                     foreignKey: false,
+                    initialValue: "null",
                 },
                 Description: {
                     hidden: false,
@@ -274,6 +281,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
+                    initialValue: "null",
                 },
                 Notes: {
                     hidden: false,
@@ -283,6 +291,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
+                    initialValue: "null",
                 },
                 TargetTemperature: {
                     hidden: false,
@@ -292,6 +301,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
+                    initialValue: "null",
                 },
                 ThermometerCount: {
                     hidden: false,
@@ -301,6 +311,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
+                    initialValue: "null",
                 },
                 TemperatureUnit: {
                     hidden: false,
@@ -310,6 +321,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
+                    initialValue: "null",
                 },
                 RecordTemperatures: {
                     hidden: false,
@@ -319,6 +331,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
+                    initialValue: "null",
                 },
                 PidP: {
                     hidden: false,
@@ -328,6 +341,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
+                    initialValue: "null",
                 },
                 PidI: {
                     hidden: false,
@@ -337,6 +351,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
+                    initialValue: "null",
                 },
                 PidD: {
                     hidden: false,
@@ -346,6 +361,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
+                    initialValue: "null",
                 },
                 MaxPWM: {
                     hidden: false,
@@ -355,6 +371,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
+                    initialValue: "null",
                 },
                 TweetOn: {
                     hidden: false,
@@ -364,6 +381,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
+                    initialValue: "null",
                 },
                 TweetPeriodInMinutes: {
                     hidden: false,
@@ -373,6 +391,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
+                    initialValue: "null",
                 },
                 PwmFrequency: {
                     hidden: false,
@@ -382,6 +401,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
+                    initialValue: "null",
                 },
                 autoseq: {
                     hidden: true,
@@ -391,6 +411,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: false,
                     foreignKey: false,
+                    initialValue: "null",
                 },
             }
         },
@@ -398,6 +419,13 @@ exports.Configuration_LodDef = {
             name: "ThermometerConfig",
             create: true,
             cardMax: 10,
+            hasInit: false,
+            creatable: true,
+            includable: false,
+            deletable: true,
+            excludable: false,
+            updatable: true,
+            parentDelete: true,
             childEntities: {},
             attributes: {
                 Id: {
@@ -408,6 +436,7 @@ exports.Configuration_LodDef = {
                     key: true,
                     update: true,
                     foreignKey: false,
+                    initialValue: "null",
                 },
                 Name: {
                     hidden: false,
@@ -417,6 +446,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
+                    initialValue: "null",
                 },
                 AlarmLow: {
                     hidden: false,
@@ -426,6 +456,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
+                    initialValue: "null",
                 },
                 AlarmHigh: {
                     hidden: false,
@@ -435,6 +466,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
+                    initialValue: "null",
                 },
                 AlarmOn: {
                     hidden: false,
@@ -444,6 +476,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
+                    initialValue: "null",
                 },
                 wTemperatureWithinAlarmThreshold: {
                     hidden: false,
@@ -453,6 +486,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
+                    initialValue: "null",
                 },
                 autoseq: {
                     hidden: true,
@@ -462,6 +496,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: false,
                     foreignKey: false,
+                    initialValue: "null",
                 },
                 fk_id_configuration: {
                     hidden: true,
@@ -471,6 +506,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: true,
+                    initialValue: "null",
                 },
             }
         },
