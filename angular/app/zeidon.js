@@ -317,8 +317,10 @@ var EntityArray = (function (_super) {
             index = this.currentlySelected;
         if (!this.hiddenEntities)
             this.hiddenEntities = new Array();
-        this.hiddenEntities.push(this[index]);
-        throw "Still needs implemnting";
+        var ei = new EntityInstance({}, this.oi);
+        ei = this.splice(index, 1)[0];
+        ei.deleted = true;
+        this.hiddenEntities.push(ei);
     };
     EntityArray.prototype.selected = function () {
         return this[this.currentlySelected];
@@ -370,8 +372,8 @@ var Activator = (function () {
 }());
 exports.Activator = Activator;
 var RestActivator = (function () {
-    function RestActivator(restUrl, http) {
-        this.restUrl = restUrl;
+    function RestActivator(values, http) {
+        this.values = values;
         this.http = http;
     }
     RestActivator.prototype.activateOi = function (oi, options) {
@@ -379,7 +381,7 @@ var RestActivator = (function () {
             options = new ActivateOptions();
         var lodName = oi.getLodDef().name;
         var errorHandler = oi.handleActivateError;
-        var url = this.restUrl + "/" + lodName;
+        var url = this.values.restUrl + "/" + lodName;
         if (options.id) {
             url = url + "/" + options.id; // Add the id to the URL.
             return this.http.get(url)
@@ -399,7 +401,7 @@ var RestActivator = (function () {
     };
     RestActivator = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [String, http_1.Http])
+        __metadata('design:paramtypes', [ZeidonRestValues, http_1.Http])
     ], RestActivator);
     return RestActivator;
 }());
@@ -418,8 +420,8 @@ var Committer = (function () {
 }());
 exports.Committer = Committer;
 var RestCommitter = (function () {
-    function RestCommitter(restUrl, http) {
-        this.restUrl = restUrl;
+    function RestCommitter(values, http) {
+        this.values = values;
         this.http = http;
     }
     RestCommitter.prototype.commitOi = function (oi, options) {
@@ -429,7 +431,7 @@ var RestCommitter = (function () {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var reqOptions = new http_1.RequestOptions({ headers: headers });
         var errorHandler = oi.handleActivateError;
-        var url = this.restUrl + "/" + lodName;
+        var url = this.values.restUrl + "/" + lodName;
         return this.http.post(url, body, reqOptions)
             .toPromise()
             .then(function (response) { return _this.parseCommitResponse(oi, response); })
@@ -443,7 +445,7 @@ var RestCommitter = (function () {
     };
     RestCommitter = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [String, http_1.Http])
+        __metadata('design:paramtypes', [ZeidonRestValues, http_1.Http])
     ], RestCommitter);
     return RestCommitter;
 }());
@@ -480,7 +482,7 @@ exports.ZeidonRestValues = ZeidonRestValues;
 var ZeidonRestConfiguration = (function (_super) {
     __extends(ZeidonRestConfiguration, _super);
     function ZeidonRestConfiguration(values, http) {
-        _super.call(this, new RestActivator(values.restUrl, http), new RestCommitter(values.restUrl, http));
+        _super.call(this, new RestActivator(values, http), new RestCommitter(values, http));
         this.values = values;
         this.http = http;
         console.log("--- ZeidonRestConfiguration --- " + values.restUrl);

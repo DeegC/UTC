@@ -125,7 +125,7 @@ export class ObjectInstance {
 }
 
 export class EntityInstance {
-    public oi: ObjectInstance;
+    public oi: ObjectInstance; // Parent OI.
     public created = false;
     public included = false;
     public deleted = false;
@@ -343,8 +343,10 @@ export class EntityArray<EntityInstance> extends Array<EntityInstance> {
         if ( ! this.hiddenEntities )
             this.hiddenEntities = new Array<EntityInstance>();
 
-        this.hiddenEntities.push( this[ index ] );
-        throw "Still needs implemnting";
+        let ei = new EntityInstance( {}, this.oi );
+        ei = this.splice( index, 1 )[0];
+        ei.deleted = true;
+        this.hiddenEntities.push( ei );
     }
 
     selected(): EntityInstance {
@@ -390,7 +392,7 @@ export class Activator {
 
 @Injectable()
 export class RestActivator {
-    constructor( private restUrl: string, private http: Http ) {}
+    constructor( private values: ZeidonRestValues, private http: Http ) {}
 
     activateOi( oi: ObjectInstance, options?: ActivateOptions ): Promise<ObjectInstance> {
         if ( options == undefined )
@@ -398,7 +400,7 @@ export class RestActivator {
 
         let lodName = oi.getLodDef().name;
         let errorHandler = oi.handleActivateError;
-        let url = `${this.restUrl}/${lodName}`;
+        let url = `${this.values.restUrl}/${lodName}`;
 
         if ( options.id ) {
             url = `${url}/${options.id}`; // Add the id to the URL.
@@ -433,7 +435,7 @@ export class Committer {
 
 @Injectable()
 export class RestCommitter implements Committer {
-    constructor( private restUrl: string, private http: Http ) {}
+    constructor( private values: ZeidonRestValues, private http: Http ) {}
 
     commitOi( oi: ObjectInstance, options?: CommitOptions ): Promise<ObjectInstance> {
         let lodName = oi.getLodDef().name;
@@ -441,7 +443,7 @@ export class RestCommitter implements Committer {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let reqOptions = new RequestOptions({ headers: headers });
         let errorHandler = oi.handleActivateError ;
-        let url = `${this.restUrl}/${lodName}`;
+        let url = `${this.values.restUrl}/${lodName}`;
 
         return this.http.post( url, body, reqOptions)
             .toPromise()
@@ -481,8 +483,8 @@ export class ZeidonRestValues {
 @Injectable()
 export class ZeidonRestConfiguration extends ZeidonConfiguration {
     constructor( private values: ZeidonRestValues, private http: Http ) {
-        super( new RestActivator( values.restUrl, http ), 
-               new RestCommitter( values.restUrl, http ) );
+        super( new RestActivator( values, http ), 
+               new RestCommitter( values, http ) );
         console.log("--- ZeidonRestConfiguration --- " + values.restUrl );
     }
 }
