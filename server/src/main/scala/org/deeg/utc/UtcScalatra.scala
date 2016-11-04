@@ -9,9 +9,10 @@ import com.quinsoft.zeidon.Task
 import com.quinsoft.zeidon.standardoe.IncrementalEntityFlags
 import com.quinsoft.zeidon.scala.QualBuilder
 import com.deeg.utc.zeidon._
+import com.quinsoft.zeidon.ObjectEngine
 
 
-class UtcScalatra extends ScalatraServlet with CorsSupport {
+class UtcScalatra extends RestScalatra with CorsSupport {
 
     val oe = JavaObjectEngine.getInstance()
     if ( oe.getSystemTask.readZeidonConfig("UTC", "StartUdpServer", "N" ) == "Y" ) {
@@ -26,117 +27,20 @@ class UtcScalatra extends ScalatraServlet with CorsSupport {
     val hardware = HardwareInterface.getHardwareInterface( task )
     val configuration = new Configuration( task )
     configuration.createDefaultConfiguration()
+
+    def getObjectEngine(): ObjectEngine = {
+        return oe
+    }
     
     options("/*") {
         //response.setHeader("Access-Control-Allow-Methods", "GET,POST");
         response.setHeader("Access-Control-Allow-Headers", request.getHeader("Access-Control-Request-Headers"));
     }
 
-    error {
-      case e: Throwable => {
-        oe.getSystemTask.log().error(e)
-        e.printStackTrace();
-      }
-    }
-
-    // Before every action runs, set the content type to be in JSON format.
-    before() {
-        contentType = "text/json"
-    }
-
-    get("/:lod") {
+    get("/utc/echo/:string") {
         oe.forTask( "UTC" ) { task =>
-            val view = View( task ) basedOn params( "lod" )
-            val qual = view.buildQual()
-            
-            if ( params.contains( "qual" ) ) {
-              qual.setQualFromJson( params( "qual" ) )
-            }
-            else {
-              qual.rootOnlyMultiple()
-            }
-
-            qual.withPaging( params.getOrElse("perPage", "20").toInt,
-                             params.getOrElse("page", "1").toInt,
-                             params.getOrElse("getTotal", "false").toBoolean )
-
-            qual.readOnly.activate()
-            serializeResponse( view )
+            "This is test for echo"
         }
-    }
-
-    get("/:lod/:id") {
-        oe.forTask( "UTC" ) { task =>
-            val lodName = params( "lod" )
-            val view = task.newView( lodName )
-                           .activateWhere( _.root.key = params( "id" ) ) 
-
-            serializeResponse( view )
-        }
-    }
-
-    // POST action will save the OI passed via the body.
-    post("/:lod") {
-        oe.forTask( "UTC" ) { task =>
-            task.log().debug( request.body )
-            val view = task.deserializeOi()
-                           .setLodDef( params( "lod") )
-                           .setVersion("1")
-                           .fromString( request.body )
-                           .asJson()
-                           .unpickle
-
-            view.commit
-
-            val serialized = view.serializeOi.asJson.withIncremental().toString()
-            task.log().debug( serialized )
-            serialized
-        }
-    }
-
-    get("/echo/:string") {
-        oe.forTask( "UTC" ) { task =>
-            params("string" )
-        }
-    }
-
-    get("/xod/:name") {
-        oe.forTask( "UTC" ) { task =>
-            // Load the XOD
-            val xod = task.deserializeOi.setLodDef("ZeidonSystem", "tzzoxodo").fromAppResource( params("name" ) + ".XOD").activateFirst
-
-            // Return it as JSON
-            val serialized = xod.serializeOi.asJson.toString()
-            task.log().debug( serialized )
-            serialized
-        }
-    }
-
-    private def serializeResponse( view: View ) : String = {
-        if ( view.isEmpty )
-            return "{}"
-            
-        val serialized = view.serializeOi.asJson.withIncremental().toString()
-        task.log().debug(serialized)
-        return serialized
-    }
-    
-    /**
-     * Add some qualification for Product lod.
-     */
-    private def addProductParams( qual: QualBuilder ) = {
-        val param = params.getOrElse("name", "" )
-        if ( param != "" )
-            qual.and( _.Product.ProductName like "%" + param + "%" )
-    }
-
-    /**
-     * Add some qualification for Product lod.
-     */
-    private def addOrderParams( qual: QualBuilder ) = {
-        val product = params.getOrElse("product", "" )
-        if ( product != "" )
-            qual.and( _.Product.ProductName like "%" + product + "%" )
     }
     
     private def startUdpServer() = {

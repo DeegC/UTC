@@ -6,6 +6,6 @@ class ScalatraBootstrap extends LifeCycle {
 
   override def init(context: ServletContext) {
 
-    context mount (new UtcScalatra, "/utc/*")
+    context mount (new UtcScalatra, "/*")
   }
 }
