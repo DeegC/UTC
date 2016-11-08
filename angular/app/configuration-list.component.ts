@@ -8,19 +8,23 @@ import * as zeidon from './zeidon';
 @Component({
     selector: 'configuration-list',
     template: `
-  <div *ngIf="configurationList">
+  <div *ngIf="configurationList && configurationList.isEmpty == false">
     <ul class="configurations">
         <li *ngFor="let config of configurationList.Configuration" 
-            [class.selected]="selectedConfigOi && selectedConfigOi.Configuration$.Id == config.Id"
-            (click)="onSelect(config)">
-        <span class="badge">{{config.Id}}</span> {{config.Description}}
+            [class.selected]="selectedConfigOi && selectedConfigOi.Configuration$.Id == config.Id">
+            <span (click)="onSelect(config)">
+                <span class="badge">{{config.Id}}</span> {{config.Description}}
+            </span>
+            <img src="/img/icons/red-x.png" (click)="onDelete( config )"/>
         </li>
     </ul>
   </div>
   <button (click)="newConfiguration()">
         New Configuration
   </button>
-  <configuration-detail [configOi]="selectedConfigOi"></configuration-detail>
+  <div *ngIf="selectedConfigOi">
+    <configuration-detail [configOi]="selectedConfigOi"></configuration-detail>
+  </div>
 `,
     styleUrls: ['app/configuration.css'],
     providers: [RestService]
@@ -49,6 +53,7 @@ export class ConfigurationListComponent implements OnInit {
     }
     
     onDelete( config: Configuration_Configuration ): void {
+        console.log("onDelete");
         config.delete();
         this.configurationList.commit().then( configOi => {
             this.selectedConfigOi = configOi; 

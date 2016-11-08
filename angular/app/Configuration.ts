@@ -1,6 +1,6 @@
 
 /*
-  Generated from LOD Configuration on 2016-11-02T18:21:46.922
+  Generated from LOD Configuration on 2016-11-06T19:33:29.165
 
 */
 import * as zeidon from './zeidon';
@@ -118,7 +118,7 @@ export const Configuration_LodDef = {
             name:       "Configuration",
             create:     true,
             cardMax:    0,
-            hasInit:    false,
+            hasInit:    true,
             creatable:  true,
             includable: false,
             deletable:  true,
@@ -137,7 +137,6 @@ export const Configuration_LodDef = {
                     key:          true,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Description: {
                     hidden:       false,
@@ -147,7 +146,6 @@ export const Configuration_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Notes: {
                     hidden:       false,
@@ -157,7 +155,6 @@ export const Configuration_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 TargetTemperature: {
                     hidden:       false,
@@ -167,7 +164,6 @@ export const Configuration_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 ThermometerCount: {
                     hidden:       false,
@@ -177,7 +173,6 @@ export const Configuration_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 TemperatureUnit: {
                     hidden:       false,
@@ -187,7 +182,7 @@ export const Configuration_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
+                    initialValue: "F",
                 },
                 RecordTemperatures: {
                     hidden:       false,
@@ -197,7 +192,6 @@ export const Configuration_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 PidP: {
                     hidden:       false,
@@ -207,7 +201,7 @@ export const Configuration_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
+                    initialValue: "3",
                 },
                 PidI: {
                     hidden:       false,
@@ -217,7 +211,7 @@ export const Configuration_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
+                    initialValue: "0.005",
                 },
                 PidD: {
                     hidden:       false,
@@ -227,7 +221,7 @@ export const Configuration_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
+                    initialValue: "5.0",
                 },
                 MaxPWM: {
                     hidden:       false,
@@ -237,7 +231,6 @@ export const Configuration_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 TweetOn: {
                     hidden:       false,
@@ -247,7 +240,6 @@ export const Configuration_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 TweetPeriodInMinutes: {
                     hidden:       false,
@@ -257,7 +249,6 @@ export const Configuration_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 PwmFrequency: {
                     hidden:       false,
@@ -267,7 +258,6 @@ export const Configuration_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 autoseq: {
                     hidden:       true,
@@ -277,7 +267,6 @@ export const Configuration_LodDef = {
                     key:          false,
                     update:       false,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
             }
         },
@@ -304,7 +293,6 @@ export const Configuration_LodDef = {
                     key:          true,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Name: {
                     hidden:       false,
@@ -314,7 +302,6 @@ export const Configuration_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 AlarmLow: {
                     hidden:       false,
@@ -324,7 +311,6 @@ export const Configuration_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 AlarmHigh: {
                     hidden:       false,
@@ -334,7 +320,6 @@ export const Configuration_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 AlarmOn: {
                     hidden:       false,
@@ -344,7 +329,6 @@ export const Configuration_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 wTemperatureWithinAlarmThreshold: {
                     hidden:       false,
@@ -354,7 +338,6 @@ export const Configuration_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 autoseq: {
                     hidden:       true,
@@ -364,7 +347,6 @@ export const Configuration_LodDef = {
                     key:          false,
                     update:       false,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 fk_id_configuration: {
                     hidden:       true,
@@ -374,7 +356,6 @@ export const Configuration_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   true,
-                    initialValue: "null",
                 },
             }
         },

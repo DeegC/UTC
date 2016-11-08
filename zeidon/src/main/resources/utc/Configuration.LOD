@@ -1,4 +1,4 @@
-z1000-Zeidon    CONFIGURATZZOLODO 10/03/16   23:10:50 1.0a2    
+z1000-Zeidon    CONFIGURATZZOLODO 11/06/16   19:32:57 1.0a2    
 eLOD       1
 aZKey      910225831
 aNextZKeyToAssign 910225854
@@ -223,6 +223,9 @@ aConstraintRule (1..8)
 
 eLOD_AttributeRec 3
 aZKey      910225838
+aUpdate    Y
+aInit      F
+aSeqOrder  A
 
 eER_AttributeRec 4
 aName      TemperatureUnit
@@ -239,6 +242,8 @@ aContextRestriction N
 
 eLOD_AttributeRec 3
 aZKey      910225839
+aUpdate    Y
+aSeqOrder  A
 
 eER_AttributeRec 4
 aName      RecordTemperatures
@@ -249,6 +254,9 @@ eDomainRec 5
 
 eLOD_AttributeRec 3
 aZKey      910225840
+aUpdate    Y
+aInit      3
+aSeqOrder  A
 
 eER_AttributeRec 4
 aName      PidP
@@ -260,6 +268,9 @@ eDomainRec 5
 
 eLOD_AttributeRec 3
 aZKey      910225841
+aUpdate    Y
+aInit      0.005
+aSeqOrder  A
 
 eER_AttributeRec 4
 aName      PidI
@@ -276,6 +287,9 @@ aContextRestriction N
 
 eLOD_AttributeRec 3
 aZKey      910225842
+aUpdate    Y
+aInit      5.0
+aSeqOrder  A
 
 eER_AttributeRec 4
 aName      PidD
@@ -287,6 +301,8 @@ eDomainRec 5
 
 eLOD_AttributeRec 3
 aZKey      910225843
+aUpdate    Y
+aSeqOrder  A
 
 eER_AttributeRec 4
 aName      MaxPWM
@@ -297,6 +313,8 @@ eDomainRec 5
 
 eLOD_AttributeRec 3
 aZKey      910225844
+aUpdate    Y
+aSeqOrder  A
 
 eER_AttributeRec 4
 aName      TweetOn
@@ -307,6 +325,8 @@ eDomainRec 5
 
 eLOD_AttributeRec 3
 aZKey      910225845
+aUpdate    Y
+aSeqOrder  A
 
 eER_AttributeRec 4
 aName      TweetPeriodInMinutes
@@ -316,6 +336,8 @@ eDomainRec 5
 
 eLOD_AttributeRec 3
 aZKey      910225846
+aUpdate    Y
+aSeqOrder  A
 
 eER_AttributeRec 4
 aName      PwmFrequency
@@ -334,6 +356,7 @@ aER_DiagramPosY 5
 aSAP_Entity 0
 
 eLOD_Entity 2
+awkSelectedAttributeForDragSort 6
 
 eLOD_Attribute 3
 awkSequence 1

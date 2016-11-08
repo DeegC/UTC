@@ -1,6 +1,6 @@
 
 /*
-  Generated from LOD Instant on 2016-11-02T18:21:46.936
+  Generated from LOD Instant on 2016-11-06T19:33:29.184
 
 */
 import * as zeidon from './zeidon';
@@ -122,7 +122,6 @@ export const Instant_LodDef = {
                     key:          true,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 TargetTemperature: {
                     hidden:       false,
@@ -132,7 +131,6 @@ export const Instant_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Therm0: {
                     hidden:       false,
@@ -142,7 +140,6 @@ export const Instant_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Therm1: {
                     hidden:       false,
@@ -152,7 +149,6 @@ export const Instant_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Therm2: {
                     hidden:       false,
@@ -162,7 +158,6 @@ export const Instant_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Therm3: {
                     hidden:       false,
@@ -172,7 +167,6 @@ export const Instant_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Therm4: {
                     hidden:       false,
@@ -182,7 +176,6 @@ export const Instant_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Therm5: {
                     hidden:       false,
@@ -192,7 +185,6 @@ export const Instant_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Therm6: {
                     hidden:       false,
@@ -202,7 +194,6 @@ export const Instant_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Therm7: {
                     hidden:       false,
@@ -212,7 +203,6 @@ export const Instant_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 PWM0: {
                     hidden:       false,
@@ -222,7 +212,6 @@ export const Instant_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 CpuTemperature: {
                     hidden:       true,
@@ -232,7 +221,6 @@ export const Instant_LodDef = {
                     key:          false,
                     update:       false,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 fk_id_session: {
                     hidden:       true,
@@ -242,7 +230,6 @@ export const Instant_LodDef = {
                     key:          true,
                     update:       true,
                     foreignKey:   true,
-                    initialValue: "null",
                 },
             }
         },
@@ -269,7 +256,6 @@ export const Instant_LodDef = {
                     key:          true,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Date: {
                     hidden:       false,
@@ -279,7 +265,6 @@ export const Instant_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 EndDate: {
                     hidden:       false,
@@ -289,7 +274,6 @@ export const Instant_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Notes: {
                     hidden:       false,
@@ -299,7 +283,6 @@ export const Instant_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 fk_id_configuration: {
                     hidden:       true,
@@ -309,7 +292,6 @@ export const Instant_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   true,
-                    initialValue: "null",
                 },
             }
         },

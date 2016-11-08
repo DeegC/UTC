@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /*
-  Generated from LOD Instant on 2016-11-02T18:21:46.936
+  Generated from LOD Instant on 2016-11-06T19:33:29.184
 
 */
 var zeidon = require('./zeidon');
@@ -231,7 +231,6 @@ exports.Instant_LodDef = {
                     key: true,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 TargetTemperature: {
                     hidden: false,
@@ -241,7 +240,6 @@ exports.Instant_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Therm0: {
                     hidden: false,
@@ -251,7 +249,6 @@ exports.Instant_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Therm1: {
                     hidden: false,
@@ -261,7 +258,6 @@ exports.Instant_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Therm2: {
                     hidden: false,
@@ -271,7 +267,6 @@ exports.Instant_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Therm3: {
                     hidden: false,
@@ -281,7 +276,6 @@ exports.Instant_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Therm4: {
                     hidden: false,
@@ -291,7 +285,6 @@ exports.Instant_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Therm5: {
                     hidden: false,
@@ -301,7 +294,6 @@ exports.Instant_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Therm6: {
                     hidden: false,
@@ -311,7 +303,6 @@ exports.Instant_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Therm7: {
                     hidden: false,
@@ -321,7 +312,6 @@ exports.Instant_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 PWM0: {
                     hidden: false,
@@ -331,7 +321,6 @@ exports.Instant_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 CpuTemperature: {
                     hidden: true,
@@ -341,7 +330,6 @@ exports.Instant_LodDef = {
                     key: false,
                     update: false,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 fk_id_session: {
                     hidden: true,
@@ -351,7 +339,6 @@ exports.Instant_LodDef = {
                     key: true,
                     update: true,
                     foreignKey: true,
-                    initialValue: "null",
                 },
             }
         },
@@ -376,7 +363,6 @@ exports.Instant_LodDef = {
                     key: true,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Date: {
                     hidden: false,
@@ -386,7 +372,6 @@ exports.Instant_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 EndDate: {
                     hidden: false,
@@ -396,7 +381,6 @@ exports.Instant_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Notes: {
                     hidden: false,
@@ -406,7 +390,6 @@ exports.Instant_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 fk_id_configuration: {
                     hidden: true,
@@ -416,7 +399,6 @@ exports.Instant_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: true,
-                    initialValue: "null",
                 },
             }
         },

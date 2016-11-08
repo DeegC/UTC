@@ -34,6 +34,7 @@ var ConfigurationListComponent = (function () {
     };
     ConfigurationListComponent.prototype.onDelete = function (config) {
         var _this = this;
+        console.log("onDelete");
         config.delete();
         this.configurationList.commit().then(function (configOi) {
             _this.selectedConfigOi = configOi;
@@ -46,7 +47,7 @@ var ConfigurationListComponent = (function () {
     ConfigurationListComponent = __decorate([
         core_1.Component({
             selector: 'configuration-list',
-            template: "\n  <div *ngIf=\"configurationList\">\n    <ul class=\"configurations\">\n        <li *ngFor=\"let config of configurationList.Configuration\" \n            [class.selected]=\"selectedConfigOi && selectedConfigOi.Configuration$.Id == config.Id\"\n            (click)=\"onSelect(config)\">\n        <span class=\"badge\">{{config.Id}}</span> {{config.Description}}\n        </li>\n    </ul>\n  </div>\n  <button (click)=\"newConfiguration()\">\n        New Configuration\n  </button>\n  <configuration-detail [configOi]=\"selectedConfigOi\"></configuration-detail>\n",
+            template: "\n  <div *ngIf=\"configurationList && configurationList.isEmpty == false\">\n    <ul class=\"configurations\">\n        <li *ngFor=\"let config of configurationList.Configuration\" \n            [class.selected]=\"selectedConfigOi && selectedConfigOi.Configuration$.Id == config.Id\">\n            <span (click)=\"onSelect(config)\">\n                <span class=\"badge\">{{config.Id}}</span> {{config.Description}}\n            </span>\n            <img src=\"/img/icons/red-x.png\" (click)=\"onDelete( config )\"/>\n        </li>\n    </ul>\n  </div>\n  <button (click)=\"newConfiguration()\">\n        New Configuration\n  </button>\n  <div *ngIf=\"selectedConfigOi\">\n    <configuration-detail [configOi]=\"selectedConfigOi\"></configuration-detail>\n  </div>\n",
             styleUrls: ['app/configuration.css'],
             providers: [rest_service_1.RestService]
         }), 

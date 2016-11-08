@@ -12,18 +12,39 @@ import { RestService } from './rest.service';
       <label>Description: </label>
       <input [(ngModel)]="configOi.Configuration$.Description" placeholder="Description"/>
     </div>
+    <div>
+      <label>Target Temperature: </label>
+      <input [(ngModel)]="configOi.Configuration$.TargetTemperature" placeholder="target temperature"/>
+    </div>
+    <div>
+      <label>PID: </label>
+      <input [(ngModel)]="configOi.Configuration$.PidP" placeholder="P" maxlength="2" size="2"/>
+      <input [(ngModel)]="configOi.Configuration$.PidI" placeholder="I" maxlength="5" size="5"/>
+      <input [(ngModel)]="configOi.Configuration$.PidD" placeholder="D" maxlength="2" size="2"/>
+    </div>
+    <div>
+      <label>Max PWM: </label>
+      <input [(ngModel)]="configOi.Configuration$.MaxPWM" placeholder="max PWM"/>
+    </div>
+    <div>
+      <label>Tweet On: </label>
+      <input [(ngModel)]="configOi.Configuration$.TweetOn" placeholder="tweet on"/>
+    </div>
+    <div>
+      <label>Tweet Period: </label>
+      <input [(ngModel)]="configOi.Configuration$.TweetPeriodInMinutes" placeholder="Tweet period"/>
+    </div>
     <h3>Thermometers</h3>
     <div *ngFor="let therm of configOi.Configuration$.ThermometerConfig" >
       <div>
         <label>name: </label>
         <input [(ngModel)]="therm.Name" placeholder="name"/>
       </div>
-      <div><label>Therm name </label>{{therm.Name}}</div>
     </div>
-    <button (click)="save()">
-      Save
+    <button (click)="save()" [disabled]="! configOi.isUpdated">
+      Save Configuration
     </button>
-    </div>
+  </div>
 `
 })
 export class ConfigurationComponent {

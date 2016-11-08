@@ -1,6 +1,6 @@
 
 /*
-  Generated from LOD Session on 2016-11-02T18:21:46.957
+  Generated from LOD Session on 2016-11-06T19:33:29.196
 
 */
 import * as zeidon from './zeidon';
@@ -177,7 +177,6 @@ export const Session_LodDef = {
                     key:          true,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Date: {
                     hidden:       false,
@@ -187,7 +186,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 EndDate: {
                     hidden:       false,
@@ -197,7 +195,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Notes: {
                     hidden:       false,
@@ -207,7 +204,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 fk_id_configuration: {
                     hidden:       true,
@@ -217,7 +213,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   true,
-                    initialValue: "null",
                 },
             }
         },
@@ -244,7 +239,6 @@ export const Session_LodDef = {
                     key:          true,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Description: {
                     hidden:       false,
@@ -254,7 +248,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Notes: {
                     hidden:       false,
@@ -264,7 +257,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 TargetTemperature: {
                     hidden:       false,
@@ -274,7 +266,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 ThermometerCount: {
                     hidden:       false,
@@ -284,7 +275,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 TemperatureUnit: {
                     hidden:       false,
@@ -294,7 +284,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 RecordTemperatures: {
                     hidden:       false,
@@ -304,7 +293,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 PidP: {
                     hidden:       false,
@@ -314,7 +302,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 PidI: {
                     hidden:       false,
@@ -324,7 +311,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 PidD: {
                     hidden:       false,
@@ -334,7 +320,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 MaxPWM: {
                     hidden:       false,
@@ -344,7 +329,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 TweetOn: {
                     hidden:       false,
@@ -354,7 +338,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 TweetPeriodInMinutes: {
                     hidden:       false,
@@ -364,7 +347,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 PwmFrequency: {
                     hidden:       false,
@@ -374,7 +356,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 autoseq: {
                     hidden:       true,
@@ -384,7 +365,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       false,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
             }
         },
@@ -411,7 +391,6 @@ export const Session_LodDef = {
                     key:          true,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 TargetTemperature: {
                     hidden:       false,
@@ -421,7 +400,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Therm0: {
                     hidden:       false,
@@ -431,7 +409,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Therm1: {
                     hidden:       false,
@@ -441,7 +418,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Therm2: {
                     hidden:       false,
@@ -451,7 +427,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Therm3: {
                     hidden:       false,
@@ -461,7 +436,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Therm4: {
                     hidden:       false,
@@ -471,7 +445,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Therm5: {
                     hidden:       false,
@@ -481,7 +454,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Therm6: {
                     hidden:       false,
@@ -491,7 +463,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 Therm7: {
                     hidden:       false,
@@ -501,7 +472,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 PWM0: {
                     hidden:       false,
@@ -511,7 +481,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 CpuTemperature: {
                     hidden:       false,
@@ -521,7 +490,6 @@ export const Session_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   false,
-                    initialValue: "null",
                 },
                 fk_id_session: {
                     hidden:       true,
@@ -531,7 +499,6 @@ export const Session_LodDef = {
                     key:          true,
                     update:       true,
                     foreignKey:   true,
-                    initialValue: "null",
                 },
             }
         },

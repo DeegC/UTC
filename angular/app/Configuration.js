@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /*
-  Generated from LOD Configuration on 2016-11-02T18:21:46.922
+  Generated from LOD Configuration on 2016-11-06T19:33:29.165
 
 */
 var zeidon = require('./zeidon');
@@ -252,7 +252,7 @@ exports.Configuration_LodDef = {
             name: "Configuration",
             create: true,
             cardMax: 0,
-            hasInit: false,
+            hasInit: true,
             creatable: true,
             includable: false,
             deletable: true,
@@ -271,7 +271,6 @@ exports.Configuration_LodDef = {
                     key: true,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Description: {
                     hidden: false,
@@ -281,7 +280,6 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Notes: {
                     hidden: false,
@@ -291,7 +289,6 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 TargetTemperature: {
                     hidden: false,
@@ -301,7 +298,6 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 ThermometerCount: {
                     hidden: false,
@@ -311,7 +307,6 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 TemperatureUnit: {
                     hidden: false,
@@ -321,7 +316,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
+                    initialValue: "F",
                 },
                 RecordTemperatures: {
                     hidden: false,
@@ -331,7 +326,6 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 PidP: {
                     hidden: false,
@@ -341,7 +335,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
+                    initialValue: "3",
                 },
                 PidI: {
                     hidden: false,
@@ -351,7 +345,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
+                    initialValue: "0.005",
                 },
                 PidD: {
                     hidden: false,
@@ -361,7 +355,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
+                    initialValue: "5.0",
                 },
                 MaxPWM: {
                     hidden: false,
@@ -371,7 +365,6 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 TweetOn: {
                     hidden: false,
@@ -381,7 +374,6 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 TweetPeriodInMinutes: {
                     hidden: false,
@@ -391,7 +383,6 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 PwmFrequency: {
                     hidden: false,
@@ -401,7 +392,6 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 autoseq: {
                     hidden: true,
@@ -411,7 +401,6 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: false,
                     foreignKey: false,
-                    initialValue: "null",
                 },
             }
         },
@@ -436,7 +425,6 @@ exports.Configuration_LodDef = {
                     key: true,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Name: {
                     hidden: false,
@@ -446,7 +434,6 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 AlarmLow: {
                     hidden: false,
@@ -456,7 +443,6 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 AlarmHigh: {
                     hidden: false,
@@ -466,7 +452,6 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 AlarmOn: {
                     hidden: false,
@@ -476,7 +461,6 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 wTemperatureWithinAlarmThreshold: {
                     hidden: false,
@@ -486,7 +470,6 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 autoseq: {
                     hidden: true,
@@ -496,7 +479,6 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: false,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 fk_id_configuration: {
                     hidden: true,
@@ -506,7 +488,6 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: true,
-                    initialValue: "null",
                 },
             }
         },

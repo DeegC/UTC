@@ -81,6 +81,13 @@ var ObjectInstance = (function () {
             error("ZeidonConfiguration not properly initiated.");
         return config.getCommitter().commitOi(this, options);
     };
+    Object.defineProperty(ObjectInstance.prototype, "isEmpty", {
+        get: function () {
+            return this.roots.length == 0;
+        },
+        enumerable: true,
+        configurable: true
+    });
     ObjectInstance.prototype.createFromJson = function (initialize, options) {
         if (typeof initialize == "string") {
             initialize = JSON.parse(initialize);
@@ -104,9 +111,12 @@ var ObjectInstance = (function () {
                     options.incrementalsSpecified = true;
                 }
             }
-            for (var _i = 0, _a = initialize.OIs[0][this.rootEntityName()]; _i < _a.length; _i++) {
-                var i = _a[_i];
-                this.roots.create(i, options);
+            var root = initialize.OIs[0][this.rootEntityName()];
+            if (root) {
+                for (var _i = 0, _a = initialize.OIs[0][this.rootEntityName()]; _i < _a.length; _i++) {
+                    var i = _a[_i];
+                    this.roots.create(i, options);
+                }
             }
         }
         else if (initialize.constructor === Array) {
@@ -180,6 +190,8 @@ var EntityInstance = (function () {
             }
             error("Unknown attribute " + attr + " for entity " + this.entityName);
         }
+        if (!options.incrementalsSpecified)
+            this.setDefaultAttributeValues();
     }
     Object.defineProperty(EntityInstance.prototype, "entityName", {
         get: function () { throw "entityName() but be overridden"; },
@@ -197,6 +209,20 @@ var EntityInstance = (function () {
         enumerable: true,
         configurable: true
     });
+    EntityInstance.prototype.setDefaultAttributeValues = function () {
+        var entityDef = this.entityDef;
+        if (!entityDef.hasInit)
+            return;
+        for (var _i = 0, _a = entityDef.attributes; _i < _a.length; _i++) {
+            var attributeDef = _a[_i];
+            if (!attributeDef.initialValue)
+                continue;
+            // If the attribute is already set, skip it.
+            if (this.getAttribute(attributeDef.name) != undefined)
+                continue;
+            this.setAttribute(attributeDef.name, attributeDef.initialValue);
+        }
+    };
     EntityInstance.prototype.setAttribute = function (attr, value, options) {
         if (options === void 0) { options = DEFAULT_CREATE_OPTIONS; }
         //    console.log( `Setting attribute ${attr}`)
@@ -276,7 +302,7 @@ var EntityInstance = (function () {
         if (Object.keys(meta).length > 0)
             json[".meta"] = meta;
         for (var attrName in this.attributeDefs) {
-            if (this.getAttribute(attrName) || this.isAttributeUpdated(attrName)) {
+            if (this.getAttribute(attrName) != undefined || this.isAttributeUpdated(attrName)) {
                 json[attrName] = this.getAttribute(attrName);
                 if (this.isAttributeUpdated(attrName)) {
                     json["." + attrName] = { updated: true };
@@ -324,7 +350,7 @@ var EntityArray = (function (_super) {
         if (options === void 0) { options = DEFAULT_CREATE_OPTIONS; }
         //    console.log("Creating entity " + this.entityName );
         var ei = Object.create(this.oi.getPrototype(this.entityName));
-        ei.constructor.apply(ei, [initialize, this.oi, options]);
+        ei.constructor.apply(ei, [initialize, this.oi, this, options]);
         this.push(ei);
         this.currentlySelected = this.length - 1;
         return ei;
@@ -389,7 +415,19 @@ var EntityArray = (function (_super) {
      * Returns all entity instances, including hidden ones.
      */
     EntityArray.prototype.allEntities = function () {
-        return this.concat(this.hiddenEntities);
+        var ret = [];
+        for (var _i = 0, _a = this; _i < _a.length; _i++) {
+            var ei = _a[_i];
+            ret.push(ei);
+        }
+        if (this.hiddenEntities) {
+            for (var _b = 0, _c = this.hiddenEntities; _b < _c.length; _b++) {
+                var ei = _c[_b];
+                ret.push(ei);
+            }
+        }
+        return ret;
+        //return this.concat( this.hiddenEntities );
     };
     return EntityArray;
 }(Array));

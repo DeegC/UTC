@@ -61,7 +61,7 @@ export class ObjectInstance {
         return wrapper;
     }
 
-    protected static activateOi( oi: ObjectInstance, options?: ActivateOptions ): Promise<ObjectInstance> {
+    public static activateOi<T extends ObjectInstance>( oi: T, options?: ActivateOptions ): Promise<T> {
         let config = configurationInstance;
         if ( ! config )
             error( "ZeidonConfiguration not properly initiated.")
@@ -75,6 +75,10 @@ export class ObjectInstance {
             error( "ZeidonConfiguration not properly initiated.")
 
         return config.getCommitter().commitOi( this, options );
+    }
+
+    public get isEmpty(): boolean {
+        return this.roots.length == 0;
     }
 
     createFromJson( initialize, options: CreateOptions ): this {
@@ -104,8 +108,11 @@ export class ObjectInstance {
                  }
              }
 
-            for ( let i of initialize.OIs[0][ this.rootEntityName() ] ) {
-                this.roots.create( i, options );
+            let root = initialize.OIs[0][ this.rootEntityName() ];
+            if ( root ) {
+                for ( let i of initialize.OIs[0][ this.rootEntityName() ] ) {
+                    this.roots.create( i, options );
+                }
             }
         } else
         if ( initialize.constructor === Array ) {
@@ -197,6 +204,27 @@ export class EntityInstance {
 
             error( `Unknown attribute ${attr} for entity ${this.entityName}` );
         }
+
+        if ( ! options.incrementalsSpecified )
+            this.setDefaultAttributeValues();
+    }
+
+    private setDefaultAttributeValues() {
+        let entityDef = this.entityDef;
+        if ( ! entityDef.hasInit )
+            return;
+
+        for ( let attributeDef of entityDef.attributes ) {
+            if ( ! attributeDef.initialValue )
+                continue;
+
+            // If the attribute is already set, skip it.
+            if ( this.getAttribute( attributeDef.name ) != undefined )
+                continue;
+
+            this.setAttribute( attributeDef.name, attributeDef.initialValue );
+        }
+
     }
 
     protected setAttribute( attr: string, value: any, options: CreateOptions = DEFAULT_CREATE_OPTIONS ) {
@@ -302,7 +330,7 @@ export class EntityInstance {
             json[ ".meta" ] = meta;
 
         for ( let attrName in this.attributeDefs ) {
-            if ( this.getAttribute( attrName ) || this.isAttributeUpdated( attrName ) ) {
+            if ( this.getAttribute( attrName ) != undefined || this.isAttributeUpdated( attrName ) ) {
                 json[attrName] = this.getAttribute( attrName );
                 if (this.isAttributeUpdated( attrName ) ) {
                     json["." + attrName] = { updated: true };
@@ -348,7 +376,7 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
     create( initialize : Object = {}, options: CreateOptions = DEFAULT_CREATE_OPTIONS ): EntityInstance {
     //    console.log("Creating entity " + this.entityName );
         let ei = Object.create( this.oi.getPrototype( this.entityName ) );
-        ei.constructor.apply(ei, [ initialize, this.oi, options] );
+        ei.constructor.apply(ei, [ initialize, this.oi, this, options] );
         this.push(ei);
         this.currentlySelected = this.length - 1;
         return ei;
@@ -425,7 +453,16 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
      * Returns all entity instances, including hidden ones.
      */
     allEntities(): Array<EntityInstance> {
-        return this.concat( this.hiddenEntities );
+        let ret = [];
+        for ( let ei of this )
+            ret.push( ei );
+        if ( this.hiddenEntities ) {
+            for ( let ei of this.hiddenEntities )
+                ret.push( ei );
+        }
+
+        return ret;
+        //return this.concat( this.hiddenEntities );
     }
 }
 

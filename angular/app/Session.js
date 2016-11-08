@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /*
-  Generated from LOD Session on 2016-11-02T18:21:46.957
+  Generated from LOD Session on 2016-11-06T19:33:29.196
 
 */
 var zeidon = require('./zeidon');
@@ -374,7 +374,6 @@ exports.Session_LodDef = {
                     key: true,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Date: {
                     hidden: false,
@@ -384,7 +383,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 EndDate: {
                     hidden: false,
@@ -394,7 +392,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Notes: {
                     hidden: false,
@@ -404,7 +401,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 fk_id_configuration: {
                     hidden: true,
@@ -414,7 +410,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: true,
-                    initialValue: "null",
                 },
             }
         },
@@ -439,7 +434,6 @@ exports.Session_LodDef = {
                     key: true,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Description: {
                     hidden: false,
@@ -449,7 +443,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Notes: {
                     hidden: false,
@@ -459,7 +452,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 TargetTemperature: {
                     hidden: false,
@@ -469,7 +461,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 ThermometerCount: {
                     hidden: false,
@@ -479,7 +470,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 TemperatureUnit: {
                     hidden: false,
@@ -489,7 +479,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 RecordTemperatures: {
                     hidden: false,
@@ -499,7 +488,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 PidP: {
                     hidden: false,
@@ -509,7 +497,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 PidI: {
                     hidden: false,
@@ -519,7 +506,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 PidD: {
                     hidden: false,
@@ -529,7 +515,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 MaxPWM: {
                     hidden: false,
@@ -539,7 +524,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 TweetOn: {
                     hidden: false,
@@ -549,7 +533,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 TweetPeriodInMinutes: {
                     hidden: false,
@@ -559,7 +542,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 PwmFrequency: {
                     hidden: false,
@@ -569,7 +551,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 autoseq: {
                     hidden: true,
@@ -579,7 +560,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: false,
                     foreignKey: false,
-                    initialValue: "null",
                 },
             }
         },
@@ -604,7 +584,6 @@ exports.Session_LodDef = {
                     key: true,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 TargetTemperature: {
                     hidden: false,
@@ -614,7 +593,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Therm0: {
                     hidden: false,
@@ -624,7 +602,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Therm1: {
                     hidden: false,
@@ -634,7 +611,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Therm2: {
                     hidden: false,
@@ -644,7 +620,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Therm3: {
                     hidden: false,
@@ -654,7 +629,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Therm4: {
                     hidden: false,
@@ -664,7 +638,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Therm5: {
                     hidden: false,
@@ -674,7 +647,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Therm6: {
                     hidden: false,
@@ -684,7 +656,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 Therm7: {
                     hidden: false,
@@ -694,7 +665,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 PWM0: {
                     hidden: false,
@@ -704,7 +674,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 CpuTemperature: {
                     hidden: false,
@@ -714,7 +683,6 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "null",
                 },
                 fk_id_session: {
                     hidden: true,
@@ -724,7 +692,6 @@ exports.Session_LodDef = {
                     key: true,
                     update: true,
                     foreignKey: true,
-                    initialValue: "null",
                 },
             }
         },
