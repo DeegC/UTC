@@ -1,9 +1,10 @@
 
 /*
-  Generated from LOD Session on 2016-11-06T19:33:29.196
+  Generated from LOD Session on 2016-11-10T00:41:55.382
 
 */
 import * as zeidon from './zeidon';
+import { Observable } from 'rxjs';
 
 
 // Session LOD.
@@ -28,7 +29,7 @@ export class Session extends zeidon.ObjectInstance {
         return this.roots.selected() as Session_Session;
     }
 
-    public static activate( options?: zeidon.ActivateOptions ): Promise<Session> {
+    public static activate( options?: zeidon.ActivateOptions ): Observable<Session> {
         return zeidon.ObjectInstance.activateOi( new Session(), options );
     }
 }

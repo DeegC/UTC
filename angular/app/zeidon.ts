@@ -1,6 +1,20 @@
 import { Headers, Http, RequestOptions } from '@angular/http';
 import { OpaqueToken } from '@angular/core';
 import { Injectable, Inject }    from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+
+// Observable class extensions
+import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/throw';
+
+// Observable operators
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
 
 let configurationInstance: ZeidonConfiguration = undefined;
 
@@ -61,7 +75,7 @@ export class ObjectInstance {
         return wrapper;
     }
 
-    public static activateOi<T extends ObjectInstance>( oi: T, options?: ActivateOptions ): Promise<T> {
+    public static activateOi<T extends ObjectInstance>( oi: T, options?: ActivateOptions ): Observable<T> {
         let config = configurationInstance;
         if ( ! config )
             error( "ZeidonConfiguration not properly initiated.")
@@ -69,12 +83,12 @@ export class ObjectInstance {
         return config.getActivator().activateOi( oi, options );
     }
 
-    public commit( options?: CommitOptions ): Promise<this> {
+    public commit( options?: CommitOptions ): Observable<this> {
         let config = configurationInstance;
         if ( ! config )
             error( "ZeidonConfiguration not properly initiated.")
 
-        return config.getCommitter().commitOi( this, options );
+        return config.getCommitter().commitOi( this, options ) as Observable<this>;
     }
 
     public get isEmpty(): boolean {
@@ -86,7 +100,7 @@ export class ObjectInstance {
             initialize = JSON.parse( initialize );
         }
 
-        this.roots = new EntityArray<EntityInstance>( this.rootEntityName(), this );
+        this.roots = new EntityArray<EntityInstance>( this.rootEntityName(), this, undefined );
         if ( ! initialize ) {
             this.roots.create( initialize, options );
         }
@@ -142,6 +156,8 @@ export class EntityInstance {
     public attributes: any = {};
     public workAttributes: any = {};
 
+    public metaFlags: any = {};
+
     // If incomplete = true then this entity did not have all its children
     // loaded and so cannot be deleted.
     private incomplete = false;
@@ -184,12 +200,7 @@ export class EntityInstance {
             }
 
             if ( attr == ".meta" ) {
-                let meta = initialize[attr];
-                if ( meta.incremntal )
-                    options.incrementalsSpecified  = true;
-                if ( meta.readOnlyOi )
-                    options.readOnlyOi = true;
-
+                this.metaFlags = initialize[attr];
                 continue;
             }
 
@@ -285,7 +296,7 @@ export class EntityInstance {
     getChildEntityArray( entityName: string): EntityArray<this> {
         let entities = this.childEntityInstances[ entityName ];
         if ( entities == undefined ) {
-            entities = new EntityArray<EntityInstance>( entityName, this.oi );
+            entities = new EntityArray<EntityInstance>( entityName, this.oi, this );
             this.childEntityInstances[ entityName ] = entities;
         }
 
@@ -361,11 +372,13 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
     entityName: string;
     oi : ObjectInstance;
     currentlySelected = 0;
+    parentEi: EntityInstance;
 
-    constructor( entityName: string, oi: ObjectInstance ) {
+    constructor( entityName: string, oi: ObjectInstance, parentEi: EntityInstance ) {
         super()
         this.entityName = entityName;
         this.oi = oi;
+        this.parentEi = parentEi;
     }
 
     private get entityDef() { return this.oi.getLodDef().entities[ this.entityName ]; }
@@ -382,9 +395,10 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
         return ei;
     }
 
-    private validateExclude() {
+    private validateExclude( index? : number ) {
         if ( ! this.entityDef.excludable )
-            error( `Entity ${this.entityDef.name} does not have delete authority.` );
+            error( `Entity ${this.entityDef.name} does not have exclude authority.` );
+
     }
 
     excludeAll() {
@@ -400,9 +414,15 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
         super.length = 0;
     }
 
-    private validateDelete() {
+    private validateDelete( index? : number ) {
         if ( ! this.entityDef.deletable )
             error( `Entity ${this.entityDef.name} does not have delete authority.` );
+
+        let list = index ? [ this[index] ] : this;
+        for ( let ei of list ) {
+            if ( ei.metaFlags.incomplete )
+                error( `Entity ${this.entityDef.name} is incomplete and cannot be deleted.` )
+        }        
     }
 
     deleteAll() {
@@ -419,10 +439,10 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
     }
 
     delete( index? : number ) {
-        this.validateDelete();
-
         if ( index == undefined )
             index = this.currentlySelected;
+
+        this.validateDelete( index );
 
         if ( ! this.hiddenEntities )
             this.hiddenEntities = new Array<T>();
@@ -494,7 +514,7 @@ const DEFAULT_CREATE_OPTIONS = new CreateOptions( { incrementalsSpecified: false
 
 @Injectable()
 export class Activator {
-    activateOi( oi: ObjectInstance, options?: ActivateOptions ): Promise<ObjectInstance> {
+    activateOi<T extends ObjectInstance>( oi: T, options?: ActivateOptions ): Observable<T> {
         throw "activateOi has not been implemented"
     }
 
@@ -506,7 +526,7 @@ export class Activator {
 export class RestActivator {
     constructor( private values: ZeidonRestValues, private http: Http ) {}
 
-    activateOi( oi: ObjectInstance, options?: ActivateOptions ): Promise<ObjectInstance> {
+    activateOi<T extends ObjectInstance>( oi: T, options?: ActivateOptions ): Observable<T> {
         if ( options == undefined )
             options = new ActivateOptions();
 
@@ -517,9 +537,7 @@ export class RestActivator {
         if ( options.id ) {
             url = `${url}/${options.id}`; // Add the id to the URL.
             return this.http.get( url )
-                    .toPromise()
-                    .then(response => oi.createFromJson( response.json(), DEFAULT_CREATE_OPTIONS ) )
-                    .catch( errorHandler );
+                    .map(response => oi.createFromJson( response.json(), DEFAULT_CREATE_OPTIONS ) );
         }
 
         // If we get here there's no qualification.  Set rootOnly if it's not.
@@ -529,15 +547,13 @@ export class RestActivator {
         }
 
         return this.http.get( url )
-                .toPromise()
-                .then(response => oi.createFromJson( response.json(), DEFAULT_CREATE_OPTIONS ) )
-                .catch( errorHandler );
+                .map( response => oi.createFromJson( response.json(), DEFAULT_CREATE_OPTIONS ) as T );
     }
 }
 
 @Injectable()
 export class Committer {
-    commitOi( oi: ObjectInstance, options?: CommitOptions ): Promise<ObjectInstance>{
+    commitOi( oi: ObjectInstance, options?: CommitOptions ): Observable<ObjectInstance>{
         throw "commitOi has not been implemented"
     }
 
@@ -549,7 +565,7 @@ export class Committer {
 export class RestCommitter implements Committer {
     constructor( private values: ZeidonRestValues, private http: Http ) {}
 
-    commitOi( oi: ObjectInstance, options?: CommitOptions ): Promise<ObjectInstance> {
+    commitOi( oi: ObjectInstance, options?: CommitOptions ): Observable<ObjectInstance> {
         let lodName = oi.getLodDef().name;
         let body = JSON.stringify( oi.toZeidonMeta() );
         let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -558,9 +574,7 @@ export class RestCommitter implements Committer {
         let url = `${this.values.restUrl}/${lodName}`;
 
         return this.http.post( url, body, reqOptions)
-            .toPromise()
-            .then(response => this.parseCommitResponse( oi, response ) )
-            .catch( errorHandler );
+            .map(response => this.parseCommitResponse( oi, response ) );
     }
 
     parseCommitResponse( oi: ObjectInstance, response ): ObjectInstance {

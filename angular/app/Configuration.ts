@@ -1,9 +1,10 @@
 
 /*
-  Generated from LOD Configuration on 2016-11-06T19:33:29.165
+  Generated from LOD Configuration on 2016-11-10T00:41:55.339
 
 */
 import * as zeidon from './zeidon';
+import { Observable } from 'rxjs';
 
 
 // Configuration LOD.
@@ -28,7 +29,7 @@ export class Configuration extends zeidon.ObjectInstance {
         return this.roots.selected() as Configuration_Configuration;
     }
 
-    public static activate( options?: zeidon.ActivateOptions ): Promise<Configuration> {
+    public static activate( options?: zeidon.ActivateOptions ): Observable<Configuration> {
         return zeidon.ObjectInstance.activateOi( new Configuration(), options );
     }
 }

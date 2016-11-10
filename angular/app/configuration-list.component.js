@@ -21,14 +21,14 @@ var ConfigurationListComponent = (function () {
     };
     ConfigurationListComponent.prototype.getConfigurationList = function () {
         var _this = this;
-        Configuration_1.Configuration.activate().then(function (configList) {
+        Configuration_1.Configuration.activate().subscribe(function (configList) {
             _this.configurationList = configList;
         });
     };
     ConfigurationListComponent.prototype.onSelect = function (config) {
         var _this = this;
         var options = new zeidon.ActivateOptions({ id: config.Id });
-        Configuration_1.Configuration.activate(options).then(function (configOi) {
+        Configuration_1.Configuration.activate(options).subscribe(function (configOi) {
             _this.selectedConfigOi = configOi;
         });
     };
@@ -36,7 +36,7 @@ var ConfigurationListComponent = (function () {
         var _this = this;
         console.log("onDelete");
         config.delete();
-        this.configurationList.commit().then(function (configOi) {
+        this.configurationList.commit().subscribe(function (configOi) {
             _this.selectedConfigOi = configOi;
         });
     };

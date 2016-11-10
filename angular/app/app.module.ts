@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 import { RouterModule }   from '@angular/router';
 import { HttpModule, Http }    from '@angular/http';
+import './rxjs-extensions';
 
 import { AppComponent }   from './app.component';
 import { ConfigurationListComponent }   from './configuration-list.component';

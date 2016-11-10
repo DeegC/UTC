@@ -40,14 +40,14 @@ export class ConfigurationListComponent implements OnInit {
     }    
 
     getConfigurationList(): void {
-        Configuration.activate().then( configList => {
+        Configuration.activate().subscribe( configList => {
             this.configurationList = configList; 
         } );
     }    
 
     onSelect(config: Configuration_Configuration): void {
         let options = new zeidon.ActivateOptions( { id: config.Id } );
-        Configuration.activate( options ).then( configOi => {
+        Configuration.activate( options ).subscribe( configOi => {
             this.selectedConfigOi = configOi; 
         } );
     }
@@ -55,7 +55,7 @@ export class ConfigurationListComponent implements OnInit {
     onDelete( config: Configuration_Configuration ): void {
         console.log("onDelete");
         config.delete();
-        this.configurationList.commit().then( configOi => {
+        this.configurationList.commit().subscribe( configOi => {
             this.selectedConfigOi = configOi; 
         } );
     }

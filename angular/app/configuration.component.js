@@ -17,7 +17,7 @@ var ConfigurationComponent = (function () {
     }
     ConfigurationComponent.prototype.save = function () {
         var _this = this;
-        this.configOi.commit().then(function (config) { return _this.configOi = config; });
+        this.configOi.commit().subscribe(function (config) { return _this.configOi = config; });
     };
     __decorate([
         core_1.Input(), 

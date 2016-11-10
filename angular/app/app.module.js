@@ -13,6 +13,7 @@ var platform_browser_1 = require('@angular/platform-browser');
 var forms_1 = require('@angular/forms');
 var router_1 = require('@angular/router');
 var http_1 = require('@angular/http');
+require('./rxjs-extensions');
 var app_component_1 = require('./app.component');
 var configuration_list_component_1 = require('./configuration-list.component');
 var configuration_component_1 = require('./configuration.component');

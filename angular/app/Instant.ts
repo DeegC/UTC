@@ -1,9 +1,10 @@
 
 /*
-  Generated from LOD Instant on 2016-11-06T19:33:29.184
+  Generated from LOD Instant on 2016-11-10T00:41:55.375
 
 */
 import * as zeidon from './zeidon';
+import { Observable } from 'rxjs';
 
 
 // Instant LOD.
@@ -28,7 +29,7 @@ export class Instant extends zeidon.ObjectInstance {
         return this.roots.selected() as Instant_Instant;
     }
 
-    public static activate( options?: zeidon.ActivateOptions ): Promise<Instant> {
+    public static activate( options?: zeidon.ActivateOptions ): Observable<Instant> {
         return zeidon.ObjectInstance.activateOi( new Instant(), options );
     }
 }

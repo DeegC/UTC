@@ -54,6 +54,6 @@ export class ConfigurationComponent {
     constructor( private restService: RestService ) { }
 
     save(): void {
-        this.configOi.commit().then( config => this.configOi = config ); 
+        this.configOi.commit().subscribe( config => this.configOi = config ); 
     }
 }
