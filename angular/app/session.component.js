@@ -8,20 +8,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var rest_service_1 = require('./rest.service');
+var core_1 = require("@angular/core");
+var rest_service_1 = require("./rest.service");
 var SessionComponent = (function () {
     function SessionComponent(restService) {
         this.restService = restService;
     }
-    SessionComponent = __decorate([
-        core_1.Component({
-            selector: 'session',
-            template: '<h3>Current Session</h3>'
-        }), 
-        __metadata('design:paramtypes', [rest_service_1.RestService])
-    ], SessionComponent);
     return SessionComponent;
 }());
+SessionComponent = __decorate([
+    core_1.Component({
+        selector: 'session',
+        template: '<h3>Current Session</h3>'
+    }),
+    __metadata("design:paramtypes", [rest_service_1.RestService])
+], SessionComponent);
 exports.SessionComponent = SessionComponent;
 //# sourceMappingURL=session.component.js.map

@@ -102,7 +102,7 @@ export class ObjectInstance {
 
         this.roots = new EntityArray<EntityInstance>( this.rootEntityName(), this, undefined );
         if ( ! initialize ) {
-            this.roots.create( initialize, options );
+            return this;
         }
         else
         if ( initialize.OIs ) {
@@ -145,6 +145,10 @@ export class ObjectInstance {
     }
 }
 
+class EiMetaFlags {
+    incomplete?: boolean;
+}
+
 export class EntityInstance {
     public oi: ObjectInstance; // Parent OI.
     public created = false;
@@ -156,7 +160,7 @@ export class EntityInstance {
     public attributes: any = {};
     public workAttributes: any = {};
 
-    public metaFlags: any = {};
+    public metaFlags: EiMetaFlags = {};
 
     // If incomplete = true then this entity did not have all its children
     // loaded and so cannot be deleted.
@@ -303,9 +307,18 @@ export class EntityInstance {
         return entities;
     }
 
-    delete() {
+    public delete() {
         let idx = this.parentArray.findIndex( ei => ei === this );
         this.parentArray.delete( idx );
+    }
+
+    public drop() {
+        let idx = this.parentArray.findIndex( ei => ei === this );
+        this.parentArray.drop( idx );
+    }
+
+    public parentEntityInstance(): EntityInstance {
+        return this.parentArray.parentEi;
     }
 
     private buildIncrementalStr(): string {
@@ -451,6 +464,17 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
         this.hiddenEntities.push( ei );
 
         this.deleteEntity( ei as any );
+    }
+
+    drop( index? : number ) {
+        if ( index == undefined )
+            index = this.currentlySelected;
+
+        let ei = this.splice( index, 1 )[0];
+        ei.deleted = true;
+        while( ei = ei.parentEntityInstance() as T ) {
+            ei.metaFlags.incomplete = true;
+        }
     }
 
     private deleteEntity ( ei: EntityInstance ) {

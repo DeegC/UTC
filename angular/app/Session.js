@@ -8,12 +8,12 @@ var __extends = (this && this.__extends) || function (d, b) {
   Generated from LOD Session on 2016-11-10T00:41:55.382
 
 */
-var zeidon = require('./zeidon');
+var zeidon = require("./zeidon");
 // Session LOD.
 var Session = (function (_super) {
     __extends(Session, _super);
     function Session() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Session.prototype.rootEntityName = function () { return "Session"; };
     ;
@@ -49,7 +49,7 @@ exports.Session = Session;
 var Session_Session = (function (_super) {
     __extends(Session_Session, _super);
     function Session_Session() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Object.defineProperty(Session_Session.prototype, "entityName", {
         get: function () { return "Session"; },
@@ -109,7 +109,7 @@ exports.Session_Session = Session_Session;
 var Session_Configuration = (function (_super) {
     __extends(Session_Configuration, _super);
     function Session_Configuration() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Object.defineProperty(Session_Configuration.prototype, "entityName", {
         get: function () { return "Configuration"; },
@@ -235,7 +235,7 @@ exports.Session_Configuration = Session_Configuration;
 var Session_Instant = (function (_super) {
     __extends(Session_Instant, _super);
     function Session_Instant() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Object.defineProperty(Session_Instant.prototype, "entityName", {
         get: function () { return "Instant"; },

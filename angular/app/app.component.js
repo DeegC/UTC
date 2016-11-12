@@ -8,20 +8,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
+var core_1 = require("@angular/core");
 var AppComponent = (function () {
     function AppComponent() {
         this.title = 'Universal Temperature Controller';
     }
-    AppComponent = __decorate([
-        core_1.Component({
-            selector: 'utc-app',
-            styleUrls: ['app/app.component.css'],
-            template: "\n    <h1>{{title}}</h1>\n    <nav>\n        <a routerLink=\"/configlist\" routerLinkActive=\"active\">Configurations</a>\n        <a routerLink=\"/session\" routerLinkActive=\"active\">Session</a>\n    </nav>\n    <router-outlet></router-outlet>\n"
-        }), 
-        __metadata('design:paramtypes', [])
-    ], AppComponent);
     return AppComponent;
 }());
+AppComponent = __decorate([
+    core_1.Component({
+        selector: 'utc-app',
+        styleUrls: ['app/app.component.css'],
+        template: "\n    <h1>{{title}}</h1>\n    <nav>\n        <a routerLink=\"/configlist\" routerLinkActive=\"active\">Configurations</a>\n        <a routerLink=\"/session\" routerLinkActive=\"active\">Session</a>\n    </nav>\n    <router-outlet></router-outlet>\n"
+    }),
+    __metadata("design:paramtypes", [])
+], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

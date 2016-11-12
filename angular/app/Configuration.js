@@ -8,12 +8,12 @@ var __extends = (this && this.__extends) || function (d, b) {
   Generated from LOD Configuration on 2016-11-10T00:41:55.339
 
 */
-var zeidon = require('./zeidon');
+var zeidon = require("./zeidon");
 // Configuration LOD.
 var Configuration = (function (_super) {
     __extends(Configuration, _super);
     function Configuration() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Configuration.prototype.rootEntityName = function () { return "Configuration"; };
     ;
@@ -49,7 +49,7 @@ exports.Configuration = Configuration;
 var Configuration_Configuration = (function (_super) {
     __extends(Configuration_Configuration, _super);
     function Configuration_Configuration() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Object.defineProperty(Configuration_Configuration.prototype, "entityName", {
         get: function () { return "Configuration"; },
@@ -182,7 +182,7 @@ exports.Configuration_Configuration = Configuration_Configuration;
 var Configuration_ThermometerConfig = (function (_super) {
     __extends(Configuration_ThermometerConfig, _super);
     function Configuration_ThermometerConfig() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Object.defineProperty(Configuration_ThermometerConfig.prototype, "entityName", {
         get: function () { return "ThermometerConfig"; },
