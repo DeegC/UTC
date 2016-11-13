@@ -380,31 +380,37 @@ export class EntityInstance {
     }
 };
 
-export class EntityArray<T extends EntityInstance> extends Array<T> {
+/**
+ * Array<T> is one of the few classes we can't directly extend so we have to create
+ * a delegate class that handles all the real work.  We'll set the appropriate function
+ * names when we construct EntityArray<T>.
+ * 
+ * See https://github.com/Microsoft/TypeScript/issues/12013 for more.
+ */
+class ArrayDelegate<T extends EntityInstance> {
     hiddenEntities : Array<T>;
     entityName: string;
     oi : ObjectInstance;
-    currentlySelected = 0;
+    currentlySelected;
     parentEi: EntityInstance;
+    array: Array<T>;
 
-    constructor( entityName: string, oi: ObjectInstance, parentEi: EntityInstance ) {
-        super()
+    constructor( array: Array<T>, entityName: string, oi: ObjectInstance, parentEi: EntityInstance ) {
         this.entityName = entityName;
         this.oi = oi;
         this.parentEi = parentEi;
+        this.array = array;
+        this.currentlySelected = 0;
     }
-
+    
     private get entityDef() { return this.oi.getLodDef().entities[ this.entityName ]; }
 
-    /** 
-     * Create an entity at the end of the current entity list.
-     */
     create( initialize : Object = {}, options: CreateOptions = DEFAULT_CREATE_OPTIONS ): EntityInstance {
     //    console.log("Creating entity " + this.entityName );
         let ei = Object.create( this.oi.getPrototype( this.entityName ) );
         ei.constructor.apply(ei, [ initialize, this.oi, this, options] );
-        this.push(ei);
-        this.currentlySelected = this.length - 1;
+        this.array.push(ei);
+        this.currentlySelected = this.array.length - 1;
         return ei;
     }
 
@@ -416,22 +422,22 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
 
     excludeAll() {
         this.validateExclude();
-        if ( super.length == 0 )
+        if ( this.array.length == 0 )
             return;
 
         this.hiddenEntities = this.hiddenEntities.concat( this );
-        for ( let ei of this )
+        for ( let ei of this.array )
             (<any>ei).excluded = true;
 
         this.oi.isUpdated = true;
-        super.length = 0;
+        this.array.length = 0;
     }
 
     private validateDelete( index? : number ) {
         if ( ! this.entityDef.deletable )
             error( `Entity ${this.entityDef.name} does not have delete authority.` );
 
-        let list = index ? [ this[index] ] : this;
+        let list = index ? [ this.array[index] ] : this.array;
         for ( let ei of list ) {
             if ( ei.metaFlags.incomplete )
                 error( `Entity ${this.entityDef.name} is incomplete and cannot be deleted.` )
@@ -440,15 +446,14 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
 
     deleteAll() {
         this.validateDelete();
-        if ( super.length == 0 )
+        if ( this.array.length == 0 )
             return;
 
-        this.hiddenEntities = this.hiddenEntities.concat( this );
-        for ( let ei of this )
+        this.hiddenEntities = this.hiddenEntities.concat( this.array );
+        for ( let ei of this.array )
             this.deleteEntity( ei );
 
-        super.length = 0;
-
+        this.array.length = 0;
     }
 
     delete( index? : number ) {
@@ -460,7 +465,7 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
         if ( ! this.hiddenEntities )
             this.hiddenEntities = new Array<T>();
 
-        let ei = this.splice( index, 1 )[0];
+        let ei = this.array.splice( index, 1 )[0];
         this.hiddenEntities.push( ei );
 
         this.deleteEntity( ei as any );
@@ -470,7 +475,7 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
         if ( index == undefined )
             index = this.currentlySelected;
 
-        let ei = this.splice( index, 1 )[0];
+        let ei = this.array.splice( index, 1 )[0];
         ei.deleted = true;
         while( ei = ei.parentEntityInstance() as T ) {
             ei.metaFlags.incomplete = true;
@@ -490,7 +495,7 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
     }
 
     selected(): EntityInstance {
-        return this[this.currentlySelected];
+        return this.array[this.currentlySelected];
     }
 
     /**
@@ -498,7 +503,7 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
      */
     allEntities(): Array<EntityInstance> {
         let ret = [];
-        for ( let ei of this )
+        for ( let ei of this.array )
             ret.push( ei );
         if ( this.hiddenEntities ) {
             for ( let ei of this.hiddenEntities )
@@ -506,8 +511,44 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
         }
 
         return ret;
-        //return this.concat( this.hiddenEntities );
     }
+}
+
+export class EntityArray<T extends EntityInstance> extends Array<T> {
+    delegate: ArrayDelegate<T>;
+
+    constructor( entityName: string, oi: ObjectInstance, parentEi: EntityInstance ) {
+        const _arr: EntityArray<T> = <any>super();
+
+        // See comment starting ArrayDelegate for why we do this.
+        this.delegate = new ArrayDelegate( _arr, entityName, oi, parentEi );
+
+        _arr.create = function( initialize : Object = {}, options: CreateOptions = DEFAULT_CREATE_OPTIONS ): EntityInstance {
+            return this.delegate.create( initialize, options );
+        }
+        _arr.excludeAll = function() { this.delegate.excludeAll(); };
+        _arr.deleteAll = function() { this.delegate.deleteAll(); };
+        _arr.drop = function() { this.delegate.drop(); };
+        _arr.selected = function() { return this.delegate.selected(); };
+        _arr.allEntities = function() { return this.delegate.allEntities(); };
+
+        return _arr;
+    }
+
+    /** 
+     * Create an entity at the end of the current entity list.
+     */
+    create: ( initialize : Object, options: CreateOptions ) => EntityInstance;
+    excludeAll: () => void;
+    deleteAll: () => void;
+    delete: ( index? : number ) => void;
+    drop: ( index? : number ) => void;
+    selected: () => EntityInstance;
+
+    /**
+     * Returns all entity instances, including hidden ones.
+     */
+    allEntities: () => Array<EntityInstance>;
 }
 
 class OptionsConstructor {
