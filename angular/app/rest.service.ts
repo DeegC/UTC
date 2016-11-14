@@ -1,8 +1,10 @@
 import { Injectable }    from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
+import './rxjs-extensions';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
 
-import { Configuration } from './Configuration';
+import { Configuration_Configuration } from './Configuration';
 import * as zeidon from './zeidon';
 
 @Injectable()
@@ -11,5 +13,14 @@ export class RestService {
 
     handleError( e ) {
         console.log("There was an error: " + e );
+    }
+
+    deleteConfiguration( config: Configuration_Configuration ) {
+        let lodName = config.oi.getLodDef().name;
+        let url = `${this.values.restUrl}/${lodName}/${config.Id}`;
+        this.http.delete( url )
+            .toPromise()
+            .then( () => config.drop() )
+            .catch((error:any) => Observable.throw(error.json().error || 'Server error')); 
     }
 }

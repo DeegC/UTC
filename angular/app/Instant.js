@@ -8,12 +8,12 @@ var __extends = (this && this.__extends) || function (d, b) {
   Generated from LOD Instant on 2016-11-10T00:41:55.375
 
 */
-var zeidon = require('./zeidon');
+var zeidon = require("./zeidon");
 // Instant LOD.
 var Instant = (function (_super) {
     __extends(Instant, _super);
     function Instant() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Instant.prototype.rootEntityName = function () { return "Instant"; };
     ;
@@ -49,7 +49,7 @@ exports.Instant = Instant;
 var Instant_Instant = (function (_super) {
     __extends(Instant_Instant, _super);
     function Instant_Instant() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Object.defineProperty(Instant_Instant.prototype, "entityName", {
         get: function () { return "Instant"; },
@@ -158,7 +158,7 @@ exports.Instant_Instant = Instant_Instant;
 var Instant_Session = (function (_super) {
     __extends(Instant_Session, _super);
     function Instant_Session() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     Object.defineProperty(Instant_Session.prototype, "entityName", {
         get: function () { return "Session"; },

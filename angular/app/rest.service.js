@@ -8,10 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var http_1 = require('@angular/http');
-require('rxjs/add/operator/toPromise');
-var zeidon = require('./zeidon');
+var core_1 = require("@angular/core");
+var http_1 = require("@angular/http");
+require("./rxjs-extensions");
+var Observable_1 = require("rxjs/Observable");
+require("rxjs/add/operator/toPromise");
+var zeidon = require("./zeidon");
 var RestService = (function () {
     function RestService(http, values) {
         this.http = http;
@@ -20,11 +22,19 @@ var RestService = (function () {
     RestService.prototype.handleError = function (e) {
         console.log("There was an error: " + e);
     };
-    RestService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http, zeidon.ZeidonRestValues])
-    ], RestService);
+    RestService.prototype.deleteConfiguration = function (config) {
+        var lodName = config.oi.getLodDef().name;
+        var url = this.values.restUrl + "/" + lodName + "/" + config.Id;
+        this.http.delete(url)
+            .toPromise()
+            .then(function () { return config.drop(); })
+            .catch(function (error) { return Observable_1.Observable.throw(error.json().error || 'Server error'); });
+    };
     return RestService;
 }());
+RestService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [http_1.Http, zeidon.ZeidonRestValues])
+], RestService);
 exports.RestService = RestService;
 //# sourceMappingURL=rest.service.js.map

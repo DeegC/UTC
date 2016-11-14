@@ -51,13 +51,13 @@ export class ConfigurationListComponent implements OnInit {
             this.selectedConfigOi = configOi; 
         } );
     }
-    
+
+    /**
+     * Delete the selected configuration from the OI list. 
+     */    
     onDelete( config: Configuration_Configuration ): void {
         console.log("onDelete");
-        config.delete();
-        this.configurationList.commit().subscribe( configOi => {
-            this.selectedConfigOi = configOi; 
-        } );
+        this.restService.deleteConfiguration( config );
     }
 
     newConfiguration(): void {

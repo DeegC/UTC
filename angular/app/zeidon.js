@@ -13,19 +13,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var http_1 = require('@angular/http');
-var core_1 = require('@angular/core');
+var http_1 = require("@angular/http");
+var core_1 = require("@angular/core");
 // Observable class extensions
-require('rxjs/add/observable/of');
-require('rxjs/add/observable/throw');
+require("rxjs/add/observable/of");
+require("rxjs/add/observable/throw");
 // Observable operators
-require('rxjs/add/operator/catch');
-require('rxjs/add/operator/debounceTime');
-require('rxjs/add/operator/distinctUntilChanged');
-require('rxjs/add/operator/do');
-require('rxjs/add/operator/filter');
-require('rxjs/add/operator/map');
-require('rxjs/add/operator/switchMap');
+require("rxjs/add/operator/catch");
+require("rxjs/add/operator/debounceTime");
+require("rxjs/add/operator/distinctUntilChanged");
+require("rxjs/add/operator/do");
+require("rxjs/add/operator/filter");
+require("rxjs/add/operator/map");
+require("rxjs/add/operator/switchMap");
 var configurationInstance = undefined;
 var Application = (function () {
     function Application(lodDefs) {
@@ -105,7 +105,7 @@ var ObjectInstance = (function () {
         }
         this.roots = new EntityArray(this.rootEntityName(), this, undefined);
         if (!initialize) {
-            this.roots.create(initialize, options);
+            return this;
         }
         else if (initialize.OIs) {
             // TODO: Someday we should handle multiple return OIs for for now
@@ -147,6 +147,11 @@ var ObjectInstance = (function () {
     return ObjectInstance;
 }());
 exports.ObjectInstance = ObjectInstance;
+var EiMetaFlags = (function () {
+    function EiMetaFlags() {
+    }
+    return EiMetaFlags;
+}());
 var EntityInstance = (function () {
     function EntityInstance(initialize, oi, parentArray, options) {
         if (options === void 0) { options = DEFAULT_CREATE_OPTIONS; }
@@ -287,6 +292,14 @@ var EntityInstance = (function () {
         var idx = this.parentArray.findIndex(function (ei) { return ei === _this; });
         this.parentArray.delete(idx);
     };
+    EntityInstance.prototype.drop = function () {
+        var _this = this;
+        var idx = this.parentArray.findIndex(function (ei) { return ei === _this; });
+        this.parentArray.drop(idx);
+    };
+    EntityInstance.prototype.parentEntityInstance = function () {
+        return this.parentArray.parentEi;
+    };
     EntityInstance.prototype.buildIncrementalStr = function () {
         var str = "";
         if (this.updated)
@@ -337,81 +350,93 @@ var EntityInstance = (function () {
 }());
 exports.EntityInstance = EntityInstance;
 ;
-var EntityArray = (function (_super) {
-    __extends(EntityArray, _super);
-    function EntityArray(entityName, oi, parentEi) {
-        _super.call(this);
-        this.currentlySelected = 0;
+/**
+ * Array<T> is one of the few classes we can't directly extend so we have to create
+ * a delegate class that handles all the real work.  We'll set the appropriate function
+ * names when we construct EntityArray<T>.
+ *
+ * See https://github.com/Microsoft/TypeScript/issues/12013 for more.
+ */
+var ArrayDelegate = (function () {
+    function ArrayDelegate(array, entityName, oi, parentEi) {
         this.entityName = entityName;
         this.oi = oi;
         this.parentEi = parentEi;
+        this.array = array;
+        this.currentlySelected = 0;
     }
-    Object.defineProperty(EntityArray.prototype, "entityDef", {
+    Object.defineProperty(ArrayDelegate.prototype, "entityDef", {
         get: function () { return this.oi.getLodDef().entities[this.entityName]; },
         enumerable: true,
         configurable: true
     });
-    /**
-     * Create an entity at the end of the current entity list.
-     */
-    EntityArray.prototype.create = function (initialize, options) {
+    ArrayDelegate.prototype.create = function (initialize, options) {
         if (initialize === void 0) { initialize = {}; }
         if (options === void 0) { options = DEFAULT_CREATE_OPTIONS; }
         //    console.log("Creating entity " + this.entityName );
         var ei = Object.create(this.oi.getPrototype(this.entityName));
-        ei.constructor.apply(ei, [initialize, this.oi, this, options]);
-        this.push(ei);
-        this.currentlySelected = this.length - 1;
+        ei.constructor.apply(ei, [initialize, this.oi, this.array, options]);
+        this.array.push(ei);
+        this.currentlySelected = this.array.length - 1;
         return ei;
     };
-    EntityArray.prototype.validateExclude = function (index) {
+    ArrayDelegate.prototype.validateExclude = function (index) {
         if (!this.entityDef.excludable)
             error("Entity " + this.entityDef.name + " does not have exclude authority.");
     };
-    EntityArray.prototype.excludeAll = function () {
+    ArrayDelegate.prototype.excludeAll = function () {
         this.validateExclude();
-        if (_super.prototype.length == 0)
+        if (this.array.length == 0)
             return;
-        this.hiddenEntities = this.hiddenEntities.concat(this);
-        for (var _i = 0, _a = this; _i < _a.length; _i++) {
+        this.hiddenEntities = this.hiddenEntities.concat(this.array);
+        for (var _i = 0, _a = this.array; _i < _a.length; _i++) {
             var ei = _a[_i];
             ei.excluded = true;
         }
         this.oi.isUpdated = true;
-        _super.prototype.length = 0;
+        this.array.length = 0;
     };
-    EntityArray.prototype.validateDelete = function (index) {
+    ArrayDelegate.prototype.validateDelete = function (index) {
         if (!this.entityDef.deletable)
             error("Entity " + this.entityDef.name + " does not have delete authority.");
-        var list = index ? [this[index]] : this;
+        var list = index ? [this.array[index]] : this.array;
         for (var _i = 0, list_1 = list; _i < list_1.length; _i++) {
             var ei = list_1[_i];
             if (ei.metaFlags.incomplete)
                 error("Entity " + this.entityDef.name + " is incomplete and cannot be deleted.");
         }
     };
-    EntityArray.prototype.deleteAll = function () {
+    ArrayDelegate.prototype.deleteAll = function () {
         this.validateDelete();
-        if (_super.prototype.length == 0)
+        if (this.array.length == 0)
             return;
-        this.hiddenEntities = this.hiddenEntities.concat(this);
-        for (var _i = 0, _a = this; _i < _a.length; _i++) {
+        this.hiddenEntities = this.hiddenEntities.concat(this.array);
+        for (var _i = 0, _a = this.array; _i < _a.length; _i++) {
             var ei = _a[_i];
             this.deleteEntity(ei);
         }
-        _super.prototype.length = 0;
+        this.array.length = 0;
     };
-    EntityArray.prototype.delete = function (index) {
+    ArrayDelegate.prototype.delete = function (index) {
         if (index == undefined)
             index = this.currentlySelected;
         this.validateDelete(index);
         if (!this.hiddenEntities)
             this.hiddenEntities = new Array();
-        var ei = this.splice(index, 1)[0];
+        var ei = this.array.splice(index, 1)[0];
         this.hiddenEntities.push(ei);
         this.deleteEntity(ei);
     };
-    EntityArray.prototype.deleteEntity = function (ei) {
+    ArrayDelegate.prototype.drop = function (index) {
+        if (index == undefined)
+            index = this.currentlySelected;
+        var ei = this.array.splice(index, 1)[0];
+        ei.deleted = true;
+        while (ei = ei.parentEntityInstance()) {
+            ei.metaFlags.incomplete = true;
+        }
+    };
+    ArrayDelegate.prototype.deleteEntity = function (ei) {
         ei.deleted = true;
         ei.oi.isUpdated = true;
         var entityDef = ei.entityDef;
@@ -423,15 +448,15 @@ var EntityArray = (function (_super) {
                 ei.getChildEntityArray(entityDef.name).excludeAll();
         }
     };
-    EntityArray.prototype.selected = function () {
-        return this[this.currentlySelected];
+    ArrayDelegate.prototype.selected = function () {
+        return this.array[this.currentlySelected];
     };
     /**
      * Returns all entity instances, including hidden ones.
      */
-    EntityArray.prototype.allEntities = function () {
+    ArrayDelegate.prototype.allEntities = function () {
         var ret = [];
-        for (var _i = 0, _a = this; _i < _a.length; _i++) {
+        for (var _i = 0, _a = this.array; _i < _a.length; _i++) {
             var ei = _a[_i];
             ret.push(ei);
         }
@@ -442,8 +467,34 @@ var EntityArray = (function (_super) {
             }
         }
         return ret;
-        //return this.concat( this.hiddenEntities );
     };
+    return ArrayDelegate;
+}());
+var EntityArray = (function (_super) {
+    __extends(EntityArray, _super);
+    function EntityArray(entityName, oi, parentEi) {
+        var _this;
+        var _arr = _this = _super.call(this) || this;
+        // See comment starting ArrayDelegate for why we do this.
+        _this.delegate = new ArrayDelegate(_arr, entityName, oi, parentEi);
+        Object.defineProperty(_arr, 'parentEi', {
+            get: function () { return parentEi; },
+            enumerable: true,
+            configurable: true
+        });
+        // Add all the functions to EntityArray.
+        _arr.create = function (initialize, options) {
+            if (initialize === void 0) { initialize = {}; }
+            if (options === void 0) { options = DEFAULT_CREATE_OPTIONS; }
+            return this.delegate.create(initialize, options);
+        };
+        _arr.excludeAll = function () { this.delegate.excludeAll(); };
+        _arr.deleteAll = function () { this.delegate.deleteAll(); };
+        _arr.drop = function () { this.delegate.drop(); };
+        _arr.selected = function () { return this.delegate.selected(); };
+        _arr.allEntities = function () { return this.delegate.allEntities(); };
+        return _arr;
+    }
     return EntityArray;
 }(Array));
 exports.EntityArray = EntityArray;
@@ -469,9 +520,10 @@ var OptionsConstructor = (function () {
 var CreateOptions = (function (_super) {
     __extends(CreateOptions, _super);
     function CreateOptions() {
-        _super.apply(this, arguments);
-        this.incrementalsSpecified = undefined;
-        this.readOnlyOi = false;
+        var _this = _super.apply(this, arguments) || this;
+        _this.incrementalsSpecified = undefined;
+        _this.readOnlyOi = false;
+        return _this;
     }
     return CreateOptions;
 }(OptionsConstructor));
@@ -483,12 +535,12 @@ var Activator = (function () {
     Activator.prototype.activateOi = function (oi, options) {
         throw "activateOi has not been implemented";
     };
-    Activator = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [])
-    ], Activator);
     return Activator;
 }());
+Activator = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [])
+], Activator);
 exports.Activator = Activator;
 var RestActivator = (function () {
     function RestActivator(values, http) {
@@ -514,12 +566,12 @@ var RestActivator = (function () {
         return this.http.get(url)
             .map(function (response) { return oi.createFromJson(response.json(), DEFAULT_CREATE_OPTIONS); });
     };
-    RestActivator = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [ZeidonRestValues, http_1.Http])
-    ], RestActivator);
     return RestActivator;
 }());
+RestActivator = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [ZeidonRestValues, http_1.Http])
+], RestActivator);
 exports.RestActivator = RestActivator;
 var Committer = (function () {
     function Committer() {
@@ -527,12 +579,12 @@ var Committer = (function () {
     Committer.prototype.commitOi = function (oi, options) {
         throw "commitOi has not been implemented";
     };
-    Committer = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [])
-    ], Committer);
     return Committer;
 }());
+Committer = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [])
+], Committer);
 exports.Committer = Committer;
 var RestCommitter = (function () {
     function RestCommitter(values, http) {
@@ -556,12 +608,12 @@ var RestCommitter = (function () {
         var data = response.json();
         return oi.createFromJson(data, DEFAULT_CREATE_OPTIONS);
     };
-    RestCommitter = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [ZeidonRestValues, http_1.Http])
-    ], RestCommitter);
     return RestCommitter;
 }());
+RestCommitter = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [ZeidonRestValues, http_1.Http])
+], RestCommitter);
 exports.RestCommitter = RestCommitter;
 var ZeidonConfiguration = (function () {
     function ZeidonConfiguration(activator, committer) {
@@ -572,12 +624,12 @@ var ZeidonConfiguration = (function () {
     }
     ZeidonConfiguration.prototype.getActivator = function () { return this.activator; };
     ZeidonConfiguration.prototype.getCommitter = function () { return this.committer; };
-    ZeidonConfiguration = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [Activator, Committer])
-    ], ZeidonConfiguration);
     return ZeidonConfiguration;
 }());
+ZeidonConfiguration = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [Activator, Committer])
+], ZeidonConfiguration);
 exports.ZeidonConfiguration = ZeidonConfiguration;
 /**
  * These are the values for configuring Zeidon to use a REST server for activate/commits.
@@ -585,32 +637,33 @@ exports.ZeidonConfiguration = ZeidonConfiguration;
 var ZeidonRestValues = (function () {
     function ZeidonRestValues() {
     }
-    ZeidonRestValues = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [])
-    ], ZeidonRestValues);
     return ZeidonRestValues;
 }());
+ZeidonRestValues = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [])
+], ZeidonRestValues);
 exports.ZeidonRestValues = ZeidonRestValues;
 var ZeidonRestConfiguration = (function (_super) {
     __extends(ZeidonRestConfiguration, _super);
     function ZeidonRestConfiguration(values, http) {
-        _super.call(this, new RestActivator(values, http), new RestCommitter(values, http));
-        this.values = values;
-        this.http = http;
+        var _this = _super.call(this, new RestActivator(values, http), new RestCommitter(values, http)) || this;
+        _this.values = values;
+        _this.http = http;
         console.log("--- ZeidonRestConfiguration --- " + values.restUrl);
+        return _this;
     }
-    ZeidonRestConfiguration = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [ZeidonRestValues, http_1.Http])
-    ], ZeidonRestConfiguration);
     return ZeidonRestConfiguration;
 }(ZeidonConfiguration));
+ZeidonRestConfiguration = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [ZeidonRestValues, http_1.Http])
+], ZeidonRestConfiguration);
 exports.ZeidonRestConfiguration = ZeidonRestConfiguration;
 var CommitOptions = (function (_super) {
     __extends(CommitOptions, _super);
     function CommitOptions() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     return CommitOptions;
 }(OptionsConstructor));
@@ -618,7 +671,7 @@ exports.CommitOptions = CommitOptions;
 var ActivateOptions = (function (_super) {
     __extends(ActivateOptions, _super);
     function ActivateOptions() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     return ActivateOptions;
 }(OptionsConstructor));

@@ -74,6 +74,7 @@ trait RestScalatra extends ScalatraServlet {
 
             view.root.deleteEntity()
             view.commit()
+            ""
         }
     }
 
