@@ -5,11 +5,11 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
 
 import { Configuration_Configuration } from './Configuration';
-import * as zeidon from './zeidon';
+import { ZeidonRestValues } from './zeidon-rest-client';
 
 @Injectable()
 export class RestService {
-    constructor(private http: Http, private values: zeidon.ZeidonRestValues) { }
+    constructor(private http: Http, private values: ZeidonRestValues) { }
 
     handleError( e ) {
         console.log("There was an error: " + e );

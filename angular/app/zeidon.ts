@@ -3,19 +3,6 @@ import { OpaqueToken } from '@angular/core';
 import { Injectable, Inject }    from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-// Observable class extensions
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/throw';
-
-// Observable operators
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-
 let configurationInstance: ZeidonConfiguration = undefined;
 
 export class Application {
@@ -95,7 +82,7 @@ export class ObjectInstance {
         return this.roots.length == 0;
     }
 
-    createFromJson( initialize, options: CreateOptions ): this {
+    createFromJson( initialize, options: CreateOptions = DEFAULT_CREATE_OPTIONS ): this {
         if ( typeof initialize == "string" ) {
             initialize = JSON.parse( initialize );
         }
@@ -596,35 +583,6 @@ export class Activator {
 }
 
 @Injectable()
-export class RestActivator {
-    constructor( private values: ZeidonRestValues, private http: Http ) {}
-
-    activateOi<T extends ObjectInstance>( oi: T, options?: ActivateOptions ): Observable<T> {
-        if ( options == undefined )
-            options = new ActivateOptions();
-
-        let lodName = oi.getLodDef().name;
-        let errorHandler = oi.handleActivateError;
-        let url = `${this.values.restUrl}/${lodName}`;
-
-        if ( options.id ) {
-            url = `${url}/${options.id}`; // Add the id to the URL.
-            return this.http.get( url )
-                    .map(response => oi.createFromJson( response.json(), DEFAULT_CREATE_OPTIONS ) );
-        }
-
-        // If we get here there's no qualification.  Set rootOnly if it's not.
-        if ( options.rootOnly == undefined ) {
-            options = options.clone();
-            options.rootOnly = true;
-        }
-
-        return this.http.get( url )
-                .map( response => oi.createFromJson( response.json(), DEFAULT_CREATE_OPTIONS ) as T );
-    }
-}
-
-@Injectable()
 export class Committer {
     commitOi( oi: ObjectInstance, options?: CommitOptions ): Observable<ObjectInstance>{
         throw "commitOi has not been implemented"
@@ -632,32 +590,6 @@ export class Committer {
 
     // Error handler called if there is an error.
     errorHandler?: (error:any) => void;
-}
-
-@Injectable()
-export class RestCommitter implements Committer {
-    constructor( private values: ZeidonRestValues, private http: Http ) {}
-
-    commitOi( oi: ObjectInstance, options?: CommitOptions ): Observable<ObjectInstance> {
-        let lodName = oi.getLodDef().name;
-        let body = JSON.stringify( oi.toZeidonMeta() );
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let reqOptions = new RequestOptions({ headers: headers });
-        let errorHandler = oi.handleActivateError ;
-        let url = `${this.values.restUrl}/${lodName}`;
-
-        return this.http.post( url, body, reqOptions)
-            .map(response => this.parseCommitResponse( oi, response ) );
-    }
-
-    parseCommitResponse( oi: ObjectInstance, response ): ObjectInstance {
-        if ( response == "{}" )
-            return oi.createFromJson( undefined, DEFAULT_CREATE_OPTIONS );
-
-        let data = response.json();
-        return oi.createFromJson( data, DEFAULT_CREATE_OPTIONS );
-    }
-
 }
 
 @Injectable()
@@ -669,23 +601,6 @@ export class ZeidonConfiguration {
 
     getActivator() : Activator { return this.activator; }
     getCommitter() : Committer { return this.committer; }
-}
-
-/**
- * These are the values for configuring Zeidon to use a REST server for activate/commits.
- */
-@Injectable()
-export class ZeidonRestValues {
-    restUrl: string;
-}
-
-@Injectable()
-export class ZeidonRestConfiguration extends ZeidonConfiguration {
-    constructor( private values: ZeidonRestValues, private http: Http ) {
-        super( new RestActivator( values, http ), 
-               new RestCommitter( values, http ) );
-        console.log("--- ZeidonRestConfiguration --- " + values.restUrl );
-    }
 }
 
 export class CommitOptions extends OptionsConstructor {

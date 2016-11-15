@@ -19,7 +19,9 @@ var configuration_list_component_1 = require("./configuration-list.component");
 var configuration_component_1 = require("./configuration.component");
 var rest_service_1 = require("./rest.service");
 var session_component_1 = require("./session.component");
-var zeidon = require("./zeidon");
+var zeidon_1 = require("./zeidon");
+var zeidon_rest_client_1 = require("./zeidon-rest-client");
+var zeidon_rest_client_2 = require("./zeidon-rest-client");
 var REST_VALUES = {
     restUrl: "http://localhost:8080/utc"
 };
@@ -56,12 +58,12 @@ AppModule = __decorate([
             configuration_component_1.ConfigurationComponent,
             session_component_1.SessionComponent],
         providers: [rest_service_1.RestService,
-            { provide: zeidon.ZeidonRestValues, useValue: REST_VALUES },
-            { provide: zeidon.ZeidonConfiguration, useClass: zeidon.ZeidonRestConfiguration },
+            { provide: zeidon_rest_client_1.ZeidonRestValues, useValue: REST_VALUES },
+            { provide: zeidon_1.ZeidonConfiguration, useClass: zeidon_rest_client_2.ZeidonRestConfiguration },
         ],
         bootstrap: [app_component_1.AppComponent]
     }),
-    __metadata("design:paramtypes", [zeidon.ZeidonConfiguration])
+    __metadata("design:paramtypes", [zeidon_1.ZeidonConfiguration])
 ], AppModule);
 exports.AppModule = AppModule;
 //# sourceMappingURL=app.module.js.map

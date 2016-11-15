@@ -13,7 +13,7 @@ var http_1 = require("@angular/http");
 require("./rxjs-extensions");
 var Observable_1 = require("rxjs/Observable");
 require("rxjs/add/operator/toPromise");
-var zeidon = require("./zeidon");
+var zeidon_rest_client_1 = require("./zeidon-rest-client");
 var RestService = (function () {
     function RestService(http, values) {
         this.http = http;
@@ -34,7 +34,7 @@ var RestService = (function () {
 }());
 RestService = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [http_1.Http, zeidon.ZeidonRestValues])
+    __metadata("design:paramtypes", [http_1.Http, zeidon_rest_client_1.ZeidonRestValues])
 ], RestService);
 exports.RestService = RestService;
 //# sourceMappingURL=rest.service.js.map

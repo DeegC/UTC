@@ -13,19 +13,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var http_1 = require("@angular/http");
 var core_1 = require("@angular/core");
-// Observable class extensions
-require("rxjs/add/observable/of");
-require("rxjs/add/observable/throw");
-// Observable operators
-require("rxjs/add/operator/catch");
-require("rxjs/add/operator/debounceTime");
-require("rxjs/add/operator/distinctUntilChanged");
-require("rxjs/add/operator/do");
-require("rxjs/add/operator/filter");
-require("rxjs/add/operator/map");
-require("rxjs/add/operator/switchMap");
 var configurationInstance = undefined;
 var Application = (function () {
     function Application(lodDefs) {
@@ -100,6 +88,7 @@ var ObjectInstance = (function () {
         configurable: true
     });
     ObjectInstance.prototype.createFromJson = function (initialize, options) {
+        if (options === void 0) { options = DEFAULT_CREATE_OPTIONS; }
         if (typeof initialize == "string") {
             initialize = JSON.parse(initialize);
         }
@@ -542,37 +531,6 @@ Activator = __decorate([
     __metadata("design:paramtypes", [])
 ], Activator);
 exports.Activator = Activator;
-var RestActivator = (function () {
-    function RestActivator(values, http) {
-        this.values = values;
-        this.http = http;
-    }
-    RestActivator.prototype.activateOi = function (oi, options) {
-        if (options == undefined)
-            options = new ActivateOptions();
-        var lodName = oi.getLodDef().name;
-        var errorHandler = oi.handleActivateError;
-        var url = this.values.restUrl + "/" + lodName;
-        if (options.id) {
-            url = url + "/" + options.id; // Add the id to the URL.
-            return this.http.get(url)
-                .map(function (response) { return oi.createFromJson(response.json(), DEFAULT_CREATE_OPTIONS); });
-        }
-        // If we get here there's no qualification.  Set rootOnly if it's not.
-        if (options.rootOnly == undefined) {
-            options = options.clone();
-            options.rootOnly = true;
-        }
-        return this.http.get(url)
-            .map(function (response) { return oi.createFromJson(response.json(), DEFAULT_CREATE_OPTIONS); });
-    };
-    return RestActivator;
-}());
-RestActivator = __decorate([
-    core_1.Injectable(),
-    __metadata("design:paramtypes", [ZeidonRestValues, http_1.Http])
-], RestActivator);
-exports.RestActivator = RestActivator;
 var Committer = (function () {
     function Committer() {
     }
@@ -586,35 +544,6 @@ Committer = __decorate([
     __metadata("design:paramtypes", [])
 ], Committer);
 exports.Committer = Committer;
-var RestCommitter = (function () {
-    function RestCommitter(values, http) {
-        this.values = values;
-        this.http = http;
-    }
-    RestCommitter.prototype.commitOi = function (oi, options) {
-        var _this = this;
-        var lodName = oi.getLodDef().name;
-        var body = JSON.stringify(oi.toZeidonMeta());
-        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
-        var reqOptions = new http_1.RequestOptions({ headers: headers });
-        var errorHandler = oi.handleActivateError;
-        var url = this.values.restUrl + "/" + lodName;
-        return this.http.post(url, body, reqOptions)
-            .map(function (response) { return _this.parseCommitResponse(oi, response); });
-    };
-    RestCommitter.prototype.parseCommitResponse = function (oi, response) {
-        if (response == "{}")
-            return oi.createFromJson(undefined, DEFAULT_CREATE_OPTIONS);
-        var data = response.json();
-        return oi.createFromJson(data, DEFAULT_CREATE_OPTIONS);
-    };
-    return RestCommitter;
-}());
-RestCommitter = __decorate([
-    core_1.Injectable(),
-    __metadata("design:paramtypes", [ZeidonRestValues, http_1.Http])
-], RestCommitter);
-exports.RestCommitter = RestCommitter;
 var ZeidonConfiguration = (function () {
     function ZeidonConfiguration(activator, committer) {
         this.activator = activator;
@@ -631,35 +560,6 @@ ZeidonConfiguration = __decorate([
     __metadata("design:paramtypes", [Activator, Committer])
 ], ZeidonConfiguration);
 exports.ZeidonConfiguration = ZeidonConfiguration;
-/**
- * These are the values for configuring Zeidon to use a REST server for activate/commits.
- */
-var ZeidonRestValues = (function () {
-    function ZeidonRestValues() {
-    }
-    return ZeidonRestValues;
-}());
-ZeidonRestValues = __decorate([
-    core_1.Injectable(),
-    __metadata("design:paramtypes", [])
-], ZeidonRestValues);
-exports.ZeidonRestValues = ZeidonRestValues;
-var ZeidonRestConfiguration = (function (_super) {
-    __extends(ZeidonRestConfiguration, _super);
-    function ZeidonRestConfiguration(values, http) {
-        var _this = _super.call(this, new RestActivator(values, http), new RestCommitter(values, http)) || this;
-        _this.values = values;
-        _this.http = http;
-        console.log("--- ZeidonRestConfiguration --- " + values.restUrl);
-        return _this;
-    }
-    return ZeidonRestConfiguration;
-}(ZeidonConfiguration));
-ZeidonRestConfiguration = __decorate([
-    core_1.Injectable(),
-    __metadata("design:paramtypes", [ZeidonRestValues, http_1.Http])
-], ZeidonRestConfiguration);
-exports.ZeidonRestConfiguration = ZeidonRestConfiguration;
 var CommitOptions = (function (_super) {
     __extends(CommitOptions, _super);
     function CommitOptions() {

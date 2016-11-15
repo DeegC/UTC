@@ -10,9 +10,12 @@ import { ConfigurationListComponent }   from './configuration-list.component';
 import { ConfigurationComponent }   from './configuration.component';
 import { RestService }   from './rest.service';
 import { SessionComponent }   from './session.component';
-import * as zeidon from './zeidon';
 
-const REST_VALUES: zeidon.ZeidonRestValues = {
+import { ZeidonConfiguration } from './zeidon';
+import { ZeidonRestValues } from './zeidon-rest-client';
+import { ZeidonRestConfiguration } from './zeidon-rest-client';
+
+const REST_VALUES: ZeidonRestValues = {
   restUrl: "http://localhost:8080/utc"
 };
 
@@ -41,12 +44,12 @@ const REST_VALUES: zeidon.ZeidonRestValues = {
                   ConfigurationComponent,
                   SessionComponent ],
   providers: [ RestService,
-               { provide: zeidon.ZeidonRestValues, useValue: REST_VALUES },
-               { provide: zeidon.ZeidonConfiguration, useClass: zeidon.ZeidonRestConfiguration },
+               { provide: ZeidonRestValues, useValue: REST_VALUES },
+               { provide: ZeidonConfiguration, useClass: ZeidonRestConfiguration },
              ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { 
   // This constructor is required to force Angular injector to load the ZeidonConfiguration.
-  constructor( private zeidonConfig: zeidon.ZeidonConfiguration ) {}
+  constructor( private zeidonConfig: ZeidonConfiguration ) {}
 }
