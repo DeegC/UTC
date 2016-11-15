@@ -10,11 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
-<<<<<<< HEAD
-=======
 require("./rxjs-extensions");
 var Observable_1 = require("rxjs/Observable");
->>>>>>> f56c4994e2d654ac8279771015149f54a8e92ebd
 require("rxjs/add/operator/toPromise");
 var zeidon = require("./zeidon");
 var RestService = (function () {
@@ -25,13 +22,6 @@ var RestService = (function () {
     RestService.prototype.handleError = function (e) {
         console.log("There was an error: " + e);
     };
-<<<<<<< HEAD
-    RestService.prototype.deleteConfigurationFromList = function (config) {
-        var lodName = config.oi.getLodDef().name;
-        var url = this.values.restUrl + "/" + lodName + "/" + config.Id;
-        this.http.delete(url)
-            .map(function (response) { return config.drop(); });
-=======
     RestService.prototype.deleteConfiguration = function (config) {
         var lodName = config.oi.getLodDef().name;
         var url = this.values.restUrl + "/" + lodName + "/" + config.Id;
@@ -39,7 +29,6 @@ var RestService = (function () {
             .toPromise()
             .then(function () { return config.drop(); })
             .catch(function (error) { return Observable_1.Observable.throw(error.json().error || 'Server error'); });
->>>>>>> f56c4994e2d654ac8279771015149f54a8e92ebd
     };
     return RestService;
 }());
