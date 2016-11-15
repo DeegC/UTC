@@ -32,13 +32,12 @@ var ConfigurationListComponent = (function () {
             _this.selectedConfigOi = configOi;
         });
     };
+    /**
+     * Delete the selected configuration from the OI list.
+     */
     ConfigurationListComponent.prototype.onDelete = function (config) {
-        var _this = this;
         console.log("onDelete");
-        config.delete();
-        this.configurationList.commit().subscribe(function (configOi) {
-            _this.selectedConfigOi = configOi;
-        });
+        this.restService.deleteConfiguration(config);
     };
     ConfigurationListComponent.prototype.newConfiguration = function () {
         // Instantiate a new Configuration with a single ThermometerConfig.

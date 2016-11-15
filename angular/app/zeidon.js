@@ -375,7 +375,11 @@ var ArrayDelegate = (function () {
         if (options === void 0) { options = DEFAULT_CREATE_OPTIONS; }
         //    console.log("Creating entity " + this.entityName );
         var ei = Object.create(this.oi.getPrototype(this.entityName));
+<<<<<<< HEAD
         ei.constructor.apply(ei, [initialize, this.oi, this, options]);
+=======
+        ei.constructor.apply(ei, [initialize, this.oi, this.array, options]);
+>>>>>>> f56c4994e2d654ac8279771015149f54a8e92ebd
         this.array.push(ei);
         this.currentlySelected = this.array.length - 1;
         return ei;
@@ -388,7 +392,11 @@ var ArrayDelegate = (function () {
         this.validateExclude();
         if (this.array.length == 0)
             return;
+<<<<<<< HEAD
         this.hiddenEntities = this.hiddenEntities.concat(this);
+=======
+        this.hiddenEntities = this.hiddenEntities.concat(this.array);
+>>>>>>> f56c4994e2d654ac8279771015149f54a8e92ebd
         for (var _i = 0, _a = this.array; _i < _a.length; _i++) {
             var ei = _a[_i];
             ei.excluded = true;
@@ -477,6 +485,15 @@ var EntityArray = (function (_super) {
         var _arr = _this = _super.call(this) || this;
         // See comment starting ArrayDelegate for why we do this.
         _this.delegate = new ArrayDelegate(_arr, entityName, oi, parentEi);
+<<<<<<< HEAD
+=======
+        Object.defineProperty(_arr, 'parentEi', {
+            get: function () { return parentEi; },
+            enumerable: true,
+            configurable: true
+        });
+        // Add all the functions to EntityArray.
+>>>>>>> f56c4994e2d654ac8279771015149f54a8e92ebd
         _arr.create = function (initialize, options) {
             if (initialize === void 0) { initialize = {}; }
             if (options === void 0) { options = DEFAULT_CREATE_OPTIONS; }

@@ -408,7 +408,7 @@ class ArrayDelegate<T extends EntityInstance> {
     create( initialize : Object = {}, options: CreateOptions = DEFAULT_CREATE_OPTIONS ): EntityInstance {
     //    console.log("Creating entity " + this.entityName );
         let ei = Object.create( this.oi.getPrototype( this.entityName ) );
-        ei.constructor.apply(ei, [ initialize, this.oi, this, options] );
+        ei.constructor.apply(ei, [ initialize, this.oi, this.array, options] );
         this.array.push(ei);
         this.currentlySelected = this.array.length - 1;
         return ei;
@@ -425,7 +425,7 @@ class ArrayDelegate<T extends EntityInstance> {
         if ( this.array.length == 0 )
             return;
 
-        this.hiddenEntities = this.hiddenEntities.concat( this );
+        this.hiddenEntities = this.hiddenEntities.concat( this.array );
         for ( let ei of this.array )
             (<any>ei).excluded = true;
 
@@ -516,6 +516,7 @@ class ArrayDelegate<T extends EntityInstance> {
 
 export class EntityArray<T extends EntityInstance> extends Array<T> {
     delegate: ArrayDelegate<T>;
+    parentEi: EntityInstance;
 
     constructor( entityName: string, oi: ObjectInstance, parentEi: EntityInstance ) {
         const _arr: EntityArray<T> = <any>super();
@@ -523,6 +524,13 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
         // See comment starting ArrayDelegate for why we do this.
         this.delegate = new ArrayDelegate( _arr, entityName, oi, parentEi );
 
+        Object.defineProperty(_arr, 'parentEi', {
+            get: () => parentEi,
+            enumerable: true,
+            configurable: true
+        });
+
+        // Add all the functions to EntityArray.
         _arr.create = function( initialize : Object = {}, options: CreateOptions = DEFAULT_CREATE_OPTIONS ): EntityInstance {
             return this.delegate.create( initialize, options );
         }
