@@ -216,15 +216,16 @@ export class EntityInstance {
         if ( ! entityDef.hasInit )
             return;
 
-        for ( let attributeDef of entityDef.attributes ) {
+        for ( let attributeName in entityDef.attributes ) {
+            let attributeDef = entityDef.attributes[ attributeName ];
             if ( ! attributeDef.initialValue )
                 continue;
 
             // If the attribute is already set, skip it.
-            if ( this.getAttribute( attributeDef.name ) != undefined )
+            if ( this.getAttribute( attributeName ) != undefined )
                 continue;
 
-            this.setAttribute( attributeDef.name, attributeDef.initialValue );
+            this.setAttribute( attributeName, attributeDef.initialValue );
         }
 
     }
@@ -278,6 +279,9 @@ export class EntityInstance {
     private getAttribHash( attr: string ): any {
         // TODO: This should return attributes or workAttributes.
         let attributeDef = this.attributeDefs[ attr ];
+        if ( attributeDef == undefined )
+            console.log("here");
+
         if ( attributeDef.persistent )
             return this.attributes;
         else

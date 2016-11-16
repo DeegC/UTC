@@ -215,14 +215,14 @@ var EntityInstance = (function () {
         var entityDef = this.entityDef;
         if (!entityDef.hasInit)
             return;
-        for (var _i = 0, _a = entityDef.attributes; _i < _a.length; _i++) {
-            var attributeDef = _a[_i];
+        for (var attributeName in entityDef.attributes) {
+            var attributeDef = entityDef.attributes[attributeName];
             if (!attributeDef.initialValue)
                 continue;
             // If the attribute is already set, skip it.
-            if (this.getAttribute(attributeDef.name) != undefined)
+            if (this.getAttribute(attributeName) != undefined)
                 continue;
-            this.setAttribute(attributeDef.name, attributeDef.initialValue);
+            this.setAttribute(attributeName, attributeDef.initialValue);
         }
     };
     EntityInstance.prototype.setAttribute = function (attr, value, options) {
@@ -263,6 +263,8 @@ var EntityInstance = (function () {
     EntityInstance.prototype.getAttribHash = function (attr) {
         // TODO: This should return attributes or workAttributes.
         var attributeDef = this.attributeDefs[attr];
+        if (attributeDef == undefined)
+            console.log("here");
         if (attributeDef.persistent)
             return this.attributes;
         else
