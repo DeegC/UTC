@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /*
-  Generated from LOD Session on 2016-11-10T00:41:55.382
+  Generated from LOD Session on 2016-11-16T18:40:08.154
 
 */
 var zeidon = require("./zeidon");
@@ -144,14 +144,6 @@ var Session_Configuration = (function (_super) {
     Object.defineProperty(Session_Configuration.prototype, "TargetTemperature", {
         get: function () { return this.getAttribute("TargetTemperature"); },
         set: function (value) { this.setAttribute("TargetTemperature", value); },
-        enumerable: true,
-        configurable: true
-    });
-    ;
-    ;
-    Object.defineProperty(Session_Configuration.prototype, "ThermometerCount", {
-        get: function () { return this.getAttribute("ThermometerCount"); },
-        set: function (value) { this.setAttribute("ThermometerCount", value); },
         enumerable: true,
         configurable: true
     });
@@ -457,15 +449,6 @@ exports.Session_LodDef = {
                     hidden: false,
                     required: true,
                     domain: "Integer",
-                    persistent: true,
-                    key: false,
-                    update: true,
-                    foreignKey: false,
-                },
-                ThermometerCount: {
-                    hidden: false,
-                    required: true,
-                    domain: "ThermometerCount",
                     persistent: true,
                     key: false,
                     update: true,

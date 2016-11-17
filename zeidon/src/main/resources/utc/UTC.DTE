@@ -1,4 +1,4 @@
-z1000-Zeidon    UTC      TZTENVRO 10/03/16   23:11:00 1.0a2    
+z1000-Zeidon    UTC      TZTENVRO 11/16/16   18:16:45 1.0a2    
 eTE_DB_Environ 1
 aName      UTC
 aZKey      1894
@@ -178,32 +178,6 @@ aDomainType E
 aContextRestriction N
 
 eTE_FieldDataRel 4
-aName      thermometer_count
-aZKey      2140
-aDesc      Number of Thermometers
-aDataOrRelfieldOrSet D
-aKey       N
-aDataType  L
-aLength    4
-aSQL_NULLS Y
-awkSequence 5
-
-eER_Attribute 5
-aName      ThermometerCount
-aZKey      905181335
-aNotNull   Y
-aDesc      Number of Thermometers
-
-eDomain    6
-aZKey      905181332
-aName      ThermometerCount
-aDataType  L
-aDesc      Integer from 1-8
-aDomainType E
-aContextRestriction N
-aConstraintRule (1..8)
-
-eTE_FieldDataRel 4
 aName      temperature_unit
 aZKey      2141
 aDataOrRelfieldOrSet D
@@ -211,7 +185,7 @@ aKey       N
 aDataType  S
 aLength    1
 aSQL_NULLS Y
-awkSequence 6
+awkSequence 5
 
 eER_Attribute 5
 aName      TemperatureUnit
@@ -234,7 +208,7 @@ aDataOrRelfieldOrSet D
 aKey       N
 aDataType  L
 aLength    4
-awkSequence 7
+awkSequence 6
 
 eER_Attribute 5
 aName      RecordTemperatures
@@ -259,7 +233,7 @@ aDataType  L
 aLength    4
 aSQL_SCALE 0
 aSQL_NULLS Y
-awkSequence 8
+awkSequence 7
 
 eER_Attribute 5
 aName      PidP
@@ -278,7 +252,7 @@ aKey       N
 aDataType  M
 aLength    40
 aSQL_NULLS Y
-awkSequence 9
+awkSequence 8
 
 eER_Attribute 5
 aName      PidI
@@ -302,7 +276,7 @@ aKey       N
 aDataType  M
 aLength    40
 aSQL_NULLS Y
-awkSequence 10
+awkSequence 9
 
 eER_Attribute 5
 aName      PidD
@@ -321,7 +295,7 @@ aKey       N
 aDataType  L
 aLength    4
 aSQL_SCALE 0
-awkSequence 11
+awkSequence 10
 
 eER_Attribute 5
 aName      MaxPWM
@@ -338,7 +312,7 @@ aDataOrRelfieldOrSet D
 aKey       N
 aDataType  L
 aLength    4
-awkSequence 12
+awkSequence 11
 
 eER_Attribute 5
 aName      TweetOn
@@ -355,7 +329,7 @@ aKey       N
 aDataType  L
 aLength    4
 aSQL_SCALE 0
-awkSequence 13
+awkSequence 12
 
 eER_Attribute 5
 aName      TweetPeriodInMinutes
@@ -372,7 +346,7 @@ aKey       N
 aDataType  L
 aLength    4
 aSQL_SCALE 0
-awkSequence 14
+awkSequence 13
 
 eER_Attribute 5
 aName      PwmFrequency
@@ -388,7 +362,7 @@ aDataOrRelfieldOrSet D
 aKey       N
 aDataType  L
 aLength    4
-awkSequence 15
+awkSequence 14
 
 eER_RelLink 5
 aName      for
@@ -1146,58 +1120,58 @@ eTE_FieldDataRelKey 5
 i9         3
 i13        5
 i21        18
-i36        24
-i42        39
-i45        24
-i48        33
+i33        24
+i39        36
+i42        24
+i45        30
+i48        24
 i51        24
-i54        24
-i62        11
-i63        14
-i64        15
-i74        71
-i77        71
-i80        71
-i83        71
-i86        71
-i89        71
-i92        71
-i95        71
-i98        24
-i101       71
-i110       102
-i111       66
-i113       106
-i115       5
-i116       102
-i119       68
-i122       68
-i125       18
-i126       15
-i129       59
-i130       11
-i131       105
-i134       106
-i135       102
-i139       5
-i142       18
+i59        11
+i60        14
+i61        15
+i71        68
+i74        68
+i77        68
+i80        68
+i83        68
+i86        68
+i89        68
+i92        68
+i95        24
+i98        68
+i107       99
+i108       63
+i110       103
+i112       5
+i113       99
+i116       65
+i119       65
+i122       18
+i123       15
+i126       56
+i127       11
+i128       102
+i131       103
+i132       99
+i136       5
+i139       18
+i142       24
 i145       24
-i148       24
-i151       33
-i154       57
-i155       59
-i156       14
-i157       153
-i158       57
-i159       59
-i160       11
-i161       58
-i164       137
-i168       5
+i148       30
+i151       54
+i152       56
+i153       14
+i154       150
+i155       54
+i156       56
+i157       11
+i158       55
+i161       134
+i165       5
+i168       18
 i171       18
 i174       18
 i177       18
 i180       18
-i183       18
-i186       24
-i190       166
+i183       24
+i187       163

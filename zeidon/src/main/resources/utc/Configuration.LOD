@@ -1,4 +1,4 @@
-z1000-Zeidon    CONFIGURATZZOLODO 11/06/16   19:32:57 1.0a2    
+z1000-Zeidon    CONFIGURATZZOLODO 11/16/16   18:16:58 1.0a2    
 eLOD       1
 aZKey      910225831
 aNextZKeyToAssign 910225854
@@ -202,24 +202,6 @@ aZKey      905181397
 aNotNull   Y
 
 eDomainRec 5
-
-eLOD_AttributeRec 3
-aZKey      910225837
-
-eER_AttributeRec 4
-aName      ThermometerCount
-aZKey      905181335
-aNotNull   Y
-aDesc      Number of Thermometers
-
-eDomainRec 5
-aZKey      905181332
-aName      ThermometerCount
-aDomainType E
-aDataType  L
-aDesc      Integer from 1-8
-aContextRestriction N
-aConstraintRule (1..8)
 
 eLOD_AttributeRec 3
 aZKey      910225838
@@ -449,13 +431,6 @@ eER_Attribute 4
 
 eDomain    5
 
-eLOD_Attribute 3
-awkSequence 14
-
-eER_Attribute 4
-
-eDomain    5
-
 eER_Entity 3
 
 eLOD_Entity 2
@@ -534,76 +509,73 @@ i26        5
 i29        8
 i32        8
 i35        11
-i44        17
-i47        11
-i53        50
-i56        11
-i59        17
+i41        17
+i44        11
+i50        47
+i53        11
+i56        17
+i59        11
 i62        11
-i65        11
-i67        1
-i68        24
-i69        25
-i70        5
-i71        27
-i72        28
+i64        1
+i65        24
+i66        25
+i67        5
+i68        27
+i69        28
+i70        8
+i71        30
+i72        31
 i73        8
-i74        30
-i75        31
-i76        8
-i77        33
-i78        34
-i79        11
-i80        36
-i81        37
-i82        38
-i83        39
-i84        40
-i85        41
-i86        42
-i87        43
-i88        17
-i89        45
-i90        46
-i91        11
-i92        48
-i93        49
-i94        50
-i95        51
-i96        52
-i97        50
-i98        54
-i99        55
+i74        33
+i75        34
+i76        11
+i77        36
+i78        37
+i79        38
+i80        39
+i81        40
+i82        17
+i83        42
+i84        43
+i85        11
+i86        45
+i87        46
+i88        47
+i89        48
+i90        49
+i91        47
+i92        51
+i93        52
+i94        11
+i95        54
+i96        55
+i97        17
+i98        57
+i99        58
 i100       11
-i101       57
-i102       58
-i103       17
-i104       60
-i105       61
-i106       11
-i107       63
-i108       64
-i109       11
-i110       66
-i111       2
-i112       3
-i113       4
-i114       5
-i115       6
-i116       7
-i117       8
-i118       9
-i119       10
-i120       11
-i121       12
-i122       13
-i123       11
-i124       15
-i125       16
-i126       17
-i127       18
-i128       19
-i129       17
-i130       21
-i131       22
-i132       23
+i101       60
+i102       61
+i103       11
+i104       63
+i105       2
+i106       3
+i107       4
+i108       5
+i109       6
+i110       7
+i111       8
+i112       9
+i113       10
+i114       11
+i115       12
+i116       13
+i117       11
+i118       15
+i119       16
+i120       17
+i121       18
+i122       19
+i123       17
+i124       21
+i125       22
+i126       23

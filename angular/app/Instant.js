@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /*
-  Generated from LOD Instant on 2016-11-10T00:41:55.375
+  Generated from LOD Instant on 2016-11-16T18:40:08.149
 
 */
 var zeidon = require("./zeidon");

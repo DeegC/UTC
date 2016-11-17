@@ -16,7 +16,6 @@ CREATE TABLE configuration (
            description                                                      longtext           NOT NULL, 
            notes                                                            longtext           NULL    , 
            target_temperature                                               int                NOT NULL, 
-           thermometer_count                                                int                NOT NULL, 
            temperature_unit                                                 varchar( 1 )       NOT NULL, 
            record_temperatures                                              int                NULL    , 
            pid_p                                                            int                NOT NULL, 

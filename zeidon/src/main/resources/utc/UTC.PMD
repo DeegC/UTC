@@ -1,9 +1,9 @@
-z1000-Zeidon    UTC      TZEREMDO 10/03/16   23:10:04 1.0a2    
+z1000-Zeidon    UTC      TZEREMDO 11/16/16   18:16:16 1.0a2    
 eEntpER_Model 1
 aName      UTC
 aZKey      905181310
 aNextZKeyToAssign 905181401
-aLastSyncDate 20161003231004613
+aLastSyncDate 20161116181616528
 aDesc      UDS Digital Supervisor (android)
 
 eER_Entity 2
@@ -51,7 +51,7 @@ aDesc      Config options for a monitoring session.
 aER_DiagramPosX 28
 aER_DiagramPosY 5
 aSAP_Entity 0
-awkSelectedAttributeForDragSort 8
+awkSelectedAttributeForDragSort 5
 
 eER_Attribute 3
 aName      Id
@@ -113,26 +113,10 @@ aDomainType E
 aContextRestriction N
 
 eER_Attribute 3
-aName      ThermometerCount
-aZKey      905181335
-aNotNull   Y
-aDesc      Number of Thermometers
-awkSequence 5
-
-eDomain    4
-aZKey      905181332
-aDesc      Integer from 1-8
-aName      ThermometerCount
-aDataType  L
-aDomainType E
-aContextRestriction N
-aConstraintRule (1..8)
-
-eER_Attribute 3
 aName      TemperatureUnit
 aZKey      905181336
 aNotNull   Y
-awkSequence 6
+awkSequence 5
 
 eDomain    4
 aZKey      905180731
@@ -146,7 +130,7 @@ eER_Attribute 3
 aName      RecordTemperatures
 aZKey      905181337
 aDesc      If 'Y', then record the smoker sesson.
-awkSequence 7
+awkSequence 6
 
 eDomain    4
 aZKey      905181228
@@ -161,7 +145,7 @@ aName      PidP
 aZKey      905181338
 aNotNull   Y
 aDesc      P value for PID algorithm.
-awkSequence 8
+awkSequence 7
 
 eDomain    4
 
@@ -170,7 +154,7 @@ aName      PidI
 aZKey      905181339
 aNotNull   Y
 aDesc      I value for PID algorithm.
-awkSequence 9
+awkSequence 8
 
 eDomain    4
 aZKey      905181226
@@ -184,7 +168,7 @@ aName      PidD
 aZKey      905181340
 aNotNull   Y
 aDesc      D value for PID algorithm.
-awkSequence 10
+awkSequence 9
 
 eDomain    4
 
@@ -192,7 +176,7 @@ eER_Attribute 3
 aName      MaxPWM
 aZKey      905181341
 aDesc      The max value for the output pwm.  Use lower values for more powerful blowers.
-awkSequence 11
+awkSequence 10
 
 eDomain    4
 
@@ -200,14 +184,14 @@ eER_Attribute 3
 aName      TweetOn
 aZKey      905181342
 aDesc      If 'Y', then periodically tweet status.
-awkSequence 12
+awkSequence 11
 
 eDomain    4
 
 eER_Attribute 3
 aName      TweetPeriodInMinutes
 aZKey      905181343
-awkSequence 13
+awkSequence 12
 
 eDomain    4
 
@@ -215,7 +199,7 @@ eER_Attribute 3
 aName      PwmFrequency
 aZKey      905181344
 aDesc      Frequency of the PWM signal
-awkSequence 14
+awkSequence 13
 
 eDomain    4
 
@@ -715,83 +699,83 @@ i7         4
 i8         2
 i11        3
 i17        15
-i27        19
-i31        29
-i33        19
-i35        25
+i25        19
+i29        27
+i31        19
+i33        23
+i35        19
 i37        19
-i39        19
-i48        13
-i49        12
-i50        10
-i59        57
-i61        57
-i63        57
-i65        57
-i67        57
-i69        57
-i71        57
-i73        57
-i75        19
-i77        57
-i81        47
-i82        55
-i84        80
-i85        47
-i86        54
-i87        52
-i88        47
-i90        3
-i94        53
-i96        53
-i98        15
-i99        80
-i100       79
-i101       78
-i102       51
-i103       46
-i104       45
-i105       44
-i106       9
-i107       92
-i108       91
-i109       89
-i110       43
-i112       3
-i116       15
+i46        13
+i47        12
+i48        10
+i57        55
+i59        55
+i61        55
+i63        55
+i65        55
+i67        55
+i69        55
+i71        55
+i73        19
+i75        55
+i79        45
+i80        53
+i82        78
+i83        45
+i84        52
+i85        50
+i86        45
+i88        3
+i92        51
+i94        51
+i96        15
+i97        78
+i98        77
+i99        76
+i100       49
+i101       44
+i102       43
+i103       42
+i104       9
+i105       90
+i106       89
+i107       87
+i108       41
+i110       3
+i114       15
+i116       19
 i118       19
-i120       19
-i122       25
-i124       25
-i125       42
-i126       41
-i127       40
-i128       9
-i129       114
-i130       113
-i131       111
-i134       3
+i120       23
+i122       23
+i123       40
+i124       39
+i125       38
+i126       9
+i127       112
+i128       111
+i129       109
+i132       3
+i136       15
 i138       15
 i140       15
 i142       15
 i144       15
-i146       15
-i148       19
-i149       136
-i150       135
-i151       133
-i152       79
-i153       80
-i154       47
-i155       78
-i156       51
-i157       41
+i146       19
+i147       134
+i148       133
+i149       131
+i150       77
+i151       78
+i152       45
+i153       76
+i154       49
+i155       39
+i156       38
+i157       9
 i158       40
-i159       9
-i160       42
-i161       43
-i162       45
+i159       41
+i160       43
+i161       42
+i162       9
 i163       44
-i164       9
-i165       46
-i166       47
+i164       45

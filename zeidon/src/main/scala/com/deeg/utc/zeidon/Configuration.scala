@@ -16,7 +16,6 @@ class Configuration( var task: Task ) extends ZeidonOperations {
             config.Configuration create()
             config.Configuration.Description = "Basic configuration"
             config.Configuration.TargetTemperature = 250
-            config.Configuration.ThermometerCount = 1
             config.Configuration.TemperatureUnit = "F"
             config.Configuration.RecordTemperatures = false
             config.Configuration.MaxPWM = 255

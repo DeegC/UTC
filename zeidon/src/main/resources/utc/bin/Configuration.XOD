@@ -1,15 +1,15 @@
-z1000-Zeidon    CONFIGURATZZOXODO 11/06/16   19:32:57 1.0a2    
+z1000-Zeidon    CONFIGURATZZOXODO 11/16/16   18:16:58 1.0a2    
 eOBJECT    1
 aNAME      Configuration
 aZKey      910225831
 aDFT_DBNAME Sqlite
 aDATABASE  Sqlite
 aOPER_LIBNM Configuration
-aER_DATE   20161003231004613
+aER_DATE   20161116181616528
 
 eENTITY    2
 aNAME      Configuration
-aMAX_LTH   10413
+aMAX_LTH   10402
 aERENT_TOK 905181331
 aFULLPERSIST Y
 aCREATE    Y
@@ -68,18 +68,6 @@ aUPDATE    Y
 aXVAATT_TOK 4
 
 eATTRIB    3
-aNAME      ThermometerCount
-aERATT_TOK 905181335
-aPERSIST   Y
-aAPDM_TOK  905181332
-aDOMAIN    ThermometerCount
-aTYPE      L
-aLTH       4
-aREQUIRED  Y
-aUPDATE    Y
-aXVAATT_TOK 5
-
-eATTRIB    3
 aNAME      TemperatureUnit
 aERATT_TOK 905181336
 aPERSIST   Y
@@ -91,7 +79,7 @@ aINIT      F
 aREQUIRED  Y
 aSEQ_AD    A
 aUPDATE    Y
-aXVAATT_TOK 6
+aXVAATT_TOK 5
 
 eATTRIB    3
 aNAME      RecordTemperatures
@@ -103,7 +91,7 @@ aTYPE      L
 aLTH       4
 aSEQ_AD    A
 aUPDATE    Y
-aXVAATT_TOK 7
+aXVAATT_TOK 6
 
 eATTRIB    3
 aNAME      PidP
@@ -117,7 +105,7 @@ aINIT      3
 aREQUIRED  Y
 aSEQ_AD    A
 aUPDATE    Y
-aXVAATT_TOK 8
+aXVAATT_TOK 7
 
 eATTRIB    3
 aNAME      PidI
@@ -131,7 +119,7 @@ aINIT      0.005
 aREQUIRED  Y
 aSEQ_AD    A
 aUPDATE    Y
-aXVAATT_TOK 9
+aXVAATT_TOK 8
 
 eATTRIB    3
 aNAME      PidD
@@ -145,7 +133,7 @@ aINIT      5.0
 aREQUIRED  Y
 aSEQ_AD    A
 aUPDATE    Y
-aXVAATT_TOK 10
+aXVAATT_TOK 9
 
 eATTRIB    3
 aNAME      MaxPWM
@@ -157,7 +145,7 @@ aTYPE      L
 aLTH       4
 aSEQ_AD    A
 aUPDATE    Y
-aXVAATT_TOK 11
+aXVAATT_TOK 10
 
 eATTRIB    3
 aNAME      TweetOn
@@ -169,7 +157,7 @@ aTYPE      L
 aLTH       4
 aSEQ_AD    A
 aUPDATE    Y
-aXVAATT_TOK 12
+aXVAATT_TOK 11
 
 eATTRIB    3
 aNAME      TweetPeriodInMinutes
@@ -181,7 +169,7 @@ aTYPE      L
 aLTH       4
 aSEQ_AD    A
 aUPDATE    Y
-aXVAATT_TOK 13
+aXVAATT_TOK 12
 
 eATTRIB    3
 aNAME      PwmFrequency
@@ -193,7 +181,7 @@ aTYPE      L
 aLTH       4
 aSEQ_AD    A
 aUPDATE    Y
-aXVAATT_TOK 14
+aXVAATT_TOK 13
 
 eATTRIB    3
 aNAME      autoseq
@@ -204,7 +192,7 @@ aDOMAIN    Integer
 aTYPE      L
 aLTH       4
 aHIDDEN    Y
-aXVAATT_TOK 15
+aXVAATT_TOK 14
 
 eDATARECORD 3
 aRECNAME   configuration
@@ -235,70 +223,64 @@ aFLDTYPE   L
 aXVAATT_TOK 4
 
 eDATAFIELD 4
-aFLDLTH    4
-aFLDNAME   thermometer_count
-aFLDTYPE   L
-aXVAATT_TOK 5
-
-eDATAFIELD 4
 aFLDLTH    1
 aFLDNAME   temperature_unit
 aFLDTYPE   S
-aXVAATT_TOK 6
+aXVAATT_TOK 5
 
 eDATAFIELD 4
 aFLDLTH    4
 aFLDNAME   record_temperatures
 aFLDTYPE   L
-aXVAATT_TOK 7
+aXVAATT_TOK 6
 
 eDATAFIELD 4
 aFLDLTH    4
 aFLDNAME   pid_p
 aFLDTYPE   L
-aXVAATT_TOK 8
+aXVAATT_TOK 7
 
 eDATAFIELD 4
 aFLDLTH    40
 aFLDNAME   pid_i
 aFLDTYPE   M
-aXVAATT_TOK 9
+aXVAATT_TOK 8
 
 eDATAFIELD 4
 aFLDLTH    40
 aFLDNAME   pid_d
 aFLDTYPE   M
-aXVAATT_TOK 10
+aXVAATT_TOK 9
 
 eDATAFIELD 4
 aFLDLTH    4
 aFLDNAME   max_pwm
 aFLDTYPE   L
-aXVAATT_TOK 11
+aXVAATT_TOK 10
 
 eDATAFIELD 4
 aFLDLTH    4
 aFLDNAME   tweet_on
 aFLDTYPE   L
-aXVAATT_TOK 12
+aXVAATT_TOK 11
 
 eDATAFIELD 4
 aFLDLTH    4
 aFLDNAME   tweet_period_in_minutes
 aFLDTYPE   L
-aXVAATT_TOK 13
+aXVAATT_TOK 12
 
 eDATAFIELD 4
 aFLDLTH    4
 aFLDNAME   pwm_frequency
 aFLDTYPE   L
-aXVAATT_TOK 14
+aXVAATT_TOK 13
 
 eDATAFIELD 4
 aFLDLTH    4
 aFLDNAME   autoseq
 aFLDTYPE   L
-aXVAATT_TOK 15
+aXVAATT_TOK 14
 
 eCHILDENTITY 3
 aNAME      ThermometerConfig
@@ -328,7 +310,7 @@ aKEY       Y
 aGENKEY    Y
 aREQUIRED  Y
 aUPDATE    Y
-aXVAATT_TOK 16
+aXVAATT_TOK 15
 
 eATTRIB    4
 aNAME      Name
@@ -340,7 +322,7 @@ aTYPE      S
 aLTH       255
 aREQUIRED  Y
 aUPDATE    Y
-aXVAATT_TOK 17
+aXVAATT_TOK 16
 
 eATTRIB    4
 aNAME      AlarmLow
@@ -351,7 +333,7 @@ aDOMAIN    Integer
 aTYPE      L
 aLTH       4
 aUPDATE    Y
-aXVAATT_TOK 18
+aXVAATT_TOK 17
 
 eATTRIB    4
 aNAME      AlarmHigh
@@ -362,7 +344,7 @@ aDOMAIN    Integer
 aTYPE      L
 aLTH       4
 aUPDATE    Y
-aXVAATT_TOK 19
+aXVAATT_TOK 18
 
 eATTRIB    4
 aNAME      AlarmOn
@@ -373,7 +355,7 @@ aDOMAIN    Boolean
 aTYPE      L
 aLTH       4
 aUPDATE    Y
-aXVAATT_TOK 20
+aXVAATT_TOK 19
 
 eATTRIB    4
 aNAME      wTemperatureWithinAlarmThreshold
@@ -383,7 +365,7 @@ aDOMAIN    Boolean
 aTYPE      L
 aLTH       4
 aUPDATE    Y
-aXVAATT_TOK 21
+aXVAATT_TOK 20
 
 eATTRIB    4
 aNAME      autoseq
@@ -394,7 +376,7 @@ aDOMAIN    Integer
 aTYPE      L
 aLTH       4
 aHIDDEN    Y
-aXVAATT_TOK 22
+aXVAATT_TOK 21
 aAUTO_SEQ  Y
 
 eATTRIB    4
@@ -408,7 +390,7 @@ aLTH       4
 aREQUIRED  Y
 aHIDDEN    Y
 aUPDATE    Y
-aXVAATT_TOK 23
+aXVAATT_TOK 22
 aFORKEY    Y
 
 eDATARECORD 4
@@ -419,48 +401,48 @@ eDATAFIELD 5
 aFLDLTH    64
 aFLDNAME   id
 aFLDTYPE   A
-aXVAATT_TOK 16
+aXVAATT_TOK 15
 
 eDATAFIELD 5
 aFLDLTH    255
 aFLDNAME   name
 aFLDTYPE   V
-aXVAATT_TOK 17
+aXVAATT_TOK 16
 
 eDATAFIELD 5
 aFLDLTH    4
 aFLDNAME   alarm_low
 aFLDTYPE   L
-aXVAATT_TOK 18
+aXVAATT_TOK 17
 
 eDATAFIELD 5
 aFLDLTH    4
 aFLDNAME   alarm_high
 aFLDTYPE   L
-aXVAATT_TOK 19
+aXVAATT_TOK 18
 
 eDATAFIELD 5
 aFLDLTH    4
 aFLDNAME   alarm_on
 aFLDTYPE   L
-aXVAATT_TOK 20
+aXVAATT_TOK 19
 
 eDATAFIELD 5
 aFLDLTH    4
 aFLDNAME   autoseq
 aFLDTYPE   L
-aXVAATT_TOK 22
+aXVAATT_TOK 21
 
 eDATAFIELD 5
 aFLDLTH    64
 aFLDNAME   fk_id_configuration
 aFLDTYPE   A
-aXVAATT_TOK 23
+aXVAATT_TOK 22
 
 eRELRECORD 5
 aOWNER_MEMB O
 
 eRELFIELD  6
-aRELXVAATT_TOK 23
+aRELXVAATT_TOK 22
 aSRCXVAATT_TOK 1
 

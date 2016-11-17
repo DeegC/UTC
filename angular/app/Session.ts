@@ -1,6 +1,6 @@
 
 /*
-  Generated from LOD Session on 2016-11-10T00:41:55.382
+  Generated from LOD Session on 2016-11-16T18:40:08.154
 
 */
 import * as zeidon from './zeidon';
@@ -73,9 +73,6 @@ export class Session_Configuration extends zeidon.EntityInstance {
 
     get TargetTemperature(): string { return this.getAttribute("TargetTemperature") };
     set TargetTemperature(value: string) { this.setAttribute("TargetTemperature", value) };
-
-    get ThermometerCount(): string { return this.getAttribute("ThermometerCount") };
-    set ThermometerCount(value: string) { this.setAttribute("ThermometerCount", value) };
 
     get TemperatureUnit(): string { return this.getAttribute("TemperatureUnit") };
     set TemperatureUnit(value: string) { this.setAttribute("TemperatureUnit", value) };
@@ -263,15 +260,6 @@ export const Session_LodDef = {
                     hidden:       false,
                     required:     true,
                     domain:       "Integer",
-                    persistent:   true,
-                    key:          false,
-                    update:       true,
-                    foreignKey:   false,
-                },
-                ThermometerCount: {
-                    hidden:       false,
-                    required:     true,
-                    domain:       "ThermometerCount",
                     persistent:   true,
                     key:          false,
                     update:       true,

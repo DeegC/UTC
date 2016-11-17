@@ -207,8 +207,11 @@ export class EntityInstance {
             error( `Unknown attribute ${attr} for entity ${this.entityName}` );
         }
 
-        if ( ! options.incrementalsSpecified )
+        if ( ! options.incrementalsSpecified ) {
             this.setDefaultAttributeValues();
+            this.created = true;
+            this.oi.isUpdated = true;
+        }
     }
 
     private setDefaultAttributeValues() {

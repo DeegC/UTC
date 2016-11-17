@@ -192,8 +192,11 @@ var EntityInstance = (function () {
             }
             error("Unknown attribute " + attr + " for entity " + this.entityName);
         }
-        if (!options.incrementalsSpecified)
+        if (!options.incrementalsSpecified) {
             this.setDefaultAttributeValues();
+            this.created = true;
+            this.oi.isUpdated = true;
+        }
     }
     Object.defineProperty(EntityInstance.prototype, "entityName", {
         get: function () { throw "entityName() but be overridden"; },

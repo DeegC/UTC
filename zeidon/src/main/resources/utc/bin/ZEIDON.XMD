@@ -1,4 +1,4 @@
-z1000-Zeidon    ZEIDON   TZEREMXO 10/03/16   23:10:51 1.0a2    
+z1000-Zeidon    ZEIDON   TZEREMXO 11/16/16   18:16:59 1.0a2    
 eMODEL     1
 aNumEnts   6
 aNumRels   3
@@ -14,7 +14,7 @@ aAPDM_TOK  905181242
 
 eENTITY    2
 aZKEY      905181331
-aNumAtts   14
+aNumAtts   13
 
 eATTRIB    3
 aZKEY      905181332
@@ -37,11 +37,6 @@ eATTRIB    3
 aZKEY      905181397
 aNAME      TargetTemperature
 aAPDM_TOK  905181155
-
-eATTRIB    3
-aZKEY      905181335
-aNAME      ThermometerCount
-aAPDM_TOK  905181332
 
 eATTRIB    3
 aZKEY      905181336
