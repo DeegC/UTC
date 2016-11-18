@@ -72,6 +72,7 @@ var ObjectInstance = (function () {
         var config = configurationInstance;
         if (!config)
             error("ZeidonConfiguration not properly initiated.");
+        oi.activateOptions = options;
         return config.getActivator().activateOi(oi, options);
     };
     ObjectInstance.prototype.commit = function (options) {
@@ -79,6 +80,16 @@ var ObjectInstance = (function () {
         if (!config)
             error("ZeidonConfiguration not properly initiated.");
         return config.getCommitter().commitOi(this, options);
+    };
+    ObjectInstance.prototype.reset = function () {
+        this.roots = new EntityArray(this.rootEntityName(), this, undefined);
+        this.isUpdated = false;
+    };
+    ObjectInstance.prototype.reload = function () {
+        this.reset();
+        var obs = ObjectInstance.activateOi(this, this.activateOptions);
+        obs.toPromise();
+        return obs;
     };
     Object.defineProperty(ObjectInstance.prototype, "isEmpty", {
         get: function () {

@@ -26,6 +26,9 @@ export class ObjectInstance {
     public getLodDef(): any { throw "getLodDef must be overridden" };
     public getApplicationName(): String { throw "getApplicationName must be overriden" };
 
+    // Saves the options used to activate this OI.
+    private activateOptions: ActivateOptions;
+
     public toJSON(): Object {
         console.log("JSON for Configuration OI" );
 
@@ -67,6 +70,7 @@ export class ObjectInstance {
         if ( ! config )
             error( "ZeidonConfiguration not properly initiated.")
 
+        oi.activateOptions = options;
         return config.getActivator().activateOi( oi, options );
     }
 
@@ -76,6 +80,18 @@ export class ObjectInstance {
             error( "ZeidonConfiguration not properly initiated.")
 
         return config.getCommitter().commitOi( this, options ) as Observable<this>;
+    }
+
+    public reset() {
+        this.roots = new EntityArray<EntityInstance>( this.rootEntityName(), this, undefined );
+        this.isUpdated = false;
+    }
+
+    public reload(): Observable<this> {
+        this.reset();
+        let obs = ObjectInstance.activateOi( this, this.activateOptions );
+        obs.toPromise();
+        return obs;
     }
 
     public get isEmpty(): boolean {

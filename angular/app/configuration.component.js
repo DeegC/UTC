@@ -17,7 +17,10 @@ var ConfigurationComponent = (function () {
     }
     ConfigurationComponent.prototype.save = function () {
         var _this = this;
-        this.configOi.commit().subscribe(function (config) { return _this.configOi = config; });
+        this.configOi.commit().subscribe(function (config) {
+            _this.configOi = config;
+            _this.configurationList.reload();
+        });
     };
     return ConfigurationComponent;
 }());
@@ -25,6 +28,10 @@ __decorate([
     core_1.Input(),
     __metadata("design:type", Configuration_1.Configuration)
 ], ConfigurationComponent.prototype, "configOi", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Configuration_1.Configuration)
+], ConfigurationComponent.prototype, "configurationList", void 0);
 ConfigurationComponent = __decorate([
     core_1.Component({
         selector: 'configuration-detail',

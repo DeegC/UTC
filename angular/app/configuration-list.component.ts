@@ -23,7 +23,7 @@ import * as zeidon from './zeidon';
         New Configuration
   </button>
   <div *ngIf="selectedConfigOi">
-    <configuration-detail [configOi]="selectedConfigOi"></configuration-detail>
+    <configuration-detail [configOi]="selectedConfigOi" [configurationList]="configurationList"></configuration-detail>
   </div>
 `,
     styleUrls: ['app/configuration.css'],

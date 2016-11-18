@@ -50,10 +50,15 @@ import { RestService } from './rest.service';
 export class ConfigurationComponent {
     @Input()
     configOi: Configuration;
+    @Input()
+    configurationList: Configuration;
 
     constructor( private restService: RestService ) { }
 
     save(): void {
-        this.configOi.commit().subscribe( config => this.configOi = config ); 
+        this.configOi.commit().subscribe( config => {
+            this.configOi = config;
+            this.configurationList.reload();
+        }); 
     }
 }
