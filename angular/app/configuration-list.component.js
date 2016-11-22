@@ -36,7 +36,6 @@ var ConfigurationListComponent = (function () {
      * Delete the selected configuration from the OI list.
      */
     ConfigurationListComponent.prototype.onDelete = function (config) {
-        console.log("onDelete");
         this.restService.deleteConfiguration(config);
     };
     ConfigurationListComponent.prototype.newConfiguration = function () {

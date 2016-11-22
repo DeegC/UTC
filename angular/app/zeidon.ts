@@ -25,6 +25,11 @@ export class ObjectInstance {
     public getPrototype( entityName: string ): any { throw "getPrototype must be overriden" };
     public getLodDef(): any { throw "getLodDef must be overridden" };
     public getApplicationName(): String { throw "getApplicationName must be overriden" };
+    public getDomain( name: string ): Domain { throw "getDomain() must be overriden" };
+
+    public getDomainFunctions( name: string ): any { 
+        return undefined;
+    }
 
     // Saves the options used to activate this OI.
     private activateOptions: ActivateOptions;
@@ -82,6 +87,9 @@ export class ObjectInstance {
         return config.getCommitter().commitOi( this, options ) as Observable<this>;
     }
 
+    /**
+     * Reset this OI so that's empty.
+     */
     public reset() {
         this.roots = new EntityArray<EntityInstance>( this.rootEntityName(), this, undefined );
         this.isUpdated = false;
@@ -103,7 +111,7 @@ export class ObjectInstance {
             initialize = JSON.parse( initialize );
         }
 
-        this.roots = new EntityArray<EntityInstance>( this.rootEntityName(), this, undefined );
+        this.reset();
         if ( ! initialize ) {
             return this;
         }
@@ -136,7 +144,8 @@ export class ObjectInstance {
             for ( let i of initialize ) {
                 this.roots.create( i, options );
             }
-        } else {
+        } else 
+        if ( initialize != {} ) {
             this.roots.create( initialize, options );
         }
 
@@ -265,6 +274,17 @@ export class EntityInstance {
                 error( `Can't set attribute for hidden EntityInstance: ${this.entityDef.name}.${attr}` );
         }
 
+        let domain = this.oi.getDomain( attributeDef.domain );
+        if ( domain ) {
+            let functions = this.oi.getDomainFunctions( domain.class );
+            if ( functions ) {
+                value = functions.convertExternalValue( value, attributeDef, domain );
+            }
+        }
+        else {
+            console.log( `Couldn't find domain '${attributeDef.domain}'` );
+        }
+
         let attribs = this.getAttribHash( attr );
 
         if ( attribs[ attr ] == value )
@@ -325,6 +345,11 @@ export class EntityInstance {
     public drop() {
         let idx = this.parentArray.findIndex( ei => ei === this );
         this.parentArray.drop( idx );
+    }
+
+    public exclude() {
+        let idx = this.parentArray.findIndex( ei => ei === this );
+        this.parentArray.exclude( idx );
     }
 
     public parentEntityInstance(): EntityInstance {
@@ -492,6 +517,15 @@ class ArrayDelegate<T extends EntityInstance> {
         }
     }
 
+    exclude( index? : number ) {
+        if ( index == undefined )
+            index = this.currentlySelected;
+
+        let ei = this.array.splice( index, 1 )[0];
+        ei.excluded = true;
+        this.oi.isUpdated = true;
+    }
+
     private deleteEntity ( ei: EntityInstance ) {
         ei.deleted = true;
         ei.oi.isUpdated = true;
@@ -502,6 +536,20 @@ class ArrayDelegate<T extends EntityInstance> {
             else
                 ei.getChildEntityArray( entityDef.name ).excludeAll();
         }
+    }
+
+    setSlected( value: any ): EntityInstance {
+        if ( typeof value == "number" ) {
+            this.currentlySelected = value;
+            return this.selected();
+        }
+
+        if ( typeof value == "EntityInstance" ) {
+            this.currentlySelected = this.array.findIndex( ei => value === ei );
+            return this.selected();
+        }
+        
+        throw "Value must be number or EntityInstance"
     }
 
     selected(): EntityInstance {
@@ -546,8 +594,11 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
         }
         _arr.excludeAll = function() { this.delegate.excludeAll(); };
         _arr.deleteAll = function() { this.delegate.deleteAll(); };
-        _arr.drop = function() { this.delegate.drop(); };
+        _arr.delete = function( index?: number) { this.delegate.delete( index ); };
+        _arr.drop = function( index?: number) { this.delegate.drop( index ); };
+        _arr.exclude = function( index?: number) { this.delegate.exclude( index ); };
         _arr.selected = function() { return this.delegate.selected(); };
+        _arr.setSelected = function(value: any) { return this.delegate.setSelected( value ); };
         _arr.allEntities = function() { return this.delegate.allEntities(); };
 
         return _arr;
@@ -561,7 +612,9 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
     deleteAll: () => void;
     delete: ( index? : number ) => void;
     drop: ( index? : number ) => void;
+    exclude: ( index? : number ) => void;
     selected: () => EntityInstance;
+    setSelected: (value: any ) => EntityInstance;
 
     /**
      * Returns all entity instances, including hidden ones.
@@ -636,6 +689,22 @@ export class ActivateOptions extends OptionsConstructor {
     // If true then only load the roots.  If undefined then it assumed to be
     // true if there is no qualification.
     rootOnly? : boolean;
+}
+
+export interface Domain {
+    name: string,
+    class: string,
+    maxLength?: number,
+    contexts?: any,
+}
+
+export class AttributeValueError extends Error {
+    attributeDef: any;
+
+    constructor( message: string, attributeDef: any ) {
+        super( message )
+        this.attributeDef = attributeDef;
+    }
 }
 
 let error = function ( message: string ) {

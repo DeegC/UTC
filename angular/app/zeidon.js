@@ -37,6 +37,11 @@ var ObjectInstance = (function () {
     ;
     ObjectInstance.prototype.getApplicationName = function () { throw "getApplicationName must be overriden"; };
     ;
+    ObjectInstance.prototype.getDomain = function (name) { throw "getDomain() must be overriden"; };
+    ;
+    ObjectInstance.prototype.getDomainFunctions = function (name) {
+        return undefined;
+    };
     ObjectInstance.prototype.toJSON = function () {
         console.log("JSON for Configuration OI");
         var jarray = [];
@@ -81,6 +86,9 @@ var ObjectInstance = (function () {
             error("ZeidonConfiguration not properly initiated.");
         return config.getCommitter().commitOi(this, options);
     };
+    /**
+     * Reset this OI so that's empty.
+     */
     ObjectInstance.prototype.reset = function () {
         this.roots = new EntityArray(this.rootEntityName(), this, undefined);
         this.isUpdated = false;
@@ -103,7 +111,7 @@ var ObjectInstance = (function () {
         if (typeof initialize == "string") {
             initialize = JSON.parse(initialize);
         }
-        this.roots = new EntityArray(this.rootEntityName(), this, undefined);
+        this.reset();
         if (!initialize) {
             return this;
         }
@@ -136,7 +144,7 @@ var ObjectInstance = (function () {
                 this.roots.create(i, options);
             }
         }
-        else {
+        else if (initialize != {}) {
             this.roots.create(initialize, options);
         }
         return this;
@@ -252,6 +260,16 @@ var EntityInstance = (function () {
             if (this.deleted || this.excluded)
                 error("Can't set attribute for hidden EntityInstance: " + this.entityDef.name + "." + attr);
         }
+        var domain = this.oi.getDomain(attributeDef.domain);
+        if (domain) {
+            var functions = this.oi.getDomainFunctions(domain.class);
+            if (functions) {
+                value = functions.convertExternalValue(value, attributeDef, domain);
+            }
+        }
+        else {
+            console.log("Couldn't find domain '" + attributeDef.domain + "'");
+        }
         var attribs = this.getAttribHash(attr);
         if (attribs[attr] == value)
             return;
@@ -301,6 +319,11 @@ var EntityInstance = (function () {
         var _this = this;
         var idx = this.parentArray.findIndex(function (ei) { return ei === _this; });
         this.parentArray.drop(idx);
+    };
+    EntityInstance.prototype.exclude = function () {
+        var _this = this;
+        var idx = this.parentArray.findIndex(function (ei) { return ei === _this; });
+        this.parentArray.exclude(idx);
     };
     EntityInstance.prototype.parentEntityInstance = function () {
         return this.parentArray.parentEi;
@@ -441,6 +464,13 @@ var ArrayDelegate = (function () {
             ei.metaFlags.incomplete = true;
         }
     };
+    ArrayDelegate.prototype.exclude = function (index) {
+        if (index == undefined)
+            index = this.currentlySelected;
+        var ei = this.array.splice(index, 1)[0];
+        ei.excluded = true;
+        this.oi.isUpdated = true;
+    };
     ArrayDelegate.prototype.deleteEntity = function (ei) {
         ei.deleted = true;
         ei.oi.isUpdated = true;
@@ -452,6 +482,17 @@ var ArrayDelegate = (function () {
             else
                 ei.getChildEntityArray(entityDef.name).excludeAll();
         }
+    };
+    ArrayDelegate.prototype.setSlected = function (value) {
+        if (typeof value == "number") {
+            this.currentlySelected = value;
+            return this.selected();
+        }
+        if (typeof value == "EntityInstance") {
+            this.currentlySelected = this.array.findIndex(function (ei) { return value === ei; });
+            return this.selected();
+        }
+        throw "Value must be number or EntityInstance";
     };
     ArrayDelegate.prototype.selected = function () {
         return this.array[this.currentlySelected];
@@ -495,8 +536,11 @@ var EntityArray = (function (_super) {
         };
         _arr.excludeAll = function () { this.delegate.excludeAll(); };
         _arr.deleteAll = function () { this.delegate.deleteAll(); };
-        _arr.drop = function () { this.delegate.drop(); };
+        _arr.delete = function (index) { this.delegate.delete(index); };
+        _arr.drop = function (index) { this.delegate.drop(index); };
+        _arr.exclude = function (index) { this.delegate.exclude(index); };
         _arr.selected = function () { return this.delegate.selected(); };
+        _arr.setSelected = function (value) { return this.delegate.setSelected(value); };
         _arr.allEntities = function () { return this.delegate.allEntities(); };
         return _arr;
     }
@@ -592,6 +636,16 @@ var ActivateOptions = (function (_super) {
     return ActivateOptions;
 }(OptionsConstructor));
 exports.ActivateOptions = ActivateOptions;
+var AttributeValueError = (function (_super) {
+    __extends(AttributeValueError, _super);
+    function AttributeValueError(message, attributeDef) {
+        var _this = _super.call(this, message) || this;
+        _this.attributeDef = attributeDef;
+        return _this;
+    }
+    return AttributeValueError;
+}(Error));
+exports.AttributeValueError = AttributeValueError;
 var error = function (message) {
     var e = new Error('dummy');
     var stack = e.stack.replace(/^[^\(]+?[\n$]/gm, '')

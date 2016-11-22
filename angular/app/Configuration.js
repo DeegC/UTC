@@ -9,6 +9,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 
 */
 var zeidon = require("./zeidon");
+var UTC_DomainList_1 = require("./UTC-DomainList");
+var UTC_DomainFunctions_1 = require("./UTC-DomainFunctions");
 // Configuration LOD.
 var Configuration = (function (_super) {
     __extends(Configuration, _super);
@@ -26,6 +28,13 @@ var Configuration = (function (_super) {
         return exports.Configuration_LodDef;
     };
     ;
+    Configuration.prototype.getDomain = function (name) {
+        return UTC_DomainList_1.UTC_DomainList[name];
+    };
+    ;
+    Configuration.prototype.getDomainFunctions = function (name) {
+        return UTC_DomainFunctions_1.UTC_DomainFunctions[name];
+    };
     Object.defineProperty(Configuration.prototype, "Configuration", {
         get: function () {
             return this.roots;

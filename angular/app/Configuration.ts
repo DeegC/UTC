@@ -1,11 +1,11 @@
-
 /*
   Generated from LOD Configuration on 2016-11-16T18:40:08.134
 
 */
 import * as zeidon from './zeidon';
 import { Observable } from 'rxjs';
-
+import { UTC_DomainList } from './UTC-DomainList';
+import { UTC_DomainFunctions } from './UTC-DomainFunctions';
 
 // Configuration LOD.
 export class Configuration extends zeidon.ObjectInstance {
@@ -21,6 +21,14 @@ export class Configuration extends zeidon.ObjectInstance {
         return Configuration_LodDef;
     };
 
+    public getDomain( name: string ): zeidon.Domain { 
+        return UTC_DomainList[name];
+    };
+
+    public getDomainFunctions( name: string ): any { 
+        return UTC_DomainFunctions[name];
+    }
+
     get Configuration(): zeidon.EntityArray<Configuration_Configuration> {
         return this.roots as zeidon.EntityArray<Configuration_Configuration>;
     }
@@ -33,7 +41,6 @@ export class Configuration extends zeidon.ObjectInstance {
         return zeidon.ObjectInstance.activateOi( new Configuration(), options );
     }
 }
-
 
 export class Configuration_Configuration extends zeidon.EntityInstance {
     public get entityName(): string { return "Configuration" };
