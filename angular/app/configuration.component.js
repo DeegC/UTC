@@ -11,6 +11,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var Configuration_1 = require("./Configuration");
 var rest_service_1 = require("./rest.service");
+var core_2 = require("@angular/core");
+var forms_1 = require("@angular/forms");
+var core_3 = require("@angular/core");
+var forms_2 = require("@angular/forms");
+var core_4 = require("@angular/core");
+var zeidon_1 = require("./zeidon");
 var ConfigurationComponent = (function () {
     function ConfigurationComponent(restService) {
         this.restService = restService;
@@ -32,12 +38,62 @@ __decorate([
     core_1.Input(),
     __metadata("design:type", Configuration_1.Configuration)
 ], ConfigurationComponent.prototype, "configurationList", void 0);
+__decorate([
+    core_2.ViewChild('configForm'),
+    __metadata("design:type", forms_1.NgForm)
+], ConfigurationComponent.prototype, "currentForm", void 0);
 ConfigurationComponent = __decorate([
     core_1.Component({
         selector: 'configuration-detail',
-        template: "\n  <div *ngIf=\"configOi\">\n    <h2>Configuration Details</h2>\n    <div><label>Id: </label>{{configOi.Configuration$.Id}}</div>\n    <div>\n      <label>Description: </label>\n      <input [(ngModel)]=\"configOi.Configuration$.Description\" placeholder=\"Description\"/>\n    </div>\n    <div>\n      <label>Target Temperature: </label>\n      <input [(ngModel)]=\"configOi.Configuration$.TargetTemperature\" placeholder=\"target temperature\"/>\n    </div>\n    <div>\n      <label>PID: </label>\n      <input [(ngModel)]=\"configOi.Configuration$.PidP\" placeholder=\"P\" maxlength=\"2\" size=\"2\"/>\n      <input [(ngModel)]=\"configOi.Configuration$.PidI\" placeholder=\"I\" maxlength=\"5\" size=\"5\"/>\n      <input [(ngModel)]=\"configOi.Configuration$.PidD\" placeholder=\"D\" maxlength=\"2\" size=\"2\"/>\n    </div>\n    <div>\n      <label>Max PWM: </label>\n      <input [(ngModel)]=\"configOi.Configuration$.MaxPWM\" placeholder=\"max PWM\"/>\n    </div>\n    <div>\n      <label>Tweet On: </label>\n      <input [(ngModel)]=\"configOi.Configuration$.TweetOn\" placeholder=\"tweet on\"/>\n    </div>\n    <div>\n      <label>Tweet Period: </label>\n      <input [(ngModel)]=\"configOi.Configuration$.TweetPeriodInMinutes\" placeholder=\"Tweet period\"/>\n    </div>\n    <h3>Thermometers</h3>\n    <div *ngFor=\"let therm of configOi.Configuration$.ThermometerConfig\" >\n      <div>\n        <label>name: </label>\n        <input [(ngModel)]=\"therm.Name\" placeholder=\"name\"/>\n      </div>\n    </div>\n    <button (click)=\"save()\" [disabled]=\"! configOi.isUpdated\">\n      Save Configuration\n    </button>\n  </div>\n"
+        template: "\n  <div *ngIf=\"configOi\">\n    <form #configForm=\"ngForm\" >\n      <h2>Configuration Details</h2>\n      <div><label>Id: </label>{{configOi.Configuration$.Id}}</div>\n      <div>\n        <label>Description: </label>\n        <input type=\"text\" id=\"description\" \n               [(ngModel)]=\"configOi.Configuration$.Description\" \n               [validateAttributeValue]=\"configOi.Configuration$\"\n               placeholder=\"Description\" name=\"description\"\n        />\n      </div>\n      <div>\n        <label>Target Temperature: </label>\n        <input [(ngModel)]=\"configOi.Configuration$.TargetTemperature\" placeholder=\"target temperature\" name=\"target\"  />\n      </div>\n      \n      <div>\n        <label>PID: </label>\n        <input [(ngModel)]=\"configOi.Configuration$.PidP\" placeholder=\"P\" maxlength=\"2\" size=\"2\" name=\"PidP\"/>\n        <input [(ngModel)]=\"configOi.Configuration$.PidI\" placeholder=\"I\" maxlength=\"5\" size=\"5\" name=\"PidI\"/>\n        <input [(ngModel)]=\"configOi.Configuration$.PidD\" placeholder=\"D\" maxlength=\"2\" size=\"2\" name=\"PidD\"/>\n      </div>\n      <div>\n        <label>Max PWM: </label>\n        <input [(ngModel)]=\"configOi.Configuration$.MaxPWM\" placeholder=\"max PWM\" name=\"maxPwm\"/>\n      </div>\n      <div>\n        <label>Tweet On: </label>\n        <input \n            [(ngModel)]=\"configOi.Configuration$.TweetOn\" placeholder=\"tweet on\" name=\"tweetOn\"\n        />\n      </div>\n      <div>\n        <label>Tweet Period: </label>\n        <input [(ngModel)]=\"configOi.Configuration$.TweetPeriodInMinutes\" placeholder=\"Tweet period\" name=\"tweetPeriod\"/>\n      </div>\n      <h3>Thermometers</h3>\n      <div *ngFor=\"let therm of configOi.Configuration$.ThermometerConfig\" >\n        <div>\n          <label>name: </label>\n          <input [(ngModel)]=\"therm.Name\" placeholder=\"name\" name=\"thermName\"/>\n        </div>\n      </div>\n      <button (click)=\"save()\" [disabled]=\"! configOi.isUpdated\">\n        Save Configuration\n      </button>\n    </form>\n  </div>\n"
     }),
     __metadata("design:paramtypes", [rest_service_1.RestService])
 ], ConfigurationComponent);
 exports.ConfigurationComponent = ConfigurationComponent;
+/** A hero's name can't match the given regular expression */
+function attributeValidator(name) {
+    console.log("validator- factory");
+    return function (control) {
+        console.log("validator- AbstractControl");
+        var name = control.value;
+        return null;
+    };
+}
+exports.attributeValidator = attributeValidator;
+var AttributeValidatorDirective = (function () {
+    function AttributeValidatorDirective(el, renderer) {
+        this.valFn = forms_2.Validators.nullValidator;
+        console.log("constructor");
+    }
+    AttributeValidatorDirective.prototype.ngOnChanges = function (changes) {
+        var change = changes['attributeValue'];
+        console.log("validator- on changes");
+        if (change) {
+            var val = change.currentValue;
+            this.valFn = attributeValidator(change.currentValue);
+        }
+        else {
+            this.valFn = forms_2.Validators.nullValidator;
+        }
+    };
+    AttributeValidatorDirective.prototype.validate = function (control) {
+        var val = control.value;
+        if (val == 'abc')
+            return { 'forbiddenName': { val: val } };
+        return this.valFn(control);
+    };
+    return AttributeValidatorDirective;
+}());
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", zeidon_1.EntityInstance)
+], AttributeValidatorDirective.prototype, "validateAttributeValue", void 0);
+AttributeValidatorDirective = __decorate([
+    core_3.Directive({
+        selector: '[validateAttributeValue]',
+        providers: [{ provide: forms_2.NG_VALIDATORS, useExisting: AttributeValidatorDirective, multi: true }]
+    }),
+    __metadata("design:paramtypes", [core_4.ElementRef, core_4.Renderer])
+], AttributeValidatorDirective);
+exports.AttributeValidatorDirective = AttributeValidatorDirective;
 //# sourceMappingURL=configuration.component.js.map

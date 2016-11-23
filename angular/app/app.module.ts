@@ -7,6 +7,8 @@ import './rxjs-extensions';
 
 import { AppComponent }   from './app.component';
 import { ConfigurationListComponent }   from './configuration-list.component';
+import { AttributeValidatorDirective }   from './configuration.component';
+import { NG_VALIDATORS } from '@angular/forms';
 import { ConfigurationComponent }   from './configuration.component';
 import { RestService }   from './rest.service';
 import { SessionComponent }   from './session.component';
@@ -42,8 +44,10 @@ const REST_VALUES: ZeidonRestValues = {
   declarations: [ AppComponent, 
                   ConfigurationListComponent, 
                   ConfigurationComponent,
+                  AttributeValidatorDirective,
                   SessionComponent ],
   providers: [ RestService,
+//               AttributeValidatorDirective,
                { provide: ZeidonRestValues, useValue: REST_VALUES },
                { provide: ZeidonConfiguration, useClass: ZeidonRestConfiguration },
              ],
