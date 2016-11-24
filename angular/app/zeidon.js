@@ -247,6 +247,20 @@ var EntityInstance = (function () {
             this.setAttribute(attributeName, attributeDef.initialValue);
         }
     };
+    EntityInstance.prototype.getDomainForAttribute = function (attributeName) {
+        var attributeDef = this.attributeDefs[attributeName];
+        if (!attributeDef)
+            error("Attribute " + attributeName + " is unknown for entity " + this.entityDef.name);
+        var domain = this.oi.getDomain(attributeDef.domain);
+        if (!domain) {
+            console.log("Couldn't find domain '" + attributeDef.domain + "'");
+            this.oi.getDomain(attributeDef.domain);
+            return undefined;
+        }
+        if (!domain.domainFunctions)
+            domain.domainFunctions = this.oi.getDomainFunctions(domain.class);
+        return domain;
+    };
     EntityInstance.prototype.setAttribute = function (attr, value, options) {
         if (options === void 0) { options = DEFAULT_CREATE_OPTIONS; }
         //    console.log( `Setting attribute ${attr}`)
@@ -260,16 +274,10 @@ var EntityInstance = (function () {
             if (this.deleted || this.excluded)
                 error("Can't set attribute for hidden EntityInstance: " + this.entityDef.name + "." + attr);
         }
-        var domain = this.oi.getDomain(attributeDef.domain);
-        if (domain) {
-            var functions = this.oi.getDomainFunctions(domain.class);
-            if (functions) {
-                value = functions.convertExternalValue(value, attributeDef, domain);
-            }
-        }
-        else {
-            console.log("Couldn't find domain '" + attributeDef.domain + "'");
-        }
+        var domain = this.getDomainForAttribute(attr);
+        // if ( domain.domainFunctions ) {
+        //     value = domain.domainFunctions.convertExternalValue( value, attributeDef, domain );
+        // }
         var attribs = this.getAttribHash(attr);
         if (attribs[attr] == value)
             return;

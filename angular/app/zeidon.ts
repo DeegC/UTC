@@ -258,6 +258,24 @@ export class EntityInstance {
 
     }
 
+    public getDomainForAttribute( attributeName: string ): Domain {
+        let attributeDef = this.attributeDefs[ attributeName ];
+        if ( ! attributeDef )
+            error( `Attribute ${attributeName} is unknown for entity ${this.entityDef.name}` );
+
+        let domain = this.oi.getDomain( attributeDef.domain );
+        if ( ! domain ) {
+            console.log( `Couldn't find domain '${attributeDef.domain}'` );
+            this.oi.getDomain( attributeDef.domain );
+            return undefined;
+        }
+        
+        if ( ! domain.domainFunctions )
+            domain.domainFunctions = this.oi.getDomainFunctions( domain.class );
+    
+        return domain;
+    }
+
     protected setAttribute( attr: string, value: any, options: CreateOptions = DEFAULT_CREATE_OPTIONS ) {
     //    console.log( `Setting attribute ${attr}`)
         let attributeDef = this.attributeDefs[ attr ];
@@ -274,16 +292,10 @@ export class EntityInstance {
                 error( `Can't set attribute for hidden EntityInstance: ${this.entityDef.name}.${attr}` );
         }
 
-        let domain = this.oi.getDomain( attributeDef.domain );
-        if ( domain ) {
-            let functions = this.oi.getDomainFunctions( domain.class );
-            if ( functions ) {
-                value = functions.convertExternalValue( value, attributeDef, domain );
-            }
-        }
-        else {
-            console.log( `Couldn't find domain '${attributeDef.domain}'` );
-        }
+        let domain = this.getDomainForAttribute( attr );
+        // if ( domain.domainFunctions ) {
+        //     value = domain.domainFunctions.convertExternalValue( value, attributeDef, domain );
+        // }
 
         let attribs = this.getAttribHash( attr );
 
@@ -696,6 +708,7 @@ export interface Domain {
     class: string,
     maxLength?: number,
     contexts?: any,
+    domainFunctions?: any,
 }
 
 export class AttributeValueError extends Error {

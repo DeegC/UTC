@@ -1,3 +1,4 @@
+import { OnInit } from '@angular/core';
 import { Component, Input } from '@angular/core';
 import { Configuration } from './Configuration';
 import { RestService } from './rest.service';
@@ -6,7 +7,7 @@ import { NgForm } from '@angular/forms';
 import { Directive, OnChanges, SimpleChanges } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, Validator, ValidatorFn, Validators } from '@angular/forms';
 import { ElementRef, Renderer } from '@angular/core';
-import { EntityInstance } from './zeidon';
+import { EntityInstance, Domain } from './zeidon';
 
 @Component({
     selector: 'configuration-detail',
@@ -17,10 +18,9 @@ import { EntityInstance } from './zeidon';
       <div><label>Id: </label>{{configOi.Configuration$.Id}}</div>
       <div>
         <label>Description: </label>
-        <input type="text" id="description" 
-               [(ngModel)]="configOi.Configuration$.Description" 
-               [validateAttributeValue]="configOi.Configuration$"
-               placeholder="Description" name="description"
+        <input type="text" id="Description" 
+               [(ngModel)]="configOi.Configuration$.Description"
+               placeholder="Description" name="Description"
         />
       </div>
       <div>
@@ -40,9 +40,13 @@ import { EntityInstance } from './zeidon';
       </div>
       <div>
         <label>Tweet On: </label>
-        <input 
-            [(ngModel)]="configOi.Configuration$.TweetOn" placeholder="tweet on" name="tweetOn"
+        <input id="TweetOn"
+            [validateAttributeValue]="configOi.Configuration$"
+            [(ngModel)]="configOi.Configuration$.TweetOn" placeholder="tweet on" name="TweetOn"
         />
+        <div *ngIf="formErrors.TweetOn" class="alert alert-danger">
+          {{ formErrors.TweetOn }}
+        </div>        
       </div>
       <div>
         <label>Tweet Period: </label>
@@ -94,13 +98,17 @@ export function attributeValidator(name: string): ValidatorFn {
     selector: '[validateAttributeValue]',
     providers: [{ provide: NG_VALIDATORS, useExisting: AttributeValidatorDirective, multi: true }]
 })
-export class AttributeValidatorDirective implements Validator, OnChanges {
-    @Input() validateAttributeValue: EntityInstance;
+export class AttributeValidatorDirective implements Validator, OnChanges, OnInit {
+    @Input("validateAttributeValue") entityInstance: EntityInstance;
 
     private valFn = Validators.nullValidator;
+    private attributeName: string;
+    private attributeDef: any;
+    private domain: Domain;
 
     constructor(el: ElementRef, renderer: Renderer) {
         console.log("constructor")
+        this.attributeName = el.nativeElement.name;
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -114,11 +122,30 @@ export class AttributeValidatorDirective implements Validator, OnChanges {
         }
     }
 
-    validate(control: AbstractControl): { [key: string]: any } {
-        let val = control.value;
-        if (val == 'abc')
-            return { 'forbiddenName': { val } };
+    ngOnInit(): void {
+        console.log( "onInit" );
+        this.attributeDef = this.entityInstance.attributeDefs[ this.attributeName ];
+        this.domain = this.entityInstance.getDomainForAttribute( this.attributeName );
+    }
 
-        return this.valFn(control);
+    validate(control: AbstractControl): { [key: string]: any } {
+        if ( ! control.touched && ! control.dirty )
+            return null;
+
+        if ( ! this.domain.domainFunctions )
+            return null;
+
+        let value = control.value;
+        try {
+            console.log("Calling domain funcation" );
+            this.domain.domainFunctions.convertExternalValue( value, this.attributeDef, this.domain );
+        }
+        catch( e ) {
+            let errors = {} as any;
+            console.log( `Error: ${e.message}`);
+            errors[ this.attributeName ] = { message: e.message };
+            return errors;
+        }
+        return null;
     }
 }
