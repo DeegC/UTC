@@ -22,8 +22,8 @@ export class AttributeValidatorDirective implements Validator, OnInit {
     }
 
     ngOnInit(): void {
-        this.attributeDef = this.entityInstance.attributeDefs[ this.attributeName ];
-        this.domain = this.entityInstance.getDomainForAttribute( this.attributeName );
+        this.attributeDef = this.entityInstance.getAttributeDef( this.attributeName );
+        this.domain = this.attributeDef.domain;
     }
 
     validate(control: AbstractControl): { [key: string]: any } {

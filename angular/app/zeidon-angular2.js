@@ -19,8 +19,8 @@ var AttributeValidatorDirective = (function () {
         this.attributeName = el.nativeElement.name;
     }
     AttributeValidatorDirective.prototype.ngOnInit = function () {
-        this.attributeDef = this.entityInstance.attributeDefs[this.attributeName];
-        this.domain = this.entityInstance.getDomainForAttribute(this.attributeName);
+        this.attributeDef = this.entityInstance.getAttributeDef(this.attributeName);
+        this.domain = this.attributeDef.domain;
     };
     AttributeValidatorDirective.prototype.validate = function (control) {
         if (!control.touched && !control.dirty)

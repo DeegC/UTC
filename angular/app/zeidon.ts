@@ -27,7 +27,8 @@ export class ObjectInstance {
     public getApplicationName(): String { throw "getApplicationName must be overriden" };
     public getDomain( name: string ): Domain { throw "getDomain() must be overriden" };
 
-    public getDomainFunctions( name: string ): any { 
+    public getDomainFunctions( name: string ): any {
+        // Can be overwritten but not necessary. 
         return undefined;
     }
 
@@ -193,7 +194,22 @@ export class EntityInstance {
 
     public get entityName(): string { throw "entityName() but be overridden" };
     public get entityDef(): any { return this.oi.getLodDef().entities[ this.entityName ];}
-    public get attributeDefs(): Object { return this.entityDef.attributes; }
+    public getAttributeDef( attributeName: string ): any {
+        let attributeDef = this.entityDef.attributes[ attributeName ];
+        if ( ! attributeDef.domain ) {
+            let domain = this.oi.getDomain( attributeDef.domainName );
+            if ( domain ) {
+                attributeDef.domain = domain;
+                if ( ! domain.domainFunctions )
+                    domain.domainFunctions = this.oi.getDomainFunctions( domain.class );
+            }
+            else {
+                console.log( `Couldn't find domain '${attributeDef.domain}'` );
+            }
+            
+        }
+        return attributeDef;
+    }
 
     constructor( initialize:  Object, 
                  oi:          ObjectInstance, 
@@ -203,7 +219,7 @@ export class EntityInstance {
         this.parentArray = parentArray;
 
         for ( let attr in initialize ) {
-            if ( this.attributeDefs[attr] ) {
+            if ( this.getAttributeDef(attr) ) {
                 this.setAttribute( attr, initialize[attr], options);
                 continue;
             }
@@ -227,7 +243,7 @@ export class EntityInstance {
 
             if ( attr.startsWith(".") ) {
                 let metaName = attr.substr(1); // Remove leading "."
-                if ( this.attributeDefs[metaName] ) {
+                if ( this.getAttributeDef( metaName ) ) {
                     let attribs = this.getAttribHash( metaName );
                     attribs[ attr ] = initialize[ attr ];
                     continue;
@@ -263,27 +279,9 @@ export class EntityInstance {
 
     }
 
-    public getDomainForAttribute( attributeName: string ): Domain {
-        let attributeDef = this.attributeDefs[ attributeName ];
-        if ( ! attributeDef )
-            error( `Attribute ${attributeName} is unknown for entity ${this.entityDef.name}` );
-
-        let domain = this.oi.getDomain( attributeDef.domain );
-        if ( ! domain ) {
-            console.log( `Couldn't find domain '${attributeDef.domain}'` );
-            this.oi.getDomain( attributeDef.domain );
-            return undefined;
-        }
-        
-        if ( ! domain.domainFunctions )
-            domain.domainFunctions = this.oi.getDomainFunctions( domain.class );
-    
-        return domain;
-    }
-
     protected setAttribute( attr: string, value: any, options: CreateOptions = DEFAULT_CREATE_OPTIONS ) {
     //    console.log( `Setting attribute ${attr}`)
-        let attributeDef = this.attributeDefs[ attr ];
+        let attributeDef = this.getAttributeDef( attr );
 
         if ( ! attributeDef )
             error( `Attribute ${attr} is unknown for entity ${this.entityDef.name}` );
@@ -297,8 +295,7 @@ export class EntityInstance {
                 error( `Can't set attribute for hidden EntityInstance: ${this.entityDef.name}.${attr}` );
         }
 
-        let domain = this.getDomainForAttribute( attr );
-        // if ( domain.domainFunctions ) {
+        // if ( attributeDef.domain.domainFunctions ) {
         //     value = domain.domainFunctions.convertExternalValue( value, attributeDef, domain );
         // }
 
@@ -337,7 +334,7 @@ export class EntityInstance {
 
     private getAttribHash( attr: string ): any {
         // TODO: This should return attributes or workAttributes.
-        let attributeDef = this.attributeDefs[ attr ];
+        let attributeDef = this.getAttributeDef( attr );
         if ( attributeDef == undefined )
             console.log("here");
 
@@ -408,7 +405,7 @@ export class EntityInstance {
         if ( Object.keys( meta ).length > 0 )
             json[ ".meta" ] = meta;
 
-        for ( let attrName in this.attributeDefs ) {
+        for ( let attrName in this.entityDef.attributes ) {
             if ( this.getAttribute( attrName ) != undefined || this.isAttributeUpdated( attrName ) ) {
                 json[attrName] = this.getAttribute( attrName );
                 if (this.isAttributeUpdated( attrName ) ) {

@@ -40,6 +40,7 @@ var ObjectInstance = (function () {
     ObjectInstance.prototype.getDomain = function (name) { throw "getDomain() must be overriden"; };
     ;
     ObjectInstance.prototype.getDomainFunctions = function (name) {
+        // Can be overwritten but not necessary. 
         return undefined;
     };
     ObjectInstance.prototype.toJSON = function () {
@@ -185,7 +186,7 @@ var EntityInstance = (function () {
         this.oi = oi;
         this.parentArray = parentArray;
         for (var attr in initialize) {
-            if (this.attributeDefs[attr]) {
+            if (this.getAttributeDef(attr)) {
                 this.setAttribute(attr, initialize[attr], options);
                 continue;
             }
@@ -207,7 +208,7 @@ var EntityInstance = (function () {
             }
             if (attr.startsWith(".")) {
                 var metaName = attr.substr(1); // Remove leading "."
-                if (this.attributeDefs[metaName]) {
+                if (this.getAttributeDef(metaName)) {
                     var attribs = this.getAttribHash(metaName);
                     attribs[attr] = initialize[attr];
                     continue;
@@ -232,11 +233,21 @@ var EntityInstance = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(EntityInstance.prototype, "attributeDefs", {
-        get: function () { return this.entityDef.attributes; },
-        enumerable: true,
-        configurable: true
-    });
+    EntityInstance.prototype.getAttributeDef = function (attributeName) {
+        var attributeDef = this.entityDef.attributes[attributeName];
+        if (!attributeDef.domain) {
+            var domain = this.oi.getDomain(attributeDef.domainName);
+            if (domain) {
+                attributeDef.domain = domain;
+                if (!domain.domainFunctions)
+                    domain.domainFunctions = this.oi.getDomainFunctions(domain.class);
+            }
+            else {
+                console.log("Couldn't find domain '" + attributeDef.domain + "'");
+            }
+        }
+        return attributeDef;
+    };
     EntityInstance.prototype.setDefaultAttributeValues = function () {
         var entityDef = this.entityDef;
         if (!entityDef.hasInit)
@@ -251,24 +262,10 @@ var EntityInstance = (function () {
             this.setAttribute(attributeName, attributeDef.initialValue);
         }
     };
-    EntityInstance.prototype.getDomainForAttribute = function (attributeName) {
-        var attributeDef = this.attributeDefs[attributeName];
-        if (!attributeDef)
-            error("Attribute " + attributeName + " is unknown for entity " + this.entityDef.name);
-        var domain = this.oi.getDomain(attributeDef.domain);
-        if (!domain) {
-            console.log("Couldn't find domain '" + attributeDef.domain + "'");
-            this.oi.getDomain(attributeDef.domain);
-            return undefined;
-        }
-        if (!domain.domainFunctions)
-            domain.domainFunctions = this.oi.getDomainFunctions(domain.class);
-        return domain;
-    };
     EntityInstance.prototype.setAttribute = function (attr, value, options) {
         if (options === void 0) { options = DEFAULT_CREATE_OPTIONS; }
         //    console.log( `Setting attribute ${attr}`)
-        var attributeDef = this.attributeDefs[attr];
+        var attributeDef = this.getAttributeDef(attr);
         if (!attributeDef)
             error("Attribute " + attr + " is unknown for entity " + this.entityDef.name);
         // Perform some validations unless incrementals are specified.
@@ -278,8 +275,7 @@ var EntityInstance = (function () {
             if (this.deleted || this.excluded)
                 error("Can't set attribute for hidden EntityInstance: " + this.entityDef.name + "." + attr);
         }
-        var domain = this.getDomainForAttribute(attr);
-        // if ( domain.domainFunctions ) {
+        // if ( attributeDef.domain.domainFunctions ) {
         //     value = domain.domainFunctions.convertExternalValue( value, attributeDef, domain );
         // }
         var attribs = this.getAttribHash(attr);
@@ -308,7 +304,7 @@ var EntityInstance = (function () {
     };
     EntityInstance.prototype.getAttribHash = function (attr) {
         // TODO: This should return attributes or workAttributes.
-        var attributeDef = this.attributeDefs[attr];
+        var attributeDef = this.getAttributeDef(attr);
         if (attributeDef == undefined)
             console.log("here");
         if (attributeDef.persistent)
@@ -364,7 +360,7 @@ var EntityInstance = (function () {
             meta.incrementals = incrementals;
         if (Object.keys(meta).length > 0)
             json[".meta"] = meta;
-        for (var attrName in this.attributeDefs) {
+        for (var attrName in this.entityDef.attributes) {
             if (this.getAttribute(attrName) != undefined || this.isAttributeUpdated(attrName)) {
                 json[attrName] = this.getAttribute(attrName);
                 if (this.isAttributeUpdated(attrName)) {
