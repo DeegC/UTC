@@ -54,6 +54,9 @@ var ObjectInstance = (function () {
         json[this.rootEntityName()] = jarray;
         return json;
     };
+    ObjectInstance.prototype.logOi = function () {
+        console.log(JSON.stringify(this, null, 2));
+    };
     /**
      * Wrap the JSON for this object with Zeidon OI meta.  Used for committing.
      */
@@ -171,6 +174,7 @@ var EntityInstance = (function () {
         this.attributes = {};
         this.workAttributes = {};
         this.metaFlags = {};
+        this.validateErrors = {};
         // If incomplete = true then this entity did not have all its children
         // loaded and so cannot be deleted.
         this.incomplete = false;
@@ -290,9 +294,14 @@ var EntityInstance = (function () {
         attribs[metaAttr].updated = true;
         this.oi.isUpdated = true;
         this.updated = true;
+        if (attr == "Name")
+            this.oi.logOi();
     };
     EntityInstance.prototype.getAttribute = function (attr) {
         var attribs = this.getAttribHash(attr);
+        if (attr == "Name") {
+            console.log("Name = " + attribs[attr]);
+        }
         return attribs[attr];
     };
     EntityInstance.prototype.isAttributeUpdated = function (attr) {

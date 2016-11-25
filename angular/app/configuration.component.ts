@@ -44,19 +44,19 @@ import { EntityInstance, Domain } from './zeidon';
             [validateAttributeValue]="configOi.Configuration$"
             [(ngModel)]="configOi.Configuration$.TweetOn" placeholder="tweet on" name="TweetOn"
         />
-        <div *ngIf="formErrors.TweetOn" class="alert alert-danger">
-          {{ formErrors.TweetOn }}
-        </div>        
+        <div *ngIf="configOi.Configuration$.validateErrors.TweetOn" class="alert alert-danger">
+          {{ configOi.Configuration$.validateErrors.TweetOn.message }}
+        </div>
       </div>
       <div>
         <label>Tweet Period: </label>
         <input [(ngModel)]="configOi.Configuration$.TweetPeriodInMinutes" placeholder="Tweet period" name="tweetPeriod"/>
       </div>
       <h3>Thermometers</h3>
-      <div *ngFor="let therm of configOi.Configuration$.ThermometerConfig" >
+      <div *ngFor="let therm of configOi.Configuration$.ThermometerConfig; let i = index;" >
         <div>
           <label>name: </label>
-          <input [(ngModel)]="therm.Name" placeholder="name" name="thermName"/>
+          <input id="thermName" [(ngModel)]="therm.Name" placeholder="name" name="thermName.{{i}}"/>
         </div>
       </div>
       <button (click)="save()" [disabled]="! configOi.isUpdated">
@@ -98,7 +98,7 @@ export function attributeValidator(name: string): ValidatorFn {
     selector: '[validateAttributeValue]',
     providers: [{ provide: NG_VALIDATORS, useExisting: AttributeValidatorDirective, multi: true }]
 })
-export class AttributeValidatorDirective implements Validator, OnChanges, OnInit {
+export class AttributeValidatorDirective implements Validator, OnInit {
     @Input("validateAttributeValue") entityInstance: EntityInstance;
 
     private valFn = Validators.nullValidator;
@@ -111,6 +111,7 @@ export class AttributeValidatorDirective implements Validator, OnChanges, OnInit
         this.attributeName = el.nativeElement.name;
     }
 
+/*
     ngOnChanges(changes: SimpleChanges): void {
         const change = changes['attributeValue'];
         console.log("validator- on changes");
@@ -121,6 +122,7 @@ export class AttributeValidatorDirective implements Validator, OnChanges, OnInit
             this.valFn = Validators.nullValidator;
         }
     }
+*/
 
     ngOnInit(): void {
         console.log( "onInit" );
@@ -136,16 +138,17 @@ export class AttributeValidatorDirective implements Validator, OnChanges, OnInit
             return null;
 
         let value = control.value;
+        let errors = this.entityInstance.validateErrors;
         try {
             console.log("Calling domain funcation" );
             this.domain.domainFunctions.convertExternalValue( value, this.attributeDef, this.domain );
+            errors[ this.attributeName ] = undefined;
+            return null;
         }
         catch( e ) {
-            let errors = {} as any;
             console.log( `Error: ${e.message}`);
             errors[ this.attributeName ] = { message: e.message };
-            return errors;
+            return errors[ this.attributeName ];
         }
-        return null;
     }
 }

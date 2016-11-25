@@ -47,6 +47,10 @@ export class ObjectInstance {
         return json;
     }
 
+    public logOi() {
+        console.log( JSON.stringify( this, null, 2) );
+    }
+
     /**
      * Wrap the JSON for this object with Zeidon OI meta.  Used for committing.
      */
@@ -173,6 +177,7 @@ export class EntityInstance {
     public workAttributes: any = {};
 
     public metaFlags: EiMetaFlags = {};
+    public validateErrors: any = {};
 
     // If incomplete = true then this entity did not have all its children
     // loaded and so cannot be deleted.
@@ -314,10 +319,18 @@ export class EntityInstance {
         attribs[ metaAttr ].updated = true;
         this.oi.isUpdated = true;
         this.updated = true;
+
+        if ( attr == "Name" )
+            this.oi.logOi();
     }
 
     protected getAttribute( attr: string ): any {
         let attribs = this.getAttribHash( attr );
+
+        if ( attr == "Name" ) {
+            console.log(`Name = ${attribs[attr]}`)
+        }
+
         return attribs[attr];
     }
 
@@ -339,7 +352,7 @@ export class EntityInstance {
             return this.workAttributes;
     }
 
-    getChildEntityArray( entityName: string): EntityArray<this> {
+    getChildEntityArray( entityName: string): EntityArray<EntityInstance> {
         let entities = this.childEntityInstances[ entityName ];
         if ( entities == undefined ) {
             entities = new EntityArray<EntityInstance>( entityName, this.oi, this );
@@ -619,7 +632,7 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
     /** 
      * Create an entity at the end of the current entity list.
      */
-    create: ( initialize : Object, options: CreateOptions ) => EntityInstance;
+    create: ( initialize? : Object, options?: CreateOptions ) => EntityInstance;
     excludeAll: () => void;
     deleteAll: () => void;
     delete: ( index? : number ) => void;

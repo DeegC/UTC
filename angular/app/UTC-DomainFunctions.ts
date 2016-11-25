@@ -14,7 +14,7 @@ export const UTC_DomainFunctions = {
                     return false;
             }
 
-            throw new AttributeValueError(`Unknown boolean value ${value}`, attributeDef );
+            throw new AttributeValueError(`Invalid boolean value: ${value}`, attributeDef );
         }
     }
 }

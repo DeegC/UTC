@@ -12,7 +12,7 @@ exports.UTC_DomainFunctions = {
                 case "false":
                     return false;
             }
-            throw new zeidon_1.AttributeValueError("Unknown boolean value " + value, attributeDef);
+            throw new zeidon_1.AttributeValueError("Invalid boolean value: " + value, attributeDef);
         }
     }
 };

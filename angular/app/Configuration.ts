@@ -84,8 +84,8 @@ export class Configuration_Configuration extends zeidon.EntityInstance {
     get PwmFrequency(): string { return this.getAttribute("PwmFrequency") };
     set PwmFrequency(value: string) { this.setAttribute("PwmFrequency", value) };
 
-    get ThermometerConfig(): zeidon.EntityArray<this> {
-        return this.getChildEntityArray("ThermometerConfig");
+    get ThermometerConfig(): zeidon.EntityArray<Configuration_ThermometerConfig> {
+        return this.getChildEntityArray("ThermometerConfig") as zeidon.EntityArray<Configuration_ThermometerConfig>;
     }
 }
 

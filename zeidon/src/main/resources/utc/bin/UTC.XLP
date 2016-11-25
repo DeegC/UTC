@@ -1,4 +1,4 @@
-z1000-Zeidon    UTC      TZCMLPLO 11/16/16   18:17:04 1.0a2    
+z1000-Zeidon    UTC      TZCMLPLO 11/21/16   22:21:52 1.0a2    
 eLPLR      1
 aName      UTC
 aDesc      Universal Temperature Controller
@@ -290,6 +290,20 @@ eW_MetaDef 3
 aGroupName TZAPDMAA
 
 eW_MetaDef 3
+aCPLR_ZKey 905180737
+aStatus    1
+aName      Temperature
+aLastUpdateDate 20160929212055880
+aGroupName UDS
+
+eW_MetaDef 3
+aCPLR_ZKey 905180731
+aStatus    1
+aName      TemperatureUnit
+aLastUpdateDate 20160929212055880
+aGroupName UDS
+
+eW_MetaDef 3
 aGroupName TZAPDMAA
 
 eW_MetaDef 3
@@ -301,18 +315,6 @@ aGroupName TablesA
 
 eW_MetaDef 3
 aGroupName Base
-
-eW_MetaDef 3
-aCPLR_ZKey 905180731
-aStatus    1
-aName      TemperatureUnit
-aGroupName UDS
-
-eW_MetaDef 3
-aCPLR_ZKey 905180737
-aStatus    1
-aName      Temperature
-aGroupName UDS
 
 eW_MetaType 2
 aType      2004
@@ -437,8 +439,8 @@ i50        11
 i51        9
 i52        8
 i53        12
-i54        13
-i56        10
+i56        13
+i58        10
 i60        19
 i63        22
 i65        24

@@ -50,12 +50,12 @@ export class Session_Session extends zeidon.EntityInstance {
     get Notes(): string { return this.getAttribute("Notes") };
     set Notes(value: string) { this.setAttribute("Notes", value) };
 
-    get Configuration(): zeidon.EntityArray<this> {
-        return this.getChildEntityArray("Configuration");
+    get Configuration(): zeidon.EntityArray<Session_Configuration> {
+        return this.getChildEntityArray("Configuration")as zeidon.EntityArray<Session_Configuration>;
     }
 
-    get Instant(): zeidon.EntityArray<this> {
-        return this.getChildEntityArray("Instant");
+    get Instant(): zeidon.EntityArray<Session_Instant> {
+        return this.getChildEntityArray("Instant") as zeidon.EntityArray<Session_Instant>;
     }
 }
 

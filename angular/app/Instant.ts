@@ -71,8 +71,8 @@ export class Instant_Instant extends zeidon.EntityInstance {
     get PWM0(): string { return this.getAttribute("PWM0") };
     set PWM0(value: string) { this.setAttribute("PWM0", value) };
 
-    get Session(): zeidon.EntityArray<this> {
-        return this.getChildEntityArray("Session");
+    get Session(): zeidon.EntityArray<Instant_Session> {
+        return this.getChildEntityArray("Session") as zeidon.EntityArray<Instant_Session>;
     }
 }
 

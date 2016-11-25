@@ -48,7 +48,7 @@ export class ConfigurationListComponent implements OnInit {
     onSelect(config: Configuration_Configuration): void {
         let options = new zeidon.ActivateOptions( { id: config.Id } );
         Configuration.activate( options ).subscribe( configOi => {
-            this.selectedConfigOi = configOi; 
+            this.selectedConfigOi = configOi;
         } );
     }
 
