@@ -1,24 +1,20 @@
-import { OnInit } from '@angular/core';
 import { Component, Input } from '@angular/core';
 import { Configuration } from './Configuration';
 import { RestService } from './rest.service';
 import { ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Directive, OnChanges, SimpleChanges } from '@angular/core';
-import { AbstractControl, NG_VALIDATORS, Validator, ValidatorFn, Validators } from '@angular/forms';
-import { ElementRef, Renderer } from '@angular/core';
-import { EntityInstance, Domain } from './zeidon';
 
 @Component({
+    moduleId:  module.id,
     selector: 'configuration-detail',
     template: `
   <div *ngIf="configOi">
-    <form #configForm="ngForm" >
+    <form>
       <h2>Configuration Details</h2>
       <div><label>Id: </label>{{configOi.Configuration$.Id}}</div>
       <div>
         <label>Description: </label>
-        <input type="text" id="Description" 
+        <input type="text"
                [(ngModel)]="configOi.Configuration$.Description"
                placeholder="Description" name="Description"
         />
@@ -56,7 +52,7 @@ import { EntityInstance, Domain } from './zeidon';
       <div *ngFor="let therm of configOi.Configuration$.ThermometerConfig; let i = index;" >
         <div>
           <label>name: </label>
-          <input id="thermName" [(ngModel)]="therm.Name" placeholder="name" name="thermName.{{i}}"/>
+          <input [(ngModel)]="therm.Name" placeholder="name" name="thermName.{{i}}"/>
         </div>
       </div>
       <button (click)="save()" [disabled]="! configOi.isUpdated">
@@ -67,14 +63,11 @@ import { EntityInstance, Domain } from './zeidon';
 `
 })
 export class ConfigurationComponent {
-    @Input()
-    configOi: Configuration;
-    @Input()
-    configurationList: Configuration;
-    @ViewChild('configForm')
-    currentForm: NgForm;
+    @Input() configOi: Configuration;
+    @Input() configurationList: Configuration;
 
-    constructor(private restService: RestService) { }
+    constructor(private restService: RestService) { 
+    }
 
     save(): void {
         this.configOi.commit().subscribe(config => {
@@ -84,71 +77,3 @@ export class ConfigurationComponent {
     }
 }
 
-/** A hero's name can't match the given regular expression */
-export function attributeValidator(name: string): ValidatorFn {
-    console.log("validator- factory");
-    return (control: AbstractControl): { [key: string]: any } => {
-        console.log("validator- AbstractControl");
-        const name = control.value;
-        return null;
-    };
-}
-
-@Directive({
-    selector: '[validateAttributeValue]',
-    providers: [{ provide: NG_VALIDATORS, useExisting: AttributeValidatorDirective, multi: true }]
-})
-export class AttributeValidatorDirective implements Validator, OnInit {
-    @Input("validateAttributeValue") entityInstance: EntityInstance;
-
-    private valFn = Validators.nullValidator;
-    private attributeName: string;
-    private attributeDef: any;
-    private domain: Domain;
-
-    constructor(el: ElementRef, renderer: Renderer) {
-        console.log("constructor")
-        this.attributeName = el.nativeElement.name;
-    }
-
-/*
-    ngOnChanges(changes: SimpleChanges): void {
-        const change = changes['attributeValue'];
-        console.log("validator- on changes");
-        if (change) {
-            const val: string = change.currentValue;
-            this.valFn = attributeValidator(change.currentValue);
-        } else {
-            this.valFn = Validators.nullValidator;
-        }
-    }
-*/
-
-    ngOnInit(): void {
-        console.log( "onInit" );
-        this.attributeDef = this.entityInstance.attributeDefs[ this.attributeName ];
-        this.domain = this.entityInstance.getDomainForAttribute( this.attributeName );
-    }
-
-    validate(control: AbstractControl): { [key: string]: any } {
-        if ( ! control.touched && ! control.dirty )
-            return null;
-
-        if ( ! this.domain.domainFunctions )
-            return null;
-
-        let value = control.value;
-        let errors = this.entityInstance.validateErrors;
-        try {
-            console.log("Calling domain funcation" );
-            this.domain.domainFunctions.convertExternalValue( value, this.attributeDef, this.domain );
-            errors[ this.attributeName ] = undefined;
-            return null;
-        }
-        catch( e ) {
-            console.log( `Error: ${e.message}`);
-            errors[ this.attributeName ] = { message: e.message };
-            return errors[ this.attributeName ];
-        }
-    }
-}

@@ -2,13 +2,12 @@ import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 import { RouterModule }   from '@angular/router';
-import { HttpModule, Http }    from '@angular/http';
+import { HttpModule }    from '@angular/http';
 import './rxjs-extensions';
 
 import { AppComponent }   from './app.component';
 import { ConfigurationListComponent }   from './configuration-list.component';
-import { AttributeValidatorDirective }   from './configuration.component';
-import { NG_VALIDATORS } from '@angular/forms';
+import { AttributeValidatorDirective }   from './zeidon-angular2';
 import { ConfigurationComponent }   from './configuration.component';
 import { RestService }   from './rest.service';
 import { SessionComponent }   from './session.component';
@@ -47,7 +46,6 @@ const REST_VALUES: ZeidonRestValues = {
                   AttributeValidatorDirective,
                   SessionComponent ],
   providers: [ RestService,
-//               AttributeValidatorDirective,
                { provide: ZeidonRestValues, useValue: REST_VALUES },
                { provide: ZeidonConfiguration, useClass: ZeidonRestConfiguration },
              ],

@@ -326,11 +326,6 @@ export class EntityInstance {
 
     protected getAttribute( attr: string ): any {
         let attribs = this.getAttribHash( attr );
-
-        if ( attr == "Name" ) {
-            console.log(`Name = ${attribs[attr]}`)
-        }
-
         return attribs[attr];
     }
 

@@ -299,9 +299,6 @@ var EntityInstance = (function () {
     };
     EntityInstance.prototype.getAttribute = function (attr) {
         var attribs = this.getAttribHash(attr);
-        if (attr == "Name") {
-            console.log("Name = " + attribs[attr]);
-        }
         return attribs[attr];
     };
     EntityInstance.prototype.isAttributeUpdated = function (attr) {
