@@ -2,7 +2,7 @@
 var zeidon_1 = require("./zeidon");
 exports.UTC_DomainFunctions = {
     "com.quinsoft.zeidon.domains.BooleanDomain": {
-        convertExternalValue: function (value, attributeDef, domain) {
+        convertExternalValue: function (value, attributeDef) {
             switch (value) {
                 case true:
                 case false:

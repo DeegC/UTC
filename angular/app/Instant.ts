@@ -1,10 +1,14 @@
 
 /*
-  Generated from LOD Instant on 2016-11-16T18:40:08.149
+  Generated from LOD Instant on 2016-11-25T16:28:12.532
 
 */
+
 import * as zeidon from './zeidon';
 import { Observable } from 'rxjs';
+import { UTC_DomainList } from './UTC-DomainList';
+import { UTC_DomainFunctions } from './UTC-DomainFunctions';
+
 
 
 // Instant LOD.
@@ -20,6 +24,15 @@ export class Instant extends zeidon.ObjectInstance {
     public getLodDef() {
         return Instant_LodDef;
     };
+
+    public getDomain( name: string ): zeidon.Domain { 
+        return UTC_DomainList[name];
+    };
+
+    public getDomainFunctions( name: string ): any { 
+        return UTC_DomainFunctions[name];
+    }
+
 
     get Instant(): zeidon.EntityArray<Instant_Instant> {
         return this.roots as zeidon.EntityArray<Instant_Instant>;
@@ -102,6 +115,7 @@ export const Instant_LodDef = {
     entities: {
         Instant: {
             name:       "Instant",
+            erToken:    "905181315",
             create:     true,
             cardMax:    0,
             hasInit:    false,
@@ -116,117 +130,130 @@ export const Instant_LodDef = {
             },
             attributes: {
                 Timestamp: {
+                    name:         "Timestamp",
                     hidden:       false,
                     required:     true,
-                    domain:       "DateTime",
+                    domainName:   "DateTime",
                     persistent:   true,
                     key:          true,
                     update:       true,
                     foreignKey:   false,
                 },
                 TargetTemperature: {
+                    name:         "TargetTemperature",
                     hidden:       false,
                     required:     true,
-                    domain:       "Temperature",
+                    domainName:   "Temperature",
                     persistent:   true,
                     key:          false,
                     update:       true,
                     foreignKey:   false,
                 },
                 Therm0: {
+                    name:         "Therm0",
                     hidden:       false,
                     required:     false,
-                    domain:       "Temperature",
+                    domainName:   "Temperature",
                     persistent:   true,
                     key:          false,
                     update:       true,
                     foreignKey:   false,
                 },
                 Therm1: {
+                    name:         "Therm1",
                     hidden:       false,
                     required:     false,
-                    domain:       "Temperature",
+                    domainName:   "Temperature",
                     persistent:   true,
                     key:          false,
                     update:       true,
                     foreignKey:   false,
                 },
                 Therm2: {
+                    name:         "Therm2",
                     hidden:       false,
                     required:     false,
-                    domain:       "Temperature",
+                    domainName:   "Temperature",
                     persistent:   true,
                     key:          false,
                     update:       true,
                     foreignKey:   false,
                 },
                 Therm3: {
+                    name:         "Therm3",
                     hidden:       false,
                     required:     false,
-                    domain:       "Temperature",
+                    domainName:   "Temperature",
                     persistent:   true,
                     key:          false,
                     update:       true,
                     foreignKey:   false,
                 },
                 Therm4: {
+                    name:         "Therm4",
                     hidden:       false,
                     required:     false,
-                    domain:       "Temperature",
+                    domainName:   "Temperature",
                     persistent:   true,
                     key:          false,
                     update:       true,
                     foreignKey:   false,
                 },
                 Therm5: {
+                    name:         "Therm5",
                     hidden:       false,
                     required:     false,
-                    domain:       "Temperature",
+                    domainName:   "Temperature",
                     persistent:   true,
                     key:          false,
                     update:       true,
                     foreignKey:   false,
                 },
                 Therm6: {
+                    name:         "Therm6",
                     hidden:       false,
                     required:     false,
-                    domain:       "Temperature",
+                    domainName:   "Temperature",
                     persistent:   true,
                     key:          false,
                     update:       true,
                     foreignKey:   false,
                 },
                 Therm7: {
+                    name:         "Therm7",
                     hidden:       false,
                     required:     false,
-                    domain:       "Temperature",
+                    domainName:   "Temperature",
                     persistent:   true,
                     key:          false,
                     update:       true,
                     foreignKey:   false,
                 },
                 PWM0: {
+                    name:         "PWM0",
                     hidden:       false,
                     required:     false,
-                    domain:       "Integer",
+                    domainName:   "Integer",
                     persistent:   true,
                     key:          false,
                     update:       true,
                     foreignKey:   false,
                 },
                 CpuTemperature: {
+                    name:         "CpuTemperature",
                     hidden:       true,
                     required:     false,
-                    domain:       "Temperature",
+                    domainName:   "Temperature",
                     persistent:   true,
                     key:          false,
                     update:       false,
                     foreignKey:   false,
                 },
                 fk_id_session: {
+                    name:         "fk_id_session",
                     hidden:       true,
                     required:     true,
-                    domain:       "GeneratedKey",
+                    domainName:   "GeneratedKey",
                     persistent:   true,
                     key:          true,
                     update:       true,
@@ -237,6 +264,7 @@ export const Instant_LodDef = {
 
         Session: {
             name:       "Session",
+            erToken:    "905181347",
             create:     false,
             cardMax:    1,
             hasInit:    false,
@@ -250,45 +278,50 @@ export const Instant_LodDef = {
             },
             attributes: {
                 Id: {
+                    name:         "Id",
                     hidden:       false,
                     required:     true,
-                    domain:       "GeneratedKey",
+                    domainName:   "GeneratedKey",
                     persistent:   true,
                     key:          true,
                     update:       true,
                     foreignKey:   false,
                 },
                 Date: {
+                    name:         "Date",
                     hidden:       false,
                     required:     true,
-                    domain:       "DateTime",
+                    domainName:   "DateTime",
                     persistent:   true,
                     key:          false,
                     update:       true,
                     foreignKey:   false,
                 },
                 EndDate: {
+                    name:         "EndDate",
                     hidden:       false,
                     required:     false,
-                    domain:       "DateTime",
+                    domainName:   "DateTime",
                     persistent:   true,
                     key:          false,
                     update:       true,
                     foreignKey:   false,
                 },
                 Notes: {
+                    name:         "Notes",
                     hidden:       false,
                     required:     false,
-                    domain:       "Text",
+                    domainName:   "Text",
                     persistent:   true,
                     key:          false,
                     update:       true,
                     foreignKey:   false,
                 },
                 fk_id_configuration: {
+                    name:         "fk_id_configuration",
                     hidden:       true,
                     required:     true,
-                    domain:       "GeneratedKey",
+                    domainName:   "GeneratedKey",
                     persistent:   true,
                     key:          false,
                     update:       true,

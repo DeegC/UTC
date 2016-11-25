@@ -37,7 +37,7 @@ export class AttributeValidatorDirective implements Validator, OnInit {
         let errors = this.entityInstance.validateErrors;
         try {
             console.log("Calling domain funcation" );
-            this.domain.domainFunctions.convertExternalValue( value, this.attributeDef, this.domain );
+            this.domain.domainFunctions.convertExternalValue( value, this.attributeDef );
             errors[ this.attributeName ] = undefined;
             return null;
         }

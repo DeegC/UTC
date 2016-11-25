@@ -1,5 +1,7 @@
 import { Domain } from "./zeidon"
 
+// Should some day be generated from the zeidon.xdm.
+
 export const UTC_DomainList = {
     "Boolean": {
         name: "Boolean",

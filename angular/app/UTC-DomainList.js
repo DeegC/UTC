@@ -1,4 +1,5 @@
 "use strict";
+// Should some day be generated from the zeidon.xdm.
 exports.UTC_DomainList = {
     "Boolean": {
         name: "Boolean",

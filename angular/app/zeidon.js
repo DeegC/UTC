@@ -235,6 +235,8 @@ var EntityInstance = (function () {
     });
     EntityInstance.prototype.getAttributeDef = function (attributeName) {
         var attributeDef = this.entityDef.attributes[attributeName];
+        if (!attributeDef)
+            return undefined;
         if (!attributeDef.domain) {
             var domain = this.oi.getDomain(attributeDef.domainName);
             if (domain) {

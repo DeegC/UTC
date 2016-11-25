@@ -3,7 +3,7 @@ import { AttributeValueError } from "./zeidon"
 
 export const UTC_DomainFunctions = {
     "com.quinsoft.zeidon.domains.BooleanDomain": {
-        convertExternalValue( value: any, attributeDef: any, domain: Domain ): any {
+        convertExternalValue( value: any, attributeDef: any ): any {
             switch ( value ) {
                 case true:
                 case false:

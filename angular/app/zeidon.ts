@@ -196,6 +196,9 @@ export class EntityInstance {
     public get entityDef(): any { return this.oi.getLodDef().entities[ this.entityName ];}
     public getAttributeDef( attributeName: string ): any {
         let attributeDef = this.entityDef.attributes[ attributeName ];
+        if ( ! attributeDef )
+            return undefined;
+
         if ( ! attributeDef.domain ) {
             let domain = this.oi.getDomain( attributeDef.domainName );
             if ( domain ) {
