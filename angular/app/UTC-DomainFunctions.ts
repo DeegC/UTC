@@ -64,5 +64,5 @@ export const UTC_DomainFunctions = {
 
             return str;
         }
-    }
+    },
 }

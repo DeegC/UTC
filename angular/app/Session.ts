@@ -1,6 +1,6 @@
 
 /*
-  Generated from LOD Session on 2016-11-25T16:28:12.539
+  Generated from LOD Session on 2016-11-26T22:01:46.579
 
 */
 
@@ -67,8 +67,16 @@ export class Session_Session extends zeidon.EntityInstance {
         return this.getChildEntityArray("Configuration") as zeidon.EntityArray<Session_Configuration>;
     }
 
+    get Configuration$(): Session_Configuration {
+        return this.getChildEntityArray("Configuration").selected() as Session_Configuration;
+    }
+
     get Instant(): zeidon.EntityArray<Session_Instant> {
         return this.getChildEntityArray("Instant") as zeidon.EntityArray<Session_Instant>;
+    }
+
+    get Instant$(): Session_Instant {
+        return this.getChildEntityArray("Instant").selected() as Session_Instant;
     }
 }
 

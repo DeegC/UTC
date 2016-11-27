@@ -85,7 +85,7 @@ export class RestCommitter implements Committer {
     }
 
     parseCommitResponse( oi: ObjectInstance, response ): ObjectInstance {
-        if ( response == "{}" )
+        if ( response.text() == "{}" )
             return oi.createFromJson( undefined );
 
         let data = response.json();

@@ -105,7 +105,7 @@ var RestCommitter = (function () {
             .map(function (response) { return _this.parseCommitResponse(oi, response); });
     };
     RestCommitter.prototype.parseCommitResponse = function (oi, response) {
-        if (response == "{}")
+        if (response.text() == "{}")
             return oi.createFromJson(undefined);
         var data = response.json();
         return oi.createFromJson(data);

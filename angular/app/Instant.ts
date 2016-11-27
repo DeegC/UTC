@@ -1,6 +1,6 @@
 
 /*
-  Generated from LOD Instant on 2016-11-25T16:28:12.532
+  Generated from LOD Instant on 2016-11-26T22:01:46.572
 
 */
 
@@ -86,6 +86,10 @@ export class Instant_Instant extends zeidon.EntityInstance {
 
     get Session(): zeidon.EntityArray<Instant_Session> {
         return this.getChildEntityArray("Session") as zeidon.EntityArray<Instant_Session>;
+    }
+
+    get Session$(): Instant_Session {
+        return this.getChildEntityArray("Session").selected() as Instant_Session;
     }
 }
 

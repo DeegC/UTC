@@ -1,6 +1,6 @@
 
 /*
-  Generated from LOD Configuration on 2016-11-25T16:28:12.516
+  Generated from LOD Configuration on 2016-11-26T22:01:46.555
 
 */
 
@@ -92,6 +92,10 @@ export class Configuration_Configuration extends zeidon.EntityInstance {
 
     get ThermometerConfig(): zeidon.EntityArray<Configuration_ThermometerConfig> {
         return this.getChildEntityArray("ThermometerConfig") as zeidon.EntityArray<Configuration_ThermometerConfig>;
+    }
+
+    get ThermometerConfig$(): Configuration_ThermometerConfig {
+        return this.getChildEntityArray("ThermometerConfig").selected() as Configuration_ThermometerConfig;
     }
 }
 

@@ -26,6 +26,13 @@ export class RestService {
             .catch((error:any) => Observable.throw(error.json().error || 'Server error')); 
     }
 
+    getCurrentSession( ) {
+        let url = `${this.values.restUrl}/getSession`;
+        let session = new Session();
+        return this.http.get( url )
+                .map( response => this.parseCommitResponse( session, response ) ) as Observable<Session>;
+    }
+
     startSession( configOi: Configuration ): Observable<Session> {
         let url = `${this.values.restUrl}/startSession/${configOi.Configuration$.Id}`;
         let body = "{}";
@@ -38,10 +45,10 @@ export class RestService {
     }
     
     parseCommitResponse( oi: ObjectInstance, response ): ObjectInstance {
-        if ( response == "{}" )
+        if ( response.text() == "{}" )
             return oi;
 
         let data = response.json();
-        return oi.createFromJson( data, );
+        return oi.createFromJson( data );
     }
 }

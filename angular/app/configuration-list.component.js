@@ -42,12 +42,17 @@ var ConfigurationListComponent = (function () {
         // Instantiate a new Configuration with a single ThermometerConfig.
         this.selectedConfigOi = new Configuration_1.Configuration({ ThermometerConfig: {} });
     };
+    ConfigurationListComponent.prototype.onSessionStarted = function (sessionOi) {
+        console.log("onSessionStarted");
+        sessionOi.logOi();
+        this.sessionOi = sessionOi;
+    };
     return ConfigurationListComponent;
 }());
 ConfigurationListComponent = __decorate([
     core_1.Component({
         selector: 'configuration-list',
-        template: "\n  <div *ngIf=\"configurationList && configurationList.isEmpty == false\">\n    <ul class=\"configurations\">\n        <li *ngFor=\"let config of configurationList.Configuration\" \n            [class.selected]=\"selectedConfigOi && selectedConfigOi.Configuration$.Id == config.Id\">\n            <span (click)=\"onSelect(config)\">\n                <span class=\"badge\">{{config.Id}}</span> {{config.Description}}\n            </span>\n            <img src=\"/img/icons/red-x.png\" (click)=\"onDelete( config )\"/>\n        </li>\n    </ul>\n  </div>\n  <button type=\"button\" class=\"btn btn-default\" (click)=\"newConfiguration()\">\n        New Configuration\n  </button>\n  <div *ngIf=\"selectedConfigOi\">\n    <configuration-detail [configOi]=\"selectedConfigOi\" [configurationList]=\"configurationList\"></configuration-detail>\n  </div>\n",
+        template: "\n  <div *ngIf=\"sessionOi && sessionOi.isEmpty == false\" class=\"alert alert-danger\">\n    Session is running!\n  </div>\n  <div *ngIf=\"configurationList && configurationList.isEmpty == false\">\n    <ul class=\"configurations\">\n        <li *ngFor=\"let config of configurationList.Configuration\" \n            [class.selected]=\"selectedConfigOi && selectedConfigOi.Configuration$.Id == config.Id\">\n            <span (click)=\"onSelect(config)\">\n                <span class=\"badge\">{{config.Id}}</span> {{config.Description}}\n            </span>\n            <img src=\"/img/icons/red-x.png\" (click)=\"onDelete( config )\"/>\n        </li>\n    </ul>\n  </div>\n  <button type=\"button\" class=\"btn btn-default\" (click)=\"newConfiguration()\">\n        New Configuration\n  </button>\n  <div *ngIf=\"selectedConfigOi\">\n    <configuration-detail [configOi]=\"selectedConfigOi\" [configurationList]=\"configurationList\"\n        (onSessionStarted)=\"onSessionStarted($event)\" >\n    </configuration-detail>\n  </div>\n",
         styleUrls: ['app/configuration.css'],
         providers: [rest_service_1.RestService]
     }),

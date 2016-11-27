@@ -52,6 +52,6 @@ exports.UTC_DomainFunctions = {
             }
             return str;
         }
-    }
+    },
 };
 //# sourceMappingURL=UTC-DomainFunctions.js.map

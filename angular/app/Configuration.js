@@ -1,5 +1,5 @@
 /*
-  Generated from LOD Configuration on 2016-11-25T16:28:12.516
+  Generated from LOD Configuration on 2016-11-26T22:01:46.555
 
 */
 "use strict";
@@ -173,6 +173,13 @@ var Configuration_Configuration = (function (_super) {
     Object.defineProperty(Configuration_Configuration.prototype, "ThermometerConfig", {
         get: function () {
             return this.getChildEntityArray("ThermometerConfig");
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Configuration_Configuration.prototype, "ThermometerConfig$", {
+        get: function () {
+            return this.getChildEntityArray("ThermometerConfig").selected();
         },
         enumerable: true,
         configurable: true

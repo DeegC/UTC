@@ -1,5 +1,5 @@
 /*
-  Generated from LOD Session on 2016-11-25T16:28:12.539
+  Generated from LOD Session on 2016-11-26T22:01:46.579
 
 */
 "use strict";
@@ -105,9 +105,23 @@ var Session_Session = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Session_Session.prototype, "Configuration$", {
+        get: function () {
+            return this.getChildEntityArray("Configuration").selected();
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(Session_Session.prototype, "Instant", {
         get: function () {
             return this.getChildEntityArray("Instant");
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Session_Session.prototype, "Instant$", {
+        get: function () {
+            return this.getChildEntityArray("Instant").selected();
         },
         enumerable: true,
         configurable: true

@@ -31,6 +31,13 @@ var RestService = (function () {
             .then(function () { return config.drop(); })
             .catch(function (error) { return Observable_1.Observable.throw(error.json().error || 'Server error'); });
     };
+    RestService.prototype.getCurrentSession = function () {
+        var _this = this;
+        var url = this.values.restUrl + "/getSession";
+        var session = new Session_1.Session();
+        return this.http.get(url)
+            .map(function (response) { return _this.parseCommitResponse(session, response); });
+    };
     RestService.prototype.startSession = function (configOi) {
         var _this = this;
         var url = this.values.restUrl + "/startSession/" + configOi.Configuration$.Id;
@@ -42,7 +49,7 @@ var RestService = (function () {
             .map(function (response) { return _this.parseCommitResponse(session, response); });
     };
     RestService.prototype.parseCommitResponse = function (oi, response) {
-        if (response == "{}")
+        if (response.text() == "{}")
             return oi;
         var data = response.json();
         return oi.createFromJson(data);

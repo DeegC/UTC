@@ -14,6 +14,7 @@ var rest_service_1 = require("./rest.service");
 var ConfigurationComponent = (function () {
     function ConfigurationComponent(restService) {
         this.restService = restService;
+        this.onSessionStarted = new core_1.EventEmitter();
     }
     ConfigurationComponent.prototype.save = function () {
         var _this = this;
@@ -27,7 +28,9 @@ var ConfigurationComponent = (function () {
         this.configOi.commit().subscribe(function (configOi) {
             _this.configOi = configOi;
             _this.configurationList.reload();
-            _this.restService.startSession(configOi);
+            _this.restService
+                .startSession(configOi)
+                .subscribe(function (sessionOi) { return _this.onSessionStarted.emit(sessionOi); });
         });
     };
     ConfigurationComponent.prototype.cancel = function () {
@@ -49,6 +52,10 @@ __decorate([
     core_1.Input(),
     __metadata("design:type", Configuration_1.Configuration)
 ], ConfigurationComponent.prototype, "configurationList", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], ConfigurationComponent.prototype, "onSessionStarted", void 0);
 ConfigurationComponent = __decorate([
     core_1.Component({
         moduleId: module.id,

@@ -1,5 +1,5 @@
 /*
-  Generated from LOD Instant on 2016-11-25T16:28:12.532
+  Generated from LOD Instant on 2016-11-26T22:01:46.572
 
 */
 "use strict";
@@ -157,6 +157,13 @@ var Instant_Instant = (function (_super) {
     Object.defineProperty(Instant_Instant.prototype, "Session", {
         get: function () {
             return this.getChildEntityArray("Session");
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Instant_Instant.prototype, "Session$", {
+        get: function () {
+            return this.getChildEntityArray("Session").selected();
         },
         enumerable: true,
         configurable: true

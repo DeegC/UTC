@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Configuration } from './Configuration';
 import { RestService } from './rest.service';
 import { Configuration_ThermometerConfig } from './Configuration';
+import { Session } from './Session';
 
 @Component({
     moduleId:  module.id,
@@ -95,6 +96,7 @@ import { Configuration_ThermometerConfig } from './Configuration';
 export class ConfigurationComponent {
     @Input() configOi: Configuration;
     @Input() configurationList: Configuration;
+    @Output() onSessionStarted = new EventEmitter<Session>();
 
     constructor(private restService: RestService) { 
     }
@@ -110,7 +112,9 @@ export class ConfigurationComponent {
         this.configOi.commit().subscribe(configOi => {
             this.configOi = configOi;
             this.configurationList.reload();
-            this.restService.startSession( configOi );
+            this.restService
+                .startSession( configOi )
+                .subscribe( sessionOi => this.onSessionStarted.emit( sessionOi ) );
         });
     }
 

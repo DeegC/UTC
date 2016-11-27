@@ -2,12 +2,16 @@ import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Configuration } from './Configuration';
 import { Configuration_Configuration } from './Configuration';
+import { Session } from './Session';
 import { RestService } from './rest.service';
 import * as zeidon from './zeidon';
 
 @Component({
     selector: 'configuration-list',
     template: `
+  <div *ngIf="sessionOi && sessionOi.isEmpty == false" class="alert alert-danger">
+    Session is running!
+  </div>
   <div *ngIf="configurationList && configurationList.isEmpty == false">
     <ul class="configurations">
         <li *ngFor="let config of configurationList.Configuration" 
@@ -23,7 +27,9 @@ import * as zeidon from './zeidon';
         New Configuration
   </button>
   <div *ngIf="selectedConfigOi">
-    <configuration-detail [configOi]="selectedConfigOi" [configurationList]="configurationList"></configuration-detail>
+    <configuration-detail [configOi]="selectedConfigOi" [configurationList]="configurationList"
+        (onSessionStarted)="onSessionStarted($event)" >
+    </configuration-detail>
   </div>
 `,
     styleUrls: ['app/configuration.css'],
@@ -32,6 +38,7 @@ import * as zeidon from './zeidon';
 export class ConfigurationListComponent implements OnInit {
     selectedConfigOi: Configuration;
     configurationList: Configuration;
+    sessionOi: Session;
 
     constructor( private restService: RestService ) { }
 
@@ -62,5 +69,11 @@ export class ConfigurationListComponent implements OnInit {
     newConfiguration(): void {
         // Instantiate a new Configuration with a single ThermometerConfig.
         this.selectedConfigOi = new Configuration( { ThermometerConfig: {} } );
+    }
+
+    onSessionStarted( sessionOi: Session ) {
+        console.log( "onSessionStarted" );
+        sessionOi.logOi();
+        this.sessionOi = sessionOi;
     }
 }
