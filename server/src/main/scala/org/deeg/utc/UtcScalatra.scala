@@ -23,11 +23,13 @@ class UtcScalatra extends RestScalatra with CorsSupport {
     // Initialize OE and Configuration
     // --
     
-    val task = oe.createTask("UTC")
-    val hardware = HardwareInterface.getHardwareInterface( task )
-    val configuration = new Configuration( task )
+    val sessionTask = oe.createTask("UTC")
+    val hardware = HardwareInterface.getHardwareInterface( sessionTask )
+    val configuration = new Configuration( sessionTask )
     configuration.createDefaultConfiguration()
 
+    var currentSession: View = null
+    
     def getObjectEngine(): ObjectEngine = {
         return oe
     }
@@ -40,6 +42,34 @@ class UtcScalatra extends RestScalatra with CorsSupport {
     get("/utc/echo/:string") {
         oe.forTask( "UTC" ) { task =>
             "This is test for echo"
+        }
+    }
+    
+    get("/utc/getSession") {
+        oe.forTask( "UTC" ) { task =>
+            if ( currentSession == null ) {
+                task.log().debug( "No current session" )
+                "{}"
+            }
+            else {
+                serializeResponse( currentSession )
+            }
+        }
+    }
+    
+    post("/utc/startSession/:id") {
+        oe.forTask( "UTC" ) { task =>
+            if ( currentSession == null ) {
+                val configOi = task.newView( "Configuration" )
+                               .activateWhere( _.root.key = params( "id" ) ) 
+    
+                currentSession = sessionTask.newView( "Session" ).activateEmpty()
+                currentSession.Session.create()
+                currentSession.Session.Date = "NOW"
+                currentSession.Configuration.include( configOi.Configuration )
+            }
+            
+            serializeResponse( currentSession )
         }
     }
     

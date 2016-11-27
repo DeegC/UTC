@@ -113,7 +113,7 @@ trait RestScalatra extends ScalatraServlet {
         }
     }
 
-    private def serializeResponse( view: View ) : String = {
+    protected def serializeResponse( view: View ) : String = {
         if ( view.isEmpty )
             return "{}"
             
