@@ -19,7 +19,7 @@ import * as zeidon from './zeidon';
         </li>
     </ul>
   </div>
-  <button (click)="newConfiguration()">
+  <button type="button" class="btn btn-default" (click)="newConfiguration()">
         New Configuration
   </button>
   <div *ngIf="selectedConfigOi">

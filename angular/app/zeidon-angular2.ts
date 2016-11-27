@@ -2,7 +2,7 @@ import { OnInit } from '@angular/core';
 import { Input } from '@angular/core';
 import { ElementRef, Renderer } from '@angular/core';
 import { Directive } from '@angular/core';
-import { AbstractControl, NG_VALIDATORS, Validator, Validators } from '@angular/forms';
+import { AbstractControl, NG_VALIDATORS, Validator } from '@angular/forms';
 import { EntityInstance, Domain } from './zeidon';
 
 @Directive({

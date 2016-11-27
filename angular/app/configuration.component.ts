@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Configuration } from './Configuration';
 import { RestService } from './rest.service';
-import { ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Configuration_ThermometerConfig } from './Configuration';
 
 @Component({
     moduleId:  module.id,
@@ -26,10 +25,23 @@ import { NgForm } from '@angular/forms';
       
       <div>
         <label>PID: </label>
-        <input [(ngModel)]="configOi.Configuration$.PidP" placeholder="P" maxlength="2" size="2" name="PidP"/>
+        <input [(ngModel)]="configOi.Configuration$.PidP" 
+            [validateAttributeValue]="configOi.Configuration$"
+            placeholder="P" maxlength="2" size="2" name="PidP"/>
         <input [(ngModel)]="configOi.Configuration$.PidI" placeholder="I" maxlength="5" size="5" name="PidI"/>
-        <input [(ngModel)]="configOi.Configuration$.PidD" placeholder="D" maxlength="2" size="2" name="PidD"/>
+        <input [(ngModel)]="configOi.Configuration$.PidD"
+            [validateAttributeValue]="configOi.Configuration$"
+            placeholder="D" maxlength="2" size="2" name="PidD"/>
       </div>
+        <div *ngIf="configOi.Configuration$.validateErrors.PidP" class="alert alert-danger">
+            {{ configOi.Configuration$.validateErrors.PidP.message }}
+        </div>
+        <div *ngIf="configOi.Configuration$.validateErrors.PidI" class="alert alert-danger">
+            {{ configOi.Configuration$.validateErrors.PidI.message }}
+        </div>
+        <div *ngIf="configOi.Configuration$.validateErrors.PidD" class="alert alert-danger">
+            {{ configOi.Configuration$.validateErrors.PidD.message }}
+        </div>
       <div>
         <label>Max PWM: </label>
         <input [(ngModel)]="configOi.Configuration$.MaxPWM" placeholder="max PWM" name="maxPwm"/>
@@ -53,11 +65,24 @@ import { NgForm } from '@angular/forms';
         <div>
           <label>name: </label>
           <input [(ngModel)]="therm.Name" placeholder="name" name="thermName.{{i}}"/>
+          <img src="/img/icons/red-x.png" (click)="deleteThermometer( therm )"/>
         </div>
       </div>
-      <button (click)="save()" [disabled]="! configOi.isUpdated">
-        Save Configuration
-      </button>
+      <div>
+        <button type="button" class="btn btn-default" (click)="newThermometer()" 
+               [disabled]="configOi.Configuration$.ThermometerConfig.length > 3" >
+            New Thermometer
+        </button>
+      </div>
+
+      <div>
+        <button type="button" class="btn btn-default" (click)="save()" [disabled]="! configOi.isUpdated">
+            Save Configuration
+        </button>
+        <button type="button" class="btn btn-default" (click)="cancel()" >
+            Cancel
+        </button>
+      </div>
     </form>
   </div>
 `
@@ -75,5 +100,16 @@ export class ConfigurationComponent {
             this.configurationList.reload();
         });
     }
-}
 
+    cancel(): void {
+        this.configOi = undefined;
+    }
+
+    deleteThermometer( therm: Configuration_ThermometerConfig ): void {
+        therm.delete();
+    }
+
+    newThermometer(): void {
+        this.configOi.Configuration$.ThermometerConfig.create({Name: "New therm" });
+    }
+}
