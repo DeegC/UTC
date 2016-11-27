@@ -13,6 +13,7 @@ var http_1 = require("@angular/http");
 require("./rxjs-extensions");
 var Observable_1 = require("rxjs/Observable");
 require("rxjs/add/operator/toPromise");
+var Session_1 = require("./Session");
 var zeidon_rest_client_1 = require("./zeidon-rest-client");
 var RestService = (function () {
     function RestService(http, values) {
@@ -29,6 +30,22 @@ var RestService = (function () {
             .toPromise()
             .then(function () { return config.drop(); })
             .catch(function (error) { return Observable_1.Observable.throw(error.json().error || 'Server error'); });
+    };
+    RestService.prototype.startSession = function (configOi) {
+        var _this = this;
+        var url = this.values.restUrl + "/startSession/" + configOi.Configuration$.Id;
+        var body = "{}";
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var reqOptions = new http_1.RequestOptions({ headers: headers });
+        var session = new Session_1.Session();
+        return this.http.post(url, body, reqOptions)
+            .map(function (response) { return _this.parseCommitResponse(session, response); });
+    };
+    RestService.prototype.parseCommitResponse = function (oi, response) {
+        if (response == "{}")
+            return oi;
+        var data = response.json();
+        return oi.createFromJson(data);
     };
     return RestService;
 }());

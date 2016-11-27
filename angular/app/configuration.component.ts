@@ -83,6 +83,11 @@ import { Configuration_ThermometerConfig } from './Configuration';
             Cancel
         </button>
       </div>
+      <div>
+        <button type="button" class="btn btn-default" (click)="startSession()" >
+            Start Session
+        </button>
+      </div>
     </form>
   </div>
 `
@@ -98,6 +103,14 @@ export class ConfigurationComponent {
         this.configOi.commit().subscribe(config => {
             this.configOi = config;
             this.configurationList.reload();
+        });
+    }
+
+    startSession(): void {
+        this.configOi.commit().subscribe(configOi => {
+            this.configOi = configOi;
+            this.configurationList.reload();
+            this.restService.startSession( configOi );
         });
     }
 

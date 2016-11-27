@@ -4,8 +4,10 @@ import './rxjs-extensions';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
 
-import { Configuration_Configuration } from './Configuration';
+import { Configuration, Configuration_Configuration } from './Configuration';
+import { Session } from './Session';
 import { ZeidonRestValues } from './zeidon-rest-client';
+import { ObjectInstance } from './zeidon';
 
 @Injectable()
 export class RestService {
@@ -22,5 +24,24 @@ export class RestService {
             .toPromise()
             .then( () => config.drop() )
             .catch((error:any) => Observable.throw(error.json().error || 'Server error')); 
+    }
+
+    startSession( configOi: Configuration ): Observable<Session> {
+        let url = `${this.values.restUrl}/startSession/${configOi.Configuration$.Id}`;
+        let body = "{}";
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let reqOptions = new RequestOptions({ headers: headers });
+        let session = new Session();
+
+        return this.http.post( url, body, reqOptions)
+            .map(response => this.parseCommitResponse( session, response ) ) as  Observable<Session>;
+    }
+    
+    parseCommitResponse( oi: ObjectInstance, response ): ObjectInstance {
+        if ( response == "{}" )
+            return oi;
+
+        let data = response.json();
+        return oi.createFromJson( data, );
     }
 }
