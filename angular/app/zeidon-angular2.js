@@ -14,7 +14,10 @@ var core_3 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var zeidon_1 = require("./zeidon");
 var AttributeValidatorDirective = (function () {
-    function AttributeValidatorDirective(el, renderer) {
+    function AttributeValidatorDirective(el, renderer, vieweContainer) {
+        this.el = el;
+        this.renderer = renderer;
+        this.vieweContainer = vieweContainer;
         console.log("constructor");
         this.attributeName = el.nativeElement.name;
     }
@@ -52,7 +55,9 @@ AttributeValidatorDirective = __decorate([
         selector: '[validateAttributeValue]',
         providers: [{ provide: forms_1.NG_VALIDATORS, useExisting: AttributeValidatorDirective, multi: true }]
     }),
-    __metadata("design:paramtypes", [core_2.ElementRef, core_2.Renderer])
+    __metadata("design:paramtypes", [core_2.ElementRef,
+        core_2.Renderer,
+        core_2.ViewContainerRef])
 ], AttributeValidatorDirective);
 exports.AttributeValidatorDirective = AttributeValidatorDirective;
 //# sourceMappingURL=zeidon-angular2.js.map

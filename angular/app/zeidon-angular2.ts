@@ -1,6 +1,6 @@
 import { OnInit } from '@angular/core';
 import { Input } from '@angular/core';
-import { ElementRef, Renderer } from '@angular/core';
+import { ElementRef, Renderer, ViewContainerRef } from '@angular/core';
 import { Directive } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, Validator } from '@angular/forms';
 import { EntityInstance, Domain } from './zeidon';
@@ -16,7 +16,9 @@ export class AttributeValidatorDirective implements Validator, OnInit {
     private attributeDef: any;
     private domain: Domain;
 
-    constructor(el: ElementRef, renderer: Renderer) {
+    constructor( private el: ElementRef, 
+                 private renderer: Renderer, 
+                 private vieweContainer: ViewContainerRef ) {
         console.log("constructor")
         this.attributeName = el.nativeElement.name;
     }
