@@ -63,9 +63,11 @@ import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@ang
       <h3>Thermometers</h3>
       <div formArrayName="ThermometerConfig">
         <div *ngFor="let therm of ThermometerConfig.controls; let i = index;" >
-            <label>name: </label>
-            <input formControlName="i" placeholder="name" />
-            <img src="/img/icons/red-x.png" (click)="deleteThermometer( therm )"/>
+            <div [formGroupName]="i">
+                <label>name: </label>
+                <input formControlName="Name" placeholder="name" />
+                <img src="/img/icons/red-x.png" (click)="deleteThermometer( therm )"/>
+            </div>
         </div>
       </div>
       
@@ -114,8 +116,12 @@ export class ConfigurationComponent implements OnInit{
             TweetOn: new FormControl( this.configOi.Configuration$.TweetOn, Validators.required ),
             TweetPeriodInMinutes: new FormControl( this.configOi.Configuration$.TweetPeriodInMinutes, Validators.required ),
             ThermometerConfig: new FormArray( [
-                new FormControl( this.configOi.Configuration$.ThermometerConfig[0].Name ),
-                new FormControl( this.configOi.Configuration$.ThermometerConfig[1].Name ),
+                new FormGroup( {
+                    Name: new FormControl( this.configOi.Configuration$.ThermometerConfig[0].Name ),
+                }),
+                new FormGroup( {
+                    Name: new FormControl( this.configOi.Configuration$.ThermometerConfig[1].Name ),
+                }),
 //                new FormGroup({ Name: new FormControl( this.configOi.Configuration$.ThermometerConfig$.Name ) })
             ] ),
         } );
