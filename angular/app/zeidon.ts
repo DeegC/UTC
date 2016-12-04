@@ -35,12 +35,13 @@ export class ObjectInstance {
     // Saves the options used to activate this OI.
     private activateOptions: ActivateOptions;
 
-    public toJSON(): Object {
+    public toJSON( options? : ZeidonToJsonOptions ): Object {
         console.log("JSON for Configuration OI" );
+        options = options || {};
 
         let jarray = []; 
         for ( let root of this.roots.allEntities() ) {
-            jarray.push( root.toJSON() );
+            jarray.push( root.toJSON( options ) );
         };
 
         let json = {};
@@ -70,7 +71,7 @@ export class ObjectInstance {
         };
 
         // Add the OI.
-        wrapper.OIs[0][ this.getLodDef().name ] = this.toJSON()[this.getLodDef().name ];
+        wrapper.OIs[0][ this.getLodDef().name ] = this.toJSON( { meta: true } )[this.getLodDef().name ];
 
         return wrapper;
     }
@@ -324,7 +325,7 @@ export class EntityInstance {
             this.oi.logOi();
     }
 
-    protected getAttribute( attr: string ): any {
+    public getAttribute( attr: string ): any {
         let attribs = this.getAttribHash( attr );
         return attribs[attr];
     }
@@ -397,37 +398,43 @@ export class EntityInstance {
         return str;
     }
 
-    public toJSON(): Object {
+    public toJSON( options? : ZeidonToJsonOptions ): Object {
+        options = options || {};
         let json = {};
 
-        let meta = {} as any;
-        let incrementals = this.buildIncrementalStr();
-        if ( incrementals != "" )
-            meta.incrementals = incrementals;
+        if ( options.meta ) {
+            let meta = {} as any;
+            let incrementals = this.buildIncrementalStr();
+            if ( incrementals != "" )
+                meta.incrementals = incrementals;
 
-        if ( Object.keys( meta ).length > 0 )
-            json[ ".meta" ] = meta;
+            if ( Object.keys( meta ).length > 0 )
+                json[ ".meta" ] = meta;
+        }
 
         for ( let attrName in this.entityDef.attributes ) {
             if ( this.getAttribute( attrName ) != undefined || this.isAttributeUpdated( attrName ) ) {
                 json[attrName] = this.getAttribute( attrName );
-                if (this.isAttributeUpdated( attrName ) ) {
+                if ( options.meta && this.isAttributeUpdated( attrName ) ) {
                     json["." + attrName] = { updated: true };
                 }
             }
         };
 
         for ( let entityName in this.entityDef.childEntities ) {
-            console.log("json entity = " + entityName );
+            if ( options.childEntities && options.childEntities.indexOf( entityName ) == -1 ) {
+                continue;
+            }
+
             let entities = this.getChildEntityArray( entityName ).allEntities(); 
             if ( entities.length == 0 )
                 continue;
 
             let entityInfo = this.entityDef.childEntities[ entityName ];
             if ( entityInfo.cardMax == 1 ) {
-                json[ entityName ] =  entities[0].toJSON();
+                json[ entityName ] =  entities[0].toJSON( options );
             } else {
-                json[ entityName ] = entities.map( ei => ei.toJSON() );
+                json[ entityName ] = entities.map( ei => ei.toJSON( options ) );
             }
         }
 
@@ -697,6 +704,11 @@ export class ZeidonConfiguration {
 
     getActivator() : Activator { return this.activator; }
     getCommitter() : Committer { return this.committer; }
+}
+
+export interface ZeidonToJsonOptions {
+    childEntities? : string[]
+    meta? :          boolean
 }
 
 export class CommitOptions extends OptionsConstructor {

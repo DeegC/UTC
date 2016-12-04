@@ -13,6 +13,7 @@ var core_2 = require("@angular/core");
 var core_3 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var zeidon_1 = require("./zeidon");
+var forms_2 = require("@angular/forms");
 var AttributeValidatorDirective = (function () {
     function AttributeValidatorDirective(el, renderer, vieweContainer) {
         this.el = el;
@@ -60,4 +61,43 @@ AttributeValidatorDirective = __decorate([
         core_2.ViewContainerRef])
 ], AttributeValidatorDirective);
 exports.AttributeValidatorDirective = AttributeValidatorDirective;
+var ZeidonFormBuilder = (function () {
+    function ZeidonFormBuilder() {
+    }
+    ZeidonFormBuilder.prototype.group = function (ei, options, form) {
+        options = options || {};
+        form = form || new forms_2.FormGroup({});
+        var entityDef = ei.entityDef;
+        for (var attrName in entityDef.attributes) {
+            var attributeDef = ei.getAttributeDef(attrName);
+            form.addControl(attrName, new forms_2.FormControl(ei.getAttribute(attrName)));
+        }
+        ;
+        for (var entityName in entityDef.childEntities) {
+            if (options.childEntities && options.childEntities.indexOf(entityName) == -1) {
+                continue;
+            }
+            var entities = ei.getChildEntityArray(entityName);
+            if (entities.length == 0)
+                continue;
+            var entityInfo = entityDef.childEntities[entityName];
+            if (entityInfo.cardMax == 1) {
+                var formGroup = this.group(entities[0], options);
+                form.addControl(entityName, formGroup);
+            }
+            else {
+                var formArray = new forms_2.FormArray([]);
+                for (var _i = 0, entities_1 = entities; _i < entities_1.length; _i++) {
+                    var child = entities_1[_i];
+                    var formGroup = this.group(child, options);
+                    formArray.push(formGroup);
+                }
+                form.addControl(entityName, formArray);
+            }
+        }
+        return form;
+    };
+    return ZeidonFormBuilder;
+}());
+exports.ZeidonFormBuilder = ZeidonFormBuilder;
 //# sourceMappingURL=zeidon-angular2.js.map

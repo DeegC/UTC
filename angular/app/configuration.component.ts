@@ -4,6 +4,7 @@ import { RestService } from './rest.service';
 import { Configuration_ThermometerConfig } from './Configuration';
 import { Session } from './Session';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
+import * as zeidon from './zeidon-angular2';
 
 @Component({
     moduleId:  module.id,
@@ -12,12 +13,14 @@ import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@ang
   <div *ngIf="configOi">
     <form [formGroup]="form" (ngSubmit)="saveConfig($event)">
       <h2>Configuration Details</h2>
-      <div><label>Id: </label>{{configOi.Configuration$.Id}}</div>
+      <div>
+        <label>Id: </label>{{configOi.Configuration$.Id}}
+      </div>
       <div>
         <label>Description: </label>
         <input type="text"
                formControlName="Description"
-               placeholder="Description" name="Description"
+               placeholder="Description"
         />
       </div>
       <div>
@@ -62,7 +65,7 @@ import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@ang
 
       <h3>Thermometers</h3>
       <div formArrayName="ThermometerConfig">
-        <div *ngFor="let therm of ThermometerConfig.controls; let i = index;" >
+        <div *ngFor="let therm of form.controls.ThermometerConfig.controls; let i = index;" >
             <div [formGroupName]="i">
                 <label>name: </label>
                 <input formControlName="Name" placeholder="name" />
@@ -80,7 +83,7 @@ import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@ang
       </div>
 -->
       <div>
-        <button type="submit" class="btn btn-default" [disabled]="! configOi.isUpdated">
+        <button type="submit" class="btn btn-default" [disabled]="false">
             Save Configuration
         </button>
         <button type="button" class="btn btn-default" (click)="cancel()" >
@@ -106,31 +109,8 @@ export class ConfigurationComponent implements OnInit{
     }
 
     ngOnInit() {
-        this.form = new FormGroup({
-            Description: new FormControl( this.configOi.Configuration$.Description, Validators.required ),
-            TargetTemperature: new FormControl( this.configOi.Configuration$.TargetTemperature, Validators.required ),
-            PidP: new FormControl( this.configOi.Configuration$.PidP, Validators.required ),
-            PidI: new FormControl( this.configOi.Configuration$.PidI, Validators.required ),
-            PidD: new FormControl( this.configOi.Configuration$.PidD, Validators.required ),
-            MaxPWM: new FormControl( this.configOi.Configuration$.MaxPWM, Validators.required ),
-            TweetOn: new FormControl( this.configOi.Configuration$.TweetOn, Validators.required ),
-            TweetPeriodInMinutes: new FormControl( this.configOi.Configuration$.TweetPeriodInMinutes, Validators.required ),
-            ThermometerConfig: new FormArray( [
-                new FormGroup( {
-                    Name: new FormControl( this.configOi.Configuration$.ThermometerConfig[0].Name ),
-                }),
-                new FormGroup( {
-                    Name: new FormControl( this.configOi.Configuration$.ThermometerConfig[1].Name ),
-                }),
-//                new FormGroup({ Name: new FormControl( this.configOi.Configuration$.ThermometerConfig$.Name ) })
-            ] ),
-        } );
+        this.form = new zeidon.ZeidonFormBuilder().group( this.configOi.Configuration$ ); 
         console.log("nOnInit");
-    }
-
-    get ThermometerConfig(): FormArray { 
-        let t = this.form.get('ThermometerConfig') as FormArray; 
-        return t;
     }
 
     saveConfig( event ): void {
