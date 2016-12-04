@@ -3,7 +3,7 @@ import { Configuration } from './Configuration';
 import { RestService } from './rest.service';
 import { Configuration_ThermometerConfig } from './Configuration';
 import { Session } from './Session';
-import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import * as zeidon from './zeidon-angular2';
 
 @Component({
@@ -105,7 +105,7 @@ export class ConfigurationComponent implements OnInit{
     @Output() onSessionStarted = new EventEmitter<Session>();
     form: FormGroup;
 
-    constructor(private restService: RestService, private fb: FormBuilder) { 
+    constructor(private restService: RestService) { 
     }
 
     ngOnInit() {
