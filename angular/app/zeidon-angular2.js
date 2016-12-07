@@ -65,12 +65,18 @@ var ZeidonFormBuilder = (function () {
     function ZeidonFormBuilder() {
     }
     ZeidonFormBuilder.prototype.group = function (ei, options, form) {
+        // Set default values
         options = options || {};
         form = form || new forms_2.FormGroup({});
+        form.addControl("fingerprint", new forms_2.FormControl(ei.fingerprint));
+        // Add a FormControl to the form for each attribute.
         var entityDef = ei.entityDef;
         for (var attrName in entityDef.attributes) {
             var attributeDef = ei.getAttributeDef(attrName);
-            form.addControl(attrName, new forms_2.FormControl(ei.getAttribute(attrName)));
+            if (attributeDef.hidden)
+                continue;
+            var value = ei.getAttribute(attrName);
+            form.addControl(attrName, new forms_2.FormControl(value, forms_2.Validators.required));
         }
         ;
         for (var entityName in entityDef.childEntities) {

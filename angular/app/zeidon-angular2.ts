@@ -59,13 +59,21 @@ export class ZeidonFormBuilder {
            },
            form? : FormGroup ) : FormGroup {
 
+        // Set default values
         options = options || {};
         form = form || new FormGroup({});
 
+        form.addControl( "fingerprint", new FormControl( ei.fingerprint ) );
+
+        // Add a FormControl to the form for each attribute.
         let entityDef = ei.entityDef;
         for ( let attrName in entityDef.attributes ) {
             let attributeDef = ei.getAttributeDef( attrName );
-            form.addControl( attrName, new FormControl( ei.getAttribute( attrName) ) );
+            if ( attributeDef.hidden )
+                continue;
+
+            let value = ei.getAttribute( attrName);
+            form.addControl( attrName, new FormControl( value, Validators.required ) );
         };
 
         for ( let entityName in entityDef.childEntities ) {

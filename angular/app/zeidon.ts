@@ -5,6 +5,12 @@ import { Observable } from 'rxjs/Observable';
 
 let configurationInstance: ZeidonConfiguration = undefined;
 
+/**
+ * Keeps track of the current EI fingerprint.  The fingerprint is used to differentiate between
+ * EIs that don't (yet) have a key.
+ */
+let entityInstanceFingerprintCount = 0;
+
 export class Application {
     lodDefs : Object;
 
@@ -185,6 +191,9 @@ export class EntityInstance {
     // loaded and so cannot be deleted.
     private incomplete = false;
 
+    // A value that can be used to compare EIs that don't have a key.
+    public readonly fingerprint = String( entityInstanceFingerprintCount++ );
+
     // Map of child entities and the array associated with each one.
     // Key: entityName
     // Value: EntityArray.
@@ -221,7 +230,6 @@ export class EntityInstance {
                  options:     CreateOptions = DEFAULT_CREATE_OPTIONS ) {                     
         this.oi = oi;
         this.parentArray = parentArray;
-
         for ( let attr in initialize ) {
             if ( this.getAttributeDef(attr) ) {
                 this.setAttribute( attr, initialize[attr], options);
@@ -398,6 +406,48 @@ export class EntityInstance {
         return str;
     }
 
+    public update( values: any, options: UpdateOptions = {} ) {
+        if ( typeof values !== 'object' )
+            error( "Argument passed to update() must be an object" );
+
+        for ( let key in values ) {
+            // Ignore known non-attributes/entities like fingerprint
+            if ( key === 'fingerprint' )
+                continue;
+
+            let attributeDef = this.getAttributeDef( key );
+            if ( attributeDef ) {
+                let value = values[ key ];
+                this.setAttribute( key, value );
+                continue;
+            }
+
+            let childDef = this.entityDef.childEntities[ key ];
+            if ( ! childDef ) {
+                if ( options.ignoreUnknownAttributeErrors )
+                    continue;
+                else
+                    error( `Key '${key} in values does not match a known entity or attribute` );
+            }
+
+            let eiChildren = this.getChildEntityArray( key );
+            let valueChildren = values[ key ];
+
+            // Children of 1-to-1 relationships are not in an array.  Convert it to
+            // an array to make it easier to process.
+            if ( ! Array.isArray( valueChildren ) )
+                valueChildren = [ valueChildren ];
+
+            for ( let valueChild of valueChildren ) {
+                let eiChild = eiChildren.find( eiChild => eiChild.fingerprint === valueChild.fingerprint )
+                if ( ! eiChild )
+                    error( "Couldn't find EI using fingerprint" );
+                
+                eiChild.update( valueChild );
+            }
+        }
+    }
+
     public toJSON( options? : ZeidonToJsonOptions ): Object {
         options = options || {};
         let json = {};
@@ -441,6 +491,11 @@ export class EntityInstance {
         return json;
     }
 };
+
+export interface UpdateOptions {
+    ignoreUnknownAttributeErrors? : boolean
+}
+
 
 /**
  * Array<T> is one of the few classes we can't directly extend so we have to create

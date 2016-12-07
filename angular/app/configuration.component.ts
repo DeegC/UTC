@@ -114,6 +114,7 @@ export class ConfigurationComponent implements OnInit{
     }
 
     saveConfig( event ): void {
+        this.configOi.Configuration$.update( this.form.value );
         this.configOi.commit().subscribe(config => {
             this.configOi = config;
             this.configurationList.reload();

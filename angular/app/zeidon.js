@@ -15,6 +15,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var configurationInstance = undefined;
+/**
+ * Keeps track of the current EI fingerprint.  The fingerprint is used to differentiate between
+ * EIs that don't (yet) have a key.
+ */
+var entityInstanceFingerprintCount = 0;
 var Application = (function () {
     function Application(lodDefs) {
         this.lodDefs = lodDefs;
@@ -180,6 +185,8 @@ var EntityInstance = (function () {
         // If incomplete = true then this entity did not have all its children
         // loaded and so cannot be deleted.
         this.incomplete = false;
+        // A value that can be used to compare EIs that don't have a key.
+        this.fingerprint = String(entityInstanceFingerprintCount++);
         // Map of child entities and the array associated with each one.
         // Key: entityName
         // Value: EntityArray.
@@ -354,6 +361,45 @@ var EntityInstance = (function () {
         if (this.excluded)
             str += 'X';
         return str;
+    };
+    EntityInstance.prototype.update = function (values, options) {
+        if (options === void 0) { options = {}; }
+        if (typeof values !== 'object')
+            error("Argument passed to update() must be an object");
+        for (var key in values) {
+            // Ignore known non-attributes/entities like fingerprint
+            if (key === 'fingerprint')
+                continue;
+            var attributeDef = this.getAttributeDef(key);
+            if (attributeDef) {
+                var value = values[key];
+                this.setAttribute(key, value);
+                continue;
+            }
+            var childDef = this.entityDef.childEntities[key];
+            if (!childDef) {
+                if (options.ignoreUnknownAttributeErrors)
+                    continue;
+                else
+                    error("Key '" + key + " in values does not match a known entity or attribute");
+            }
+            var eiChildren = this.getChildEntityArray(key);
+            var valueChildren = values[key];
+            // Children of 1-to-1 relationships are not in an array.  Convert it to
+            // an array to make it easier to process.
+            if (!Array.isArray(valueChildren))
+                valueChildren = [valueChildren];
+            var _loop_1 = function (valueChild) {
+                var eiChild = eiChildren.find(function (eiChild) { return eiChild.fingerprint === valueChild.fingerprint; });
+                if (!eiChild)
+                    error("Couldn't find EI using fingerprint");
+                eiChild.update(valueChild);
+            };
+            for (var _i = 0, valueChildren_1 = valueChildren; _i < valueChildren_1.length; _i++) {
+                var valueChild = valueChildren_1[_i];
+                _loop_1(valueChild);
+            }
+        }
     };
     EntityInstance.prototype.toJSON = function (options) {
         options = options || {};

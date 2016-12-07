@@ -23,6 +23,7 @@ var ConfigurationComponent = (function () {
     };
     ConfigurationComponent.prototype.saveConfig = function (event) {
         var _this = this;
+        this.configOi.Configuration$.update(this.form.value);
         this.configOi.commit().subscribe(function (config) {
             _this.configOi = config;
             _this.configurationList.reload();
