@@ -34,7 +34,7 @@ export class ObjectInstance {
     public getDomain( name: string ): Domain { throw "getDomain() must be overriden" };
 
     public getDomainFunctions( name: string ): any {
-        // Can be overwritten but not necessary. 
+        // Can be overwritten but not necessary.
         return undefined;
     }
 
@@ -45,7 +45,7 @@ export class ObjectInstance {
         console.log("JSON for Configuration OI" );
         options = options || {};
 
-        let jarray = []; 
+        let jarray = [];
         for ( let root of this.roots.allEntities() ) {
             jarray.push( root.toJSON( options ) );
         };
@@ -133,7 +133,7 @@ export class ObjectInstance {
             // we'll assume just one and hardcode '[0]'.
              let oimeta = initialize.OIs[0][ ".oimeta" ];
 
-             // If incrementals are set then set the constructor option to 
+             // If incrementals are set then set the constructor option to
              // not set the update flag when the attribute value is set.  The
              // flags will be set by the incrementals.
              if ( oimeta && oimeta.incremental ) {
@@ -156,14 +156,14 @@ export class ObjectInstance {
             for ( let i of initialize ) {
                 this.roots.create( i, options );
             }
-        } else 
+        } else
         if ( initialize != {} ) {
             this.roots.create( initialize, options );
         }
 
         return this;
     }
-    
+
     handleActivateError( e ) {
         console.log("There was an error: " + e );
     }
@@ -219,15 +219,15 @@ export class EntityInstance {
             else {
                 console.log( `Couldn't find domain '${attributeDef.domain}'` );
             }
-            
+
         }
         return attributeDef;
     }
 
-    constructor( initialize:  Object, 
-                 oi:          ObjectInstance, 
-                 parentArray: EntityArray<EntityInstance>, 
-                 options:     CreateOptions = DEFAULT_CREATE_OPTIONS ) {                     
+    constructor( initialize:  Object,
+                 oi:          ObjectInstance,
+                 parentArray: EntityArray<EntityInstance>,
+                 options:     CreateOptions = DEFAULT_CREATE_OPTIONS ) {
         this.oi = oi;
         this.parentArray = parentArray;
         for ( let attr in initialize ) {
@@ -442,7 +442,7 @@ export class EntityInstance {
                 let eiChild = eiChildren.find( eiChild => eiChild.fingerprint === valueChild.fingerprint )
                 if ( ! eiChild )
                     error( "Couldn't find EI using fingerprint" );
-                
+
                 eiChild.update( valueChild );
             }
         }
@@ -476,7 +476,7 @@ export class EntityInstance {
                 continue;
             }
 
-            let entities = this.getChildEntityArray( entityName ).allEntities(); 
+            let entities = this.getChildEntityArray( entityName ).allEntities();
             if ( entities.length == 0 )
                 continue;
 
@@ -501,7 +501,7 @@ export interface UpdateOptions {
  * Array<T> is one of the few classes we can't directly extend so we have to create
  * a delegate class that handles all the real work.  We'll set the appropriate function
  * names when we construct EntityArray<T>.
- * 
+ *
  * See https://github.com/Microsoft/TypeScript/issues/12013 for more.
  */
 class ArrayDelegate<T extends EntityInstance> {
@@ -519,7 +519,7 @@ class ArrayDelegate<T extends EntityInstance> {
         this.array = array;
         this.currentlySelected = 0;
     }
-    
+
     private get entityDef() { return this.oi.getLodDef().entities[ this.entityName ]; }
 
     create( initialize : Object = {}, options: CreateOptions = DEFAULT_CREATE_OPTIONS ): EntityInstance {
@@ -558,7 +558,7 @@ class ArrayDelegate<T extends EntityInstance> {
         for ( let ei of list ) {
             if ( ei.metaFlags.incomplete )
                 error( `Entity ${this.entityDef.name} is incomplete and cannot be deleted.` )
-        }        
+        }
     }
 
     deleteAll() {
@@ -630,7 +630,7 @@ class ArrayDelegate<T extends EntityInstance> {
             this.currentlySelected = this.array.findIndex( ei => value === ei );
             return this.selected();
         }
-        
+
         throw "Value must be number or EntityInstance"
     }
 
@@ -686,7 +686,7 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
         return _arr;
     }
 
-    /** 
+    /**
      * Create an entity at the end of the current entity list.
      */
     create: ( initialize? : Object, options?: CreateOptions ) => EntityInstance;

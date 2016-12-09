@@ -45,7 +45,7 @@ var ObjectInstance = (function () {
     ObjectInstance.prototype.getDomain = function (name) { throw "getDomain() must be overriden"; };
     ;
     ObjectInstance.prototype.getDomainFunctions = function (name) {
-        // Can be overwritten but not necessary. 
+        // Can be overwritten but not necessary.
         return undefined;
     };
     ObjectInstance.prototype.toJSON = function (options) {
@@ -129,7 +129,7 @@ var ObjectInstance = (function () {
             // TODO: Someday we should handle multiple return OIs for for now
             // we'll assume just one and hardcode '[0]'.
             var oimeta = initialize.OIs[0][".oimeta"];
-            // If incrementals are set then set the constructor option to 
+            // If incrementals are set then set the constructor option to
             // not set the update flag when the attribute value is set.  The
             // flags will be set by the incrementals.
             if (oimeta && oimeta.incremental) {

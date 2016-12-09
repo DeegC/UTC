@@ -10,6 +10,8 @@
         "**/.DS_Store": true,
         "**/*.js.map": true,
         "**/*.js": {"when": "$(basename).ts"}
-    }
+    },
+
+    "files.trimTrailingWhitespace": true
 
 }
