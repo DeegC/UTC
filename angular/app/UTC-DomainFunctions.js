@@ -6,7 +6,7 @@ var zeidon_1 = require("./zeidon");
 exports.UTC_DomainFunctions = {
     "com.quinsoft.zeidon.domains.BooleanDomain": {
         convertExternalValue: function (value, attributeDef) {
-            if (attributeDef.required && value == undefined)
+            if (attributeDef.required && (value == undefined || value === ""))
                 throw new zeidon_1.AttributeValueError("Value is required.", attributeDef);
             switch (value) {
                 case true:
@@ -16,6 +16,9 @@ exports.UTC_DomainFunctions = {
                     return true;
                 case "false":
                     return false;
+                case "":
+                case undefined:
+                    return undefined;
             }
             throw new zeidon_1.AttributeValueError("Invalid boolean value: " + value, attributeDef);
         }

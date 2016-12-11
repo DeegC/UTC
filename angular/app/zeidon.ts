@@ -406,6 +406,29 @@ export class EntityInstance {
         return str;
     }
 
+    /**
+     * Updates the attributes of this entity instance and any children that are specified
+     * in 'values'.  The entity fingerprint is used to match up entities in 'value' to the
+     * entities in the OI.
+     *
+     * Note: This will not create or delete entities.  It is expected that every fingerprint
+     * in 'values' exists in the OI.
+     *
+     * Sample input might look like:
+     *      {
+     *          fingerprint: 22,
+     *          Attr1: 'new value',
+     *          Attr2: 'another value',
+     *          Attr3: true,
+     *          Child1: [
+     *              {
+     *                  fingerprint: 49,
+     *                  ChildAttr1: 10,
+     *                  ChildAttr2: 'foo'
+     *              }
+     *          ]
+     *      }
+     */
     public update( values: any, options: UpdateOptions = {} ) {
         if ( typeof values !== 'object' )
             error( "Argument passed to update() must be an object" );
@@ -804,6 +827,6 @@ let error = function ( message: string ) {
     console.log(stack.join("\n"));
 
     console.log( message );
-    //alert( message );
+    alert( message );
     throw message;
 }

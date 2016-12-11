@@ -8,17 +8,20 @@ import { AttributeValueError } from "./zeidon"
 export const UTC_DomainFunctions = {
     "com.quinsoft.zeidon.domains.BooleanDomain": {
         convertExternalValue( value: any, attributeDef: any ): any {
-            if ( attributeDef.required && value == undefined )
+            if ( attributeDef.required && ( value == undefined || value === "" ) )
                 throw new AttributeValueError(`Value is required.`, attributeDef );
-                
+
             switch ( value ) {
                 case true:
                 case false:
                     return value
-                case "true": 
+                case "true":
                     return true;
-                case "false": 
+                case "false":
                     return false;
+                case "":
+                case undefined:
+                    return undefined;
             }
 
             throw new AttributeValueError(`Invalid boolean value: ${value}`, attributeDef );
@@ -29,7 +32,7 @@ export const UTC_DomainFunctions = {
         convertExternalValue( value: any, attributeDef: any ): any {
             if ( attributeDef.required && value == undefined )
                 throw new AttributeValueError(`Value is required.`, attributeDef );
-                
+
             if ( typeof value === 'number' ) {
                 // Do nothing atm.
             } else
@@ -51,7 +54,7 @@ export const UTC_DomainFunctions = {
         convertExternalValue( value: any, attributeDef: any ): any {
             if ( attributeDef.required && value == undefined )
                 throw new AttributeValueError(`Value is required.`, attributeDef );
-                
+
             let str = value.toString();
 
             if ( attributeDef.maxLength ) {

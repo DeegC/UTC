@@ -1,4 +1,4 @@
-import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import { Configuration } from './Configuration';
 import { RestService } from './rest.service';
 import { Configuration_ThermometerConfig } from './Configuration';
@@ -27,16 +27,16 @@ import * as zeidon from './zeidon-angular2';
         <label>Target Temperature: </label>
         <input formControlName="TargetTemperature" placeholder="target temperature"  />
       </div>
-      
+
       <div>
         <label>PID: </label>
-        <input formControlName="PidP" 
+        <input formControlName="PidP"
             placeholder="P" maxlength="2" size="2"/>
         <input formControlName="PidI" placeholder="I" maxlength="5" size="5" />
         <input formControlName="PidD"
             placeholder="D" maxlength="2" size="2"/>
       </div>
-        <div *ngIf="configOi.Configuration$.validateErrors.PidP" class="alert alert-danger">
+        <div name="pidError" *ngIf="configOi.Configuration$.validateErrors.PidP" class="alert alert-danger">
             {{ configOi.Configuration$.validateErrors.PidP.message }}
         </div>
         <div *ngIf="configOi.Configuration$.validateErrors.PidI" class="alert alert-danger">
@@ -52,10 +52,9 @@ import * as zeidon from './zeidon-angular2';
       <div>
         <label>Tweet On: </label>
         <input id="TweetOn"
-            formControlName="TweetOn" placeholder="tweet on"
+            formControlName="TweetOn" placeholder="tweet on" [validateAttributeValue]="tweetError"
         />
-        <div *ngIf="configOi.Configuration$.validateErrors.TweetOn" class="alert alert-danger">
-          {{ configOi.Configuration$.validateErrors.TweetOn.message }}
+        <div #tweetError class="alert alert-danger" style="display:none">
         </div>
       </div>
       <div>
@@ -73,10 +72,10 @@ import * as zeidon from './zeidon-angular2';
             </div>
         </div>
       </div>
-      
-<!--      
+
+<!--
       <div>
-        <button type="button" class="btn btn-default" (click)="newThermometer()" 
+        <button type="button" class="btn btn-default" (click)="newThermometer()"
                [disabled]="configOi.Configuration$.ThermometerConfig.length > 3" >
             New Thermometer
         </button>
@@ -99,24 +98,33 @@ import * as zeidon from './zeidon-angular2';
   </div>
 `
 })
-export class ConfigurationComponent implements OnInit{
+export class ConfigurationComponent implements OnChanges {
     @Input() configOi: Configuration;
     @Input() configurationList: Configuration;
     @Output() onSessionStarted = new EventEmitter<Session>();
     form: FormGroup;
 
-    constructor(private restService: RestService) { 
+    constructor(private restService: RestService) {
     }
 
-    ngOnInit() {
-        this.form = new zeidon.ZeidonFormBuilder().group( this.configOi.Configuration$ ); 
-        console.log("nOnInit");
+    // ngOnInit() {
+    //     console.log("nOnInit");
+    // }
+
+    ngOnChanges(changes: SimpleChanges) {
+        this.buildForm();
+        console.log( "ngOnChanges for configuration" );
+    }
+
+    buildForm() {
+        this.form = new zeidon.ZeidonFormBuilder().group( this.configOi.Configuration$ );
     }
 
     saveConfig( event ): void {
         this.configOi.Configuration$.update( this.form.value );
         this.configOi.commit().subscribe(config => {
             this.configOi = config;
+            this.buildForm();
             this.configurationList.reload();
         });
     }

@@ -1,4 +1,4 @@
-import { OnInit } from '@angular/core';
+import { OnInit, SimpleChanges, OnChanges } from '@angular/core';
 import { Input } from '@angular/core';
 import { ElementRef, Renderer, ViewContainerRef } from '@angular/core';
 import { Directive } from '@angular/core';
@@ -10,54 +10,77 @@ import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
     selector: '[validateAttributeValue]',
     providers: [{ provide: NG_VALIDATORS, useExisting: AttributeValidatorDirective, multi: true }]
 })
-export class AttributeValidatorDirective implements Validator, OnInit {
-    @Input("validateAttributeValue") entityInstance: EntityInstance;
+export class AttributeValidatorDirective implements Validator, OnInit, OnChanges {
+    @Input("validateAttributeValue") entityInstance: any;
 
     private attributeName: string;
     private attributeDef: any;
     private domain: Domain;
 
-    constructor( private el: ElementRef, 
-                 private renderer: Renderer, 
-                 private vieweContainer: ViewContainerRef ) {
+    constructor( private el: ElementRef,
+                 private renderer: Renderer,
+                 private viewContainer: ViewContainerRef ) {
         console.log("constructor")
         this.attributeName = el.nativeElement.name;
     }
 
     ngOnInit(): void {
-        this.attributeDef = this.entityInstance.getAttributeDef( this.attributeName );
-        this.domain = this.attributeDef.domain;
+        console.log("validator OnInit" );
+        //this.attributeDef = this.entityInstance.getAttributeDef( this.attributeName );
+        //this.domain = this.attributeDef.domain;
     }
 
-    validate(control: AbstractControl): { [key: string]: any } {
+    ngOnChanges(changes: SimpleChanges) {
+        console.log( "ngOnChanges for directive" );
+    }
+
+    validate( control ) {
+        console.log( "directive validate" );
+        if ( control.zeidonErrorMessage ) {
+            this.renderer.setElementStyle( this.entityInstance, "display", "" );
+            this.entityInstance.innerHTML = control.zeidonErrorMessage;
+        } else {
+            this.renderer.setElementStyle( this.entityInstance, "display", "none" );
+        }
+        return null;
+    }
+}
+
+let domainValidator = function( ei: EntityInstance, attributeDef ) {
+    return function( control ) {
+        control.zeidonErrorMessage = undefined;
+        let domain = attributeDef.domain;
         if ( ! control.touched && ! control.dirty )
             return null;
 
-        if ( ! this.domain.domainFunctions )
+        if ( ! domain.domainFunctions )
             return null;
 
         let value = control.value;
-        let errors = this.entityInstance.validateErrors;
+        let errors = ei.validateErrors;
         try {
-            console.log("Calling domain funcation" );
-            this.domain.domainFunctions.convertExternalValue( value, this.attributeDef );
-            errors[ this.attributeName ] = undefined;
+            console.log("Calling domain function" );
+            domain.domainFunctions.convertExternalValue( value, attributeDef );
+            errors[ attributeDef.name ] = undefined;
             return null;
         }
         catch( e ) {
             console.log( `Error: ${e.message}`);
-            errors[ this.attributeName ] = { message: e.message };
-            return errors[ this.attributeName ];
+            control.zeidonErrorMessage = e.message;
+            errors[ attributeDef.name ] = { message: e.message };
+            return errors[ attributeDef.name ];
         }
-    }
+    };
+};
+
+export interface ZeidonFormBuilderOptions {
+    childEntities? : string[] // If undefined then add all, otherwise list of child entities to be added.
 }
 
 export class ZeidonFormBuilder {
-    public group( ei: EntityInstance, 
-           options?: { 
-               childEntities? : string[] // If undefined then add all, otherwise list of child entities to be added.
-           },
-           form? : FormGroup ) : FormGroup {
+    public group( ei       : EntityInstance,
+                  options? : ZeidonFormBuilderOptions,
+                  form?    : FormGroup ) : FormGroup {
 
         // Set default values
         options = options || {};
@@ -73,7 +96,7 @@ export class ZeidonFormBuilder {
                 continue;
 
             let value = ei.getAttribute( attrName);
-            form.addControl( attrName, new FormControl( value, Validators.required ) );
+            form.addControl( attrName, new FormControl( value, domainValidator( ei, attributeDef ) ) );
         };
 
         for ( let entityName in entityDef.childEntities ) {
@@ -81,7 +104,7 @@ export class ZeidonFormBuilder {
                 continue;
             }
 
-            let entities = ei.getChildEntityArray( entityName ) 
+            let entities = ei.getChildEntityArray( entityName )
             if ( entities.length == 0 )
                 continue;
 

@@ -379,7 +379,7 @@ exports.Configuration_LodDef = {
                 TweetOn: {
                     name: "TweetOn",
                     hidden: false,
-                    required: false,
+                    required: true,
                     domainName: "Boolean",
                     persistent: true,
                     key: false,

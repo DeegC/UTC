@@ -25,11 +25,11 @@ export class Configuration extends zeidon.ObjectInstance {
         return Configuration_LodDef;
     };
 
-    public getDomain( name: string ): zeidon.Domain { 
+    public getDomain( name: string ): zeidon.Domain {
         return UTC_DomainList[name];
     };
 
-    public getDomainFunctions( name: string ): any { 
+    public getDomainFunctions( name: string ): any {
         return UTC_DomainFunctions[name];
     }
 
@@ -122,8 +122,8 @@ export class Configuration_ThermometerConfig extends zeidon.EntityInstance {
 }
 
 const ConfigurationEntityPrototypes = {
-    Configuration: Configuration_Configuration.prototype, 
-    ThermometerConfig: Configuration_ThermometerConfig.prototype, 
+    Configuration: Configuration_Configuration.prototype,
+    ThermometerConfig: Configuration_ThermometerConfig.prototype,
 }
 
 export const Configuration_LodDef = {
@@ -252,7 +252,7 @@ export const Configuration_LodDef = {
                 TweetOn: {
                     name:         "TweetOn",
                     hidden:       false,
-                    required:     false,
+                    required:     true,
                     domainName:   "Boolean",
                     persistent:   true,
                     key:          false,
