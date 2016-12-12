@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var Configuration_1 = require("./Configuration");
 var rest_service_1 = require("./rest.service");
-var zeidon = require("./zeidon-angular2");
+var zeidon = require("./zeidon-angular");
 var ConfigurationComponent = (function () {
     function ConfigurationComponent(restService) {
         this.restService = restService;

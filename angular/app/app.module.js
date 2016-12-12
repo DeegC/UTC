@@ -17,7 +17,7 @@ var http_1 = require("@angular/http");
 require("./rxjs-extensions");
 var app_component_1 = require("./app.component");
 var configuration_list_component_1 = require("./configuration-list.component");
-var zeidon_angular2_1 = require("./zeidon-angular2");
+var zeidon_angular_1 = require("./zeidon-angular");
 var configuration_component_1 = require("./configuration.component");
 var rest_service_1 = require("./rest.service");
 var session_component_1 = require("./session.component");
@@ -59,7 +59,7 @@ AppModule = __decorate([
         declarations: [app_component_1.AppComponent,
             configuration_list_component_1.ConfigurationListComponent,
             configuration_component_1.ConfigurationComponent,
-            zeidon_angular2_1.AttributeValidatorDirective,
+            zeidon_angular_1.AttributeValidatorDirective,
             session_component_1.SessionComponent],
         providers: [rest_service_1.RestService,
             { provide: zeidon_rest_client_1.ZeidonRestValues, useValue: REST_VALUES },

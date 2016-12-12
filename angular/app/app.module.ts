@@ -8,7 +8,7 @@ import './rxjs-extensions';
 
 import { AppComponent }   from './app.component';
 import { ConfigurationListComponent }   from './configuration-list.component';
-import { AttributeValidatorDirective }   from './zeidon-angular2';
+import { AttributeValidatorDirective }   from './zeidon-angular';
 import { ConfigurationComponent }   from './configuration.component';
 import { RestService }   from './rest.service';
 import { SessionComponent }   from './session.component';

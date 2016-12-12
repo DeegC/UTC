@@ -127,4 +127,4 @@ var ZeidonFormBuilder = (function () {
     return ZeidonFormBuilder;
 }());
 exports.ZeidonFormBuilder = ZeidonFormBuilder;
-//# sourceMappingURL=zeidon-angular2.js.map
+//# sourceMappingURL=zeidon-angular.js.map

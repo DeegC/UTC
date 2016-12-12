@@ -4,7 +4,7 @@ import { RestService } from './rest.service';
 import { Configuration_ThermometerConfig } from './Configuration';
 import { Session } from './Session';
 import { FormGroup, Validators } from '@angular/forms';
-import * as zeidon from './zeidon-angular2';
+import * as zeidon from './zeidon-angular';
 
 @Component({
     moduleId:  module.id,
