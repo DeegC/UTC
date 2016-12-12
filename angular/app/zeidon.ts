@@ -307,9 +307,9 @@ export class EntityInstance {
                 error( `Can't set attribute for hidden EntityInstance: ${this.entityDef.name}.${attr}` );
         }
 
-        // if ( attributeDef.domain.domainFunctions ) {
-        //     value = domain.domainFunctions.convertExternalValue( value, attributeDef, domain );
-        // }
+        if ( attributeDef.domain.domainFunctions ) {
+            value = attributeDef.domain.domainFunctions.convertExternalValue( value, attributeDef );
+        }
 
         let attribs = this.getAttribHash( attr );
 

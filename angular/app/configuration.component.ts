@@ -35,10 +35,10 @@ import * as zeidon from './zeidon-angular';
       <div>
         <label>PID: </label>
         <input type="number" formControlName="PidP" [zeidonErrorElement]="pidError"
-            placeholder="P" maxlength="2" size="2"/>
+            placeholder="P" maxlength="2" size="3"/>
         <input formControlName="PidI" [zeidonErrorElement]="pidError"
             placeholder="I" maxlength="5" size="5" />
-        <input type="number" formControlName="PidD" [zeidonErrorElement]="pidError"
+        <input formControlName="PidD" [zeidonErrorElement]="pidError"
             placeholder="D" maxlength="2" size="2"/>
       </div>
       <div #pidError class="alert alert-danger" style="display:none"></div>

@@ -285,9 +285,9 @@ var EntityInstance = (function () {
             if (this.deleted || this.excluded)
                 error("Can't set attribute for hidden EntityInstance: " + this.entityDef.name + "." + attr);
         }
-        // if ( attributeDef.domain.domainFunctions ) {
-        //     value = domain.domainFunctions.convertExternalValue( value, attributeDef, domain );
-        // }
+        if (attributeDef.domain.domainFunctions) {
+            value = attributeDef.domain.domainFunctions.convertExternalValue(value, attributeDef);
+        }
         var attribs = this.getAttribHash(attr);
         if (attribs[attr] == value)
             return;

@@ -4,74 +4,117 @@ import { AttributeValueError } from "./zeidon"
 /**
  * User-written code to process domains.
  */
-
-export const checkForRequiredValue = function( value: any, attributeDef: any ) {
-    if ( attributeDef.required && ( value == undefined || value === "" ) )
-        throw new AttributeValueError(`Value is required.`, attributeDef );
+export interface DomainFunctions {
+    convertExternalValue?( value: any, attributeDef: any, context? : any ): any;
 }
 
-export const UTC_DomainFunctions = {
-    "com.quinsoft.zeidon.domains.BooleanDomain": {
-        convertExternalValue( value: any, attributeDef: any, context? : any ): any {
-            checkForRequiredValue( value, attributeDef );
+export class BaseDomainFunctions implements DomainFunctions {
+    checkForRequiredValue( value: any, attributeDef: any ) {
+        if ( attributeDef.required && ( value == undefined || value === "" ) )
+            throw new AttributeValueError(`Value is required.`, attributeDef );
+    }
 
-            switch ( value ) {
-                case true:
-                case false:
-                    return value
-                case "true":
-                    return true;
-                case "false":
-                    return false;
-                case "":
-                case undefined:
-                    return undefined;
-            }
+    convertExternalValue?( value: any, attributeDef: any, context? : any ): any {
+        this.checkForRequiredValue( value, attributeDef );
+        return value;
+    }
+}
 
-            throw new AttributeValueError(`Invalid boolean value: ${value}`, attributeDef );
+export class StringDomainFunctions extends BaseDomainFunctions {
+    convertExternalValue?( value: any, attributeDef: any, context? : any ): any {
+        this.checkForRequiredValue( value, attributeDef );
+        let str = value.toString();
+
+        if ( attributeDef.maxLength ) {
+            if ( str.length > attributeDef.maxLength )
+                throw new AttributeValueError(`Length is longer than max string length: ${value}`, attributeDef );
+            else
+            if ( str.length > attributeDef.domain.maxLength )
+                throw new AttributeValueError(`Length is longer than max string length: ${value}`, attributeDef );
         }
-    },
 
-    "com.quinsoft.zeidon.domains.IntegerDomain": {
-        convertExternalValue( value: any, attributeDef: any, context? : any ): any {
-            checkForRequiredValue( value, attributeDef );
+        return str;
+    }
+}
 
-            if ( typeof value === 'number' ) {
-                // Do nothing atm.
-            } else
-            if ( typeof value === 'string' ) {
-                let v = Number(value);
-                if ( isNaN( v ) ) {
-                    throw new AttributeValueError(`Invalid integer value: ${value}`, attributeDef );
-                }
+export class IntegerDomainFunctions extends BaseDomainFunctions {
+    convertExternalValue?( value: any, attributeDef: any, context? : any ): any {
+        this.checkForRequiredValue( value, attributeDef );
 
-                if ( ! Number.isInteger( v ) )
-                    throw new AttributeValueError(`Invalid integer value: ${value}`, attributeDef );
-
-                value = v;
-            } else {
+        if ( typeof value === 'number' ) {
+            // Do nothing atm.
+        } else
+        if ( typeof value === 'string' ) {
+            let v = Number(value);
+            if ( isNaN( v ) ) {
                 throw new AttributeValueError(`Invalid integer value: ${value}`, attributeDef );
             }
 
-            return value;
+            value = v;
+        } else {
+            throw new AttributeValueError(`Invalid integer value: ${value}`, attributeDef );
         }
-    },
 
-    "com.quinsoft.zeidon.domains.StringDomain": {
-        convertExternalValue( value: any, attributeDef: any, context? : any ): any {
-            checkForRequiredValue( value, attributeDef );
+        if ( ! Number.isInteger( value ) )
+            throw new AttributeValueError(`Invalid integer value: ${value}`, attributeDef );
 
-            let str = value.toString();
+        return value;
+    }
+}
 
-            if ( attributeDef.maxLength ) {
-                if ( str.length > attributeDef.maxLength )
-                    throw new AttributeValueError(`Length is longer than max string length: ${value}`, attributeDef );
-                else
-                if ( str.length > attributeDef.domain.maxLength )
-                    throw new AttributeValueError(`Length is longer than max string length: ${value}`, attributeDef );
+export class BooleanDomainFunctions extends BaseDomainFunctions {
+    convertExternalValue?( value: any, attributeDef: any, context? : any ): any {
+        this.checkForRequiredValue( value, attributeDef );
+
+        switch ( value ) {
+            case true:
+            case false:
+                return value
+            case "true":
+                return true;
+            case "false":
+                return false;
+            case "":
+            case undefined:
+                return undefined;
+        }
+
+        throw new AttributeValueError(`Invalid boolean value: ${value}`, attributeDef );
+    }
+}
+
+export class DoubleDomainFunctions extends BaseDomainFunctions {
+    convertExternalValue?( value: any, attributeDef: any, context? : any ): any {
+        this.checkForRequiredValue( value, attributeDef );
+
+        if ( typeof value === 'number' ) {
+            // Do nothing atm.
+        } else
+        if ( typeof value === 'string' ) {
+            let v = Number(value);
+            if ( isNaN( v ) ) {
+                throw new AttributeValueError(`Invalid double value: ${value}`, attributeDef );
             }
 
-            return str;
+            value = v;
+        } else {
+            throw new AttributeValueError(`Invalid double value: ${value}`, attributeDef );
         }
-    },
+
+        return value;
+    }
+}
+
+export class xxxDomainFunctions extends BaseDomainFunctions {
+    convertExternalValue?( value: any, attributeDef: any, context? : any ): any {
+        this.checkForRequiredValue( value, attributeDef );
+        return value;
+    }
+}
+
+export const UTC_DomainFunctions = {
+    "com.quinsoft.zeidon.domains.BooleanDomain": new BooleanDomainFunctions(),
+    "com.quinsoft.zeidon.domains.IntegerDomain": new IntegerDomainFunctions(),
+    "com.quinsoft.zeidon.domains.StringDomain": new StringDomainFunctions(),
+    "com.quinsoft.zeidon.domains.DoubleDomain": new DoubleDomainFunctions(),
 }
