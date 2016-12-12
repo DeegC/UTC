@@ -1,3 +1,7 @@
+/**
+ * Classes for dealing specifically with Angular 2+ apps.
+ */
+
 import { OnInit, SimpleChanges, OnChanges } from '@angular/core';
 import { Input } from '@angular/core';
 import { ElementRef, Renderer, ViewContainerRef } from '@angular/core';
@@ -6,12 +10,16 @@ import { AbstractControl, NG_VALIDATORS, Validator } from '@angular/forms';
 import { EntityInstance, Domain } from './zeidon';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 
+/**
+ * When added to an input element, this will automatically set the value of
+ * the error element to display the attribute error.
+ */
 @Directive({
-    selector: '[validateAttributeValue]',
-    providers: [{ provide: NG_VALIDATORS, useExisting: AttributeValidatorDirective, multi: true }]
+    selector: '[zeidonErrorElement]',
+    providers: [{ provide: NG_VALIDATORS, useExisting: ErrorElementDirective, multi: true }]
 })
-export class AttributeValidatorDirective implements Validator, OnInit, OnChanges {
-    @Input("validateAttributeValue") errorElement: any;
+export class ErrorElementDirective implements Validator, OnInit, OnChanges {
+    @Input("zeidonErrorElement") errorElement: any;
 
     private attributeName: string;
     private attributeDef: any;
@@ -21,7 +29,7 @@ export class AttributeValidatorDirective implements Validator, OnInit, OnChanges
                  private renderer: Renderer,
                  private viewContainer: ViewContainerRef ) {
         console.log("constructor")
-        this.attributeName = el.nativeElement.name;
+        this.attributeName = el.nativeElement.attributes.formControlName;
     }
 
     ngOnInit(): void {
@@ -35,16 +43,25 @@ export class AttributeValidatorDirective implements Validator, OnInit, OnChanges
     }
 
     registerOnValidatorChange( control ) {
-        // Do nothing for now.  This method is necessary to prevent an exception.
+        // Do nothing for now.  This method is necessary to prevent an exception when
+        // called from Angular logic.
     }
 
+    /**
+     * This doesn't actually do any validation.  It checks to see if there is an error message
+     * associated with the control.  If there is, update the elements with the appropriate
+     * styles/classes.
+     */
     validate( control ) {
-        console.log( "directive validate" );
         if ( control.zeidonErrorMessage ) {
-            this.renderer.setElementStyle( this.errorElement, "display", "" );
-            this.errorElement.innerHTML = control.zeidonErrorMessage;
+            if ( this.errorElement ) {
+                this.renderer.setElementStyle( this.errorElement, "display", "" );
+                this.errorElement.innerHTML = control.zeidonErrorMessage;
+            }
         } else {
-            this.renderer.setElementStyle( this.errorElement, "display", "none" );
+            if ( this.errorElement ) {
+                this.renderer.setElementStyle( this.errorElement, "display", "none" );
+            }
         }
         return null;
     }
@@ -62,7 +79,6 @@ let domainValidator = function( ei: EntityInstance, attributeDef ) {
 
         let value = control.value;
         try {
-            console.log("Calling domain function" );
             domain.domainFunctions.convertExternalValue( value, attributeDef );
             return null;
         }

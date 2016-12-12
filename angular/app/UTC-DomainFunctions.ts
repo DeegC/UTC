@@ -44,6 +44,10 @@ export const UTC_DomainFunctions = {
                 if ( isNaN( v ) ) {
                     throw new AttributeValueError(`Invalid integer value: ${value}`, attributeDef );
                 }
+
+                if ( ! Number.isInteger( v ) )
+                    throw new AttributeValueError(`Invalid integer value: ${value}`, attributeDef );
+
                 value = v;
             } else {
                 throw new AttributeValueError(`Invalid integer value: ${value}`, attributeDef );

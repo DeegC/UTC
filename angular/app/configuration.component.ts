@@ -19,46 +19,47 @@ import * as zeidon from './zeidon-angular';
       <div>
         <label>Description: </label>
         <input type="text"
-               formControlName="Description" [validateAttributeValue]="descriptionError"
+               formControlName="Description" [zeidonErrorElement]="descriptionError"
                placeholder="Description"
         />
       </div>
       <div #descriptionError class="alert alert-danger" style="display:none"></div>
+
       <div>
         <label>Target Temperature: </label>
-        <input formControlName="TargetTemperature" [validateAttributeValue]="targetError"
+        <input type="number" formControlName="TargetTemperature" [zeidonErrorElement]="targetError"
                placeholder="target temperature"  />
       </div>
       <div #targetError class="alert alert-danger" style="display:none"></div>
 
       <div>
         <label>PID: </label>
-        <input formControlName="PidP" [validateAttributeValue]="pidError"
+        <input type="number" formControlName="PidP" [zeidonErrorElement]="pidError"
             placeholder="P" maxlength="2" size="2"/>
-        <input formControlName="PidI" [validateAttributeValue]="pidError"
+        <input formControlName="PidI" [zeidonErrorElement]="pidError"
             placeholder="I" maxlength="5" size="5" />
-        <input formControlName="PidD" [validateAttributeValue]="pidError"
+        <input type="number" formControlName="PidD" [zeidonErrorElement]="pidError"
             placeholder="D" maxlength="2" size="2"/>
       </div>
       <div #pidError class="alert alert-danger" style="display:none"></div>
 
       <div>
         <label>Max PWM: </label>
-        <input formControlName="MaxPWM" [validateAttributeValue]="pwmError" placeholder="max PWM"/>
+        <input type="number" formControlName="MaxPWM" [zeidonErrorElement]="pwmError" placeholder="max PWM"/>
       </div>
       <div #pwmError class="alert alert-danger" style="display:none"></div>
 
       <div>
         <label>Tweet On: </label>
-        <input id="TweetOn"
-            formControlName="TweetOn" placeholder="tweet on" [validateAttributeValue]="tweetError"
+        <input type="checkbox"
+            formControlName="TweetOn" placeholder="tweet on" [zeidonErrorElement]="tweetError"
         />
         <div #tweetError class="alert alert-danger" style="display:none"></div>
       </div>
 
       <div>
         <label>Tweet Period: </label>
-        <input formControlName="TweetPeriodInMinutes" [validateAttributeValue]="periodError" placeholder="Tweet period"/>
+        <input type="number" formControlName="TweetPeriodInMinutes" [zeidonErrorElement]="periodError" placeholder="Tweet period"/>
       </div>
       <div #periodError class="alert alert-danger" style="display:none"></div>
 
@@ -67,7 +68,7 @@ import * as zeidon from './zeidon-angular';
         <div *ngFor="let therm of form.controls.ThermometerConfig.controls; let i = index;" >
             <div [formGroupName]="i">
                 <label>name: </label>
-                <input formControlName="Name" placeholder="name" [validateAttributeValue]="thermError" />
+                <input type="text" formControlName="Name" placeholder="name" [zeidonErrorElement]="thermError" />
                 <img src="/img/icons/red-x.png" (click)="deleteThermometer( therm )"/>
             </div>
             <div #thermError class="alert alert-danger" style="display:none"></div>

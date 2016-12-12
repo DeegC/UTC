@@ -36,6 +36,8 @@ exports.UTC_DomainFunctions = {
                 if (isNaN(v)) {
                     throw new zeidon_1.AttributeValueError("Invalid integer value: " + value, attributeDef);
                 }
+                if (!Number.isInteger(v))
+                    throw new zeidon_1.AttributeValueError("Invalid integer value: " + value, attributeDef);
                 value = v;
             }
             else {

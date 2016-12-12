@@ -1,3 +1,6 @@
+/**
+ * Classes for dealing specifically with Angular 2+ apps.
+ */
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -13,52 +16,65 @@ var core_2 = require("@angular/core");
 var core_3 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var forms_2 = require("@angular/forms");
-var AttributeValidatorDirective = (function () {
-    function AttributeValidatorDirective(el, renderer, viewContainer) {
+/**
+ * When added to an input element, this will automatically set the value of
+ * the error element to display the attribute error.
+ */
+var ErrorElementDirective = (function () {
+    function ErrorElementDirective(el, renderer, viewContainer) {
         this.el = el;
         this.renderer = renderer;
         this.viewContainer = viewContainer;
         console.log("constructor");
-        this.attributeName = el.nativeElement.name;
+        this.attributeName = el.nativeElement.attributes.formControlName;
     }
-    AttributeValidatorDirective.prototype.ngOnInit = function () {
+    ErrorElementDirective.prototype.ngOnInit = function () {
         console.log("validator OnInit");
         //this.attributeDef = this.entityInstance.getAttributeDef( this.attributeName );
         //this.domain = this.attributeDef.domain;
     };
-    AttributeValidatorDirective.prototype.ngOnChanges = function (changes) {
+    ErrorElementDirective.prototype.ngOnChanges = function (changes) {
         console.log("ngOnChanges for directive");
     };
-    AttributeValidatorDirective.prototype.registerOnValidatorChange = function (control) {
-        // Do nothing for now.  This method is necessary to prevent an exception.
+    ErrorElementDirective.prototype.registerOnValidatorChange = function (control) {
+        // Do nothing for now.  This method is necessary to prevent an exception when
+        // called from Angular logic.
     };
-    AttributeValidatorDirective.prototype.validate = function (control) {
-        console.log("directive validate");
+    /**
+     * This doesn't actually do any validation.  It checks to see if there is an error message
+     * associated with the control.  If there is, update the elements with the appropriate
+     * styles/classes.
+     */
+    ErrorElementDirective.prototype.validate = function (control) {
         if (control.zeidonErrorMessage) {
-            this.renderer.setElementStyle(this.errorElement, "display", "");
-            this.errorElement.innerHTML = control.zeidonErrorMessage;
+            if (this.errorElement) {
+                this.renderer.setElementStyle(this.errorElement, "display", "");
+                this.errorElement.innerHTML = control.zeidonErrorMessage;
+            }
         }
         else {
-            this.renderer.setElementStyle(this.errorElement, "display", "none");
+            if (this.errorElement) {
+                this.renderer.setElementStyle(this.errorElement, "display", "none");
+            }
         }
         return null;
     };
-    return AttributeValidatorDirective;
+    return ErrorElementDirective;
 }());
 __decorate([
-    core_1.Input("validateAttributeValue"),
+    core_1.Input("zeidonErrorElement"),
     __metadata("design:type", Object)
-], AttributeValidatorDirective.prototype, "errorElement", void 0);
-AttributeValidatorDirective = __decorate([
+], ErrorElementDirective.prototype, "errorElement", void 0);
+ErrorElementDirective = __decorate([
     core_3.Directive({
-        selector: '[validateAttributeValue]',
-        providers: [{ provide: forms_1.NG_VALIDATORS, useExisting: AttributeValidatorDirective, multi: true }]
+        selector: '[zeidonErrorElement]',
+        providers: [{ provide: forms_1.NG_VALIDATORS, useExisting: ErrorElementDirective, multi: true }]
     }),
     __metadata("design:paramtypes", [core_2.ElementRef,
         core_2.Renderer,
         core_2.ViewContainerRef])
-], AttributeValidatorDirective);
-exports.AttributeValidatorDirective = AttributeValidatorDirective;
+], ErrorElementDirective);
+exports.ErrorElementDirective = ErrorElementDirective;
 var domainValidator = function (ei, attributeDef) {
     return function (control) {
         control.zeidonErrorMessage = undefined;
@@ -69,7 +85,6 @@ var domainValidator = function (ei, attributeDef) {
             return null;
         var value = control.value;
         try {
-            console.log("Calling domain function");
             domain.domainFunctions.convertExternalValue(value, attributeDef);
             return null;
         }

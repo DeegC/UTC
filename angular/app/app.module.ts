@@ -8,7 +8,7 @@ import './rxjs-extensions';
 
 import { AppComponent }   from './app.component';
 import { ConfigurationListComponent }   from './configuration-list.component';
-import { AttributeValidatorDirective }   from './zeidon-angular';
+import { ErrorElementDirective }   from './zeidon-angular';
 import { ConfigurationComponent }   from './configuration.component';
 import { RestService }   from './rest.service';
 import { SessionComponent }   from './session.component';
@@ -22,7 +22,7 @@ const REST_VALUES: ZeidonRestValues = {
 };
 
 @NgModule({
-  imports:      [ BrowserModule, 
+  imports:      [ BrowserModule,
                   FormsModule,
                   ReactiveFormsModule,
                   HttpModule,
@@ -42,10 +42,10 @@ const REST_VALUES: ZeidonRestValues = {
                     }
                   ])
    ],
-  declarations: [ AppComponent, 
-                  ConfigurationListComponent, 
+  declarations: [ AppComponent,
+                  ConfigurationListComponent,
                   ConfigurationComponent,
-                  AttributeValidatorDirective,
+                  ErrorElementDirective,
                   SessionComponent ],
   providers: [ RestService,
                { provide: ZeidonRestValues, useValue: REST_VALUES },
@@ -53,7 +53,7 @@ const REST_VALUES: ZeidonRestValues = {
              ],
   bootstrap: [ AppComponent ]
 })
-export class AppModule { 
+export class AppModule {
   // This constructor is required to force Angular injector to load the ZeidonConfiguration.
   constructor( private zeidonConfig: ZeidonConfiguration ) {}
 }
