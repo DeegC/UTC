@@ -19,57 +19,58 @@ import * as zeidon from './zeidon-angular2';
       <div>
         <label>Description: </label>
         <input type="text"
-               formControlName="Description"
+               formControlName="Description" [validateAttributeValue]="descriptionError"
                placeholder="Description"
         />
       </div>
+      <div #descriptionError class="alert alert-danger" style="display:none"></div>
       <div>
         <label>Target Temperature: </label>
-        <input formControlName="TargetTemperature" placeholder="target temperature"  />
+        <input formControlName="TargetTemperature" [validateAttributeValue]="targetError"
+               placeholder="target temperature"  />
       </div>
+      <div #targetError class="alert alert-danger" style="display:none"></div>
 
       <div>
         <label>PID: </label>
-        <input formControlName="PidP"
+        <input formControlName="PidP" [validateAttributeValue]="pidError"
             placeholder="P" maxlength="2" size="2"/>
-        <input formControlName="PidI" placeholder="I" maxlength="5" size="5" />
-        <input formControlName="PidD"
+        <input formControlName="PidI" [validateAttributeValue]="pidError"
+            placeholder="I" maxlength="5" size="5" />
+        <input formControlName="PidD" [validateAttributeValue]="pidError"
             placeholder="D" maxlength="2" size="2"/>
       </div>
-        <div name="pidError" *ngIf="configOi.Configuration$.validateErrors.PidP" class="alert alert-danger">
-            {{ configOi.Configuration$.validateErrors.PidP.message }}
-        </div>
-        <div *ngIf="configOi.Configuration$.validateErrors.PidI" class="alert alert-danger">
-            {{ configOi.Configuration$.validateErrors.PidI.message }}
-        </div>
-        <div *ngIf="configOi.Configuration$.validateErrors.PidD" class="alert alert-danger">
-            {{ configOi.Configuration$.validateErrors.PidD.message }}
-        </div>
+      <div #pidError class="alert alert-danger" style="display:none"></div>
+
       <div>
         <label>Max PWM: </label>
-        <input formControlName="MaxPWM" placeholder="max PWM"/>
+        <input formControlName="MaxPWM" [validateAttributeValue]="pwmError" placeholder="max PWM"/>
       </div>
+      <div #pwmError class="alert alert-danger" style="display:none"></div>
+
       <div>
         <label>Tweet On: </label>
         <input id="TweetOn"
             formControlName="TweetOn" placeholder="tweet on" [validateAttributeValue]="tweetError"
         />
-        <div #tweetError class="alert alert-danger" style="display:none">
-        </div>
+        <div #tweetError class="alert alert-danger" style="display:none"></div>
       </div>
+
       <div>
         <label>Tweet Period: </label>
-        <input formControlName="TweetPeriodInMinutes" placeholder="Tweet period"/>
+        <input formControlName="TweetPeriodInMinutes" [validateAttributeValue]="periodError" placeholder="Tweet period"/>
       </div>
+      <div #periodError class="alert alert-danger" style="display:none"></div>
 
       <h3>Thermometers</h3>
       <div formArrayName="ThermometerConfig">
         <div *ngFor="let therm of form.controls.ThermometerConfig.controls; let i = index;" >
             <div [formGroupName]="i">
                 <label>name: </label>
-                <input formControlName="Name" placeholder="name" />
+                <input formControlName="Name" placeholder="name" [validateAttributeValue]="thermError" />
                 <img src="/img/icons/red-x.png" (click)="deleteThermometer( therm )"/>
             </div>
+            <div #thermError class="alert alert-danger" style="display:none"></div>
         </div>
       </div>
 

@@ -29,14 +29,17 @@ var AttributeValidatorDirective = (function () {
     AttributeValidatorDirective.prototype.ngOnChanges = function (changes) {
         console.log("ngOnChanges for directive");
     };
+    AttributeValidatorDirective.prototype.registerOnValidatorChange = function (control) {
+        // Do nothing for now.  This method is necessary to prevent an exception.
+    };
     AttributeValidatorDirective.prototype.validate = function (control) {
         console.log("directive validate");
         if (control.zeidonErrorMessage) {
-            this.renderer.setElementStyle(this.entityInstance, "display", "");
-            this.entityInstance.innerHTML = control.zeidonErrorMessage;
+            this.renderer.setElementStyle(this.errorElement, "display", "");
+            this.errorElement.innerHTML = control.zeidonErrorMessage;
         }
         else {
-            this.renderer.setElementStyle(this.entityInstance, "display", "none");
+            this.renderer.setElementStyle(this.errorElement, "display", "none");
         }
         return null;
     };
@@ -45,7 +48,7 @@ var AttributeValidatorDirective = (function () {
 __decorate([
     core_1.Input("validateAttributeValue"),
     __metadata("design:type", Object)
-], AttributeValidatorDirective.prototype, "entityInstance", void 0);
+], AttributeValidatorDirective.prototype, "errorElement", void 0);
 AttributeValidatorDirective = __decorate([
     core_3.Directive({
         selector: '[validateAttributeValue]',
@@ -65,16 +68,15 @@ var domainValidator = function (ei, attributeDef) {
         if (!domain.domainFunctions)
             return null;
         var value = control.value;
-        var errors = ei.validateErrors;
         try {
             console.log("Calling domain function");
             domain.domainFunctions.convertExternalValue(value, attributeDef);
-            errors[attributeDef.name] = undefined;
             return null;
         }
         catch (e) {
             console.log("Error: " + e.message);
             control.zeidonErrorMessage = e.message;
+            var errors = {};
             errors[attributeDef.name] = { message: e.message };
             return errors[attributeDef.name];
         }

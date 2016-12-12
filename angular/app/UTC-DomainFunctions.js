@@ -3,11 +3,14 @@ var zeidon_1 = require("./zeidon");
 /**
  * User-written code to process domains.
  */
+exports.checkForRequiredValue = function (value, attributeDef) {
+    if (attributeDef.required && (value == undefined || value === ""))
+        throw new zeidon_1.AttributeValueError("Value is required.", attributeDef);
+};
 exports.UTC_DomainFunctions = {
     "com.quinsoft.zeidon.domains.BooleanDomain": {
-        convertExternalValue: function (value, attributeDef) {
-            if (attributeDef.required && (value == undefined || value === ""))
-                throw new zeidon_1.AttributeValueError("Value is required.", attributeDef);
+        convertExternalValue: function (value, attributeDef, context) {
+            exports.checkForRequiredValue(value, attributeDef);
             switch (value) {
                 case true:
                 case false:
@@ -24,9 +27,8 @@ exports.UTC_DomainFunctions = {
         }
     },
     "com.quinsoft.zeidon.domains.IntegerDomain": {
-        convertExternalValue: function (value, attributeDef) {
-            if (attributeDef.required && value == undefined)
-                throw new zeidon_1.AttributeValueError("Value is required.", attributeDef);
+        convertExternalValue: function (value, attributeDef, context) {
+            exports.checkForRequiredValue(value, attributeDef);
             if (typeof value === 'number') {
             }
             else if (typeof value === 'string') {
@@ -43,9 +45,8 @@ exports.UTC_DomainFunctions = {
         }
     },
     "com.quinsoft.zeidon.domains.StringDomain": {
-        convertExternalValue: function (value, attributeDef) {
-            if (attributeDef.required && value == undefined)
-                throw new zeidon_1.AttributeValueError("Value is required.", attributeDef);
+        convertExternalValue: function (value, attributeDef, context) {
+            exports.checkForRequiredValue(value, attributeDef);
             var str = value.toString();
             if (attributeDef.maxLength) {
                 if (str.length > attributeDef.maxLength)

@@ -5,11 +5,15 @@ import { AttributeValueError } from "./zeidon"
  * User-written code to process domains.
  */
 
+export const checkForRequiredValue = function( value: any, attributeDef: any ) {
+    if ( attributeDef.required && ( value == undefined || value === "" ) )
+        throw new AttributeValueError(`Value is required.`, attributeDef );
+}
+
 export const UTC_DomainFunctions = {
     "com.quinsoft.zeidon.domains.BooleanDomain": {
-        convertExternalValue( value: any, attributeDef: any ): any {
-            if ( attributeDef.required && ( value == undefined || value === "" ) )
-                throw new AttributeValueError(`Value is required.`, attributeDef );
+        convertExternalValue( value: any, attributeDef: any, context? : any ): any {
+            checkForRequiredValue( value, attributeDef );
 
             switch ( value ) {
                 case true:
@@ -29,9 +33,8 @@ export const UTC_DomainFunctions = {
     },
 
     "com.quinsoft.zeidon.domains.IntegerDomain": {
-        convertExternalValue( value: any, attributeDef: any ): any {
-            if ( attributeDef.required && value == undefined )
-                throw new AttributeValueError(`Value is required.`, attributeDef );
+        convertExternalValue( value: any, attributeDef: any, context? : any ): any {
+            checkForRequiredValue( value, attributeDef );
 
             if ( typeof value === 'number' ) {
                 // Do nothing atm.
@@ -51,9 +54,8 @@ export const UTC_DomainFunctions = {
     },
 
     "com.quinsoft.zeidon.domains.StringDomain": {
-        convertExternalValue( value: any, attributeDef: any ): any {
-            if ( attributeDef.required && value == undefined )
-                throw new AttributeValueError(`Value is required.`, attributeDef );
+        convertExternalValue( value: any, attributeDef: any, context? : any ): any {
+            checkForRequiredValue( value, attributeDef );
 
             let str = value.toString();
 

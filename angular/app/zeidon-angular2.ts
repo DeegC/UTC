@@ -11,7 +11,7 @@ import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
     providers: [{ provide: NG_VALIDATORS, useExisting: AttributeValidatorDirective, multi: true }]
 })
 export class AttributeValidatorDirective implements Validator, OnInit, OnChanges {
-    @Input("validateAttributeValue") entityInstance: any;
+    @Input("validateAttributeValue") errorElement: any;
 
     private attributeName: string;
     private attributeDef: any;
@@ -34,13 +34,17 @@ export class AttributeValidatorDirective implements Validator, OnInit, OnChanges
         console.log( "ngOnChanges for directive" );
     }
 
+    registerOnValidatorChange( control ) {
+        // Do nothing for now.  This method is necessary to prevent an exception.
+    }
+
     validate( control ) {
         console.log( "directive validate" );
         if ( control.zeidonErrorMessage ) {
-            this.renderer.setElementStyle( this.entityInstance, "display", "" );
-            this.entityInstance.innerHTML = control.zeidonErrorMessage;
+            this.renderer.setElementStyle( this.errorElement, "display", "" );
+            this.errorElement.innerHTML = control.zeidonErrorMessage;
         } else {
-            this.renderer.setElementStyle( this.entityInstance, "display", "none" );
+            this.renderer.setElementStyle( this.errorElement, "display", "none" );
         }
         return null;
     }
@@ -57,16 +61,15 @@ let domainValidator = function( ei: EntityInstance, attributeDef ) {
             return null;
 
         let value = control.value;
-        let errors = ei.validateErrors;
         try {
             console.log("Calling domain function" );
             domain.domainFunctions.convertExternalValue( value, attributeDef );
-            errors[ attributeDef.name ] = undefined;
             return null;
         }
         catch( e ) {
             console.log( `Error: ${e.message}`);
             control.zeidonErrorMessage = e.message;
+            let errors = {};
             errors[ attributeDef.name ] = { message: e.message };
             return errors[ attributeDef.name ];
         }
