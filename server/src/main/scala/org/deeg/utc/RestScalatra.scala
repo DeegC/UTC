@@ -41,7 +41,7 @@ trait RestScalatra extends ScalatraServlet {
             val qual = view.buildQual()
             
             if ( params.contains( "qual" ) ) {
-              qual.setQualFromJson( params( "qual" ) )
+              qual.fromJson( params( "qual" ) )
             }
             else {
               qual.rootOnlyMultiple()
