@@ -18,7 +18,6 @@ import 'rxjs/add/operator/switchMap';
 
 import { RestService } from './rest.service';
 import { ObjectInstance } from './zeidon';
-import { ActivateOptions } from './zeidon';
 import { ZeidonConfiguration } from './zeidon';
 import { Committer, CommitOptions } from './zeidon';
 
@@ -26,26 +25,13 @@ import { Committer, CommitOptions } from './zeidon';
 export class RestActivator {
     constructor( private values: ZeidonRestValues, private http: Http ) {}
 
-    activateOi<T extends ObjectInstance>( oi: T, options?: ActivateOptions ): Observable<T> {
-        if ( options == undefined )
-            options = new ActivateOptions();
+    activateOi<T extends ObjectInstance>( oi: T, qual?: any ): Observable<T> {
+        if ( qual == undefined )
+            qual = { rootOnly: true };
 
         let lodName = oi.getLodDef().name;
         let errorHandler = oi.handleActivateError;
-        let url = `${this.values.restUrl}/${lodName}`;
-
-        if ( options.id ) {
-            url = `${url}/${options.id}`; // Add the id to the URL.
-            return this.http.get( url )
-                    .map(response => oi.createFromJson( response.json() ) );
-        }
-
-        // If we get here there's no qualification.  Set rootOnly if it's not.
-        if ( options.rootOnly == undefined ) {
-            options = options.clone();
-            options.rootOnly = true;
-        }
-
+        let url = `${this.values.restUrl}/${lodName}?qual=${encodeURIComponent(JSON.stringify(qual))}`;
         return this.http.get( url )
                 .map( response => oi.createFromJson( response.json() ) as T );
     }
@@ -62,7 +48,7 @@ export class ZeidonRestValues {
 @Injectable()
 export class ZeidonRestConfiguration extends ZeidonConfiguration {
     constructor( private values: ZeidonRestValues, private http: Http ) {
-        super( new RestActivator( values, http ), 
+        super( new RestActivator( values, http ),
                new RestCommitter( values, http ) );
         console.log("--- ZeidonRestConfiguration --- " + values.restUrl );
     }

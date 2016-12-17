@@ -23,6 +23,9 @@ export class BaseDomainFunctions implements DomainFunctions {
 export class StringDomainFunctions extends BaseDomainFunctions {
     convertExternalValue?( value: any, attributeDef: any, context? : any ): any {
         this.checkForRequiredValue( value, attributeDef );
+        if ( value == undefined )
+            return undefined;
+
         let str = value.toString();
 
         if ( attributeDef.maxLength ) {
@@ -74,6 +77,7 @@ export class BooleanDomainFunctions extends BaseDomainFunctions {
                 return true;
             case "false":
                 return false;
+            case null:
             case "":
             case undefined:
                 return undefined;

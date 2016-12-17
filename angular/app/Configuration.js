@@ -1,5 +1,5 @@
 /*
-  Generated from LOD Configuration on 2016-11-26T22:01:46.555
+  Generated from LOD Configuration on 2016-12-16T22:12:58.510
 
 */
 "use strict";
@@ -49,8 +49,8 @@ var Configuration = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Configuration.activate = function (options) {
-        return zeidon.ObjectInstance.activateOi(new Configuration(), options);
+    Configuration.activate = function (qual) {
+        return zeidon.ObjectInstance.activateOi(new Configuration(), qual);
     };
     return Configuration;
 }(zeidon.ObjectInstance));
@@ -379,7 +379,7 @@ exports.Configuration_LodDef = {
                 TweetOn: {
                     name: "TweetOn",
                     hidden: false,
-                    required: true,
+                    required: false,
                     domainName: "Boolean",
                     persistent: true,
                     key: false,

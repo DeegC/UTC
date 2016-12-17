@@ -27,28 +27,17 @@ require("rxjs/add/operator/filter");
 require("rxjs/add/operator/map");
 require("rxjs/add/operator/switchMap");
 var zeidon_1 = require("./zeidon");
-var zeidon_2 = require("./zeidon");
 var RestActivator = (function () {
     function RestActivator(values, http) {
         this.values = values;
         this.http = http;
     }
-    RestActivator.prototype.activateOi = function (oi, options) {
-        if (options == undefined)
-            options = new zeidon_1.ActivateOptions();
+    RestActivator.prototype.activateOi = function (oi, qual) {
+        if (qual == undefined)
+            qual = { rootOnly: true };
         var lodName = oi.getLodDef().name;
         var errorHandler = oi.handleActivateError;
-        var url = this.values.restUrl + "/" + lodName;
-        if (options.id) {
-            url = url + "/" + options.id; // Add the id to the URL.
-            return this.http.get(url)
-                .map(function (response) { return oi.createFromJson(response.json()); });
-        }
-        // If we get here there's no qualification.  Set rootOnly if it's not.
-        if (options.rootOnly == undefined) {
-            options = options.clone();
-            options.rootOnly = true;
-        }
+        var url = this.values.restUrl + "/" + lodName + "?qual=" + encodeURIComponent(JSON.stringify(qual));
         return this.http.get(url)
             .map(function (response) { return oi.createFromJson(response.json()); });
     };
@@ -82,7 +71,7 @@ var ZeidonRestConfiguration = (function (_super) {
         return _this;
     }
     return ZeidonRestConfiguration;
-}(zeidon_2.ZeidonConfiguration));
+}(zeidon_1.ZeidonConfiguration));
 ZeidonRestConfiguration = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [ZeidonRestValues, http_1.Http])

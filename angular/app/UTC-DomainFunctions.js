@@ -26,6 +26,8 @@ var StringDomainFunctions = (function (_super) {
     }
     StringDomainFunctions.prototype.convertExternalValue = function (value, attributeDef, context) {
         this.checkForRequiredValue(value, attributeDef);
+        if (value == undefined)
+            return undefined;
         var str = value.toString();
         if (attributeDef.maxLength) {
             if (str.length > attributeDef.maxLength)
@@ -79,6 +81,7 @@ var BooleanDomainFunctions = (function (_super) {
                 return true;
             case "false":
                 return false;
+            case null:
             case "":
             case undefined:
                 return undefined;

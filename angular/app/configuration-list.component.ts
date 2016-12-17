@@ -14,7 +14,7 @@ import * as zeidon from './zeidon';
   </div>
   <div *ngIf="configurationList && configurationList.isEmpty == false">
     <ul class="configurations">
-        <li *ngFor="let config of configurationList.Configuration" 
+        <li *ngFor="let config of configurationList.Configuration"
             [class.selected]="selectedConfigOi && selectedConfigOi.Configuration$.Id == config.Id">
             <span (click)="onSelect(config)">
                 <span class="badge">{{config.Id}}</span> {{config.Description}}
@@ -44,24 +44,23 @@ export class ConfigurationListComponent implements OnInit {
 
     ngOnInit(): void {
         this.getConfigurationList();
-    }    
+    }
 
     getConfigurationList(): void {
         Configuration.activate().subscribe( configList => {
-            this.configurationList = configList; 
+            this.configurationList = configList;
         } );
-    }    
+    }
 
     onSelect(config: Configuration_Configuration): void {
-        let options = new zeidon.ActivateOptions( { id: config.Id } );
-        Configuration.activate( options ).subscribe( configOi => {
+        Configuration.activate( { Id: config.Id } ).subscribe( configOi => {
             this.selectedConfigOi = configOi;
         } );
     }
 
     /**
-     * Delete the selected configuration from the OI list. 
-     */    
+     * Delete the selected configuration from the OI list.
+     */
     onDelete( config: Configuration_Configuration ): void {
         this.restService.deleteConfiguration( config );
     }

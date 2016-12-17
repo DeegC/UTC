@@ -1,5 +1,5 @@
 /*
-  Generated from LOD Session on 2016-11-26T22:01:46.579
+  Generated from LOD Session on 2016-12-16T22:12:58.532
 
 */
 "use strict";
@@ -49,8 +49,8 @@ var Session = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Session.activate = function (options) {
-        return zeidon.ObjectInstance.activateOi(new Session(), options);
+    Session.activate = function (qual) {
+        return zeidon.ObjectInstance.activateOi(new Session(), qual);
     };
     return Session;
 }(zeidon.ObjectInstance));

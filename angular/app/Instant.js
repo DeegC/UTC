@@ -1,5 +1,5 @@
 /*
-  Generated from LOD Instant on 2016-11-26T22:01:46.572
+  Generated from LOD Instant on 2016-12-16T22:12:58.526
 
 */
 "use strict";
@@ -49,8 +49,8 @@ var Instant = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Instant.activate = function (options) {
-        return zeidon.ObjectInstance.activateOi(new Instant(), options);
+    Instant.activate = function (qual) {
+        return zeidon.ObjectInstance.activateOi(new Instant(), qual);
     };
     return Instant;
 }(zeidon.ObjectInstance));

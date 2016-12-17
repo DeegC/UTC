@@ -39,7 +39,7 @@ export class ObjectInstance {
     }
 
     // Saves the options used to activate this OI.
-    private activateOptions: ActivateOptions;
+    private activateOptions: any;
 
     public toJSON( options? : ZeidonToJsonOptions ): Object {
         console.log("JSON for Configuration OI" );
@@ -82,7 +82,7 @@ export class ObjectInstance {
         return wrapper;
     }
 
-    public static activateOi<T extends ObjectInstance>( oi: T, options?: ActivateOptions ): Observable<T> {
+    public static activateOi<T extends ObjectInstance>( oi: T, options?: any ): Observable<T> {
         let config = configurationInstance;
         if ( ! config )
             error( "ZeidonConfiguration not properly initiated.")
@@ -755,7 +755,7 @@ const DEFAULT_CREATE_OPTIONS = new CreateOptions( { incrementalsSpecified: false
 
 @Injectable()
 export class Activator {
-    activateOi<T extends ObjectInstance>( oi: T, options?: ActivateOptions ): Observable<T> {
+    activateOi<T extends ObjectInstance>( oi: T, options?: any ): Observable<T> {
         throw "activateOi has not been implemented"
     }
 
@@ -790,15 +790,6 @@ export interface ZeidonToJsonOptions {
 }
 
 export class CommitOptions extends OptionsConstructor {
-}
-
-export class ActivateOptions extends OptionsConstructor {
-    // If specified, then the OI will be activated using this root ID.
-    id?: any;
-
-    // If true then only load the roots.  If undefined then it assumed to be
-    // true if there is no qualification.
-    rootOnly? : boolean;
 }
 
 /**

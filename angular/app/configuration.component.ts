@@ -28,24 +28,25 @@ import * as zeidon from './zeidon-angular';
       <div>
         <label>Target Temperature: </label>
         <input type="number" formControlName="TargetTemperature" [zeidonErrorElement]="targetError"
-               placeholder="target temperature"  />
+               placeholder="target temperature" style="width:3em" />
       </div>
       <div #targetError class="alert alert-danger" style="display:none"></div>
 
       <div>
         <label>PID: </label>
         <input type="number" formControlName="PidP" [zeidonErrorElement]="pidError"
-            placeholder="P" maxlength="2" size="3"/>
+            placeholder="P" maxlength="2" style="width:3em" />
         <input formControlName="PidI" [zeidonErrorElement]="pidError"
-            placeholder="I" maxlength="5" size="5" />
+            placeholder="I" maxlength="5" style="width:3em" />
         <input formControlName="PidD" [zeidonErrorElement]="pidError"
-            placeholder="D" maxlength="2" size="2"/>
+            placeholder="D" maxlength="2" style="width:3em" />
       </div>
       <div #pidError class="alert alert-danger" style="display:none"></div>
 
       <div>
         <label>Max PWM: </label>
-        <input type="number" formControlName="MaxPWM" [zeidonErrorElement]="pwmError" placeholder="max PWM"/>
+        <input type="number" formControlName="MaxPWM" [zeidonErrorElement]="pwmError"
+               placeholder="max PWM" style="width:3em" />
       </div>
       <div #pwmError class="alert alert-danger" style="display:none"></div>
 
@@ -59,7 +60,8 @@ import * as zeidon from './zeidon-angular';
 
       <div>
         <label>Tweet Period: </label>
-        <input type="number" formControlName="TweetPeriodInMinutes" [zeidonErrorElement]="periodError" placeholder="Tweet period"/>
+        <input type="number" formControlName="TweetPeriodInMinutes" [zeidonErrorElement]="periodError"
+               placeholder="Tweet period" style="width:3em" />
       </div>
       <div #periodError class="alert alert-danger" style="display:none"></div>
 
@@ -67,8 +69,13 @@ import * as zeidon from './zeidon-angular';
       <div formArrayName="ThermometerConfig">
         <div *ngFor="let therm of form.controls.ThermometerConfig.controls; let i = index;" >
             <div [formGroupName]="i">
-                <label>name: </label>
-                <input type="text" formControlName="Name" placeholder="name" [zeidonErrorElement]="thermError" />
+                <label>{{i + 1}}</label>
+                <input type="text" formControlName="Name" placeholder="name" [zeidonErrorElement]="thermError"  />
+                <input type="checkbox" formControlName="AlarmOn" [zeidonErrorElement]="thermError" />
+                <input type="number" formControlName="AlarmLow" placeholder="low"
+                       [zeidonErrorElement]="thermError" maxlength="2" style="width:3em" />
+                <input type="number" formControlName="AlarmHigh" placeholder="high"
+                       [zeidonErrorElement]="thermError" maxlength="2" style="width:3em" />
                 <img src="/img/icons/red-x.png" (click)="deleteThermometer( therm )"/>
             </div>
             <div #thermError class="alert alert-danger" style="display:none"></div>

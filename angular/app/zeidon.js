@@ -715,14 +715,6 @@ var CommitOptions = (function (_super) {
     return CommitOptions;
 }(OptionsConstructor));
 exports.CommitOptions = CommitOptions;
-var ActivateOptions = (function (_super) {
-    __extends(ActivateOptions, _super);
-    function ActivateOptions() {
-        return _super.apply(this, arguments) || this;
-    }
-    return ActivateOptions;
-}(OptionsConstructor));
-exports.ActivateOptions = ActivateOptions;
 var AttributeValueError = (function (_super) {
     __extends(AttributeValueError, _super);
     function AttributeValueError(message, attributeDef) {

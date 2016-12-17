@@ -1,6 +1,6 @@
 
 /*
-  Generated from LOD Session on 2016-11-26T22:01:46.579
+  Generated from LOD Session on 2016-12-16T22:12:58.532
 
 */
 
@@ -42,8 +42,8 @@ export class Session extends zeidon.ObjectInstance {
         return this.roots.selected() as Session_Session;
     }
 
-    public static activate( options?: zeidon.ActivateOptions ): Observable<Session> {
-        return zeidon.ObjectInstance.activateOi( new Session(), options );
+    public static activate( qual?: any ): Observable<Session> {
+        return zeidon.ObjectInstance.activateOi( new Session(), qual );
     }
 }
 

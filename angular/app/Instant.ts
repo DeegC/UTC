@@ -1,6 +1,6 @@
 
 /*
-  Generated from LOD Instant on 2016-11-26T22:01:46.572
+  Generated from LOD Instant on 2016-12-16T22:12:58.526
 
 */
 
@@ -42,8 +42,8 @@ export class Instant extends zeidon.ObjectInstance {
         return this.roots.selected() as Instant_Instant;
     }
 
-    public static activate( options?: zeidon.ActivateOptions ): Observable<Instant> {
-        return zeidon.ObjectInstance.activateOi( new Instant(), options );
+    public static activate( qual?: any ): Observable<Instant> {
+        return zeidon.ObjectInstance.activateOi( new Instant(), qual );
     }
 }
 

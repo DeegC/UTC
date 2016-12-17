@@ -1,6 +1,6 @@
 
 /*
-  Generated from LOD Configuration on 2016-11-26T22:01:46.555
+  Generated from LOD Configuration on 2016-12-16T22:12:58.510
 
 */
 
@@ -25,11 +25,11 @@ export class Configuration extends zeidon.ObjectInstance {
         return Configuration_LodDef;
     };
 
-    public getDomain( name: string ): zeidon.Domain {
+    public getDomain( name: string ): zeidon.Domain { 
         return UTC_DomainList[name];
     };
 
-    public getDomainFunctions( name: string ): any {
+    public getDomainFunctions( name: string ): any { 
         return UTC_DomainFunctions[name];
     }
 
@@ -42,8 +42,8 @@ export class Configuration extends zeidon.ObjectInstance {
         return this.roots.selected() as Configuration_Configuration;
     }
 
-    public static activate( options?: zeidon.ActivateOptions ): Observable<Configuration> {
-        return zeidon.ObjectInstance.activateOi( new Configuration(), options );
+    public static activate( qual?: any ): Observable<Configuration> {
+        return zeidon.ObjectInstance.activateOi( new Configuration(), qual );
     }
 }
 
@@ -122,8 +122,8 @@ export class Configuration_ThermometerConfig extends zeidon.EntityInstance {
 }
 
 const ConfigurationEntityPrototypes = {
-    Configuration: Configuration_Configuration.prototype,
-    ThermometerConfig: Configuration_ThermometerConfig.prototype,
+    Configuration: Configuration_Configuration.prototype, 
+    ThermometerConfig: Configuration_ThermometerConfig.prototype, 
 }
 
 export const Configuration_LodDef = {
@@ -252,7 +252,7 @@ export const Configuration_LodDef = {
                 TweetOn: {
                     name:         "TweetOn",
                     hidden:       false,
-                    required:     true,
+                    required:     false,
                     domainName:   "Boolean",
                     persistent:   true,
                     key:          false,
