@@ -12,7 +12,7 @@ import com.deeg.utc.zeidon._
 import com.quinsoft.zeidon.ObjectEngine
 
 
-class UtcScalatra extends RestScalatra with CorsSupport {
+class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
 
     val oe = JavaObjectEngine.getInstance()
     if ( oe.getSystemTask.readZeidonConfig("UTC", "StartUdpServer", "N" ) == "Y" ) {

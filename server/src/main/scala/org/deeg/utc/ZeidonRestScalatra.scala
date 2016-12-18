@@ -13,7 +13,7 @@ import com.quinsoft.zeidon.ObjectEngine
 /**
  * 
  */
-trait RestScalatra extends ScalatraServlet {
+trait ZeidonRestScalatra extends ScalatraServlet {
 
     def getObjectEngine(): ObjectEngine
 
