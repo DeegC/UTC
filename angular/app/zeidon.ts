@@ -519,6 +519,17 @@ export interface UpdateOptions {
     ignoreUnknownAttributeErrors? : boolean
 }
 
+/**
+ * Include logic can get pretty hairy.  This class tries to perform it.
+ */
+class Includer {
+    constructor( private target: EntityInstance, private source: EntityInstance ) {}
+
+    include() {
+        this.target;
+    }
+
+}
 
 /**
  * Array<T> is one of the few classes we can't directly extend so we have to create
@@ -529,17 +540,12 @@ export interface UpdateOptions {
  */
 class ArrayDelegate<T extends EntityInstance> {
     hiddenEntities : Array<T>;
-    entityName: string;
-    oi : ObjectInstance;
     currentlySelected;
-    parentEi: EntityInstance;
-    array: Array<T>;
 
-    constructor( array: Array<T>, entityName: string, oi: ObjectInstance, parentEi: EntityInstance ) {
-        this.entityName = entityName;
-        this.oi = oi;
-        this.parentEi = parentEi;
-        this.array = array;
+    constructor( private array: Array<T>,
+                 private entityName: string,
+                 private oi: ObjectInstance,
+                 private parentEi: EntityInstance ) {
         this.currentlySelected = 0;
     }
 
@@ -554,10 +560,18 @@ class ArrayDelegate<T extends EntityInstance> {
         return ei;
     }
 
+    include( sourceEi: EntityInstance, index: number = -1, options: any = {} ) {
+        if ( ! this.entityDef.includable )
+            error( `Entity ${this.entityDef.name} does not have include authority.` );
+
+    }
+
     private validateExclude( index? : number ) {
         if ( ! this.entityDef.excludable )
             error( `Entity ${this.entityDef.name} does not have exclude authority.` );
 
+        if ( ! this.hiddenEntities )
+            this.hiddenEntities = new Array<T>();
     }
 
     excludeAll() {
@@ -582,6 +596,9 @@ class ArrayDelegate<T extends EntityInstance> {
             if ( ei.metaFlags.incomplete )
                 error( `Entity ${this.entityDef.name} is incomplete and cannot be deleted.` )
         }
+
+        if ( ! this.hiddenEntities )
+            this.hiddenEntities = new Array<T>();
     }
 
     deleteAll() {
@@ -601,9 +618,6 @@ class ArrayDelegate<T extends EntityInstance> {
             index = this.currentlySelected;
 
         this.validateDelete( index );
-
-        if ( ! this.hiddenEntities )
-            this.hiddenEntities = new Array<T>();
 
         let ei = this.array.splice( index, 1 )[0];
         this.hiddenEntities.push( ei );

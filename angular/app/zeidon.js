@@ -466,6 +466,19 @@ var EntityInstance = (function () {
 exports.EntityInstance = EntityInstance;
 ;
 /**
+ * Include logic can get pretty hairy.  This class tries to perform it.
+ */
+var Includer = (function () {
+    function Includer(target, source) {
+        this.target = target;
+        this.source = source;
+    }
+    Includer.prototype.include = function () {
+        this.target;
+    };
+    return Includer;
+}());
+/**
  * Array<T> is one of the few classes we can't directly extend so we have to create
  * a delegate class that handles all the real work.  We'll set the appropriate function
  * names when we construct EntityArray<T>.
@@ -474,10 +487,10 @@ exports.EntityInstance = EntityInstance;
  */
 var ArrayDelegate = (function () {
     function ArrayDelegate(array, entityName, oi, parentEi) {
+        this.array = array;
         this.entityName = entityName;
         this.oi = oi;
         this.parentEi = parentEi;
-        this.array = array;
         this.currentlySelected = 0;
     }
     Object.defineProperty(ArrayDelegate.prototype, "entityDef", {
@@ -495,9 +508,17 @@ var ArrayDelegate = (function () {
         this.currentlySelected = this.array.length - 1;
         return ei;
     };
+    ArrayDelegate.prototype.include = function (sourceEi, index, options) {
+        if (index === void 0) { index = -1; }
+        if (options === void 0) { options = {}; }
+        if (!this.entityDef.includable)
+            error("Entity " + this.entityDef.name + " does not have include authority.");
+    };
     ArrayDelegate.prototype.validateExclude = function (index) {
         if (!this.entityDef.excludable)
             error("Entity " + this.entityDef.name + " does not have exclude authority.");
+        if (!this.hiddenEntities)
+            this.hiddenEntities = new Array();
     };
     ArrayDelegate.prototype.excludeAll = function () {
         this.validateExclude();
@@ -520,6 +541,8 @@ var ArrayDelegate = (function () {
             if (ei.metaFlags.incomplete)
                 error("Entity " + this.entityDef.name + " is incomplete and cannot be deleted.");
         }
+        if (!this.hiddenEntities)
+            this.hiddenEntities = new Array();
     };
     ArrayDelegate.prototype.deleteAll = function () {
         this.validateDelete();
@@ -536,8 +559,6 @@ var ArrayDelegate = (function () {
         if (index == undefined)
             index = this.currentlySelected;
         this.validateDelete(index);
-        if (!this.hiddenEntities)
-            this.hiddenEntities = new Array();
         var ei = this.array.splice(index, 1)[0];
         this.hiddenEntities.push(ei);
         this.deleteEntity(ei);
