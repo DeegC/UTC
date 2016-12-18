@@ -10,6 +10,7 @@ import com.quinsoft.zeidon.standardoe.IncrementalEntityFlags
 import com.quinsoft.zeidon.scala.QualBuilder
 import com.deeg.utc.zeidon._
 import com.quinsoft.zeidon.ObjectEngine
+import com.quinsoft.zeidon.scalatra.ZeidonRestScalatra
 
 
 class UtcScalatra extends ZeidonRestScalatra with CorsSupport {

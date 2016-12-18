@@ -8,9 +8,9 @@ apply plugin: 'war'
 
 dependencies {
     compile project(':utc-controller')
-    compile( 'org.scalatra:scalatra_2.11:2.3.1' ) {
+    compile( 'com.quinsoft.zeidon:zeidon-scalatra-rest:1.4.1-SNAPSHOT' ) {
         exclude module: 'scala-xml_2.11'
     }
-		
-    compile 'org.eclipse.jetty.orbit:javax.servlet:3.0.0.v201112011016'
+
+//    compile 'org.eclipse.jetty.orbit:javax.servlet:3.0.0.v201112011016'
 }
