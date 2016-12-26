@@ -47,6 +47,8 @@ var IntegerDomainFunctions = (function (_super) {
     }
     IntegerDomainFunctions.prototype.convertExternalValue = function (value, attributeDef, context) {
         this.checkForRequiredValue(value, attributeDef);
+        if (value == undefined)
+            return undefined;
         if (typeof value === 'number') {
         }
         else if (typeof value === 'string') {
@@ -98,6 +100,8 @@ var DoubleDomainFunctions = (function (_super) {
     }
     DoubleDomainFunctions.prototype.convertExternalValue = function (value, attributeDef, context) {
         this.checkForRequiredValue(value, attributeDef);
+        if (value == undefined)
+            return undefined;
         if (typeof value === 'number') {
         }
         else if (typeof value === 'string') {

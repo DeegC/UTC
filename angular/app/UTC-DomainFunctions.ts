@@ -43,6 +43,8 @@ export class StringDomainFunctions extends BaseDomainFunctions {
 export class IntegerDomainFunctions extends BaseDomainFunctions {
     convertExternalValue?( value: any, attributeDef: any, context? : any ): any {
         this.checkForRequiredValue( value, attributeDef );
+        if ( value == undefined )
+            return undefined;
 
         if ( typeof value === 'number' ) {
             // Do nothing atm.
@@ -90,6 +92,8 @@ export class BooleanDomainFunctions extends BaseDomainFunctions {
 export class DoubleDomainFunctions extends BaseDomainFunctions {
     convertExternalValue?( value: any, attributeDef: any, context? : any ): any {
         this.checkForRequiredValue( value, attributeDef );
+        if ( value == undefined )
+            return undefined;
 
         if ( typeof value === 'number' ) {
             // Do nothing atm.

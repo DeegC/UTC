@@ -136,7 +136,7 @@ var ObjectInstance = (function () {
                 if (options.incrementalsSpecified == undefined) {
                     // We're going to change the options so create a new one so we
                     // don't override the original one.
-                    options = options.clone();
+                    options = Object.assign({}, options);
                     options.incrementalsSpecified = true;
                 }
             }
@@ -367,7 +367,7 @@ var EntityInstance = (function () {
      * in 'values'.  The entity fingerprint is used to match up entities in 'value' to the
      * entities in the OI.
      *
-     * Note: This will not create or delete entities.  It is expected that every fingerprint
+     * Note: This will not create or re-order entities.  It is expected that every fingerprint
      * in 'values' exists in the OI.
      *
      * Sample input might look like:
@@ -389,39 +389,52 @@ var EntityInstance = (function () {
         if (options === void 0) { options = {}; }
         if (typeof values !== 'object')
             error("Argument passed to update() must be an object");
-        for (var key in values) {
+        var _loop_1 = function (key) {
             // Ignore known non-attributes/entities like fingerprint
             if (key === 'fingerprint')
-                continue;
-            var attributeDef = this.getAttributeDef(key);
+                return "continue";
+            var attributeDef = this_1.getAttributeDef(key);
             if (attributeDef) {
                 var value = values[key];
-                this.setAttribute(key, value);
-                continue;
+                this_1.setAttribute(key, value);
+                return "continue";
             }
-            var childDef = this.entityDef.childEntities[key];
+            var childDef = this_1.entityDef.childEntities[key];
             if (!childDef) {
                 if (options.ignoreUnknownAttributeErrors)
-                    continue;
+                    return "continue";
                 else
                     error("Key '" + key + " in values does not match a known entity or attribute");
             }
-            var eiChildren = this.getChildEntityArray(key);
+            var eiChildren = this_1.getChildEntityArray(key);
             var valueChildren = values[key];
+            // Keep track of the fingerprints of the child entities.  We'll use
+            // this to determine which children EIs need to be deleted.
+            var childFingerprints = {};
             // Children of 1-to-1 relationships are not in an array.  Convert it to
             // an array to make it easier to process.
             if (!Array.isArray(valueChildren))
                 valueChildren = [valueChildren];
-            var _loop_1 = function (valueChild) {
+            var _loop_2 = function (valueChild) {
                 var eiChild = eiChildren.find(function (eiChild) { return eiChild.fingerprint === valueChild.fingerprint; });
                 if (!eiChild)
                     error("Couldn't find EI using fingerprint");
+                childFingerprints[valueChild.fingerprint] = true;
                 eiChild.update(valueChild);
             };
             for (var _i = 0, valueChildren_1 = valueChildren; _i < valueChildren_1.length; _i++) {
                 var valueChild = valueChildren_1[_i];
-                _loop_1(valueChild);
+                _loop_2(valueChild);
             }
+            // Do we have a fingerprint for every child entity?
+            if (Object.keys(childFingerprints).length < eiChildren.length) {
+                // No.  Delete all child entities that are missing from the list of fingerprints.
+                eiChildren.deleteAll(function (ei) { return !childFingerprints[ei.fingerprint]; });
+            }
+        };
+        var this_1 = this;
+        for (var key in values) {
+            _loop_1(key);
         }
     };
     EntityInstance.prototype.toJSON = function (options) {
@@ -504,8 +517,32 @@ var ArrayDelegate = (function () {
         //    console.log("Creating entity " + this.entityName );
         var ei = Object.create(this.oi.getPrototype(this.entityName));
         ei.constructor.apply(ei, [initialize, this.oi, this.array, options]);
-        this.array.push(ei);
-        this.currentlySelected = this.array.length - 1;
+        // Figure out where to insert the new ei.
+        var position = options.position;
+        if (position == undefined) {
+            // Default is to insert at the end.
+            this.array.push(ei);
+        }
+        else if (typeof position === "Position") {
+            if (position === Position.Last)
+                this.array.push(ei);
+            else if (position === Position.First)
+                this.array.unshift(ei);
+            else if (position === Position.Next)
+                this.array.splice(this.currentlySelected, 0, ei);
+            else {
+                // Must be Position.Prev.  If currentlySelected is 0, then put
+                // at the beginning.
+                if (this.currentlySelected == 0)
+                    this.array.unshift(ei);
+                else
+                    this.array.splice(this.currentlySelected - 1, 0, ei);
+            }
+        }
+        else {
+            this.array.splice(position, 0, ei);
+        }
+        this.setSelected(ei);
         return ei;
     };
     ArrayDelegate.prototype.include = function (sourceEi, index, options) {
@@ -544,14 +581,15 @@ var ArrayDelegate = (function () {
         if (!this.hiddenEntities)
             this.hiddenEntities = new Array();
     };
-    ArrayDelegate.prototype.deleteAll = function () {
+    ArrayDelegate.prototype.deleteAll = function (filter) {
         this.validateDelete();
         if (this.array.length == 0)
             return;
         this.hiddenEntities = this.hiddenEntities.concat(this.array);
         for (var _i = 0, _a = this.array; _i < _a.length; _i++) {
             var ei = _a[_i];
-            this.deleteEntity(ei);
+            if (filter == undefined || filter(ei) === true)
+                this.deleteEntity(ei);
         }
         this.array.length = 0;
     };
@@ -591,16 +629,16 @@ var ArrayDelegate = (function () {
                 ei.getChildEntityArray(entityDef.name).excludeAll();
         }
     };
-    ArrayDelegate.prototype.setSlected = function (value) {
+    ArrayDelegate.prototype.setSelected = function (value) {
+        if (value instanceof EntityInstance) {
+            this.currentlySelected = this.array.findIndex(function (ei) { return value === ei; });
+            return this.selected();
+        }
         if (typeof value == "number") {
             this.currentlySelected = value;
             return this.selected();
         }
-        if (typeof value == "EntityInstance") {
-            this.currentlySelected = this.array.findIndex(function (ei) { return value === ei; });
-            return this.selected();
-        }
-        throw "Value must be number or EntityInstance";
+        throw "Value must be number or EntityInstance.  Found " + typeof value;
     };
     ArrayDelegate.prototype.selected = function () {
         return this.array[this.currentlySelected];
@@ -643,7 +681,7 @@ var EntityArray = (function (_super) {
             return this.delegate.create(initialize, options);
         };
         _arr.excludeAll = function () { this.delegate.excludeAll(); };
-        _arr.deleteAll = function () { this.delegate.deleteAll(); };
+        _arr.deleteAll = function (filter) { this.delegate.deleteAll(filter); };
         _arr.delete = function (index) { this.delegate.delete(index); };
         _arr.drop = function (index) { this.delegate.drop(index); };
         _arr.exclude = function (index) { this.delegate.exclude(index); };
@@ -655,37 +693,18 @@ var EntityArray = (function (_super) {
     return EntityArray;
 }(Array));
 exports.EntityArray = EntityArray;
-var OptionsConstructor = (function () {
-    function OptionsConstructor(initialize) {
-        if (initialize === void 0) { initialize = undefined; }
-        for (var i in initialize) {
-            this[i] = initialize[i];
-        }
-    }
-    OptionsConstructor.prototype.toString = function () {
-        return JSON.stringify(this);
-    };
-    // Quick and easy way to create a new instance of options with same values.
-    OptionsConstructor.prototype.clone = function () {
-        var proto = Object.getPrototypeOf(this);
-        var options = Object.create(proto);
-        options.constructor.apply(options, [this]);
-        return options;
-    };
-    return OptionsConstructor;
-}());
-var CreateOptions = (function (_super) {
-    __extends(CreateOptions, _super);
-    function CreateOptions() {
-        var _this = _super.apply(this, arguments) || this;
-        _this.incrementalsSpecified = undefined;
-        _this.readOnlyOi = false;
-        return _this;
-    }
-    return CreateOptions;
-}(OptionsConstructor));
-exports.CreateOptions = CreateOptions;
-var DEFAULT_CREATE_OPTIONS = new CreateOptions({ incrementalsSpecified: false, readOnlyOi: false });
+(function (Position) {
+    Position[Position["First"] = 0] = "First";
+    Position[Position["Prev"] = 1] = "Prev";
+    Position[Position["Next"] = 2] = "Next";
+    Position[Position["Last"] = 3] = "Last";
+})(exports.Position || (exports.Position = {}));
+var Position = exports.Position;
+var DEFAULT_CREATE_OPTIONS = {
+    incrementalsSpecified: false,
+    readOnlyOi: false,
+    position: Position.Last
+};
 var Activator = (function () {
     function Activator() {
     }
@@ -728,14 +747,6 @@ ZeidonConfiguration = __decorate([
     __metadata("design:paramtypes", [Activator, Committer])
 ], ZeidonConfiguration);
 exports.ZeidonConfiguration = ZeidonConfiguration;
-var CommitOptions = (function (_super) {
-    __extends(CommitOptions, _super);
-    function CommitOptions() {
-        return _super.apply(this, arguments) || this;
-    }
-    return CommitOptions;
-}(OptionsConstructor));
-exports.CommitOptions = CommitOptions;
 var AttributeValueError = (function (_super) {
     __extends(AttributeValueError, _super);
     function AttributeValueError(message, attributeDef) {

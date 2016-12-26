@@ -76,20 +76,20 @@ import * as zeidon from './zeidon-angular';
                        [zeidonErrorElement]="thermError" maxlength="2" style="width:3em" />
                 <input type="number" formControlName="AlarmHigh" placeholder="high"
                        [zeidonErrorElement]="thermError" maxlength="2" style="width:3em" />
-                <img src="/img/icons/red-x.png" (click)="deleteThermometer( therm )"/>
+                <img src="/img/icons/red-x.png" (click)="deleteThermometer( form.controls.ThermometerConfig, i )"/>
             </div>
             <div #thermError class="alert alert-danger" style="display:none"></div>
         </div>
       </div>
 
 <!--
+-->
       <div>
         <button type="button" class="btn btn-default" (click)="newThermometer()"
                [disabled]="configOi.Configuration$.ThermometerConfig.length > 3" >
             New Thermometer
         </button>
       </div>
--->
       <div>
         <button type="submit" class="btn btn-default" [disabled]="false">
             Save Configuration
@@ -152,11 +152,16 @@ export class ConfigurationComponent implements OnChanges {
         this.configOi = undefined;
     }
 
-    deleteThermometer( therm: Configuration_ThermometerConfig ): void {
-        therm.delete();
+    deleteThermometer( therm: any, index: number ): void {
+        therm.removeAt( index );
     }
 
     newThermometer(): void {
+        // Copy any changed values to the OI
+        this.configOi.Configuration$.update( this.form.value );
+        // Create the new entity.
         this.configOi.Configuration$.ThermometerConfig.create({Name: "New therm" });
+        // Rebuild the form with the new therm.
+        this.buildForm();
     }
 }

@@ -140,7 +140,7 @@ export class ObjectInstance {
                  if ( options.incrementalsSpecified == undefined ) {
                      // We're going to change the options so create a new one so we
                      // don't override the original one.
-                     options = options.clone();
+                     options = Object.assign( {}, options );
                      options.incrementalsSpecified = true;
                  }
              }
@@ -411,7 +411,7 @@ export class EntityInstance {
      * in 'values'.  The entity fingerprint is used to match up entities in 'value' to the
      * entities in the OI.
      *
-     * Note: This will not create or delete entities.  It is expected that every fingerprint
+     * Note: This will not create or re-order entities.  It is expected that every fingerprint
      * in 'values' exists in the OI.
      *
      * Sample input might look like:
@@ -456,6 +456,10 @@ export class EntityInstance {
             let eiChildren = this.getChildEntityArray( key );
             let valueChildren = values[ key ];
 
+            // Keep track of the fingerprints of the child entities.  We'll use
+            // this to determine which children EIs need to be deleted.
+            let childFingerprints = {};
+
             // Children of 1-to-1 relationships are not in an array.  Convert it to
             // an array to make it easier to process.
             if ( ! Array.isArray( valueChildren ) )
@@ -466,7 +470,14 @@ export class EntityInstance {
                 if ( ! eiChild )
                     error( "Couldn't find EI using fingerprint" );
 
+                childFingerprints[ valueChild.fingerprint ] = true;
                 eiChild.update( valueChild );
+            }
+
+            // Do we have a fingerprint for every child entity?
+            if ( Object.keys( childFingerprints ).length < eiChildren.length ) {
+                // No.  Delete all child entities that are missing from the list of fingerprints.
+                eiChildren.deleteAll( (ei) => ! childFingerprints[ ei.fingerprint ] );
             }
         }
     }
@@ -554,16 +565,43 @@ class ArrayDelegate<T extends EntityInstance> {
     create( initialize : Object = {}, options: CreateOptions = DEFAULT_CREATE_OPTIONS ): EntityInstance {
     //    console.log("Creating entity " + this.entityName );
         let ei = Object.create( this.oi.getPrototype( this.entityName ) );
-        ei.constructor.apply(ei, [ initialize, this.oi, this.array, options] );
-        this.array.push(ei);
-        this.currentlySelected = this.array.length - 1;
+        ei.constructor.apply(ei, [ initialize, this.oi, this.array, options ] );
+
+        // Figure out where to insert the new ei.
+        let position = options.position;
+        if ( position == undefined ) {
+            // Default is to insert at the end.
+            this.array.push( ei );
+        } else
+        if ( typeof position === "Position" ) {
+            if ( position === Position.Last )
+                this.array.push( ei );
+            else
+            if ( position === Position.First )
+                this.array.unshift( ei );
+            else
+            if ( position === Position.Next )
+                this.array.splice( this.currentlySelected, 0, ei );
+            else {
+                // Must be Position.Prev.  If currentlySelected is 0, then put
+                // at the beginning.
+                if ( this.currentlySelected == 0 )
+                    this.array.unshift( ei );
+                else
+                    this.array.splice( this.currentlySelected - 1, 0, ei );
+            }
+        }
+        else {
+            this.array.splice( position, 0, ei );
+        }
+
+        this.setSelected( ei );
         return ei;
     }
 
     include( sourceEi: EntityInstance, index: number = -1, options: any = {} ) {
         if ( ! this.entityDef.includable )
             error( `Entity ${this.entityDef.name} does not have include authority.` );
-
     }
 
     private validateExclude( index? : number ) {
@@ -601,14 +639,16 @@ class ArrayDelegate<T extends EntityInstance> {
             this.hiddenEntities = new Array<T>();
     }
 
-    deleteAll() {
+    deleteAll( filter?: ( EntityInstance ) => boolean ) {
         this.validateDelete();
         if ( this.array.length == 0 )
             return;
 
         this.hiddenEntities = this.hiddenEntities.concat( this.array );
-        for ( let ei of this.array )
-            this.deleteEntity( ei );
+        for ( let ei of this.array ) {
+            if ( filter == undefined || filter( ei ) === true )
+                this.deleteEntity( ei );
+        }
 
         this.array.length = 0;
     }
@@ -657,18 +697,18 @@ class ArrayDelegate<T extends EntityInstance> {
         }
     }
 
-    setSlected( value: any ): EntityInstance {
+    setSelected( value: number | EntityInstance ): EntityInstance {
+        if ( value instanceof EntityInstance ) {
+            this.currentlySelected = this.array.findIndex( ei => value === ei );
+            return this.selected();
+        }
+
         if ( typeof value == "number" ) {
             this.currentlySelected = value;
             return this.selected();
         }
 
-        if ( typeof value == "EntityInstance" ) {
-            this.currentlySelected = this.array.findIndex( ei => value === ei );
-            return this.selected();
-        }
-
-        throw "Value must be number or EntityInstance"
+        throw `Value must be number or EntityInstance.  Found ${typeof value}`
     }
 
     selected(): EntityInstance {
@@ -712,12 +752,12 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
             return this.delegate.create( initialize, options );
         }
         _arr.excludeAll = function() { this.delegate.excludeAll(); };
-        _arr.deleteAll = function() { this.delegate.deleteAll(); };
+        _arr.deleteAll = function( filter?: ( EntityInstance ) => boolean ) { this.delegate.deleteAll(filter); };
         _arr.delete = function( index?: number) { this.delegate.delete( index ); };
         _arr.drop = function( index?: number) { this.delegate.drop( index ); };
         _arr.exclude = function( index?: number) { this.delegate.exclude( index ); };
         _arr.selected = function() { return this.delegate.selected(); };
-        _arr.setSelected = function(value: any) { return this.delegate.setSelected( value ); };
+        _arr.setSelected = function(value: number | EntityInstance) { return this.delegate.setSelected( value ); };
         _arr.allEntities = function() { return this.delegate.allEntities(); };
 
         return _arr;
@@ -728,12 +768,12 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
      */
     create: ( initialize? : Object, options?: CreateOptions ) => EntityInstance;
     excludeAll: () => void;
-    deleteAll: () => void;
+    deleteAll: ( filter?: ( EntityInstance ) => boolean ) => void;
     delete: ( index? : number ) => void;
     drop: ( index? : number ) => void;
     exclude: ( index? : number ) => void;
     selected: () => EntityInstance;
-    setSelected: (value: any ) => EntityInstance;
+    setSelected: (value: number | EntityInstance ) => EntityInstance;
 
     /**
      * Returns all entity instances, including hidden ones.
@@ -741,31 +781,21 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
     allEntities: () => Array<EntityInstance>;
 }
 
-class OptionsConstructor {
-    constructor( initialize = undefined ) {
-        for ( let i in initialize ) {
-            this[i] = initialize[i];
-        }
-    }
-
-    public toString(): string {
-        return JSON.stringify( this );
-    }
-
-    // Quick and easy way to create a new instance of options with same values.
-    public clone() : this {
-        let proto = Object.getPrototypeOf( this );
-        let options = Object.create( proto );
-        options.constructor.apply(options, [ this ] );
-        return options;
-    }
+export enum Position {
+    First, Prev, Next, Last
 }
 
-export class CreateOptions extends OptionsConstructor {
-    incrementalsSpecified? : boolean = undefined;
-    readOnlyOi? : boolean = false;
+export interface CreateOptions {
+    incrementalsSpecified? : boolean;
+    readOnlyOi? : boolean;
+    position? : Position | number;
 }
-const DEFAULT_CREATE_OPTIONS = new CreateOptions( { incrementalsSpecified: false, readOnlyOi: false } );
+
+const DEFAULT_CREATE_OPTIONS = {
+    incrementalsSpecified: false,
+    readOnlyOi: false,
+    position: Position.Last
+ };
 
 @Injectable()
 export class Activator {
@@ -803,7 +833,7 @@ export interface ZeidonToJsonOptions {
     meta? :          boolean
 }
 
-export class CommitOptions extends OptionsConstructor {
+export interface CommitOptions {
 }
 
 /**

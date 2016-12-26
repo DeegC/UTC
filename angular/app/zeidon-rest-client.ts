@@ -33,7 +33,7 @@ export class RestActivator {
         let errorHandler = oi.handleActivateError;
         let url = `${this.values.restUrl}/${lodName}?qual=${encodeURIComponent(JSON.stringify(qual))}`;
         return this.http.get( url )
-                .map( response => oi.createFromJson( response.json() ) as T );
+                .map( response => oi.createFromJson( response.json(), { incrementalsSpecified: true } ) as T );
     }
 }
 
@@ -75,7 +75,7 @@ export class RestCommitter implements Committer {
             return oi.createFromJson( undefined );
 
         let data = response.json();
-        return oi.createFromJson( data, );
+        return oi.createFromJson( data, { incrementalsSpecified: true} );
     }
 
 }

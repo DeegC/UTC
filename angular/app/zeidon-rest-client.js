@@ -39,7 +39,7 @@ var RestActivator = (function () {
         var errorHandler = oi.handleActivateError;
         var url = this.values.restUrl + "/" + lodName + "?qual=" + encodeURIComponent(JSON.stringify(qual));
         return this.http.get(url)
-            .map(function (response) { return oi.createFromJson(response.json()); });
+            .map(function (response) { return oi.createFromJson(response.json(), { incrementalsSpecified: true }); });
     };
     return RestActivator;
 }());
@@ -97,7 +97,7 @@ var RestCommitter = (function () {
         if (response.text() == "{}")
             return oi.createFromJson(undefined);
         var data = response.json();
-        return oi.createFromJson(data);
+        return oi.createFromJson(data, { incrementalsSpecified: true });
     };
     return RestCommitter;
 }());
