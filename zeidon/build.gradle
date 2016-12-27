@@ -26,6 +26,7 @@ dependencies {
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.+'
 
     repl 'org.scala-lang:scala-compiler:2.11.8'
+    repl 'com.quinsoft.zeidon:object-browser:1.4.1-SNAPSHOT'
     repl 'jline:jline:2.13'
 
     generateTypescriptFiles 'com.quinsoft.zeidon:javascript:1.4.1-SNAPSHOT'
