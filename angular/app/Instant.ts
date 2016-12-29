@@ -1,6 +1,6 @@
 
 /*
-  Generated from LOD Instant on 2016-12-18T01:33:59.130
+  Generated from LOD Instant on 2016-12-29T00:14:17.976
 
 */
 
@@ -83,35 +83,10 @@ export class Instant_Instant extends zeidon.EntityInstance {
 
     get PWM0(): string { return this.getAttribute("PWM0") };
     set PWM0(value: string) { this.setAttribute("PWM0", value) };
-
-    get Session(): zeidon.EntityArray<Instant_Session> {
-        return this.getChildEntityArray("Session") as zeidon.EntityArray<Instant_Session>;
-    }
-
-    get Session$(): Instant_Session {
-        return this.getChildEntityArray("Session").selected() as Instant_Session;
-    }
-}
-
-export class Instant_Session extends zeidon.EntityInstance {
-    public get entityName(): string { return "Session" };
-
-    get Id(): string { return this.getAttribute("Id") };
-    set Id(value: string) { this.setAttribute("Id", value) };
-
-    get Date(): string { return this.getAttribute("Date") };
-    set Date(value: string) { this.setAttribute("Date", value) };
-
-    get EndDate(): string { return this.getAttribute("EndDate") };
-    set EndDate(value: string) { this.setAttribute("EndDate", value) };
-
-    get Notes(): string { return this.getAttribute("Notes") };
-    set Notes(value: string) { this.setAttribute("Notes", value) };
 }
 
 const InstantEntityPrototypes = {
     Instant: Instant_Instant.prototype, 
-    Session: Instant_Session.prototype, 
 }
 
 export const Instant_LodDef = {
@@ -130,7 +105,6 @@ export const Instant_LodDef = {
             updatable:  true,
             parentDelete: true,
             childEntities: {
-                Session: {},
             },
             attributes: {
                 Timestamp: {
@@ -260,74 +234,6 @@ export const Instant_LodDef = {
                     domainName:   "GeneratedKey",
                     persistent:   true,
                     key:          true,
-                    update:       true,
-                    foreignKey:   true,
-                },
-            }
-        },
-
-        Session: {
-            name:       "Session",
-            erToken:    "905181347",
-            create:     false,
-            cardMax:    1,
-            hasInit:    false,
-            creatable:  false,
-            includable: true,
-            deletable:  false,
-            excludable: true,
-            updatable:  false,
-            parentDelete: false,
-            childEntities: {
-            },
-            attributes: {
-                Id: {
-                    name:         "Id",
-                    hidden:       false,
-                    required:     true,
-                    domainName:   "GeneratedKey",
-                    persistent:   true,
-                    key:          true,
-                    update:       true,
-                    foreignKey:   false,
-                },
-                Date: {
-                    name:         "Date",
-                    hidden:       false,
-                    required:     true,
-                    domainName:   "DateTime",
-                    persistent:   true,
-                    key:          false,
-                    update:       true,
-                    foreignKey:   false,
-                },
-                EndDate: {
-                    name:         "EndDate",
-                    hidden:       false,
-                    required:     false,
-                    domainName:   "DateTime",
-                    persistent:   true,
-                    key:          false,
-                    update:       true,
-                    foreignKey:   false,
-                },
-                Notes: {
-                    name:         "Notes",
-                    hidden:       false,
-                    required:     false,
-                    domainName:   "Text",
-                    persistent:   true,
-                    key:          false,
-                    update:       true,
-                    foreignKey:   false,
-                },
-                fk_id_configuration: {
-                    name:         "fk_id_configuration",
-                    hidden:       true,
-                    required:     true,
-                    domainName:   "GeneratedKey",
-                    persistent:   true,
-                    key:          false,
                     update:       true,
                     foreignKey:   true,
                 },

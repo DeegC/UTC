@@ -6,9 +6,13 @@ import com.quinsoft.zeidon.scala.Implicits._
 import com.quinsoft.zeidon.scala.View
 import com.quinsoft.zeidon.scala.basedOn
 
-class TemperatureController( val currentSession: View @basedOn( "Session" ) ) extends Runnable {
-    @volatile var running = false;
-    val logger = currentSession.log()
+class TemperatureController( private val currentSession: View @basedOn( "Session" ) ) extends Runnable {
+    @volatile 
+    private var running = false;
+    private val logger = currentSession.log()
+    private val task = currentSession.task
+
+    private val hardware = HardwareInterface.getHardwareInterface( task )
     
     def run() {
         logger.info( "Starting up controller for config %s", currentSession.Configuration.Description )
@@ -16,15 +20,40 @@ class TemperatureController( val currentSession: View @basedOn( "Session" ) ) ex
         // Wait until someone calls stop(), which will call notify().
         running = true;
         logger.info( "Waiting..." )
-        wait()
+        this.synchronized{  wait() }
         logger.info( "Controller done." )
     }
+    
+    def isRunning = running
     
     def stop() {
         if ( running ) {
             logger.info( "Received notification to stop controller" )
             notify()
             running = false
+        }
+    }
+    
+    /**
+     * 
+     */
+    def currentState : View @basedOn( "Instant" ) = {
+        val instant = task.newView( "Instant" ).activateEmpty()
+        currentSession.synchronized {
+            if ( currentSession.Instant setLast() )
+                instant.Instant include( currentSession.Instant )
+            else
+                instant.Instant create()
+        }
+        
+        return instant
+    }
+    
+    def serializeSession() : String = {
+        currentSession.synchronized {
+            val serialized = currentSession.serializeOi.asJson.withIncremental().toString()
+            logger.debug(serialized)
+            return serialized
         }
     }
 }

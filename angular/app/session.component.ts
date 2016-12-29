@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from './rest.service';
 import { Session } from './Session';
+import { Instant } from './Instant';
 
 @Component({
   selector: 'session',
@@ -17,17 +18,27 @@ import { Session } from './Session';
 `
 })
 export class SessionComponent implements OnInit {
-    currentSession: Session; 
+    currentSession: Session;
+    currentState:   Instant;
+
     constructor( private restService: RestService ) { }
-    
+
     ngOnInit(): void {
         this.getCurrentSession();
-    }    
+        this.getCurrentState();
+    }
 
     getCurrentSession() {
         this.restService.getCurrentSession().subscribe( session => {
             this.currentSession = session;
             session.logOi();
+        } );
+    }
+
+    getCurrentState() {
+        this.restService.getCurrentState().subscribe( instant => {
+            this.currentState = instant;
+            instant.logOi();
         } );
     }
 }

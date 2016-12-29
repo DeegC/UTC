@@ -1,4 +1,4 @@
-package org.deeg.utc
+package org.deeg.utc.controller
 
 import com.quinsoft.zeidon.Task
 

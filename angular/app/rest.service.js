@@ -14,6 +14,7 @@ require("./rxjs-extensions");
 var Observable_1 = require("rxjs/Observable");
 require("rxjs/add/operator/toPromise");
 var Session_1 = require("./Session");
+var Instant_1 = require("./Instant");
 var zeidon_rest_client_1 = require("./zeidon-rest-client");
 var RestService = (function () {
     function RestService(http, values) {
@@ -35,6 +36,13 @@ var RestService = (function () {
         var _this = this;
         var url = this.values.restUrl + "/getSession";
         var session = new Session_1.Session();
+        return this.http.get(url)
+            .map(function (response) { return _this.parseCommitResponse(session, response); });
+    };
+    RestService.prototype.getCurrentState = function () {
+        var _this = this;
+        var url = this.values.restUrl + "/getState";
+        var session = new Instant_1.Instant();
         return this.http.get(url)
             .map(function (response) { return _this.parseCommitResponse(session, response); });
     };

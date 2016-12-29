@@ -1,4 +1,4 @@
-z1000-Zeidon    UTC      TZCMLPLO 11/25/16   17:32:58 1.0a2    
+z1000-Zeidon    UTC      TZCMLPLO 12/28/16   23:00:43 1.0a2    
 eLPLR      1
 aName      UTC
 aDesc      Universal Temperature Controller
@@ -157,8 +157,8 @@ aStatus    1
 aUpdateInd 2
 aName      Instant
 aDesc      Records the status of the sensors at a particular time.
-aLastSyncDate 20160929210634743
-aLastUpdateDate 20160929210634743
+aLastSyncDate 20161228230043398
+aLastUpdateDate 20161228230043398
 
 eW_MetaDef 3
 aCPLR_ZKey 929210658

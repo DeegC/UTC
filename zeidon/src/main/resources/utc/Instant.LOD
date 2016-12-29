@@ -1,4 +1,4 @@
-z1000-Zeidon    INSTANT  TZZOLODO 11/16/16   18:16:58 1.0a2    
+z1000-Zeidon    INSTANT  TZZOLODO 12/28/16   23:00:43 1.0a2    
 eLOD       1
 aZKey      929210436
 aNextZKeyToAssign 929210454
@@ -22,109 +22,6 @@ aWork      N
 aParentDeleteBehave D
 aDesc      This entity records all the readings of a moment in time in a UTC run.
 
-eLOD_EntityChild 3
-aName      Session
-aIndentName    Session
-aIndentLvl 3
-aZKey      929210449
-aCreate    N
-aDelete    N
-aUpdate    N
-aInclude   Y
-aInclSrc   Y
-aExclude   Y
-aRecursive N
-aDerived   N
-aParentDeleteBehave E
-aRelLinkIndicator H
-aDesc      A controller session; i.e. a cook.
-
-eLOD_AttributeRec 4
-aZKey      929210450
-
-eER_AttributeRec 5
-aName      Id
-aZKey      905181348
-aNotNull   Y
-aSAP_Attribute 0
-
-eDomainRec 6
-aZKey      905181242
-aName      GeneratedKey
-aDomainType E
-aDataType  L
-aMaxStringLth 64
-aDesc      Generic DB-generated key
-aContextRestriction N
-
-eLOD_AttributeRec 4
-aZKey      929210451
-
-eER_AttributeRec 5
-aName      Date
-aZKey      905181349
-aNotNull   Y
-
-eDomainRec 6
-aZKey      905181215
-aName      DateTime
-aDomainType E
-aDataType  T
-aDesc      Date/time field
-aContextRestriction N
-
-eLOD_AttributeRec 4
-aZKey      929210452
-
-eER_AttributeRec 5
-aName      EndDate
-aZKey      905181350
-
-eDomainRec 6
-
-eLOD_AttributeRec 4
-aZKey      929210453
-
-eER_AttributeRec 5
-aName      Notes
-aZKey      905181351
-aLth       10000
-aDesc      Notes regarding this session
-
-eDomainRec 6
-aZKey      905181158
-aName      Text
-aDomainType E
-aDataType  S
-aMaxStringLth 10000
-aDesc      Any Character String
-aContextRestriction N
-
-eER_EntityRec 4
-aName      Session
-aZKey      905181347
-aPurpose   F
-aDesc      A controller session; i.e. a cook.
-aER_DiagramPosX 28
-aER_DiagramPosY 17
-aSAP_Entity 0
-
-eER_RelLinkRec 4
-aName      for
-aZKey      905181387
-aCardMin   1
-aCardMax   1
-
-eER_RelTypeRec 5
-aZKey      905181385
-aFact      Added thru ER Dialog
-aER_DiagramBendPosX 0
-aER_DiagramBendPosY 0
-aER_DiagramE1PosX 32
-aER_DiagramE1PosY 22
-aER_DiagramE2PosX 32
-aER_DiagramE2PosY 27
-
 eLOD_AttributeRec 3
 aZKey      929210438
 
@@ -135,6 +32,12 @@ aNotNull   Y
 aDesc      Instant that this record was recorded.
 
 eDomainRec 5
+aZKey      905181215
+aName      DateTime
+aDomainType E
+aDataType  T
+aDesc      Date/time field
+aContextRestriction N
 
 eLOD_AttributeRec 3
 aZKey      929210439
@@ -337,42 +240,6 @@ eDomain    5
 
 eER_Entity 3
 
-eLOD_Entity 2
-
-eLOD_Attribute 3
-awkSequence 1
-
-eER_Attribute 4
-
-eDomain    5
-
-eLOD_Attribute 3
-awkSequence 2
-
-eER_Attribute 4
-
-eDomain    5
-
-eLOD_Attribute 3
-awkSequence 3
-
-eER_Attribute 4
-
-eDomain    5
-
-eLOD_Attribute 3
-awkSequence 4
-
-eER_Attribute 4
-
-eDomain    5
-
-eER_Entity 3
-
-eER_RelLink 3
-
-eER_RelType 4
-
 ePOD       2
 aNAME      Instant
 aZKey      929210454
@@ -393,64 +260,46 @@ aGenerateExecutable kzhsqllb
 aDisplayOwner N
 aTranslateNamesToLowerUnderscore Y
 
-i11        8
-i20        8
-i26        23
-i29        23
-i32        23
-i35        23
-i38        23
-i41        23
-i44        23
-i47        23
-i52        1
+i10        7
+i13        7
+i16        7
+i19        7
+i22        7
+i25        7
+i28        7
+i31        7
+i36        1
+i37        2
+i38        3
+i39        4
+i40        5
+i41        6
+i42        7
+i43        8
+i44        9
+i45        7
+i46        11
+i47        12
+i48        7
+i49        14
+i50        15
+i51        7
+i52        17
 i53        18
-i54        19
-i55        8
+i54        7
+i55        20
 i56        21
-i57        22
+i57        7
 i58        23
 i59        24
-i60        25
-i61        23
+i60        7
+i61        26
 i62        27
-i63        28
-i64        23
+i63        7
+i64        29
 i65        30
-i66        31
-i67        23
+i66        7
+i67        32
 i68        33
 i69        34
-i70        23
-i71        36
-i72        37
-i73        23
-i74        39
-i75        40
-i76        23
-i77        42
-i78        43
-i79        23
-i80        45
-i81        46
-i82        23
-i83        48
-i84        49
-i85        50
-i86        51
-i87        2
-i88        3
-i89        4
-i90        5
-i91        6
-i92        7
-i93        8
-i94        9
-i95        10
-i96        8
-i97        12
-i98        13
-i99        14
-i100       15
-i101       16
-i102       17
+i70        35

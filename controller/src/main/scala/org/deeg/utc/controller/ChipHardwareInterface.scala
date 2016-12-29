@@ -1,13 +1,12 @@
-package org.deeg.utc
+package org.deeg.utc.controller
 
-import com.quinsoft.zeidon.scala.basedOn
-import com.quinsoft.zeidon.scala.View
 import com.quinsoft.zeidon.scala.Implicits._
 import sys.process._
 import com.quinsoft.zeidon.Task
 
 /**
- * Interface with a C.H.I.P.
+ * Interface with a C.H.
+import org.deeg.utc.controller.HardwareInterfaceI.P.
  */
 class ChipHardwareInterface(val task: Task) extends HardwareInterface {
     

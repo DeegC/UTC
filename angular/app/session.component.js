@@ -16,12 +16,20 @@ var SessionComponent = (function () {
     }
     SessionComponent.prototype.ngOnInit = function () {
         this.getCurrentSession();
+        this.getCurrentState();
     };
     SessionComponent.prototype.getCurrentSession = function () {
         var _this = this;
         this.restService.getCurrentSession().subscribe(function (session) {
             _this.currentSession = session;
             session.logOi();
+        });
+    };
+    SessionComponent.prototype.getCurrentState = function () {
+        var _this = this;
+        this.restService.getCurrentState().subscribe(function (instant) {
+            _this.currentState = instant;
+            instant.logOi();
         });
     };
     return SessionComponent;

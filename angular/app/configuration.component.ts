@@ -139,9 +139,11 @@ export class ConfigurationComponent implements OnChanges {
     }
 
     startSession(): void {
+        // Commit the current changes to the config.
         this.configOi.commit().subscribe(configOi => {
             this.configOi = configOi;
             this.configurationList.reload();
+            // Now call the server to start a new session.
             this.restService
                 .startSession( configOi )
                 .subscribe( sessionOi => this.onSessionStarted.emit( sessionOi ) );

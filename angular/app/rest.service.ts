@@ -6,6 +6,7 @@ import 'rxjs/add/operator/toPromise';
 
 import { Configuration, Configuration_Configuration } from './Configuration';
 import { Session } from './Session';
+import { Instant } from './Instant';
 import { ZeidonRestValues } from './zeidon-rest-client';
 import { ObjectInstance } from './zeidon';
 
@@ -23,7 +24,7 @@ export class RestService {
         this.http.delete( url )
             .toPromise()
             .then( () => config.drop() )
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error')); 
+            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     getCurrentSession( ) {
@@ -31,6 +32,13 @@ export class RestService {
         let session = new Session();
         return this.http.get( url )
                 .map( response => this.parseCommitResponse( session, response ) ) as Observable<Session>;
+    }
+
+    getCurrentState( ) {
+        let url = `${this.values.restUrl}/getState`;
+        let session = new Instant();
+        return this.http.get( url )
+                .map( response => this.parseCommitResponse( session, response ) ) as Observable<Instant>;
     }
 
     startSession( configOi: Configuration ): Observable<Session> {
@@ -43,7 +51,7 @@ export class RestService {
         return this.http.post( url, body, reqOptions)
             .map(response => this.parseCommitResponse( session, response ) ) as  Observable<Session>;
     }
-    
+
     parseCommitResponse( oi: ObjectInstance, response ): ObjectInstance {
         if ( response.text() == "{}" )
             return oi;

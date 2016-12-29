@@ -11,6 +11,7 @@ import com.quinsoft.zeidon.scala.QualBuilder
 import com.deeg.utc.zeidon._
 import com.quinsoft.zeidon.ObjectEngine
 import com.quinsoft.zeidon.scalatra.ZeidonRestScalatra
+import org.deeg.utc.controller.TemperatureController
 
 
 class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
@@ -24,12 +25,13 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
     // Initialize OE and Configuration
     // --
     
-    val sessionTask = oe.createTask("UTC")
-    val hardware = HardwareInterface.getHardwareInterface( sessionTask )
-    val configuration = new Configuration( sessionTask )
+    val task = oe.createTask("UTC")
+    val configuration = new Configuration( task )
     configuration.createDefaultConfiguration()
+    
+    val logger = task.log()
 
-    var currentSession: View = null
+    var controller : TemperatureController = null
     
     def getObjectEngine(): ObjectEngine = {
         return oe
@@ -47,34 +49,33 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
     }
     
     get("/utc/getSession") {
-        oe.forTask( "UTC" ) { task =>
-            if ( currentSession == null ) {
-                task.log().debug( "No current session" )
-                "{}"
-            }
-            else {
-                serializeResponse( currentSession )
-            }
+        if ( controller == null ) {
+            logger.debug( "No current session" )
+            "{}"
+        }
+        else {
+            controller.serializeSession()
+        }
+    }
+    
+    get("/utc/getState") {
+        if ( controller == null ) {
+            logger.debug( "No current session" )
+            "{}"
+        }
+        else {
+            serializeResponse( controller.currentState )
         }
     }
     
     post("/utc/startSession/:id") {
-        oe.forTask( "UTC" ) { task =>
-            if ( currentSession == null ) {
-                val configOi = task.newView( "Configuration" )
-                               .activateWhere( _.root.key = params( "id" ) ) 
-    
-                currentSession = sessionTask.newView( "Session" ).activateEmpty()
-                currentSession.Session.create()
-                currentSession.Session.Date = "NOW"
-                currentSession.Configuration.include( configOi.Configuration )
-            }
-            
-            serializeResponse( currentSession )
+        if ( controller == null ) {
+            controller = TemperatureController.startController(oe, params( "id" ).toInt )
         }
+        
+        controller.serializeSession()
     }
     
     private def startUdpServer() = {
-      
     }
 }

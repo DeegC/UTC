@@ -1,5 +1,5 @@
 /*
-  Generated from LOD Instant on 2016-12-18T01:33:59.130
+  Generated from LOD Instant on 2016-12-29T00:14:17.976
 
 */
 "use strict";
@@ -154,72 +154,11 @@ var Instant_Instant = (function (_super) {
     });
     ;
     ;
-    Object.defineProperty(Instant_Instant.prototype, "Session", {
-        get: function () {
-            return this.getChildEntityArray("Session");
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Instant_Instant.prototype, "Session$", {
-        get: function () {
-            return this.getChildEntityArray("Session").selected();
-        },
-        enumerable: true,
-        configurable: true
-    });
     return Instant_Instant;
 }(zeidon.EntityInstance));
 exports.Instant_Instant = Instant_Instant;
-var Instant_Session = (function (_super) {
-    __extends(Instant_Session, _super);
-    function Instant_Session() {
-        return _super.apply(this, arguments) || this;
-    }
-    Object.defineProperty(Instant_Session.prototype, "entityName", {
-        get: function () { return "Session"; },
-        enumerable: true,
-        configurable: true
-    });
-    ;
-    Object.defineProperty(Instant_Session.prototype, "Id", {
-        get: function () { return this.getAttribute("Id"); },
-        set: function (value) { this.setAttribute("Id", value); },
-        enumerable: true,
-        configurable: true
-    });
-    ;
-    ;
-    Object.defineProperty(Instant_Session.prototype, "Date", {
-        get: function () { return this.getAttribute("Date"); },
-        set: function (value) { this.setAttribute("Date", value); },
-        enumerable: true,
-        configurable: true
-    });
-    ;
-    ;
-    Object.defineProperty(Instant_Session.prototype, "EndDate", {
-        get: function () { return this.getAttribute("EndDate"); },
-        set: function (value) { this.setAttribute("EndDate", value); },
-        enumerable: true,
-        configurable: true
-    });
-    ;
-    ;
-    Object.defineProperty(Instant_Session.prototype, "Notes", {
-        get: function () { return this.getAttribute("Notes"); },
-        set: function (value) { this.setAttribute("Notes", value); },
-        enumerable: true,
-        configurable: true
-    });
-    ;
-    ;
-    return Instant_Session;
-}(zeidon.EntityInstance));
-exports.Instant_Session = Instant_Session;
 var InstantEntityPrototypes = {
     Instant: Instant_Instant.prototype,
-    Session: Instant_Session.prototype,
 };
 exports.Instant_LodDef = {
     name: "Instant",
@@ -236,9 +175,7 @@ exports.Instant_LodDef = {
             excludable: false,
             updatable: true,
             parentDelete: true,
-            childEntities: {
-                Session: {},
-            },
+            childEntities: {},
             attributes: {
                 Timestamp: {
                     name: "Timestamp",
@@ -367,72 +304,6 @@ exports.Instant_LodDef = {
                     domainName: "GeneratedKey",
                     persistent: true,
                     key: true,
-                    update: true,
-                    foreignKey: true,
-                },
-            }
-        },
-        Session: {
-            name: "Session",
-            erToken: "905181347",
-            create: false,
-            cardMax: 1,
-            hasInit: false,
-            creatable: false,
-            includable: true,
-            deletable: false,
-            excludable: true,
-            updatable: false,
-            parentDelete: false,
-            childEntities: {},
-            attributes: {
-                Id: {
-                    name: "Id",
-                    hidden: false,
-                    required: true,
-                    domainName: "GeneratedKey",
-                    persistent: true,
-                    key: true,
-                    update: true,
-                    foreignKey: false,
-                },
-                Date: {
-                    name: "Date",
-                    hidden: false,
-                    required: true,
-                    domainName: "DateTime",
-                    persistent: true,
-                    key: false,
-                    update: true,
-                    foreignKey: false,
-                },
-                EndDate: {
-                    name: "EndDate",
-                    hidden: false,
-                    required: false,
-                    domainName: "DateTime",
-                    persistent: true,
-                    key: false,
-                    update: true,
-                    foreignKey: false,
-                },
-                Notes: {
-                    name: "Notes",
-                    hidden: false,
-                    required: false,
-                    domainName: "Text",
-                    persistent: true,
-                    key: false,
-                    update: true,
-                    foreignKey: false,
-                },
-                fk_id_configuration: {
-                    name: "fk_id_configuration",
-                    hidden: true,
-                    required: true,
-                    domainName: "GeneratedKey",
-                    persistent: true,
-                    key: false,
                     update: true,
                     foreignKey: true,
                 },

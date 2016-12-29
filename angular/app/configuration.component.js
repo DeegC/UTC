@@ -38,9 +38,11 @@ var ConfigurationComponent = (function () {
     };
     ConfigurationComponent.prototype.startSession = function () {
         var _this = this;
+        // Commit the current changes to the config.
         this.configOi.commit().subscribe(function (configOi) {
             _this.configOi = configOi;
             _this.configurationList.reload();
+            // Now call the server to start a new session.
             _this.restService
                 .startSession(configOi)
                 .subscribe(function (sessionOi) { return _this.onSessionStarted.emit(sessionOi); });

@@ -4,38 +4,7 @@ Controller logic
 Project name: ${project.name}
 """
 
-configurations {
-    repl
-}
-
 // In this section you declare the dependencies for your production and test code
 dependencies {
     compile project( ':utc-zeidon' )
-
-    repl 'org.scala-lang:scala-compiler:2.11.8'
-    repl 'jline:jline:2.13'
-}
-
-task repl(type:JavaExec) {
-
-  def initFile = ''
-
-  File.createTempFile("temp",".tmp").with {
-    deleteOnExit()
-    write '''
-import com.quinsoft.zeidon.standardoe.JavaObjectEngine
-import com.quinsoft.zeidon.scala._
-
-val oe = JavaObjectEngine.getInstance()
-val task = oe.createTask("UTC")
-    
-'''
-    initFile = absolutePath
-  }
-
-  main = "scala.tools.nsc.MainGenericRunner"
-  classpath( sourceSets.main.runtimeClasspath, '../conf', configurations.repl )
-  standardInput System.in
-  args( '-i', initFile, '-usejavacp' )
-  jvmArgs( '-DSQLITE_ROOT=../sqlite', '-Djline.inputrc=~/.jline.inputrc' )
 }
