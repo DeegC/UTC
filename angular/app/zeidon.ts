@@ -41,13 +41,14 @@ export class ObjectInstance {
     // Saves the options used to activate this OI.
     private activateOptions: any;
 
-    public toJSON( options? : ZeidonToJsonOptions ): Object {
-        console.log("JSON for Configuration OI" );
-        options = options || {};
-
+    public toJSON( options : ZeidonToJsonOptions = {} ): Object {
         let jarray = [];
         for ( let root of this.roots.allEntities() ) {
-            jarray.push( root.toJSON( options ) );
+            // TODO: can't use forCommit yet because the OI that comes back doesn't have
+            // the missing entities.  We can't use forCommit until we implement a merge.
+            // If forCommit is true, only write updated entities.
+            // TODO: can't use forCommit yet because the OI that comes back doesn't have            // TODO: can't use forCommit yet because the OI that comes back doesn't have            // TODO: can't use forCommit yet because the OI that comes back doesn't have            // TODO: can't use forCommit yet because the OI that comes back doesn't have            // TODO: can't use forCommit yet because the OI that comes back doesn't have            // if ( ! options.forCommit || root.childUpdated )
+                jarray.push( root.toJSON( options ) );
         };
 
         let json = {};
@@ -62,7 +63,9 @@ export class ObjectInstance {
     /**
      * Wrap the JSON for this object with Zeidon OI meta.  Used for committing.
      */
-    toZeidonMeta() : Object {
+    toZeidonMeta( options? : CommitOptions ) : Object {
+            // the missing entities.  We can't use forCommit until we implement a merge.            // the missing entities.  We can't use forCommit until we implement a merge.            // the missing entities.  We can't use forCommit until we implement a merge.            // the missing entities.  We can't use forCommit until we implement a merge.            // the missing entities.  We can't use forCommit until we implement a merge.        options = options || { meta: true, forCommit: true };
+
         let wrapper = {
             ".meta": { version: "1" },
             OIs : [ {
@@ -77,7 +80,7 @@ export class ObjectInstance {
         };
 
         // Add the OI.
-        wrapper.OIs[0][ this.getLodDef().name ] = this.toJSON( { meta: true } )[this.getLodDef().name ];
+        wrapper.OIs[0][ this.getLodDef().name ] = this.toJSON( options )[this.getLodDef().name ];
 
         return wrapper;
     }
@@ -169,27 +172,51 @@ export class ObjectInstance {
     }
 }
 
-class EiMetaFlags {
-    incomplete?: boolean;
+class Incrementals {
+    created = false;
+    included = false;
+    deleted = false;
+    excluded = false;
+    updated = false;
 }
 
 export class EntityInstance {
     public oi: ObjectInstance; // Parent OI.
-    public created = false;
-    public included = false;
-    public deleted = false;
-    public excluded = false;
-    public updated = false;
+    private incrementals = new Incrementals();
+    public childUpdated = false;  // True if this entity or one of its children is updated.
+
+    public get created() { return this.incrementals.created };
+    public get deleted() { return this.incrementals.deleted };
+    public get included() { return this.incrementals.included };
+    public get excluded() { return this.incrementals.excluded };
+    public get updated() { return this.incrementals.updated };
+
+    private setIncremental( v: boolean, flag: string ) {
+        if ( v && ! this.incrementals[ flag ] ) {
+            this.oi.isUpdated = true;
+            this.childUpdated = true;
+            for ( let parent = this.parentEntityInstance(); parent; parent = parent.parentEntityInstance() ) {
+                parent.childUpdated = true;
+            }
+        }
+
+        this.incrementals[ flag ] = v;
+    }
+
+    public set created( v: boolean ) { this.setIncremental( v, "created" ) }
+    public set deleted( v: boolean ) { this.setIncremental( v, "deleted" ) }
+    public set included( v: boolean ) { this.setIncremental( v, "included" ) }
+    public set excluded( v: boolean ) { this.setIncremental( v, "excluded" ) }
+    public set updated( v: boolean ) { this.setIncremental( v, "updated" ) }
 
     public attributes: any = {};
     public workAttributes: any = {};
 
-    public metaFlags: EiMetaFlags = {};
     public validateErrors: any = {};
 
     // If incomplete = true then this entity did not have all its children
     // loaded and so cannot be deleted.
-    private incomplete = false;
+    public incomplete = false;
 
     // A value that can be used to compare EIs that don't have a key.
     public readonly fingerprint = String( entityInstanceFingerprintCount++ );
@@ -249,7 +276,7 @@ export class EntityInstance {
             }
 
             if ( attr == ".meta" ) {
-                this.metaFlags = initialize[attr];
+                this.parseEntityMeta( initialize[attr] );
                 continue;
             }
 
@@ -406,6 +433,30 @@ export class EntityInstance {
         return str;
     }
 
+    private parseEntityMeta( meta: any ) {
+        if ( meta.incrementals ) {
+            this.created = meta.incrementals.indexOf( "C" ) > -1;
+            this.deleted = meta.incrementals.indexOf( "D" ) > -1;
+            this.included = meta.incrementals.indexOf( "I" ) > -1;
+            this.excluded = meta.incrementals.indexOf( "X" ) > -1;
+            this.updated = meta.incrementals.indexOf( "U" ) > -1;
+        }
+
+        this.incomplete = !!meta.incomplete;
+    }
+
+    private buildEntityMeta(): Object {
+        let meta = {};
+        let incrementals = this.buildIncrementalStr();
+        if ( incrementals != "" )
+            meta[ "incrementals" ] = incrementals;
+
+        if ( this.incomplete )
+            meta[ "incomplete" ] = true;
+
+        return meta;
+    }
+
     /**
      * Updates the attributes of this entity instance and any children that are specified
      * in 'values'.  The entity fingerprint is used to match up entities in 'value' to the
@@ -482,8 +533,12 @@ export class EntityInstance {
         }
     }
 
-    public toJSON( options? : ZeidonToJsonOptions ): Object {
-        options = options || {};
+    public toJSON( options : ZeidonToJsonOptions = {} ): Object {
+        // TODO: can't use forCommit yet because the OI that comes back doesn't have
+        // the missing entities.  We can't use forCommit until we implement a merge.
+        // if ( options.forCommit && ! this.childUpdated )
+        //     return undefined;
+
         let json = {};
 
         if ( options.meta ) {
@@ -516,9 +571,15 @@ export class EntityInstance {
 
             let entityInfo = this.entityDef.childEntities[ entityName ];
             if ( entityInfo.cardMax == 1 ) {
-                json[ entityName ] =  entities[0].toJSON( options );
+                // TODO: can't use forCommit yet because the OI that comes back doesn't have
+                // the missing entities.  We can't use forCommit until we implement a merge.
+                //if ( ! options.forCommit || entities[0].childUpdated )
+                if ( entities[0].childUpdated )
+                    json[ entityName ] =  entities[0].toJSON( options );
             } else {
-                json[ entityName ] = entities.map( ei => ei.toJSON( options ) );
+                // Filter is used to remove undefined values; these are returned if options.forCommit
+                // is true and the ei wasn't updated.
+                json[ entityName ] = entities.map( ei => ei.toJSON( options ) ).filter( ei => ei );
             }
         }
 
@@ -631,7 +692,7 @@ class ArrayDelegate<T extends EntityInstance> {
 
         let list = index ? [ this.array[index] ] : this.array;
         for ( let ei of list ) {
-            if ( ei.metaFlags.incomplete )
+            if ( ei.incomplete )
                 error( `Entity ${this.entityDef.name} is incomplete and cannot be deleted.` )
         }
 
@@ -672,7 +733,7 @@ class ArrayDelegate<T extends EntityInstance> {
         let ei = this.array.splice( index, 1 )[0];
         ei.deleted = true;
         while( ei = ei.parentEntityInstance() as T ) {
-            ei.metaFlags.incomplete = true;
+            ei.incomplete = true;
         }
     }
 
@@ -829,8 +890,9 @@ export class ZeidonConfiguration {
 }
 
 export interface ZeidonToJsonOptions {
-    childEntities? : string[]
-    meta? :          boolean
+    childEntities? : string[];  // If a non-empty array, only write childEntities listed in the array.
+    meta? :          boolean;   // Write OI/entity meta (e.g. incrementals).
+    forCommit? :     boolean;   // Only write entities need for update.
 }
 
 export interface CommitOptions {

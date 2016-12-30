@@ -49,11 +49,14 @@ var ObjectInstance = (function () {
         return undefined;
     };
     ObjectInstance.prototype.toJSON = function (options) {
-        console.log("JSON for Configuration OI");
-        options = options || {};
+        if (options === void 0) { options = {}; }
         var jarray = [];
         for (var _i = 0, _a = this.roots.allEntities(); _i < _a.length; _i++) {
             var root = _a[_i];
+            // TODO: can't use forCommit yet because the OI that comes back doesn't have
+            // the missing entities.  We can't use forCommit until we implement a merge.
+            // If forCommit is true, only write updated entities.
+            // TODO: can't use forCommit yet because the OI that comes back doesn't have            // TODO: can't use forCommit yet because the OI that comes back doesn't have            // TODO: can't use forCommit yet because the OI that comes back doesn't have            // TODO: can't use forCommit yet because the OI that comes back doesn't have            // TODO: can't use forCommit yet because the OI that comes back doesn't have            // if ( ! options.forCommit || root.childUpdated )
             jarray.push(root.toJSON(options));
         }
         ;
@@ -67,7 +70,8 @@ var ObjectInstance = (function () {
     /**
      * Wrap the JSON for this object with Zeidon OI meta.  Used for committing.
      */
-    ObjectInstance.prototype.toZeidonMeta = function () {
+    ObjectInstance.prototype.toZeidonMeta = function (options) {
+        // the missing entities.  We can't use forCommit until we implement a merge.            // the missing entities.  We can't use forCommit until we implement a merge.            // the missing entities.  We can't use forCommit until we implement a merge.            // the missing entities.  We can't use forCommit until we implement a merge.            // the missing entities.  We can't use forCommit until we implement a merge.        options = options || { meta: true, forCommit: true };
         var wrapper = {
             ".meta": { version: "1" },
             OIs: [{
@@ -80,7 +84,7 @@ var ObjectInstance = (function () {
                 }]
         };
         // Add the OI.
-        wrapper.OIs[0][this.getLodDef().name] = this.toJSON({ meta: true })[this.getLodDef().name];
+        wrapper.OIs[0][this.getLodDef().name] = this.toJSON(options)[this.getLodDef().name];
         return wrapper;
     };
     ObjectInstance.activateOi = function (oi, options) {
@@ -165,22 +169,23 @@ var ObjectInstance = (function () {
     return ObjectInstance;
 }());
 exports.ObjectInstance = ObjectInstance;
-var EiMetaFlags = (function () {
-    function EiMetaFlags() {
-    }
-    return EiMetaFlags;
-}());
-var EntityInstance = (function () {
-    function EntityInstance(initialize, oi, parentArray, options) {
-        if (options === void 0) { options = DEFAULT_CREATE_OPTIONS; }
+var Incrementals = (function () {
+    function Incrementals() {
         this.created = false;
         this.included = false;
         this.deleted = false;
         this.excluded = false;
         this.updated = false;
+    }
+    return Incrementals;
+}());
+var EntityInstance = (function () {
+    function EntityInstance(initialize, oi, parentArray, options) {
+        if (options === void 0) { options = DEFAULT_CREATE_OPTIONS; }
+        this.incrementals = new Incrementals();
+        this.childUpdated = false; // True if this entity or one of its children is updated.
         this.attributes = {};
         this.workAttributes = {};
-        this.metaFlags = {};
         this.validateErrors = {};
         // If incomplete = true then this entity did not have all its children
         // loaded and so cannot be deleted.
@@ -211,7 +216,7 @@ var EntityInstance = (function () {
                 continue;
             }
             if (attr == ".meta") {
-                this.metaFlags = initialize[attr];
+                this.parseEntityMeta(initialize[attr]);
                 continue;
             }
             if (attr.startsWith(".")) {
@@ -230,6 +235,51 @@ var EntityInstance = (function () {
             this.oi.isUpdated = true;
         }
     }
+    Object.defineProperty(EntityInstance.prototype, "created", {
+        get: function () { return this.incrementals.created; },
+        set: function (v) { this.setIncremental(v, "created"); },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(EntityInstance.prototype, "deleted", {
+        get: function () { return this.incrementals.deleted; },
+        set: function (v) { this.setIncremental(v, "deleted"); },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(EntityInstance.prototype, "included", {
+        get: function () { return this.incrementals.included; },
+        set: function (v) { this.setIncremental(v, "included"); },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(EntityInstance.prototype, "excluded", {
+        get: function () { return this.incrementals.excluded; },
+        set: function (v) { this.setIncremental(v, "excluded"); },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(EntityInstance.prototype, "updated", {
+        get: function () { return this.incrementals.updated; },
+        set: function (v) { this.setIncremental(v, "updated"); },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    EntityInstance.prototype.setIncremental = function (v, flag) {
+        if (v && !this.incrementals[flag]) {
+            this.oi.isUpdated = true;
+            this.childUpdated = true;
+            for (var parent_1 = this.parentEntityInstance(); parent_1; parent_1 = parent_1.parentEntityInstance()) {
+                parent_1.childUpdated = true;
+            }
+        }
+        this.incrementals[flag] = v;
+    };
     Object.defineProperty(EntityInstance.prototype, "entityName", {
         get: function () { throw "entityName() but be overridden"; },
         enumerable: true,
@@ -362,6 +412,25 @@ var EntityInstance = (function () {
             str += 'X';
         return str;
     };
+    EntityInstance.prototype.parseEntityMeta = function (meta) {
+        if (meta.incrementals) {
+            this.created = meta.incrementals.indexOf("C") > -1;
+            this.deleted = meta.incrementals.indexOf("D") > -1;
+            this.included = meta.incrementals.indexOf("I") > -1;
+            this.excluded = meta.incrementals.indexOf("X") > -1;
+            this.updated = meta.incrementals.indexOf("U") > -1;
+        }
+        this.incomplete = !!meta.incomplete;
+    };
+    EntityInstance.prototype.buildEntityMeta = function () {
+        var meta = {};
+        var incrementals = this.buildIncrementalStr();
+        if (incrementals != "")
+            meta["incrementals"] = incrementals;
+        if (this.incomplete)
+            meta["incomplete"] = true;
+        return meta;
+    };
     /**
      * Updates the attributes of this entity instance and any children that are specified
      * in 'values'.  The entity fingerprint is used to match up entities in 'value' to the
@@ -438,7 +507,11 @@ var EntityInstance = (function () {
         }
     };
     EntityInstance.prototype.toJSON = function (options) {
-        options = options || {};
+        // TODO: can't use forCommit yet because the OI that comes back doesn't have
+        // the missing entities.  We can't use forCommit until we implement a merge.
+        // if ( options.forCommit && ! this.childUpdated )
+        //     return undefined;
+        if (options === void 0) { options = {}; }
         var json = {};
         if (options.meta) {
             var meta = {};
@@ -466,10 +539,16 @@ var EntityInstance = (function () {
                 continue;
             var entityInfo = this.entityDef.childEntities[entityName];
             if (entityInfo.cardMax == 1) {
-                json[entityName] = entities[0].toJSON(options);
+                // TODO: can't use forCommit yet because the OI that comes back doesn't have
+                // the missing entities.  We can't use forCommit until we implement a merge.
+                //if ( ! options.forCommit || entities[0].childUpdated )
+                if (entities[0].childUpdated)
+                    json[entityName] = entities[0].toJSON(options);
             }
             else {
-                json[entityName] = entities.map(function (ei) { return ei.toJSON(options); });
+                // Filter is used to remove undefined values; these are returned if options.forCommit
+                // is true and the ei wasn't updated.
+                json[entityName] = entities.map(function (ei) { return ei.toJSON(options); }).filter(function (ei) { return ei; });
             }
         }
         return json;
@@ -575,7 +654,7 @@ var ArrayDelegate = (function () {
         var list = index ? [this.array[index]] : this.array;
         for (var _i = 0, list_1 = list; _i < list_1.length; _i++) {
             var ei = list_1[_i];
-            if (ei.metaFlags.incomplete)
+            if (ei.incomplete)
                 error("Entity " + this.entityDef.name + " is incomplete and cannot be deleted.");
         }
         if (!this.hiddenEntities)
@@ -607,7 +686,7 @@ var ArrayDelegate = (function () {
         var ei = this.array.splice(index, 1)[0];
         ei.deleted = true;
         while (ei = ei.parentEntityInstance()) {
-            ei.metaFlags.incomplete = true;
+            ei.incomplete = true;
         }
     };
     ArrayDelegate.prototype.exclude = function (index) {

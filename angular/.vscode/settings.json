@@ -12,6 +12,10 @@
         "**/*.js": {"when": "$(basename).ts"}
     },
 
-    "files.trimTrailingWhitespace": true
+    "files.trimTrailingWhitespace": true,
+
+    // Following for Numbered Bookmarks extension.
+    "numberedBookmarks.saveBookmarksBetweenSessions": true,
+    "numberedBookmarks.useStickyBookmarks": true
 
 }
