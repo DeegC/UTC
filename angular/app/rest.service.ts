@@ -52,6 +52,16 @@ export class RestService {
             .map(response => this.parseCommitResponse( session, response ) ) as  Observable<Session>;
     }
 
+    stopSession(): Observable<string> {
+        let url = `${this.values.restUrl}/stopSession`;
+        let body = "{}";
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let reqOptions = new RequestOptions({ headers: headers });
+
+        return this.http.post( url, body, reqOptions)
+            .map(response => response.text() ) as  Observable<string>;
+    }
+
     parseCommitResponse( oi: ObjectInstance, response ): ObjectInstance {
         if ( response.text() == "{}" )
             return oi;

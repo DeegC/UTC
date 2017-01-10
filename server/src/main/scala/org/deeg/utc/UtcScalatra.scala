@@ -31,7 +31,7 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
     
     val logger = task.log()
 
-    var controller : TemperatureController = null
+    @volatile var controller : TemperatureController = null
     
     def getObjectEngine(): ObjectEngine = {
         return oe
@@ -74,6 +74,17 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
         }
         
         controller.serializeSession()
+    }
+    
+    post("/utc/stopSession") {
+        if ( controller == null ) {
+            """{ "message": "No session running" }"""
+        }
+        else {
+            controller.stop()
+            controller = null
+            """{ "message": "Session stopped." }"""
+        }
     }
     
     private def startUdpServer() = {

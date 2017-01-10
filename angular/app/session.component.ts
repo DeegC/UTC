@@ -7,19 +7,24 @@ import { Instant } from './Instant';
   selector: 'session',
   template: `
   <h3>Current Session</h3>
-  <div *ngIf="currentSession == undefined || currentSession.isEmpty" >
-    No session is currently running
+  <div>
+    {{currentMessage}}
   </div>
 
   <div *ngIf="currentSession && ! currentSession.isEmpty" >
       <div><label>Configuration: </label>{{currentSession.Session$.Configuration$.Description}}</div>
       <div><label>Started at: </label>{{currentSession.Session$.Date}}</div>
+
+      <button type="button" class="btn btn-default" (click)="stopSession()" >
+            Stop Session
+      </button>
   </div>
 `
 })
 export class SessionComponent implements OnInit {
     currentSession: Session;
     currentState:   Instant;
+    currentMessage = "No session is currently running";
 
     constructor( private restService: RestService ) { }
 
@@ -31,6 +36,11 @@ export class SessionComponent implements OnInit {
     getCurrentSession() {
         this.restService.getCurrentSession().subscribe( session => {
             this.currentSession = session;
+            if ( this.currentSession.isEmpty )
+                this.currentMessage = "No Session is currently running";
+            else
+                this.currentMessage = undefined;
+
             session.logOi();
         } );
     }
@@ -40,5 +50,14 @@ export class SessionComponent implements OnInit {
             this.currentState = instant;
             instant.logOi();
         } );
+    }
+
+    stopSession(): void {
+        this.restService.stopSession().subscribe( message => {
+            this.currentSession = undefined;
+            this.currentState = undefined;
+            this.currentMessage = message;
+        } );
+
     }
 }

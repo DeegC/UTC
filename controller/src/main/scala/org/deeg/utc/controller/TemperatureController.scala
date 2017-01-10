@@ -29,7 +29,7 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
     def stop() {
         if ( running ) {
             logger.info( "Received notification to stop controller" )
-            notify()
+            this.synchronized{  notify() }
             running = false
         }
     }

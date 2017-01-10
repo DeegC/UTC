@@ -56,6 +56,14 @@ var RestService = (function () {
         return this.http.post(url, body, reqOptions)
             .map(function (response) { return _this.parseCommitResponse(session, response); });
     };
+    RestService.prototype.stopSession = function () {
+        var url = this.values.restUrl + "/stopSession";
+        var body = "{}";
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var reqOptions = new http_1.RequestOptions({ headers: headers });
+        return this.http.post(url, body, reqOptions)
+            .map(function (response) { return response.text(); });
+    };
     RestService.prototype.parseCommitResponse = function (oi, response) {
         if (response.text() == "{}")
             return oi;

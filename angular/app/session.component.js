@@ -13,6 +13,7 @@ var rest_service_1 = require("./rest.service");
 var SessionComponent = (function () {
     function SessionComponent(restService) {
         this.restService = restService;
+        this.currentMessage = "No session is currently running";
     }
     SessionComponent.prototype.ngOnInit = function () {
         this.getCurrentSession();
@@ -22,6 +23,10 @@ var SessionComponent = (function () {
         var _this = this;
         this.restService.getCurrentSession().subscribe(function (session) {
             _this.currentSession = session;
+            if (_this.currentSession.isEmpty)
+                _this.currentMessage = "No Session is currently running";
+            else
+                _this.currentMessage = undefined;
             session.logOi();
         });
     };
@@ -32,12 +37,20 @@ var SessionComponent = (function () {
             instant.logOi();
         });
     };
+    SessionComponent.prototype.stopSession = function () {
+        var _this = this;
+        this.restService.stopSession().subscribe(function (message) {
+            _this.currentSession = undefined;
+            _this.currentState = undefined;
+            _this.currentMessage = message;
+        });
+    };
     return SessionComponent;
 }());
 SessionComponent = __decorate([
     core_1.Component({
         selector: 'session',
-        template: "\n  <h3>Current Session</h3>\n  <div *ngIf=\"currentSession == undefined || currentSession.isEmpty\" >\n    No session is currently running\n  </div>\n\n  <div *ngIf=\"currentSession && ! currentSession.isEmpty\" >\n      <div><label>Configuration: </label>{{currentSession.Session$.Configuration$.Description}}</div>\n      <div><label>Started at: </label>{{currentSession.Session$.Date}}</div>\n  </div>\n"
+        template: "\n  <h3>Current Session</h3>\n  <div>\n    {{currentMessage}}\n  </div>\n\n  <div *ngIf=\"currentSession && ! currentSession.isEmpty\" >\n      <div><label>Configuration: </label>{{currentSession.Session$.Configuration$.Description}}</div>\n      <div><label>Started at: </label>{{currentSession.Session$.Date}}</div>\n\n      <button type=\"button\" class=\"btn btn-default\" (click)=\"stopSession()\" >\n            Stop Session\n      </button>\n  </div>\n"
     }),
     __metadata("design:paramtypes", [rest_service_1.RestService])
 ], SessionComponent);

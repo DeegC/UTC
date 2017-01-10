@@ -56,7 +56,7 @@ var ObjectInstance = (function () {
             // TODO: can't use forCommit yet because the OI that comes back doesn't have
             // the missing entities.  We can't use forCommit until we implement a merge.
             // If forCommit is true, only write updated entities.
-            // TODO: can't use forCommit yet because the OI that comes back doesn't have            // TODO: can't use forCommit yet because the OI that comes back doesn't have            // TODO: can't use forCommit yet because the OI that comes back doesn't have            // TODO: can't use forCommit yet because the OI that comes back doesn't have            // TODO: can't use forCommit yet because the OI that comes back doesn't have            // if ( ! options.forCommit || root.childUpdated )
+            // if ( ! options.forCommit || root.childUpdated )
             jarray.push(root.toJSON(options));
         }
         ;
@@ -71,7 +71,7 @@ var ObjectInstance = (function () {
      * Wrap the JSON for this object with Zeidon OI meta.  Used for committing.
      */
     ObjectInstance.prototype.toZeidonMeta = function (options) {
-        // the missing entities.  We can't use forCommit until we implement a merge.            // the missing entities.  We can't use forCommit until we implement a merge.            // the missing entities.  We can't use forCommit until we implement a merge.            // the missing entities.  We can't use forCommit until we implement a merge.            // the missing entities.  We can't use forCommit until we implement a merge.        options = options || { meta: true, forCommit: true };
+        options = options || { meta: true, forCommit: true };
         var wrapper = {
             ".meta": { version: "1" },
             OIs: [{
@@ -84,7 +84,9 @@ var ObjectInstance = (function () {
                 }]
         };
         // Add the OI.
-        wrapper.OIs[0][this.getLodDef().name] = this.toJSON(options)[this.getLodDef().name];
+        var oi = this.toJSON(options);
+        var root = oi[this.getLodDef().name];
+        wrapper.OIs[0][this.getLodDef().name] = root;
         return wrapper;
     };
     ObjectInstance.activateOi = function (oi, options) {

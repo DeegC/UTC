@@ -47,7 +47,7 @@ export class ObjectInstance {
             // TODO: can't use forCommit yet because the OI that comes back doesn't have
             // the missing entities.  We can't use forCommit until we implement a merge.
             // If forCommit is true, only write updated entities.
-            // TODO: can't use forCommit yet because the OI that comes back doesn't have            // TODO: can't use forCommit yet because the OI that comes back doesn't have            // TODO: can't use forCommit yet because the OI that comes back doesn't have            // TODO: can't use forCommit yet because the OI that comes back doesn't have            // TODO: can't use forCommit yet because the OI that comes back doesn't have            // if ( ! options.forCommit || root.childUpdated )
+            // if ( ! options.forCommit || root.childUpdated )
                 jarray.push( root.toJSON( options ) );
         };
 
@@ -64,7 +64,7 @@ export class ObjectInstance {
      * Wrap the JSON for this object with Zeidon OI meta.  Used for committing.
      */
     toZeidonMeta( options? : CommitOptions ) : Object {
-            // the missing entities.  We can't use forCommit until we implement a merge.            // the missing entities.  We can't use forCommit until we implement a merge.            // the missing entities.  We can't use forCommit until we implement a merge.            // the missing entities.  We can't use forCommit until we implement a merge.            // the missing entities.  We can't use forCommit until we implement a merge.        options = options || { meta: true, forCommit: true };
+        options = options || { meta: true, forCommit: true };
 
         let wrapper = {
             ".meta": { version: "1" },
@@ -80,7 +80,9 @@ export class ObjectInstance {
         };
 
         // Add the OI.
-        wrapper.OIs[0][ this.getLodDef().name ] = this.toJSON( options )[this.getLodDef().name ];
+        let oi = this.toJSON( options );
+        let root = oi[this.getLodDef().name ];
+        wrapper.OIs[0][ this.getLodDef().name ] = root;
 
         return wrapper;
     }
