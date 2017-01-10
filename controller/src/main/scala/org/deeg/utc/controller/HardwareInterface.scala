@@ -10,14 +10,19 @@ trait HardwareInterface {
   /**
    * Read the value of different sensors and create a new Instant entity.
    */
-  def readSensors( session: View @basedOn( "Session" ) ) = {
-    session.Instant create()
-    session.Instant.CpuTemperature = readCpuTemperature
-    task.log.debug( "CpuTemperature=%s", session.Instant.CpuTemperature )
+  def readSensors(): View @basedOn( "Instant" ) = {
+    val instant = task.newView( "Instant" ).activateEmpty()
+    instant.Instant create()
+    instant.Instant.CpuTemperature = readCpuTemperature
+    instant.Instant.Therm0 = readTemperature( 0 )
+    instant.logOi
+    return instant
   }
 
   def task: Task
   def readCpuTemperature: Int
+  def readTemperature( probe: Int ) : Double
+  def setPwm( pwm: Int )
 }
 
 object HardwareInterface {

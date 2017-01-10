@@ -5,22 +5,76 @@ import com.quinsoft.zeidon.Task
 import com.quinsoft.zeidon.scala.Implicits._
 import com.quinsoft.zeidon.scala.View
 import com.quinsoft.zeidon.scala.basedOn
+import edu.wpi.first.wpilibj.PIDController
+import edu.wpi.first.wpilibj.PIDOutput
+import edu.wpi.first.wpilibj.PIDSource
 
-class TemperatureController( private val currentSession: View @basedOn( "Session" ) ) extends Runnable {
+class TemperatureController( private val currentSession: View @basedOn( "Session" ) ) extends Runnable with PIDSource with PIDOutput {
     @volatile 
-    private var running = false;
+    private var running = false
+    private var pid : PIDController = null
     private val logger = currentSession.log()
     private val task = currentSession.task
 
     private val hardware = HardwareInterface.getHardwareInterface( task )
     
+    /**
+     * The amount of time (in millis) that the main Looper thread waits
+     * between reads.
+     */
+    private val mainLoopDelay = 250
+    
+    /**
+     * Main method for processing a single tick of the controller.
+     */
+    private def tick() {
+        logger.debug( "Main controller tick..." )
+        
+    }
+    
+    /**
+     * Get the result to use in PIDController
+     * @return the result to use in PIDController
+     * 
+     * TODO: Therm0 is an integer and pidGet expects a double, thus there is a loss of precision.
+     *       Should we track temperatures as doubles?
+     */
+    def pidGet(): Double = {
+        val instant = hardware.readSensors( )
+        logger.debug( "pidGet" )
+        return instant.Instant.Therm0
+    }
+    
+    /**
+     * Set the output to the value calculated by PIDController
+     * @param output the value calculated by PIDController
+     */
+    def pidWrite(output: Double) {
+        hardware.setPwm( output.toInt )
+    }
+    
+
     def run() {
         logger.info( "Starting up controller for config %s", currentSession.Configuration.Description )
+
         
-        // Wait until someone calls stop(), which will call notify().
+        pid = new PIDController( currentSession.Configuration.PidP,
+                                 currentSession.Configuration.PidI,
+                                 currentSession.Configuration.PidD,
+                                 this, this, 5 );
+
+        pid.setOutputRange( 0, 255 );
+        pid.setSetpoint( 250 );
+        pid.enable()
+        
+        // Run until someone calls stop()
         running = true;
-        logger.info( "Waiting..." )
-        this.synchronized{  wait() }
+        while ( running ) {
+            tick();
+            Thread.sleep( mainLoopDelay )
+        }
+        
+        pid.disable()
         logger.info( "Controller done." )
     }
     
@@ -29,7 +83,6 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
     def stop() {
         if ( running ) {
             logger.info( "Received notification to stop controller" )
-            this.synchronized{  notify() }
             running = false
         }
     }
@@ -51,8 +104,8 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
     
     def serializeSession() : String = {
         currentSession.synchronized {
-            val serialized = currentSession.serializeOi.asJson.withIncremental().toString()
-            logger.debug(serialized)
+            val serialized = currentSession.serializeOi.asJson.withIncremental.toString()
+            logger.debug( serialized )
             return serialized
         }
     }

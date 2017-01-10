@@ -9,7 +9,15 @@ import com.quinsoft.zeidon.Task
 import org.deeg.utc.controller.HardwareInterfaceI.P.
  */
 class ChipHardwareInterface(val task: Task) extends HardwareInterface {
-    
+  
+  override def setPwm( pwm : Int ) {
+      task.log().debug("Setting pwm to %s", pwm )
+  }
+  
+  override def readTemperature( probe : Int ) : Double = {
+      return 100.0 + probe    
+  }
+  
   override def readCpuTemperature: Int = {
     val lsb = "i2cget -y -f 0 0x34 0x5f".!!
     val msb = "i2cget -y -f 0 0x34 0x5e".!!
