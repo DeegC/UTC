@@ -13,6 +13,7 @@ trait HardwareInterface {
   def readSensors(): View @basedOn( "Instant" ) = {
     val instant = task.newView( "Instant" ).activateEmpty()
     instant.Instant create()
+    instant.Instant.Timestamp = "NOW"
     instant.Instant.CpuTemperature = readCpuTemperature
     instant.Instant.Therm0 = readTemperature( 0 )
     instant.logOi

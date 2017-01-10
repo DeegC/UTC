@@ -1,5 +1,5 @@
 /*
-  Generated from LOD Instant on 2017-01-01T21:56:36.667
+  Generated from LOD Instant on 2017-01-10T01:34:45.631
 
 */
 "use strict";
@@ -154,6 +154,14 @@ var Instant_Instant = (function (_super) {
     });
     ;
     ;
+    Object.defineProperty(Instant_Instant.prototype, "CpuTemperature", {
+        get: function () { return this.getAttribute("CpuTemperature"); },
+        set: function (value) { this.setAttribute("CpuTemperature", value); },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    ;
     return Instant_Instant;
 }(zeidon.EntityInstance));
 exports.Instant_Instant = Instant_Instant;
@@ -289,12 +297,12 @@ exports.Instant_LodDef = {
                 },
                 CpuTemperature: {
                     name: "CpuTemperature",
-                    hidden: true,
+                    hidden: false,
                     required: false,
                     domainName: "Temperature",
                     persistent: true,
                     key: false,
-                    update: false,
+                    update: true,
                     foreignKey: false,
                 },
                 fk_id_session: {

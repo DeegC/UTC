@@ -1,4 +1,4 @@
-z1000-Zeidon    SESSION  TZZOLODO 11/16/16   18:17:00 1.0a2    
+z1000-Zeidon    SESSION  TZZOLODO 01/10/17   01:34:39 1.0a2    
 eLOD       1
 aZKey      929210658
 aNextZKeyToAssign 929210692
@@ -246,12 +246,15 @@ aZKey      929210664
 aCreate    Y
 aDelete    Y
 aUpdate    Y
-aInclude   N
+aInclude   Y
 aInclSrc   Y
 aExclude   N
 aRecursive N
 aDerived   N
+aWork      N
 aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
 aRelLinkIndicator L
 aDesc      This entity records all the readings of a moment in time in a UTC run.
 aSeqNo     0

@@ -1,6 +1,6 @@
 
 /*
-  Generated from LOD Instant on 2017-01-01T21:56:36.667
+  Generated from LOD Instant on 2017-01-10T01:34:45.631
 
 */
 
@@ -83,6 +83,9 @@ export class Instant_Instant extends zeidon.EntityInstance {
 
     get PWM0(): string { return this.getAttribute("PWM0") };
     set PWM0(value: string) { this.setAttribute("PWM0", value) };
+
+    get CpuTemperature(): string { return this.getAttribute("CpuTemperature") };
+    set CpuTemperature(value: string) { this.setAttribute("CpuTemperature", value) };
 }
 
 const InstantEntityPrototypes = {
@@ -219,12 +222,12 @@ export const Instant_LodDef = {
                 },
                 CpuTemperature: {
                     name:         "CpuTemperature",
-                    hidden:       true,
+                    hidden:       false,
                     required:     false,
                     domainName:   "Temperature",
                     persistent:   true,
                     key:          false,
-                    update:       false,
+                    update:       true,
                     foreignKey:   false,
                 },
                 fk_id_session: {

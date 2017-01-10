@@ -25,11 +25,25 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
     private val mainLoopDelay = 250
     
     /**
+     * This is the next time (in epoch millis) that the current state should be saved to the DB.
+     */
+    private var nextSaveTime: Long = 0
+    
+    /**
      * Main method for processing a single tick of the controller.
      */
     private def tick() {
         logger.debug( "Main controller tick..." )
-        
+        if ( System.currentTimeMillis() > nextSaveTime ) {
+            nextSaveTime = System.currentTimeMillis() + 60 * 1000 // Save again in a minute.
+            val instant = hardware.readSensors( )
+            currentSession.synchronized {
+                currentSession.Instant include instant.Instant
+                currentSession.Instant.TargetTemperature = currentSession.Configuration.TargetTemperature
+                currentSession.commit()
+            }
+            
+        }
     }
     
     /**
@@ -91,15 +105,7 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
      * 
      */
     def currentState : View @basedOn( "Instant" ) = {
-        val instant = task.newView( "Instant" ).activateEmpty()
-        currentSession.synchronized {
-            if ( currentSession.Instant setLast() )
-                instant.Instant include( currentSession.Instant )
-            else
-                instant.Instant create()
-        }
-        
-        return instant
+        return hardware.readSensors( )
     }
     
     def serializeSession() : String = {

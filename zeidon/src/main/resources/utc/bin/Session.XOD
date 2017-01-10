@@ -1,4 +1,4 @@
-z1000-Zeidon    SESSION  TZZOXODO 11/16/16   18:17:00 1.0a2    
+z1000-Zeidon    SESSION  TZZOXODO 01/10/17   01:34:39 1.0a2    
 eOBJECT    1
 aNAME      Session
 aZKey      929210658
@@ -397,6 +397,7 @@ aCREATE    Y
 aDELETE    Y
 aPDELETE   D
 aUPDATE    Y
+aINCLUDE   Y
 aINCLSRC   Y
 aMAX_LTH   150
 

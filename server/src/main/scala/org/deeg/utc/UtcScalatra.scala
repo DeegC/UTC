@@ -42,12 +42,6 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
         response.setHeader("Access-Control-Allow-Headers", request.getHeader("Access-Control-Request-Headers"));
     }
 
-    get("/utc/echo/:string") {
-        oe.forTask( "UTC" ) { task =>
-            "This is test for echo"
-        }
-    }
-    
     get("/utc/getSession") {
         if ( controller == null ) {
             logger.debug( "No current session" )
@@ -64,7 +58,10 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
             "{}"
         }
         else {
-            serializeResponse( controller.currentState )
+            val view = controller.currentState()
+            val serialized = view.serializeOi.asJson.toString()
+            logger.debug(serialized)
+            serialized
         }
     }
     

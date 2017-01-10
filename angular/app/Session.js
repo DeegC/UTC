@@ -1,5 +1,5 @@
 /*
-  Generated from LOD Session on 2017-01-01T21:56:36.671
+  Generated from LOD Session on 2017-01-10T01:34:45.636
 
 */
 "use strict";
@@ -597,7 +597,7 @@ exports.Session_LodDef = {
             cardMax: 999999,
             hasInit: false,
             creatable: true,
-            includable: false,
+            includable: true,
             deletable: true,
             excludable: false,
             updatable: true,
