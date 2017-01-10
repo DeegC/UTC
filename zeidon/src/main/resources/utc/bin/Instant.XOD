@@ -1,4 +1,4 @@
-z1000-Zeidon    INSTANT  TZZOXODO 12/28/16   23:00:43 1.0a2    
+z1000-Zeidon    INSTANT  TZZOXODO 01/10/17   00:45:50 1.0a2    
 eOBJECT    1
 aNAME      Instant
 aZKey      929210436
@@ -11,6 +11,7 @@ eENTITY    2
 aNAME      Instant
 aMAX_LTH   150
 aERENT_TOK 905181315
+aFULLPERSIST Y
 aCREATE    Y
 aDELETE    Y
 aPDELETE   D
@@ -149,7 +150,7 @@ aAPDM_TOK  905180737
 aDOMAIN    Temperature
 aTYPE      L
 aLTH       4
-aHIDDEN    Y
+aUPDATE    Y
 aXVAATT_TOK 12
 
 eATTRIB    3

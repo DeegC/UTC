@@ -1,7 +1,7 @@
-z1000-Zeidon    INSTANT  TZZOLODO 12/28/16   23:00:43 1.0a2    
+z1000-Zeidon    INSTANT  TZZOLODO 01/10/17   00:45:50 1.0a2    
 eLOD       1
 aZKey      929210436
-aNextZKeyToAssign 929210454
+aNextZKeyToAssign 929210455
 aName      Instant
 aDesc      Records the status of the sensors at a particular time.
 
@@ -151,6 +151,16 @@ aDecimalFormat 0
 aDesc      Integer numbers from -lots to +lots
 aContextRestriction N
 
+eLOD_AttributeRec 3
+aZKey      929210455
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      CpuTemperature
+aZKey      905181401
+
+eDomainRec 5
+
 eER_EntityRec 3
 aName      Instant
 aZKey      905181315
@@ -160,6 +170,7 @@ aER_DiagramPosX 28
 aER_DiagramPosY 28
 
 eLOD_Entity 2
+awkSelectedAttributeForDragSort 11
 
 eLOD_Attribute 3
 awkSequence 1
@@ -238,6 +249,13 @@ eER_Attribute 4
 
 eDomain    5
 
+eLOD_Attribute 3
+awkSequence 12
+
+eER_Attribute 4
+
+eDomain    5
+
 eER_Entity 3
 
 ePOD       2
@@ -268,38 +286,42 @@ i22        7
 i25        7
 i28        7
 i31        7
-i36        1
-i37        2
-i38        3
-i39        4
-i40        5
-i41        6
-i42        7
-i43        8
-i44        9
+i37        7
+i39        1
+i40        2
+i41        3
+i42        4
+i43        5
+i44        6
 i45        7
-i46        11
-i47        12
+i46        8
+i47        9
 i48        7
-i49        14
-i50        15
+i49        11
+i50        12
 i51        7
-i52        17
-i53        18
+i52        14
+i53        15
 i54        7
-i55        20
-i56        21
+i55        17
+i56        18
 i57        7
-i58        23
-i59        24
+i58        20
+i59        21
 i60        7
-i61        26
-i62        27
+i61        23
+i62        24
 i63        7
-i64        29
-i65        30
+i64        26
+i65        27
 i66        7
-i67        32
-i68        33
-i69        34
-i70        35
+i67        29
+i68        30
+i69        7
+i70        32
+i71        33
+i72        34
+i73        35
+i74        36
+i75        7
+i76        38
