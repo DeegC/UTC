@@ -11,7 +11,7 @@ configurations {
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
-    compile( 'com.quinsoft.zeidon:zeidon-scala:1.4.1-SNAPSHOT') {
+    compile( 'com.quinsoft.zeidon:zeidon-scala:1.5.0-SNAPSHOT') {
         // Exclude some projects to keep the final .war size down.
         exclude module: 'scala-reflect'
         exclude module: 'httpclient'

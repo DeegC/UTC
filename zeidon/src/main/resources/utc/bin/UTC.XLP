@@ -1,4 +1,4 @@
-z1000-Zeidon    UTC      TZCMLPLO 01/10/17   01:34:39 1.0a2    
+z1000-Zeidon    UTC      TZCMLPLO 01/10/17   10:04:17 1.0a2    
 eLPLR      1
 aName      UTC
 aDesc      Universal Temperature Controller
@@ -6,7 +6,7 @@ aZKey      92726748
 aPgmSrcDir c:\zeidon\zapp\utc
 aExecDir   c:\zeidon\zapp\utc\bin
 aMetaSrcDir c:\zeidon\zapp\utc
-aTaskUseCount 2
+aTaskUseCount 1
 aLastBuildDate 20160921001239602
 aLPLR_Type 2
 aTempDesc  Universal Temperature Controller
