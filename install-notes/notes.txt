@@ -1,10 +1,18 @@
 Pair phone with CHIP.
 
+To get wifi to connect without asking for keyring password: https://bbs.nextthing.co/t/disable-keyring-password-request/6689
+
+EMAIL
+
+Updates need to be made to /etc/ssmtp/ssmtp.conf.  See http://www.howtogeek.com/51819/how-to-setup-email-alerts-on-linux-using-gmail/
+Note: For gmail you may have to turn on "less secure apps" for the account.
+
 To get python script running.
 Edit /lib/systemd/system/bluetooth.service and add '-C' after 'bluetoothd'. Reboot.
 sudo sdptool add SP
 
 Automatically send ip after connect
+apt-get update
 apt-get install ssmtp
 /etc/network/if-up.d/send-ip:
 	ip addr show wlan0  | mail -s"Chip IP" dgc@dgchristensen.net
