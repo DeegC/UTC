@@ -10,6 +10,8 @@ import org.deeg.utc.controller.HardwareInterfaceI.P.
  */
 class ChipHardwareInterface(val task: Task) extends HardwareInterface {
   
+  task.log().info( "Using ChipHardwareInterface" );
+    
   override def setPwm( pwm : Int ) {
       task.log().debug("Setting pwm to %s", pwm )
   }

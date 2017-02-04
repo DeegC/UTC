@@ -1,8 +1,0 @@
-#!/bin/bash
-
-# Copy this to /etc/network/if-up.d/send-ip to automatically send email with current IP address
-# Must not have .sh suffix.
-
-ip addr show wlan0  | mail -s"Chip IP" user@email.com
-
-exit 0

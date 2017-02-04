@@ -9,14 +9,14 @@ import edu.wpi.first.wpilibj.PIDController
 import edu.wpi.first.wpilibj.PIDOutput
 import edu.wpi.first.wpilibj.PIDSource
 
-class TemperatureController( private val currentSession: View @basedOn( "Session" ) ) extends Runnable with PIDSource with PIDOutput {
+class TemperatureController( private val currentSession: View @basedOn( "Session" ),
+                             private val hardware: HardwareInterface ) extends Runnable with PIDSource with PIDOutput {
     @volatile 
     private var running = false
     private var pid : PIDController = null
     private val logger = currentSession.log()
     private val task = currentSession.task
 
-    private val hardware = HardwareInterface.getHardwareInterface( task )
     
     /**
      * The amount of time (in millis) that the main Looper thread waits
@@ -122,7 +122,9 @@ object TemperatureController {
     /**
      * Start a new controller with a configuration based on configId.
      */
-    def startController( oe: ObjectEngine, configId : Int ) : TemperatureController = {
+    def startController( oe: ObjectEngine, 
+                         configId : Int,
+                         hardwareInterface: HardwareInterface ) : TemperatureController = {
         val task = oe.createTask( "UTC" )
         val configOi = task.newView( "Configuration" )
                            .activateWhere( _.Configuration.Id = configId )
@@ -131,7 +133,7 @@ object TemperatureController {
         currentSession.Session.Date = "NOW"
         currentSession.Configuration.include( configOi.Configuration )
 
-        val controller = new TemperatureController( currentSession )
+        val controller = new TemperatureController( currentSession, hardwareInterface )
         val thread = new Thread( controller )
         thread.start()
         return controller

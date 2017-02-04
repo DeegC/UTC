@@ -12,6 +12,7 @@ import com.deeg.utc.zeidon._
 import com.quinsoft.zeidon.ObjectEngine
 import com.quinsoft.zeidon.scalatra.ZeidonRestScalatra
 import org.deeg.utc.controller.TemperatureController
+import org.deeg.utc.controller.HardwareInterface
 
 
 class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
@@ -30,6 +31,8 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
     configuration.createDefaultConfiguration()
     
     val logger = task.log()
+    
+    private val hardware = HardwareInterface.getHardwareInterface( task )
 
     @volatile var controller : TemperatureController = null
     
@@ -65,9 +68,19 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
         }
     }
     
+    /**
+     * Return values retrieved from the hardware without a session.  Mostly used as
+     * a way to test the hardware.
+     */
+    get("/utc/getHardware") {
+        s"""{
+    "cpuTemperature": ${hardware.readCpuTemperature}
+}"""
+    }
+    
     post("/utc/startSession/:id") {
         if ( controller == null ) {
-            controller = TemperatureController.startController(oe, params( "id" ).toInt )
+            controller = TemperatureController.startController(oe, params( "id" ).toInt, hardware )
         }
         
         controller.serializeSession()
