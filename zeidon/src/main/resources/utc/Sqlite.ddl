@@ -30,17 +30,17 @@ CREATE TABLE configuration (
 /* Entity - Instant */
 CREATE TABLE instant ( 
            timestamp                                                        datetime           NOT NULL, 
-           target_temperature                                               int                NOT NULL, 
-           therm0                                                           int                NULL    , 
-           therm1                                                           int                NULL    , 
-           therm2                                                           int                NULL    , 
-           therm3                                                           int                NULL    , 
-           therm4                                                           int                NULL    , 
-           therm5                                                           int                NULL    , 
-           therm6                                                           int                NULL    , 
-           therm7                                                           int                NULL    , 
+           target_temperature                                               double             NOT NULL, 
+           therm0                                                           double             NULL    , 
+           therm1                                                           double             NULL    , 
+           therm2                                                           double             NULL    , 
+           therm3                                                           double             NULL    , 
+           therm4                                                           double             NULL    , 
+           therm5                                                           double             NULL    , 
+           therm6                                                           double             NULL    , 
+           therm7                                                           double             NULL    , 
            pw_m0                                                            int                NULL    , 
-           cpu_temperature                                                  int                NULL    , 
+           cpu_temperature                                                  double             NULL    , 
            fk_id_session                                                    INTEGER            NOT NULL ) ;
  
 /* Entity - Session */

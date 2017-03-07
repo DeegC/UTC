@@ -1,4 +1,4 @@
-z1000-Zeidon    ZEIDON   TZEREMXO 11/16/16   18:16:59 1.0a2    
+z1000-Zeidon    ZEIDON   TZEREMXO 03/07/17   15:15:38 1.0a2    
 eMODEL     1
 aNumEnts   6
 aNumRels   3
@@ -148,7 +148,7 @@ aNAME      CpuTemperature
 aAPDM_TOK  905180737
 
 eATTRIB    3
-aZKEY      2189
+aZKEY      20833
 aNAME      fk_id_session
 aAPDM_TOK  905181242
 aLTH       64
@@ -179,7 +179,7 @@ aAPDM_TOK  905181158
 aLTH       10000
 
 eATTRIB    3
-aZKEY      2191
+aZKEY      20835
 aNAME      fk_id_configuration
 aAPDM_TOK  905181242
 aLTH       64
@@ -220,7 +220,7 @@ aNAME      wTemperatureWithinAlarmThreshold
 aAPDM_TOK  905181228
 
 eATTRIB    3
-aZKEY      2190
+aZKEY      20834
 aNAME      fk_id_configuration
 aAPDM_TOK  905181242
 aLTH       64

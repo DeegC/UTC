@@ -1,4 +1,4 @@
-z1000-Zeidon    ZEIDON   TZDMXGPO 09/29/16   21:20:55 1.0a2    
+z1000-Zeidon    ZEIDON   TZDMXGPO 03/07/17   14:47:57 1.0a2    
 eDomainGroup 1
 aName      UTC
 
@@ -111,12 +111,12 @@ aName      INTEGER
 aIsDefault Y
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.IntegerDomain
+aJavaClass com.quinsoft.zeidon.domains.DoubleDomain
 aZKey      905180737
 aName      Temperature
 aDesc      Temperature stored as Fahrenheit.  Can be converted to C or K.
 aDomainType E
-aDataType  L
+aDataType  M
 aContextRestriction N
 
 eContext   3
@@ -126,7 +126,7 @@ aIsDefault Y
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
-aZKey      905180725
+aZKey      905180731
 aName      TemperatureUnit
 aDomainType T
 aDataType  S
@@ -134,25 +134,22 @@ aMaxStringLth 1
 aContextRestriction N
 
 eContext   3
-aZKey      905180726
+aZKey      905180732
 aName      Unit
 aIsDefault Y
 
 eTableEntry 4
-aZKey      905180727
-
-eTableEntry 4
-aZKey      905180728
+aZKey      905180734
 aExternalValue Fahrenheit
 aInternalValue F
 
 eTableEntry 4
-aZKey      905180729
+aZKey      905180735
 aExternalValue Celsius
 aInternalValue C
 
 eTableEntry 4
-aZKey      905180730
+aZKey      905180736
 aExternalValue Kelvin
 aInternalValue K
 
