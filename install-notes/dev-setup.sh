@@ -22,7 +22,7 @@ if [ -z "$1" ]; then
     apt-get update
 fi
 
-apt-get install ssmtp mailutils vim oracle-java8-installer git x11vnc emacs ruby htop
+apt-get install ssmtp mailutils vim oracle-java8-installer git x11vnc emacs ruby htop wireless-tools screen gcc make
 #apt-get install mysql-server
 
 if [ ! -f /etc/network/if-up.d/send-ip ]; then
