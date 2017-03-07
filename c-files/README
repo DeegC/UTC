@@ -1,0 +1,5 @@
+# Helper C files
+These are files that need to be compiled on the CHIP that are used by the Java server.  Source for these files found at:
+
+http://www.chip-community.org/index.php/SPI_support
+
