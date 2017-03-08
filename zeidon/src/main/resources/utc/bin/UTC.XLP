@@ -1,4 +1,4 @@
-z1000-Zeidon    UTC      TZCMLPLO 03/07/17   15:15:45 1.0a2    
+z1000-Zeidon    UTC      TZCMLPLO 03/07/17   18:20:32 1.0a2    
 eLPLR      1
 aName      UTC
 aDesc      Universal Temperature Controller
@@ -47,55 +47,6 @@ aName      ThermometerCount
 aLastUpdateDate 20170307163020711
 
 eW_MetaDef 3
-aCPLR_ZKey 905181228
-aStatus    1
-aUpdateInd 2
-aName      Boolean
-aLastUpdateDate 20170307163020707
-
-eW_MetaDef 3
-aCPLR_ZKey 905181230
-aStatus    1
-aUpdateInd 2
-aName      Blob
-aLastUpdateDate 20170307163020707
-
-eW_MetaDef 3
-aCPLR_ZKey 905181232
-aStatus    1
-aUpdateInd 2
-aName      Date
-aLastUpdateDate 20170307163020707
-
-eW_MetaDef 3
-aCPLR_ZKey 905181242
-aStatus    1
-aUpdateInd 2
-aName      GeneratedKey
-aLastUpdateDate 20170307163020707
-
-eW_MetaDef 3
-aCPLR_ZKey 905181226
-aStatus    1
-aUpdateInd 2
-aName      Double
-aLastUpdateDate 20170307163020707
-
-eW_MetaDef 3
-aCPLR_ZKey 905181217
-aStatus    1
-aUpdateInd 2
-aName      Y/N
-aLastUpdateDate 20170307163020707
-
-eW_MetaDef 3
-aCPLR_ZKey 905181215
-aStatus    1
-aUpdateInd 2
-aName      DateTime
-aLastUpdateDate 20170307163020707
-
-eW_MetaDef 3
 aCPLR_ZKey 905180731
 aStatus    1
 aName      TemperatureUnit
@@ -106,6 +57,48 @@ aCPLR_ZKey 905180737
 aStatus    1
 aName      Temperature
 aGroupName UDS
+
+eW_MetaDef 3
+aCPLR_ZKey 905181228
+aStatus    1
+aName      Boolean
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181230
+aStatus    1
+aName      Blob
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181232
+aStatus    1
+aName      Date
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181242
+aStatus    1
+aName      GeneratedKey
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181226
+aStatus    1
+aName      Double
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181217
+aStatus    1
+aName      Y/N
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181215
+aStatus    1
+aName      DateTime
+aGroupName Base
 
 eW_MetaType 2
 aType      4
@@ -213,8 +206,8 @@ aCPLR_ZKey 905181202
 aStatus    1
 aUpdateInd 2
 aName      Base
-aLastSyncDate 20170307163020707
-aLastUpdateDate 20170307163020707
+aLastSyncDate 20170307182030142
+aLastUpdateDate 20170307182030142
 
 eW_MetaDef 3
 aCPLR_ZKey 905181326
@@ -264,25 +257,21 @@ eW_MetaType 2
 aType      2003
 
 eW_MetaDef 3
-aGroupName Base
-
-eW_MetaDef 3
-aGroupName Base
-
-eW_MetaDef 3
-aGroupName Base
-
-eW_MetaDef 3
-aGroupName Base
-
-eW_MetaDef 3
-aGroupName Base
-
-eW_MetaDef 3
-aGroupName Base
-
-eW_MetaDef 3
 aGroupName TZAPDMAA
+
+eW_MetaDef 3
+aCPLR_ZKey 905180737
+aStatus    1
+aName      Temperature
+aLastUpdateDate 20170307144757542
+aGroupName UDS
+
+eW_MetaDef 3
+aCPLR_ZKey 905180731
+aStatus    1
+aName      TemperatureUnit
+aLastUpdateDate 20170307144757542
+aGroupName UDS
 
 eW_MetaDef 3
 aGroupName TZAPDMAA
@@ -291,19 +280,46 @@ eW_MetaDef 3
 aGroupName TablesA
 
 eW_MetaDef 3
+aCPLR_ZKey 905181228
+aStatus    1
+aName      Boolean
 aGroupName Base
 
 eW_MetaDef 3
-aCPLR_ZKey 905180731
+aCPLR_ZKey 905181230
 aStatus    1
-aName      TemperatureUnit
-aGroupName UDS
+aName      Blob
+aGroupName Base
 
 eW_MetaDef 3
-aCPLR_ZKey 905180737
+aCPLR_ZKey 905181232
 aStatus    1
-aName      Temperature
-aGroupName UDS
+aName      Date
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181242
+aStatus    1
+aName      GeneratedKey
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181226
+aStatus    1
+aName      Double
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181217
+aStatus    1
+aName      Y/N
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181215
+aStatus    1
+aName      DateTime
+aGroupName Base
 
 eW_MetaType 2
 aType      2004
@@ -421,16 +437,9 @@ aJavaClassName com.quinsoft.zeidon.domains.BooleanDomain
 eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.DateTimeDomain
 
-i46        9
-i47        8
-i48        10
-i49        14
-i50        12
-i51        11
-i52        5
-i53        6
-i54        7
-i55        13
+i46        5
+i49        6
+i50        7
 i59        18
 i62        21
 i64        25

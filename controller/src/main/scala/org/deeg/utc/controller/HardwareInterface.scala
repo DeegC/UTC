@@ -16,6 +16,13 @@ trait HardwareInterface {
     instant.Instant.Timestamp = "NOW"
     instant.Instant.CpuTemperature = readCpuTemperature
     instant.Instant.Therm0 = readTemperature( 0 )
+    instant.Instant.Therm1 = readTemperature( 1 )
+    instant.Instant.Therm2 = readTemperature( 2 )
+    instant.Instant.Therm3 = readTemperature( 3 )
+    instant.Instant.Therm4 = readTemperature( 4 )
+    instant.Instant.Therm5 = readTemperature( 5 )
+    instant.Instant.Therm6 = readTemperature( 6 )
+    instant.Instant.Therm7 = readTemperature( 7 )
     instant.logOi
     return instant
   }

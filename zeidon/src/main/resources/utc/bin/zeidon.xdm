@@ -1,4 +1,4 @@
-z1000-Zeidon    ZEIDON   TZDMXGPO 03/07/17   14:47:57 1.0a2    
+z1000-Zeidon    ZEIDON   TZDMXGPO 03/07/17   18:20:30 1.0a2    
 eDomainGroup 1
 aName      UTC
 
@@ -57,7 +57,7 @@ aContextRestriction N
 eContext   3
 aZKey      905181216
 aName      DateTime
-aJavaEditString yyyy-MM-dd
+aJavaEditString yyyy-MM-dd HH:mm:ss.SSS
 aIsDefault Y
 
 eDomain    2

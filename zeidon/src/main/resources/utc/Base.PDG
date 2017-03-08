@@ -1,4 +1,4 @@
-z1000-Zeidon    BASE     TZDGSRCO 09/21/16   00:12:05 1.0a2    
+z1000-Zeidon    BASE     TZDGSRCO 03/07/17   18:20:30 1.0a2    
 eDomainGroup 1
 aZKey      905181202
 aNextZKeyToAssign 905181253
@@ -132,6 +132,6 @@ aContextRestriction N
 eContext   3
 aZKey      905181216
 aName      DateTime
-aJavaEditString yyyy-MM-dd
+aJavaEditString yyyy-MM-dd HH:mm:ss.SSS
 aIsDefault Y
 

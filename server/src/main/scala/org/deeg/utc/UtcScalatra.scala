@@ -73,9 +73,10 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
      * a way to test the hardware.
      */
     get("/utc/getHardware") {
-        s"""{
-    "cpuTemperature": ${hardware.readCpuTemperature}
-}"""
+        val instant = hardware.readSensors()
+        val serialized = instant.serializeOi.asJson.toString()
+        logger.debug(serialized)
+        serialized
     }
     
     post("/utc/startSession/:id") {

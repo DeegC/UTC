@@ -3,6 +3,7 @@ package org.deeg.utc.controller
 import com.quinsoft.zeidon.scala.Implicits._
 import sys.process._
 import com.quinsoft.zeidon.Task
+import org.joda.time.DateTime
 
 /**
  * Interface with a C.H.
@@ -11,13 +12,38 @@ import org.deeg.utc.controller.HardwareInterfaceI.P.
 class ChipHardwareInterface(val task: Task) extends HardwareInterface {
   
   task.log().info( "Using ChipHardwareInterface" );
+  
+  /**
+   * Set up steinhart algorithm for use with Maverick probes.  Some day we can
+   * make this configurable to work with other probes.
+   */
+  val steinhart = new SteinhartHart( 2.3067434E-4, 2.3696596E-4, 1.2636414E-7, 22100, 3.3 )
+  var lastRead : DateTime = null
+  var voltageArray : Array[Double] = null
     
   override def setPwm( pwm : Int ) {
       task.log().debug("Setting pwm to %s", pwm )
   }
   
   override def readTemperature( probe : Int ) : Double = {
-      return 100.0 + probe    
+      read_mcp3008()
+      return voltageArray(probe)    
+  }
+  
+  private def read_mcp3008(): Unit = {
+      // To keep from overworking the CHIP we'll read the temps no more
+      // than once a second.
+      val now = DateTime.now()
+      if ( lastRead != null ) {
+          val diff = now.getMillis - lastRead.getMillis
+          if ( diff < 1000 )
+              return
+      }
+      
+      val voltages = "read_therms".!!
+      task.log().debug( "Measured voltages =\n%s", voltages )
+      voltageArray = voltages.split("\n").map { vstr => steinhart.computeTemperature( vstr.toDouble ) }
+      lastRead = DateTime.now()
   }
   
   override def readCpuTemperature: Int = {
