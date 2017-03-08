@@ -160,7 +160,15 @@ var ObjectInstance = (function () {
                 this.roots.create(i, options);
             }
         }
+        else if (initialize[this.rootEntityName()] && initialize[this.rootEntityName()].constructor === Array) {
+            for (var _c = 0, _d = initialize[this.rootEntityName()]; _c < _d.length; _c++) {
+                var i = _d[_c];
+                this.roots.create(i, options);
+            }
+        }
         else if (initialize != {}) {
+            // Ignore version for now.
+            delete initialize.version;
             this.roots.create(initialize, options);
         }
         return this;
@@ -831,7 +839,7 @@ exports.ZeidonConfiguration = ZeidonConfiguration;
 var AttributeValueError = (function (_super) {
     __extends(AttributeValueError, _super);
     function AttributeValueError(message, attributeDef) {
-        var _this = _super.call(this, message) || this;
+        var _this = _super.call(this, message + ("   Attribute: " + attributeDef.name)) || this;
         _this.attributeDef = attributeDef;
         return _this;
     }

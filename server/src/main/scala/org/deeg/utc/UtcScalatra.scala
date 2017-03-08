@@ -61,7 +61,7 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
             "{}"
         }
         else {
-            val view = controller.currentState()
+            val view = controller.currentState
             val serialized = view.serializeOi.asJson.toString()
             logger.debug(serialized)
             serialized

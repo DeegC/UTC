@@ -28,7 +28,7 @@ exports.UTC_DomainList = {
     },
     "Temperature": {
         name: "Temperature",
-        class: "com.quinsoft.zeidon.domains.IntegerDomain",
+        class: "com.quinsoft.zeidon.domains.DoubleDomain",
     },
     "TemperatureUnit": {
         name: "TemperatureUnit",

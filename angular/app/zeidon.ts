@@ -162,7 +162,14 @@ export class ObjectInstance {
                 this.roots.create( i, options );
             }
         } else
+        if ( initialize[ this.rootEntityName() ] && initialize[ this.rootEntityName() ].constructor === Array ) {
+            for ( let i of initialize[ this.rootEntityName() ] ) {
+                this.roots.create( i, options );
+            }
+        } else
         if ( initialize != {} ) {
+            // Ignore version for now.
+            delete initialize.version;
             this.roots.create( initialize, options );
         }
 
@@ -915,7 +922,7 @@ export class AttributeValueError extends Error {
     attributeDef: any;
 
     constructor( message: string, attributeDef: any ) {
-        super( message )
+        super( message + `   Attribute: ${attributeDef.name}`)
         this.attributeDef = attributeDef;
     }
 }

@@ -1,4 +1,4 @@
-z1000-Zeidon    INSTANT  TZZOLODO 01/10/17   00:45:50 1.0a2    
+z1000-Zeidon    INSTANT  TZZOLODO 03/08/17   13:47:32 1.0a2    
 eLOD       1
 aZKey      929210436
 aNextZKeyToAssign 929210455
@@ -51,7 +51,7 @@ eDomainRec 5
 aZKey      905180737
 aName      Temperature
 aDomainType E
-aDataType  L
+aDataType  M
 aDesc      Temperature stored as Fahrenheit.  Can be converted to C or K.
 aContextRestriction N
 
