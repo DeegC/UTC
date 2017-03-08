@@ -64,13 +64,13 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
      * @param output the value calculated by PIDController
      */
     def pidWrite(output: Double) {
+        logger.debug( "pidWrite %s", output )
         hardware.setPwm( output.toInt )
     }
     
 
     def run() {
         logger.info( "Starting up controller for config %s", currentSession.Configuration.Description )
-
         
         pid = new PIDController( currentSession.Configuration.PidP,
                                  currentSession.Configuration.PidI,
@@ -105,7 +105,10 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
      * 
      */
     def currentState : View @basedOn( "Instant" ) = {
-        return hardware.readSensors( )
+        val instant = hardware.readSensors( )
+        instant.Instant.TargetTemperature = currentSession.Configuration.TargetTemperature
+        return instant
+        
     }
     
     def serializeSession() : String = {

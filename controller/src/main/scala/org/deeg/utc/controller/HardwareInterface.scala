@@ -7,30 +7,37 @@ import com.quinsoft.zeidon.Task
 import sys.process._
 
 trait HardwareInterface {
-  /**
-   * Read the value of different sensors and create a new Instant entity.
-   */
-  def readSensors(): View @basedOn( "Instant" ) = {
-    val instant = task.newView( "Instant" ).activateEmpty()
-    instant.Instant create()
-    instant.Instant.Timestamp = "NOW"
-    instant.Instant.CpuTemperature = readCpuTemperature
-    instant.Instant.Therm0 = readTemperature( 0 )
-    instant.Instant.Therm1 = readTemperature( 1 )
-    instant.Instant.Therm2 = readTemperature( 2 )
-    instant.Instant.Therm3 = readTemperature( 3 )
-    instant.Instant.Therm4 = readTemperature( 4 )
-    instant.Instant.Therm5 = readTemperature( 5 )
-    instant.Instant.Therm6 = readTemperature( 6 )
-    instant.Instant.Therm7 = readTemperature( 7 )
-    instant.logOi
-    return instant
-  }
+    private var currentPwm: Int = 0
 
-  def task: Task
-  def readCpuTemperature: Int
-  def readTemperature( probe: Int ) : Double
-  def setPwm( pwm: Int )
+    /**
+     * Read the value of different sensors and create a new Instant entity.
+     */
+    def readSensors(): View @basedOn("Instant") = {
+        val instant = task.newView("Instant").activateEmpty()
+        instant.Instant create ()
+        instant.Instant.Timestamp = "NOW"
+        instant.Instant.CpuTemperature = readCpuTemperature
+        instant.Instant.Therm0 = readTemperature(0)
+        instant.Instant.Therm1 = readTemperature(1)
+        instant.Instant.Therm2 = readTemperature(2)
+        instant.Instant.Therm3 = readTemperature(3)
+        instant.Instant.Therm4 = readTemperature(4)
+        instant.Instant.Therm5 = readTemperature(5)
+        instant.Instant.Therm6 = readTemperature(6)
+        instant.Instant.Therm7 = readTemperature(7)
+        instant.Instant.PWM0 = readPwm()
+        instant.logOi
+        return instant
+    }
+
+    def task: Task
+    def readCpuTemperature: Int
+    def readTemperature(probe: Int): Double
+    def setPwm(pwm: Int) = {
+        task.log().debug("Setting test pwm to %s", pwm )
+        currentPwm = pwm
+    }
+    def readPwm() = currentPwm
 }
 
 object HardwareInterface {

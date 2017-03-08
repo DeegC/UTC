@@ -22,7 +22,7 @@ class ChipHardwareInterface(val task: Task) extends HardwareInterface {
   var voltageArray : Array[Double] = null
     
   override def setPwm( pwm : Int ) {
-      task.log().debug("Setting pwm to %s", pwm )
+      super.setPwm(pwm)
   }
   
   override def readTemperature( probe : Int ) : Double = {
