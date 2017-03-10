@@ -21,6 +21,11 @@ class ChipHardwareInterface(val task: Task) extends HardwareInterface {
   var lastRead : DateTime = null
   var voltageArray : Array[Double] = null
     
+  // Set LEDs to indicate that the server is up.
+  task.log().info( "set-led.sh green on".!! )
+  task.log().info( "set-led.sh yellow off".!! )
+  task.log().info( "set-led.sh red off".!! )
+  
   override def setPwm( pwm : Int ) {
       super.setPwm(pwm)
   }
