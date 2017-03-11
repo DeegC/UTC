@@ -13,11 +13,15 @@ import * as zeidon from './zeidon';
         <li *ngFor="let session of sessionList.Session"
             [class.selected]="selectedSessionOi && selectedSessionOi.Session$.Id == session.Id">
             <span (click)="onSelect(session)">
-                <span class="badge">{{session.Id}}</span> {{session.Date}}
+                <span class="badge">{{session.Id}}</span> {{session.Date | date:'yyyy-MM-dd hh:mm a'}}
             </span>
             <img src="/img/icons/red-x.png" (click)="onDelete( session )"/>
         </li>
     </ul>
+  </div>
+  <div *ngIf="selectedSessionOi">
+    <session-detail [sessionOi]="selectedSessionOi" >
+    </session-detail>
   </div>
 `,
     styleUrls: ['app/configuration.css'],

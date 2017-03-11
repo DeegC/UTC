@@ -22,6 +22,7 @@ var configuration_component_1 = require("./configuration.component");
 var rest_service_1 = require("./rest.service");
 var session_component_1 = require("./session.component");
 var session_list_component_1 = require("./session-list.component");
+var session_detail_component_1 = require("./session-detail.component");
 var zeidon_1 = require("./zeidon");
 var zeidon_rest_client_1 = require("./zeidon-rest-client");
 var zeidon_rest_client_2 = require("./zeidon-rest-client");
@@ -66,6 +67,7 @@ AppModule = __decorate([
             configuration_component_1.ConfigurationComponent,
             zeidon_angular_1.ErrorElementDirective,
             session_list_component_1.SessionListComponent,
+            session_detail_component_1.SessionDetailComponent,
             session_component_1.SessionComponent],
         providers: [rest_service_1.RestService,
             { provide: zeidon_rest_client_1.ZeidonRestValues, useValue: REST_VALUES },
