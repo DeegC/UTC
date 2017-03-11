@@ -56,6 +56,10 @@ export class ObjectInstance {
         return json;
     }
 
+    get root(): EntityArray<EntityInstance> {
+        return this.roots as EntityArray<EntityInstance>;
+    }
+
     public logOi() {
         console.log( JSON.stringify( this, null, 2) );
     }
@@ -259,6 +263,18 @@ export class EntityInstance {
         }
         return attributeDef;
     }
+
+    get keyAttributeDef(): any {
+        let attributeDefs = this.entityDef.attributes;
+        let keyDefs = attributeDefs.filter( def => def.isKey )
+        if ( keyDefs.length != 1 )
+            error( `keyAttributeDef can only be called for entities with a single key. Entity = ${this.entityName}` );
+
+        return this.getAttribute( keyDefs[0].name );
+    };
+
+    get key(): string { return this.getAttribute(this.keyAttributeDef) };
+    set key(value: string) { this.setAttribute(this.keyAttributeDef, value) };
 
     constructor( initialize:  Object,
                  oi:          ObjectInstance,

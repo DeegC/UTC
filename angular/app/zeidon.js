@@ -64,6 +64,13 @@ var ObjectInstance = (function () {
         json[this.rootEntityName()] = jarray;
         return json;
     };
+    Object.defineProperty(ObjectInstance.prototype, "root", {
+        get: function () {
+            return this.roots;
+        },
+        enumerable: true,
+        configurable: true
+    });
     ObjectInstance.prototype.logOi = function () {
         console.log(JSON.stringify(this, null, 2));
     };
@@ -318,6 +325,26 @@ var EntityInstance = (function () {
         }
         return attributeDef;
     };
+    Object.defineProperty(EntityInstance.prototype, "keyAttributeDef", {
+        get: function () {
+            var attributeDefs = this.entityDef.attributes;
+            var keyDefs = attributeDefs.filter(function (def) { return def.isKey; });
+            if (keyDefs.length != 1)
+                error("keyAttributeDef can only be called for entities with a single key. Entity = " + this.entityName);
+            return this.getAttribute(keyDefs[0].name);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(EntityInstance.prototype, "key", {
+        get: function () { return this.getAttribute(this.keyAttributeDef); },
+        set: function (value) { this.setAttribute(this.keyAttributeDef, value); },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    ;
     EntityInstance.prototype.setDefaultAttributeValues = function () {
         var entityDef = this.entityDef;
         if (!entityDef.hasInit)

@@ -18,6 +18,20 @@ export class RestService {
         console.log("There was an error: " + e );
     }
 
+    deleteOi( oi: ObjectInstance ) {
+        // For now we only handle a single root.  No real reason it can't handle more
+        // but the semantics of calling the server need to be worked out.
+        if ( oi.root.length != 1 )
+            Observable.throw( "deleteOi may only be called on OI with a single root.");
+
+        let lodName = oi.getLodDef().name;
+        let url = `${this.values.restUrl}/${lodName}/${oi.root[0].key}`;
+        this.http.delete( url )
+            .toPromise()
+            .then( () => oi.root[0].drop() )
+            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+    }
+
     deleteConfiguration( config: Configuration_Configuration ) {
         let lodName = config.oi.getLodDef().name;
         let url = `${this.values.restUrl}/${lodName}/${config.Id}`;

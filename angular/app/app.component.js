@@ -19,7 +19,7 @@ AppComponent = __decorate([
     core_1.Component({
         selector: 'utc-app',
         styleUrls: ['app/app.component.css'],
-        template: "\n    <h1>{{title}}</h1>\n    <nav>\n        <a routerLink=\"/configlist\" routerLinkActive=\"active\">Configurations</a>\n        <a routerLink=\"/session\" routerLinkActive=\"active\">Session</a>\n    </nav>\n    <router-outlet></router-outlet>\n"
+        template: "\n    <h1>{{title}}</h1>\n    <nav>\n        <a routerLink=\"/configlist\" routerLinkActive=\"active\">Configurations</a>\n        <a routerLink=\"/session\" routerLinkActive=\"active\">Session</a>\n        <a routerLink=\"/history\" routerLinkActive=\"active\">History</a>\n    </nav>\n    <router-outlet></router-outlet>\n"
     }),
     __metadata("design:paramtypes", [])
 ], AppComponent);
