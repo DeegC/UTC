@@ -45,7 +45,7 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
         response.setHeader("Access-Control-Allow-Headers", request.getHeader("Access-Control-Request-Headers"));
     }
 
-    get("/utc/getSession") {
+    get("/utc/getCurrentSession") {
         if ( controller == null ) {
             logger.debug( "No current session" )
             "{}"
@@ -55,7 +55,7 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
         }
     }
     
-    get("/utc/getState") {
+    get("/utc/getCurrentState") {
         if ( controller == null ) {
             logger.debug( "No current session" )
             "{}"

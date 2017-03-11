@@ -42,14 +42,14 @@ export class RestService {
     }
 
     getCurrentSession( ) {
-        let url = `${this.values.restUrl}/getSession`;
+        let url = `${this.values.restUrl}/getCurrentSession`;
         let session = new Session();
         return this.http.get( url )
                 .map( response => this.parseCommitResponse( session, response ) ) as Observable<Session>;
     }
 
     getCurrentState( ) {
-        let url = `${this.values.restUrl}/getState`;
+        let url = `${this.values.restUrl}/getCurrentState`;
         let session = new Instant();
         return this.http.get( url )
                 .map( response => this.parseCommitResponse( session, response ) ) as Observable<Instant>;

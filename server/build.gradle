@@ -9,8 +9,9 @@ apply plugin: 'war'
 dependencies {
     compile project(':utc-controller')
     compile( 'com.quinsoft.zeidon:zeidon-scalatra-rest:1.5.0-SNAPSHOT' ) {
-        exclude module: 'scala-xml_2.11'
+        exclude module: 'scala-xml_2.11' // To save space.
     }
 
+    compile "com.github.wookietreiber:scala-chart_${versions.scala}:0.5.1"
 //    compile 'org.eclipse.jetty.orbit:javax.servlet:3.0.0.v201112011016'
 }

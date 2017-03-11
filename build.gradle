@@ -3,6 +3,10 @@ subprojects {
 
   group = 'org.deeg.utc'
   version = '1.0'
+  
+  ext.versions = [
+     scala: '2.11'
+  ]
 
   repositories {
      mavenLocal()
