@@ -1,0 +1,25 @@
+{
+    "authors": "Michel Salib <https://github.com/michelsalib>, Adi Dahiya <https://github.com/adidahiya>, Raphael Schweizer <https://github.com/rasch>, Cody Schaaf <https://github.com/codyschaaf>",
+    "libraryDependencies": [
+        "jquery"
+    ],
+    "moduleDependencies": [
+        "angular"
+    ],
+    "libraryMajorVersion": 1,
+    "libraryMinorVersion": 5,
+    "libraryName": "Angular JS (ngAnimate module)",
+    "typingsPackageName": "angular-animate",
+    "projectName": "http://angularjs.org",
+    "sourceRepoURL": "https://www.github.com/DefinitelyTyped/DefinitelyTyped",
+    "sourceBranch": "types-2.0",
+    "globals": [],
+    "declaredModules": [
+        "angular-animate"
+    ],
+    "files": [
+        "index.d.ts"
+    ],
+    "hasPackageJson": false,
+    "contentHash": "cf6298f0e029075d00cb9350ed58737783247631c8575d06ad60b231634b330d"
+}

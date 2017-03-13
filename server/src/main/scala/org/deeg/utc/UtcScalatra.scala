@@ -68,6 +68,21 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
         }
     }
     
+    get("/utc/getChart/:id") {
+        contentType = "image/png"
+        oe.forTask( "UTC" ) { task =>
+            val session = new View( task ) basedOn "Session"
+            session.activateWhere( _.Session.Id = params( "id" ) )
+            session.logOi
+            
+            val generator = new ChartGenerator( session )
+            val filename = generator.generate()
+            val file = new java.io.File( filename )
+            response.setHeader("Content-Disposition", "attachment; filename=" + file.getName)
+            file
+        }
+    }
+    
     /**
      * Return values retrieved from the hardware without a session.  Mostly used as
      * a way to test the hardware.

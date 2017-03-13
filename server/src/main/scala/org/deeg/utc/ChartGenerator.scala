@@ -10,7 +10,7 @@ import org.jfree.data.time.Second
 import org.joda.time.DateTime
 
 class ChartGenerator( val session: View @basedOn( "Session" ) ) {
-    def generate() = {
+    def generate() : String = {
         val targetData = new TimeSeries( "target" )
         val pitData = new TimeSeries( "pit" )
         val therm1Data = new TimeSeries( "therm1" )
@@ -28,7 +28,9 @@ class ChartGenerator( val session: View @basedOn( "Session" ) ) {
         allData.addSeries( therm1Data )
         
         val chart = XYLineChart( allData )
-        chart.saveAsPNG("/tmp/chart.png")
+        val filename = s"charts/session-${session.Session.Id}.png"
+        chart.saveAsPNG( filename )
+        return filename
     }
     
     private def toSeconds( timestamp: AttributeInstance ) : Second = {
