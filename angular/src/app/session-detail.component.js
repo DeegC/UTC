@@ -16,11 +16,10 @@ var SessionDetailComponent = (function () {
     function SessionDetailComponent(restService) {
         this.restService = restService;
     }
-    SessionDetailComponent.prototype.ngOnInit = function () {
+    SessionDetailComponent.prototype.ngOnChanges = function (changes) {
         var _this = this;
-        this.restService.getChart(4).subscribe(function (url) {
+        this.restService.getChart(this.sessionOi.Session$.Id).subscribe(function (url) {
             _this.chartUrl = url;
-            console.log(url);
         });
     };
     return SessionDetailComponent;

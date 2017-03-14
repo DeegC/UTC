@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { SafeUrl} from '@angular/platform-browser';
 import { OnInit } from '@angular/core';
 import { Configuration } from './Configuration';
@@ -21,17 +21,15 @@ import * as zeidon from './zeidon';
     styleUrls: ['app/configuration.css'],
     providers: [RestService]
 })
-export class SessionDetailComponent implements OnInit {
+export class SessionDetailComponent implements OnChanges {
     @Input() sessionOi: Session;
     chartUrl: SafeUrl;
 
     constructor( private restService: RestService ) { }
 
-    ngOnInit(): void {
-        this.restService.getChart( 4 ).subscribe( url => {
+    ngOnChanges(changes: SimpleChanges) {
+        this.restService.getChart( this.sessionOi.Session$.Id ).subscribe( url => {
             this.chartUrl = url;
-            console.log( url );
         })
     }
-
 }
