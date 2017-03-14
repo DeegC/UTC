@@ -27,11 +27,20 @@ var RestService = (function () {
     RestService.prototype.handleError = function (e) {
         console.log("There was an error: " + e);
     };
+    RestService.prototype.deleteRoot = function (root) {
+        var oi = root.oi;
+        var lodName = oi.getLodDef().name;
+        var url = this.values.restUrl + "/" + lodName + "/" + root.key;
+        this.http.delete(url)
+            .toPromise()
+            .then(function () { return root.drop(); })
+            .catch(function (error) { return Observable_1.Observable.throw(error.json().error || 'Server error'); });
+    };
     RestService.prototype.deleteOi = function (oi) {
         // For now we only handle a single root.  No real reason it can't handle more
         // but the semantics of calling the server need to be worked out.
         if (oi.root.length != 1)
-            Observable_1.Observable.throw("deleteOi may only be called on OI with a single root.");
+            throw ("deleteOi may only be called on OI with a single root.");
         var lodName = oi.getLodDef().name;
         var url = this.values.restUrl + "/" + lodName + "/" + oi.root[0].key;
         this.http.delete(url)

@@ -334,17 +334,24 @@ var EntityInstance = (function () {
     Object.defineProperty(EntityInstance.prototype, "keyAttributeDef", {
         get: function () {
             var attributeDefs = this.entityDef.attributes;
-            var keyDefs = attributeDefs.filter(function (def) { return def.isKey; });
+            var keyDefs = [];
+            for (var attrName in attributeDefs) {
+                if (attributeDefs[attrName].key)
+                    keyDefs.push(attributeDefs[attrName]);
+            }
             if (keyDefs.length != 1)
                 error("keyAttributeDef can only be called for entities with a single key. Entity = " + this.entityName);
-            return this.getAttribute(keyDefs[0].name);
+            return keyDefs[0];
         },
         enumerable: true,
         configurable: true
     });
     ;
     Object.defineProperty(EntityInstance.prototype, "key", {
-        get: function () { return this.getAttribute(this.keyAttributeDef); },
+        get: function () {
+            var key = this.keyAttributeDef;
+            return this.getAttribute(key.name);
+        },
         set: function (value) { this.setAttribute(this.keyAttributeDef, value); },
         enumerable: true,
         configurable: true

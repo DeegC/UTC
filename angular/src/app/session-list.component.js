@@ -35,7 +35,7 @@ var SessionListComponent = (function () {
      * Delete the selected session from the OI list.
      */
     SessionListComponent.prototype.onDelete = function (session) {
-        this.restService.deleteOi(session.oi);
+        this.restService.deleteRoot(session);
     };
     return SessionListComponent;
 }());

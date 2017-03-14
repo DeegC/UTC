@@ -53,6 +53,6 @@ export class SessionListComponent implements OnInit {
      * Delete the selected session from the OI list.
      */
     onDelete( session: Session_Session ): void {
-        this.restService.deleteOi( session.oi );
+        this.restService.deleteRoot( session );
     }
 }

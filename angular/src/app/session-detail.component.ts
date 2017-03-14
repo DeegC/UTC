@@ -28,8 +28,7 @@ export class SessionDetailComponent implements OnChanges {
     constructor( private restService: RestService ) { }
 
     ngOnChanges(changes: SimpleChanges) {
-        this.restService.getChart( this.sessionOi.Session$.Id ).subscribe( url => {
-            this.chartUrl = url;
-        })
+        this.restService.getChart( this.sessionOi.Session$.Id )
+                        .subscribe( url => { this.chartUrl = url; } )
     }
 }

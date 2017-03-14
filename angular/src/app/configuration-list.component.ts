@@ -62,7 +62,7 @@ export class ConfigurationListComponent implements OnInit {
      * Delete the selected configuration from the OI list.
      */
     onDelete( config: Configuration_Configuration ): void {
-        this.restService.deleteConfiguration( config );
+        this.restService.deleteRoot( config );
     }
 
     newConfiguration(): void {

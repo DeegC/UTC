@@ -18,9 +18,8 @@ var SessionDetailComponent = (function () {
     }
     SessionDetailComponent.prototype.ngOnChanges = function (changes) {
         var _this = this;
-        this.restService.getChart(this.sessionOi.Session$.Id).subscribe(function (url) {
-            _this.chartUrl = url;
-        });
+        this.restService.getChart(this.sessionOi.Session$.Id)
+            .subscribe(function (url) { _this.chartUrl = url; });
     };
     return SessionDetailComponent;
 }());

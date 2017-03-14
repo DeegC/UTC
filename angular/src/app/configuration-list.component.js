@@ -35,7 +35,7 @@ var ConfigurationListComponent = (function () {
      * Delete the selected configuration from the OI list.
      */
     ConfigurationListComponent.prototype.onDelete = function (config) {
-        this.restService.deleteConfiguration(config);
+        this.restService.deleteRoot(config);
     };
     ConfigurationListComponent.prototype.newConfiguration = function () {
         // Instantiate a new Configuration with a single ThermometerConfig.

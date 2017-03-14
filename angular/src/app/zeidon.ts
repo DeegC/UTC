@@ -266,14 +266,22 @@ export class EntityInstance {
 
     get keyAttributeDef(): any {
         let attributeDefs = this.entityDef.attributes;
-        let keyDefs = attributeDefs.filter( def => def.isKey )
+        let keyDefs = [];
+        for ( let attrName in attributeDefs ) {
+            if ( attributeDefs[ attrName ].key )
+                keyDefs.push( attributeDefs[ attrName ] );
+        }
+
         if ( keyDefs.length != 1 )
             error( `keyAttributeDef can only be called for entities with a single key. Entity = ${this.entityName}` );
 
-        return this.getAttribute( keyDefs[0].name );
+        return keyDefs[0];
     };
 
-    get key(): string { return this.getAttribute(this.keyAttributeDef) };
+    get key(): string {
+        let key = this.keyAttributeDef;
+        return this.getAttribute( key.name )
+    };
     set key(value: string) { this.setAttribute(this.keyAttributeDef, value) };
 
     constructor( initialize:  Object,
