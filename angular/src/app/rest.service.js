@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
+var platform_browser_1 = require("@angular/platform-browser");
 require("./rxjs-extensions");
 var Observable_1 = require("rxjs/Observable");
 require("rxjs/add/operator/toPromise");
@@ -18,8 +19,9 @@ var Session_1 = require("./Session");
 var Instant_1 = require("./Instant");
 var zeidon_rest_client_1 = require("./zeidon-rest-client");
 var RestService = (function () {
-    function RestService(http, values) {
+    function RestService(http, sanitizer, values) {
         this.http = http;
+        this.sanitizer = sanitizer;
         this.values = values;
     }
     RestService.prototype.handleError = function (e) {
@@ -60,10 +62,15 @@ var RestService = (function () {
             .map(function (response) { return _this.parseCommitResponse(session, response); });
     };
     RestService.prototype.getChart = function (id) {
-        // let url = `${this.values.restUrl}/getChart/${id}`;
-        // return this.http.get( url, { headers: {'Content-Type': 'image/jpg'},
-        //                              responseType: ResponseContentType.Blob } )
-        //         .map( response => response.arrayBuffer() );
+        var _this = this;
+        var url = this.values.restUrl + "/getChart/" + id;
+        var headers = new http_1.Headers({ 'Content-Type': 'image/png' });
+        return this.http.get(url, { headers: headers,
+            responseType: http_1.ResponseContentType.Blob })
+            .map(function (res) {
+            var urlCreator = window.URL;
+            return _this.sanitizer.bypassSecurityTrustUrl(urlCreator.createObjectURL(res.blob()));
+        });
     };
     RestService.prototype.startSession = function (configOi) {
         var _this = this;
@@ -93,7 +100,9 @@ var RestService = (function () {
 }());
 RestService = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [http_1.Http, zeidon_rest_client_1.ZeidonRestValues])
+    __metadata("design:paramtypes", [http_1.Http,
+        platform_browser_1.DomSanitizer,
+        zeidon_rest_client_1.ZeidonRestValues])
 ], RestService);
 exports.RestService = RestService;
 //# sourceMappingURL=rest.service.js.map

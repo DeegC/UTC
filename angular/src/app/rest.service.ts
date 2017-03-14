@@ -1,5 +1,6 @@
 import { Injectable }    from '@angular/core';
-import { Headers, Http, RequestOptions } from '@angular/http';
+import { Headers, Http, RequestOptions, ResponseContentType } from '@angular/http';
+import { DomSanitizer} from '@angular/platform-browser';
 import './rxjs-extensions';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
@@ -12,7 +13,9 @@ import { ObjectInstance } from './zeidon';
 
 @Injectable()
 export class RestService {
-    constructor(private http: Http, private values: ZeidonRestValues) { }
+    constructor( private http: Http,
+                 private sanitizer: DomSanitizer,
+                 private values: ZeidonRestValues) { }
 
     handleError( e ) {
         console.log("There was an error: " + e );
@@ -56,10 +59,14 @@ export class RestService {
     }
 
     getChart( id ) {
-        // let url = `${this.values.restUrl}/getChart/${id}`;
-        // return this.http.get( url, { headers: {'Content-Type': 'image/jpg'},
-        //                              responseType: ResponseContentType.Blob } )
-        //         .map( response => response.arrayBuffer() );
+        let url = `${this.values.restUrl}/getChart/${id}`;
+        let headers = new Headers({ 'Content-Type': 'image/png' });
+        return this.http.get( url, { headers: headers,
+                                     responseType: ResponseContentType.Blob } )
+                         .map(res => {
+                             var urlCreator = window.URL;
+                             return  this.sanitizer.bypassSecurityTrustUrl(urlCreator.createObjectURL(res.blob()));
+                         })
     }
 
     startSession( configOi: Configuration ): Observable<Session> {

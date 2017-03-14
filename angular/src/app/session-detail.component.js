@@ -17,7 +17,11 @@ var SessionDetailComponent = (function () {
         this.restService = restService;
     }
     SessionDetailComponent.prototype.ngOnInit = function () {
-        //this.restService.getChart( 4 ).subscribe( buffer => this.chart = buffer )
+        var _this = this;
+        this.restService.getChart(4).subscribe(function (url) {
+            _this.chartUrl = url;
+            console.log(url);
+        });
     };
     return SessionDetailComponent;
 }());
@@ -28,7 +32,7 @@ __decorate([
 SessionDetailComponent = __decorate([
     core_1.Component({
         selector: 'session-detail',
-        template: "\n    <div>\n    =============================================================\n        {{sessionOi.Session$.Date | date:'yyyy-MM-dd hh:mm a'}}\n    </div>\n",
+        template: "\n    <div>\n    =============================================================\n        {{sessionOi.Session$.Date | date:'yyyy-MM-dd hh:mm a'}}\n        <div *ngIf=\"chartUrl\">\n            <img [src]=\"chartUrl\" />\n        </div>\n    </div>\n",
         styleUrls: ['app/configuration.css'],
         providers: [rest_service_1.RestService]
     }),
