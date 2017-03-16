@@ -13,7 +13,9 @@ import com.quinsoft.zeidon.ObjectEngine
 import com.quinsoft.zeidon.scalatra.ZeidonRestScalatra
 import org.deeg.utc.controller.TemperatureController
 import org.deeg.utc.controller.HardwareInterface
-
+import java.io.File
+import org.apache.commons.io.FileUtils
+import com.quinsoft.zeidon.ZeidonException
 
 class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
 
@@ -62,9 +64,7 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
         }
         else {
             val view = controller.currentState
-            val serialized = view.serializeOi.asJson.toString()
-            logger.debug(serialized)
-            serialized
+            serializeResponse( view )
         }
     }
     
@@ -83,15 +83,26 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
         }
     }
     
+    get("/utc/getLogFile/:name") {
+        contentType = "text/plain"
+        val filename = params( "name" )
+        
+        // Try to prevent someone from getting a file outside of logs.
+        if ( filename.contains(".." ) || filename.contains( "/" ) )
+            throw new ZeidonException( "Invalid filename" );
+                
+        val file = new java.io.File( "./logs/" + filename )
+        response.setHeader("Content-Disposition", "attachment; filename=" + file.getName)
+        file
+    }
+    
     /**
      * Return values retrieved from the hardware without a session.  Mostly used as
      * a way to test the hardware.
      */
     get("/utc/getHardware") {
         val instant = hardware.readSensors()
-        val serialized = instant.serializeOi.asJson.toString()
-        logger.debug(serialized)
-        serialized
+        serializeResponse( instant )
     }
     
     post("/utc/startSession/:id") {
@@ -111,6 +122,23 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
             controller = null
             """{ "message": "Session stopped." }"""
         }
+    }
+    
+    get("/utc/getDebugInfo") {
+        oe.forTask( "UTC" ) { task =>
+            val info = task.newView("DebugInfo") activateEmpty()
+            info.DebugInfo create()
+            val f = new File( "./logs" ).getAbsolutePath
+            task.log().info( f )
+            new File( "./logs" ).listFiles().foreach{ file =>
+                if ( file.isFile() ) {
+                    info.File create()
+                    info.File.Name = file.getName
+                    info.File.Size = FileUtils.byteCountToDisplaySize( file.length() )
+                }
+            }
+            serializeResponse( info )
+        }            
     }
     
     private def startUdpServer() = {

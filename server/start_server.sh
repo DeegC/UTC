@@ -22,7 +22,7 @@ find ./charts -mtime +30 -exec rm {} \;
 
 # Set up logs dir and clean out old files
 mkdir -p ./logs > /dev/null
-find ./logs/* -mtime +30 -exec rm {} \;
+find ./logs -mtime +30 -exec rm {} \;
 
 JETTY_RUNNER=$(find jetty -name jetty-runner*)
 UTC_WAR=$(find build -name utc-server*.war)

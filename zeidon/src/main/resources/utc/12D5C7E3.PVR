@@ -1,0 +1,12 @@
+z1000-Zeidon    12D5C7E3 TZWDVORO 03/16/17   00:02:26 1.0a2    
+eViewObjRef 1
+aZKey      316000227
+aNextZKeyToAssign 316000227
+aName      DebugInfo
+aDesc      VOR automatically built from LOD Dialog
+
+eLOD       2
+aZKey      316000030
+aName      DebugInfo
+aDesc      Object for passing debug info to client
+

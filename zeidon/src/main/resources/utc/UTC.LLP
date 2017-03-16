@@ -1,4 +1,4 @@
-z1000-Zeidon    UTC      TZCMLPLO 03/10/17   23:29:17 1.0a2    
+z1000-Zeidon    UTC      TZCMLPLO 03/16/17   00:31:16 1.0a2    
 eLPLR      1
 aName      UTC
 aDesc      Universal Temperature Controller
@@ -131,6 +131,24 @@ eW_MetaType 2
 aType      7
 
 eW_MetaDef 3
+aCPLR_ZKey 910225831
+aStatus    1
+aUpdateInd 2
+aName      Configuration
+aDesc      Main configuration object
+aLastSyncDate 20170307163020711
+aLastUpdateDate 20170307163020711
+
+eW_MetaDef 3
+aCPLR_ZKey 316000030
+aStatus    1
+aUpdateInd 2
+aName      DebugInfo
+aDesc      Object for passing debug info to client
+aLastSyncDate 20170316003116691
+aLastUpdateDate 20170316003116691
+
+eW_MetaDef 3
 aCPLR_ZKey 929210436
 aStatus    1
 aUpdateInd 2
@@ -147,15 +165,6 @@ aName      Session
 aLastSyncDate 20170307163020707
 aLastUpdateDate 20170307163020707
 
-eW_MetaDef 3
-aCPLR_ZKey 910225831
-aStatus    1
-aUpdateInd 2
-aName      Configuration
-aDesc      Main configuration object
-aLastSyncDate 20170307163020711
-aLastUpdateDate 20170307163020711
-
 eW_MetaType 2
 aType      8
 
@@ -163,13 +172,22 @@ eW_MetaType 2
 aType      9
 
 eW_MetaDef 3
-aCPLR_ZKey 929210726
+aCPLR_ZKey 910225924
 aStatus    1
 aUpdateInd 2
-aName      Session
+aName      Configuration
 aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20170307163020707
-aLastUpdateDate 20170307163020707
+aLastSyncDate 20170307163020711
+aLastUpdateDate 20170307163020711
+
+eW_MetaDef 3
+aCPLR_ZKey 316000227
+aStatus    1
+aUpdateInd 2
+aName      DebugInfo
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20170316000226763
+aLastUpdateDate 20170316000226763
 
 eW_MetaDef 3
 aCPLR_ZKey 929210527
@@ -181,13 +199,13 @@ aLastSyncDate 20170307163020695
 aLastUpdateDate 20170307163020695
 
 eW_MetaDef 3
-aCPLR_ZKey 910225924
+aCPLR_ZKey 929210726
 aStatus    1
 aUpdateInd 2
-aName      Configuration
+aName      Session
 aDesc      VOR automatically built from LOD Dialog
-aLastSyncDate 20170307163020711
-aLastUpdateDate 20170307163020711
+aLastSyncDate 20170307163020707
+aLastUpdateDate 20170307163020707
 
 eW_MetaType 2
 aType      10
@@ -343,11 +361,15 @@ eW_MetaDef 3
 
 eW_MetaDef 3
 
+eW_MetaDef 3
+
 eW_MetaType 2
 aType      2008
 
 eW_MetaType 2
 aType      2009
+
+eW_MetaDef 3
 
 eW_MetaDef 3
 
@@ -437,18 +459,20 @@ aJavaClassName com.quinsoft.zeidon.domains.BooleanDomain
 eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.DateTimeDomain
 
-i46        5
-i49        6
-i50        7
-i59        18
-i62        21
-i64        25
-i65        24
+i48        5
+i51        6
+i52        7
+i61        18
+i64        21
 i66        23
-i69        28
-i70        29
-i71        30
-i76        38
-i77        35
-i78        36
-i79        37
+i67        24
+i68        26
+i69        25
+i72        32
+i73        30
+i74        31
+i75        29
+i80        40
+i81        37
+i82        38
+i83        39

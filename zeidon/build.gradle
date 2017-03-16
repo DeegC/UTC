@@ -42,7 +42,7 @@ task generateTypescriptFiles( type: JavaExec ) {
     description 'Generates Typescript files for each LOD.'
     
     def xodDir = file("src/main/resources/utc/bin")
-    def typescriptDir = file("../angular/app")
+    def typescriptDir = file("../angular/src/app")
 
     // Set up properties so this only gets executed if an XOD has changed.
     outputs.upToDateSpec = new org.gradle.api.specs.AndSpec()

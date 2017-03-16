@@ -1,0 +1,103 @@
+z1000-Zeidon    DEBUGINFOTZZOLODO 03/16/17   00:31:16 1.0a2    
+eLOD       1
+aZKey      316000030
+aNextZKeyToAssign 316000040
+aName      DebugInfo
+aDesc      Object for passing debug info to client
+
+eLOD_EntityParent 2
+aName      DebugInfo
+aIndentName DebugInfo
+aIndentLvl 0
+aZKey      316000031
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      Y
+aParentDeleteBehave D
+
+eLOD_EntityChild 3
+aName      File
+aIndentName    File
+aIndentLvl 3
+aZKey      316000032
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      Y
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+aDesc      Debig file info
+
+eLOD_AttributeRec 4
+aZKey      316000037
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 5
+aName      Name
+aZKey      316000038
+aLth       1000
+
+eDomainRec 6
+aZKey      905181158
+aName      Text
+aDomainType E
+aDataType  S
+aMaxStringLth 10000
+aDesc      Any Character String
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      316000039
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 5
+aName      Size
+aZKey      316000040
+aLth       10
+
+eDomainRec 6
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 1
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+i8         5
+i9         1
+i10        2
+i11        3
+i12        4
+i13        5
+i14        6
+i15        7
+i16        5

@@ -7,3 +7,4 @@ eclipse-bin/
 .cache-main
 .cache-tests
 server/charts
+server/logs

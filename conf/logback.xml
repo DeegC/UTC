@@ -9,13 +9,13 @@
 
 
   <appender name="LOGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <file>${java.io.tmpdir}/utc.log</file>
+    <file>logs/utc.log</file>
     <encoder>
       <pattern>%d [%thread] %-5level - %msg%n</pattern>
     </encoder>
 
     <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-      <fileNamePattern>${java.io.tmpdir}/utc.%i.log</fileNamePattern>
+      <fileNamePattern>logs/utc.%i.log</fileNamePattern>
       <minIndex>1</minIndex>
       <maxIndex>5</maxIndex>
     </rollingPolicy>
@@ -33,6 +33,5 @@
   </logger>
 
   <root level="DEBUG">
-    <appender-ref ref="LOGFILE" />
   </root>
 </configuration>
