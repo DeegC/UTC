@@ -16,8 +16,8 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
     private var pid : PIDController = null
     private val logger = currentSession.log()
     private val task = currentSession.task
+    private var greenLedFlasher = false
 
-    
     /**
      * The amount of time (in millis) that the main Looper thread waits
      * between reads.
@@ -34,6 +34,9 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
      */
     private def tick() {
         logger.debug( "Main controller tick..." )
+        hardware.setGreenLed( greenLedFlasher )
+        greenLedFlasher = !greenLedFlasher
+        
         if ( System.currentTimeMillis() > nextSaveTime ) {
             nextSaveTime = System.currentTimeMillis() + 60 * 1000 // Save again in a minute.
             val instant = hardware.readSensors( )
@@ -42,7 +45,6 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
                 currentSession.Instant.TargetTemperature = currentSession.Configuration.TargetTemperature
                 currentSession.commit()
             }
-            
         }
     }
     
@@ -71,6 +73,10 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
 
     def run() {
         logger.info( "Starting up controller for config %s", currentSession.Configuration.Description )
+
+        hardware.setGreenLed( false )
+        hardware.setRedLed( false )
+        hardware.setYellowLed( false )
         
         pid = new PIDController( currentSession.Configuration.PidP,
                                  currentSession.Configuration.PidI,
@@ -89,6 +95,11 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
         }
         
         pid.disable()
+        
+        hardware.setGreenLed( false )
+        hardware.setRedLed( false )
+        hardware.setYellowLed( false )
+        
         logger.info( "Controller done." )
     }
     

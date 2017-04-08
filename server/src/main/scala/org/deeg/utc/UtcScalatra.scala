@@ -35,6 +35,11 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
     val logger = task.log()
     
     private val hardware = HardwareInterface.getHardwareInterface( task )
+    
+    // Indicate via LEDs that we're up and ready to go.
+    hardware.setGreenLed( true )
+    hardware.setRedLed( false )
+    hardware.setYellowLed( false )
 
     @volatile var controller : TemperatureController = null
     

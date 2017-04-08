@@ -13,9 +13,9 @@ case "$1" in
 esac
 
 case "$2" in
-  on) value=0
+  on|true)   value=0
     ;;
-  off) value=1
+  off|false) value=1
     ;;
   *) echo "Unknown value $2"
     exit 1

@@ -8,3 +8,4 @@ eclipse-bin/
 .cache-tests
 server/charts
 server/logs
+zeidon/logs

@@ -8,13 +8,14 @@ pwd
 # If we're on a CHIP then turn on some LEDs to indicate we're starting.
 arch=$(lscpu | grep Arch | awk '{print $2}')
 if [ "$arch" == "armv7l" ]; then
-    ../c-files/set-led.sh green on
-    ../c-files/set-led.sh yellow on
-    ../c-files/set-led.sh red on
-fi
+    # The directory that contains the bin files/scripts for interfacing with the CHIP hardware.
+    CHIP_BIN=../chip-bin
+    export PATH="$PATH:$CHIP_BIN"
 
-# Add c-files so server can turn on/off LEDs.
-export PATH="$PATH:../c-files"
+    set-led.sh green on
+    set-led.sh yellow on
+    set-led.sh red on
+fi
 
 # Set up chart dir and clean out old files
 mkdir -p ./charts > /dev/null

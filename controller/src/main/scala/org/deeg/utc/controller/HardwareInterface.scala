@@ -38,6 +38,10 @@ trait HardwareInterface {
         currentPwm = pwm
     }
     def readPwm() = currentPwm
+    
+    def setRedLed( on: Boolean )
+    def setGreenLed( on: Boolean )
+    def setYellowLed( on: Boolean )
 }
 
 object HardwareInterface {
