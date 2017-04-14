@@ -48,14 +48,6 @@ var RestService = (function () {
             .then(function () { return oi.root[0].drop(); })
             .catch(function (error) { return Observable_1.Observable.throw(error.json().error || 'Server error'); });
     };
-    RestService.prototype.deleteConfiguration = function (config) {
-        var lodName = config.oi.getLodDef().name;
-        var url = this.values.restUrl + "/" + lodName + "/" + config.Id;
-        this.http.delete(url)
-            .toPromise()
-            .then(function () { return config.drop(); })
-            .catch(function (error) { return Observable_1.Observable.throw(error.json().error || 'Server error'); });
-    };
     RestService.prototype.getCurrentSession = function () {
         var _this = this;
         var url = this.values.restUrl + "/getCurrentSession";

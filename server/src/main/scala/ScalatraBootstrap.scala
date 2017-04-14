@@ -4,8 +4,8 @@ import org.deeg.utc._
 
 class ScalatraBootstrap extends LifeCycle {
 
-  override def init(context: ServletContext) {
+    override def init(context: ServletContext) {
 
-    context mount (new UtcScalatra, "/*")
-  }
+        context mount (new UtcScalatra, "/api/*")
+    }
 }
