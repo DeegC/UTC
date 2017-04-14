@@ -33,9 +33,11 @@ dependencies {
     generateTypescriptFiles  group: 'ch.qos.logback', name: 'logback-classic', version: '1.+'
 }
 
-task writeClasspath << {
-    buildDir.mkdirs()
-    new File(buildDir, "classpath.txt").text = configurations.runtime.asPath + "\n"
+task writeClasspath {
+    doLast {
+        buildDir.mkdirs()
+        new File(buildDir, "classpath.txt").text = configurations.runtime.asPath + "\n"
+    }
 }
 	
 task generateTypescriptFiles( type: JavaExec ) {

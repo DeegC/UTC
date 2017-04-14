@@ -20,7 +20,7 @@ import { ZeidonRestValues } from './zeidon-rest-client';
 import { ZeidonRestConfiguration } from './zeidon-rest-client';
 
 const REST_VALUES: ZeidonRestValues = {
-  restUrl: `http://${window.location.hostname}:8080/utc`
+  restUrl: `http://${window.location.hostname}:8080/api/utc`
 };
 
 @NgModule({

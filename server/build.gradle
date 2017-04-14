@@ -15,3 +15,7 @@ dependencies {
     compile "com.github.wookietreiber:scala-chart_${versions.scala}:0.5.1"
 //    compile 'org.eclipse.jetty.orbit:javax.servlet:3.0.0.v201112011016'
 }
+
+war {
+    from( "../angular/src" )
+}
