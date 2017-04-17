@@ -9,13 +9,13 @@
 
     <!-- 1. Load libraries -->
      <!-- Polyfill(s) for older browsers -->
-    <script src="https://unpkg.com/core-js/client/shim.min.js"></script>
-    <script src="https://unpkg.com/zone.js@0.7.8?main=browser"></script>
-    <script src="https://unpkg.com/reflect-metadata@0.1.10"></script>
-    <script src="https://unpkg.com/systemjs@0.19.39/dist/system.src.js"></script>
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
 
     <!-- 2. Configure SystemJS -->
-    <script src="systemjs.config.jetty.js"></script>
+    <script src="systemjs.config.js"></script>
     <script>
       System.import('main.js').catch(function(err){ console.error(err); });
     </script>

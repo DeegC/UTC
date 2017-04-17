@@ -18,4 +18,6 @@ dependencies {
 
 war {
     from( "../angular/src" )
+    exclude( "**/index.html" )
+    rename( "index.jetty.html", "index.html" )
 }
