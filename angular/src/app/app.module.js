@@ -61,7 +61,7 @@ AppModule = __decorate([
                     path: 'history',
                     component: session_list_component_1.SessionListComponent
                 }
-            ])
+            ], { useHash: true } /* required for use with Jetty */)
         ],
         declarations: [app_component_1.AppComponent,
             configuration_list_component_1.ConfigurationListComponent,

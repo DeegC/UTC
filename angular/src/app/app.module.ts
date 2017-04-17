@@ -46,7 +46,7 @@ const REST_VALUES: ZeidonRestValues = {
                       path: 'history',
                       component: SessionListComponent
                     }
-                  ])
+                    ], { useHash: true } /* required for use with Jetty */ )
    ],
   declarations: [ AppComponent,
                   ConfigurationListComponent,
