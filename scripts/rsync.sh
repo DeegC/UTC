@@ -11,4 +11,4 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/..
 DIR=$(pwd)
 echo $DIR
-rsync -av --exclude .gradle --exclude .git . $1:/home/dgc/projects/UTC
+rsync -av --exclude .gradle --exclude .git --exclude server/logs --exclude server/charts . $1:/home/dgc/projects/UTC

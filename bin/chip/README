@@ -1,0 +1,6 @@
+# bin files for working with C.H.I.P
+
+These are files that need to be compiled on the CHIP that are used by the Java server.  Source for some of these files found at:
+
+http://www.chip-community.org/index.php/SPI_support
+
