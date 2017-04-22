@@ -1,7 +1,7 @@
-z1000-Zeidon    UDS      TZDGSRCO 03/07/17   14:47:57 1.0a2    
+z1000-Zeidon    UDS      TZDGSRCO 04/22/17   00:20:40 1.0a2    
 eDomainGroup 1
 aZKey      905180724
-aNextZKeyToAssign 905180738
+aNextZKeyToAssign 905180742
 aName      UDS
 aDesc      UDS domains
 aExtension C
@@ -14,6 +14,25 @@ aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain
 aDataType  S
 aMaxStringLth 1
 aContextRestriction N
+
+eContext   3
+aZKey      905180739
+aName      Abbrev
+
+eTableEntry 4
+aZKey      905180740
+aExternalValue F
+aInternalValue F
+
+eTableEntry 4
+aZKey      905180741
+aExternalValue C
+aInternalValue C
+
+eTableEntry 4
+aZKey      905180742
+aExternalValue K
+aInternalValue K
 
 eContext   3
 aZKey      905180732

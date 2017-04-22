@@ -22,12 +22,17 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
      * The amount of time (in millis) that the main Looper thread waits
      * between reads.
      */
-    private val mainLoopDelay = 250
+    private val mainLoopDelay = 1000
     
     /**
      * This is the next time (in epoch millis) that the current state should be saved to the DB.
      */
     private var nextSaveTime: Long = 0
+    
+    /**
+     * This is the time in millis between saves of the Instant to the DB.
+     */
+    private val savePeriod: Long = 60 * 1000  // 1 minutes.
     
     /**
      * Main method for processing a single tick of the controller.
@@ -39,7 +44,7 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
         
         if ( System.currentTimeMillis() > nextSaveTime ) {
             nextSaveTime = System.currentTimeMillis() + 60 * 1000 // Save again in a minute.
-            val instant = hardware.readSensors( )
+            val instant = hardware.readSensors( currentSession )
             currentSession.synchronized {
                 currentSession.Instant include instant.Instant
                 currentSession.Instant.TargetTemperature = currentSession.Configuration.TargetTemperature
@@ -56,8 +61,7 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
      *       Should we track temperatures as doubles?
      */
     def pidGet(): Double = {
-        val instant = hardware.readSensors( )
-        logger.debug( "pidGet" )
+        val instant = hardware.readSensors( currentSession )
         return instant.Instant.Therm0
     }
     
@@ -67,10 +71,9 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
      */
     def pidWrite(output: Double) {
         logger.debug( "pidWrite %s", output )
-        hardware.setPwm( output.toInt )
+        hardware.setPwm( output.toInt, currentSession.Configuration.PwmFrequency )
     }
     
-
     def run() {
         logger.info( "Starting up controller for config %s", currentSession.Configuration.Description )
 
@@ -83,7 +86,7 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
                                  currentSession.Configuration.PidD,
                                  this, this, 5 );
 
-        pid.setOutputRange( 0, 255 );
+        pid.setOutputRange( 0, 100 );
         pid.setSetpoint( 250 );
         pid.enable()
         
@@ -116,7 +119,7 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
      * 
      */
     def currentState : View @basedOn( "Instant" ) = {
-        val instant = hardware.readSensors( )
+        val instant = hardware.readSensors( currentSession )
         instant.Instant.TargetTemperature = currentSession.Configuration.TargetTemperature
         return instant
         

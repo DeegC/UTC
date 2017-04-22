@@ -30,7 +30,7 @@ class SteinhartHart(val A : Double,
 
 object SteinhartHart {
     def main(args: Array[String]) {
-        val measuredVoltage = 2.810
+        val measuredVoltage = 2.810156
         val alg = new SteinhartHart( 2.3067434E-4, 2.3696596E-4, 1.2636414E-7, 22200, 3.22 )
 //        val alg = new SteinhartHart( 2.4723753e-04,2.3402251e-04,1.3879768e-07, 22200, 3.22 )
         val k = alg.computeTemperature( measuredVoltage )

@@ -19,7 +19,7 @@ fi
 # Don't allow root to ssh into server.  This disallows chip user from logging in.
 sed -i "s/PermitRootLogin yes/PermitRootLogin no/g" /etc/ssh/sshd_config
 
-# Install Oracle Java 8 ppa.  We need Oracle Java 8 for ARM for performance reasons.
+# Add Oracle Java 8 ppa.  We need Oracle Java 8 for ARM for performance reasons.
 if [ ! -f /etc/apt/sources.list.d/webupd8team-java.list ]; then
     echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" > /etc/apt/sources.list.d/webupd8team-java.list
     echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" >> /etc/apt/sources.list.d/webupd8team-java.list

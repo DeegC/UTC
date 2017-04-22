@@ -26,7 +26,7 @@ else
     export PATH="$PATH:../bin/test"  # Test files.
 fi
 
-
+set-pwm.sh 10000 0  # We may need to make freq configurable.
 set-led.sh green on
 set-led.sh yellow on
 set-led.sh red on

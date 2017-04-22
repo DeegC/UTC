@@ -11,7 +11,6 @@ import org.joda.time.DateTime
 class ChipHardwareInterface(val task: Task) extends HardwareInterface {
 
     task.log().info("Using ChipHardwareInterface");
-    task.log().info("test.sh"!! );
 
     /**
      * Set up steinhart algorithm for use with Maverick probes.  Some day we can
@@ -26,9 +25,9 @@ class ChipHardwareInterface(val task: Task) extends HardwareInterface {
     setGreenLed( true )
     setYellowLed( true )
 
-    override def setPwm(pwm: Int) {
-        super.setPwm(pwm)
-        task.log().info( s"set-pwm 1000 ${pwm}".!! )
+    override def setPwm(pwm: Int, freq: Int) {
+        super.setPwm(pwm, freq)
+        task.log().info( s"set-pwm.sh ${freq} ${pwm}".!! )
     }
 
     override def readTemperature(probe: Int): Double = {
@@ -49,7 +48,7 @@ class ChipHardwareInterface(val task: Task) extends HardwareInterface {
         val voltages = "read_therms".!!
         task.log().debug("Measured voltages =\n%s", voltages)
         voltageArray = voltages.split("\n").map { vstr => steinhart.computeTemperature(vstr.toDouble) }
-        lastRead = DateTime.now()
+        lastRead = now
     }
 
     override def readCpuTemperature: Int = {
