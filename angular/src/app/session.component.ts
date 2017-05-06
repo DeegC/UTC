@@ -25,6 +25,7 @@ import { Instant } from './Instant';
         <div><label>Therm 4: </label>{{currentState.Instant$.Therm4}}</div>
         <div><label>Therm 5: </label>{{currentState.Instant$.Therm5}}</div>
         <div><label>Therm 6: </label>{{currentState.Instant$.Therm6}}</div>
+        <div><label>CPU Temp: </label>{{currentState.Instant$.CpuTemperature}}</div>
         <div><label>Timestamp: </label>{{currentState.Instant$.Timestamp}}</div>
       </div>
 
