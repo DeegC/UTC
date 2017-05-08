@@ -12,6 +12,10 @@ import { Instant } from './Instant';
   </div>
 
   <div *ngIf="currentSession && ! currentSession.isEmpty" >
+      <div *ngIf="currentSession.Session.wError" >
+        <h2>{{currentSession.Session.wErrorMessage}}</h2>
+      </div>
+
       <div><label>Configuration: </label>{{currentSession.Session$.Configuration$.Description}}</div>
       <div><label>Started at: </label>{{currentSession.Session$.Date}}</div>
       <div><label>Target Temp: </label>{{currentSession.Session$.Configuration$.TargetTemperature}}</div>

@@ -14,14 +14,14 @@ class TestHardwareInterface(val task: Task) extends HardwareInterface {
     def readCpuTemperature: Int = 99
 
     override def setRedLed(on: Boolean) {
-        task.log().info("Turning Red LED: ${on}")
+        task.log().info(s"Turning Red LED: ${on}")
     }
 
     override def setGreenLed(on: Boolean) {
-        task.log().info("Turning Green LED: ${on}")
+        task.log().info(s"Turning Green LED: ${on}")
     }
 
     override def setYellowLed(on: Boolean) {
-        task.log().info("Turning Yellow LED: ${on}")
+        task.log().info(s"Turning Yellow LED: ${on}")
     }
 }

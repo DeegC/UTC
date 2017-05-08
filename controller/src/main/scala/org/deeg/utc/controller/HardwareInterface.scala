@@ -27,7 +27,6 @@ trait HardwareInterface {
         instant.Instant.Therm6 = convertTemperature( session, readTemperature(6) )
         instant.Instant.Therm7 = convertTemperature( session, readTemperature(7) )
         instant.Instant.PWM0 = readPwm()
-        instant.logOi
         return instant
     }
 
@@ -35,14 +34,14 @@ trait HardwareInterface {
                             tempKelvin : Double ) : Double = {
         if ( session == null )
             tempKelvin
-            
+
         return session.Configuration.TemperatureUnit.getString( "Abbrev" ) match {
             case "K" => tempKelvin
             case "C" => tempKelvin - 273.15
             case "F" => tempKelvin * 9.0 / 5.0 - 459.67
         }
     }
-    
+
     def task: Task
     def readCpuTemperature: Int
     def readTemperature(probe: Int): Double
@@ -52,31 +51,31 @@ trait HardwareInterface {
         currentFreq = freq
     }
     def readPwm() = currentPwm
-    
+
     def setRedLed( on: Boolean )
     def setGreenLed( on: Boolean )
     def setYellowLed( on: Boolean )
 }
 
 object HardwareInterface {
-  
+
   /**
    * Attempt to figure out which HardwareInterface to use depending on the
    * local hardware.
    */
   def getHardwareInterface( task: Task ): HardwareInterface = {
-    
-    val arch = 
-      try {  
+
+    val arch =
+      try {
         val lscpu = "lscpu".!!
         "Architecture:\\s*([^\\n]*)".r.findFirstMatchIn(lscpu).map(_ group 1).get
       }
       catch {
         case e: Exception => e.getMessage
       }
-    
+
     task.slog.info( s"CPU architecture = '$arch'" )
-    
+
     arch match {
       case "armv7l" => new ChipHardwareInterface( task )
       case _ => {
@@ -84,6 +83,6 @@ object HardwareInterface {
         new TestHardwareInterface( task )
       }
     }
-    
+
   }
 }

@@ -1,5 +1,5 @@
 /*
-  Generated from LOD Session on 2017-04-16T13:10:58.187
+  Generated from LOD Session on 2017-05-06T23:09:27.794
 
 */
 "use strict";
@@ -99,6 +99,22 @@ var Session_Session = (function (_super) {
     Object.defineProperty(Session_Session.prototype, "Notes", {
         get: function () { return this.getAttribute("Notes"); },
         set: function (value) { this.setAttribute("Notes", value); },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    ;
+    Object.defineProperty(Session_Session.prototype, "wError", {
+        get: function () { return this.getAttribute("wError"); },
+        set: function (value) { this.setAttribute("wError", value); },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    ;
+    Object.defineProperty(Session_Session.prototype, "wErrorMessage", {
+        get: function () { return this.getAttribute("wErrorMessage"); },
+        set: function (value) { this.setAttribute("wErrorMessage", value); },
         enumerable: true,
         configurable: true
     });
@@ -250,9 +266,93 @@ var Session_Configuration = (function (_super) {
     });
     ;
     ;
+    Object.defineProperty(Session_Configuration.prototype, "ThermometerConfig", {
+        get: function () {
+            return this.getChildEntityArray("ThermometerConfig");
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Session_Configuration.prototype, "ThermometerConfig$", {
+        get: function () {
+            return this.getChildEntityArray("ThermometerConfig").selected();
+        },
+        enumerable: true,
+        configurable: true
+    });
     return Session_Configuration;
 }(zeidon.EntityInstance));
 exports.Session_Configuration = Session_Configuration;
+var Session_ThermometerConfig = (function (_super) {
+    __extends(Session_ThermometerConfig, _super);
+    function Session_ThermometerConfig() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Object.defineProperty(Session_ThermometerConfig.prototype, "entityName", {
+        get: function () { return "ThermometerConfig"; },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    Object.defineProperty(Session_ThermometerConfig.prototype, "Id", {
+        get: function () { return this.getAttribute("Id"); },
+        set: function (value) { this.setAttribute("Id", value); },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    ;
+    Object.defineProperty(Session_ThermometerConfig.prototype, "Name", {
+        get: function () { return this.getAttribute("Name"); },
+        set: function (value) { this.setAttribute("Name", value); },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    ;
+    Object.defineProperty(Session_ThermometerConfig.prototype, "AlarmLow", {
+        get: function () { return this.getAttribute("AlarmLow"); },
+        set: function (value) { this.setAttribute("AlarmLow", value); },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    ;
+    Object.defineProperty(Session_ThermometerConfig.prototype, "AlarmHigh", {
+        get: function () { return this.getAttribute("AlarmHigh"); },
+        set: function (value) { this.setAttribute("AlarmHigh", value); },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    ;
+    Object.defineProperty(Session_ThermometerConfig.prototype, "AlarmOn", {
+        get: function () { return this.getAttribute("AlarmOn"); },
+        set: function (value) { this.setAttribute("AlarmOn", value); },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    ;
+    Object.defineProperty(Session_ThermometerConfig.prototype, "wTemperatureWithinAlarmThreshold", {
+        get: function () { return this.getAttribute("wTemperatureWithinAlarmThreshold"); },
+        set: function (value) { this.setAttribute("wTemperatureWithinAlarmThreshold", value); },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    ;
+    Object.defineProperty(Session_ThermometerConfig.prototype, "wTemperatureError", {
+        get: function () { return this.getAttribute("wTemperatureError"); },
+        set: function (value) { this.setAttribute("wTemperatureError", value); },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    ;
+    return Session_ThermometerConfig;
+}(zeidon.EntityInstance));
+exports.Session_ThermometerConfig = Session_ThermometerConfig;
 var Session_Instant = (function (_super) {
     __extends(Session_Instant, _super);
     function Session_Instant() {
@@ -366,6 +466,7 @@ exports.Session_Instant = Session_Instant;
 var SessionEntityPrototypes = {
     Session: Session_Session.prototype,
     Configuration: Session_Configuration.prototype,
+    ThermometerConfig: Session_ThermometerConfig.prototype,
     Instant: Session_Instant.prototype,
 };
 exports.Session_LodDef = {
@@ -376,7 +477,7 @@ exports.Session_LodDef = {
             erToken: "905181347",
             create: true,
             cardMax: 0,
-            hasInit: false,
+            hasInit: true,
             creatable: true,
             includable: false,
             deletable: true,
@@ -428,6 +529,27 @@ exports.Session_LodDef = {
                     update: true,
                     foreignKey: false,
                 },
+                wError: {
+                    name: "wError",
+                    hidden: false,
+                    required: false,
+                    domainName: "Boolean",
+                    persistent: false,
+                    key: false,
+                    update: true,
+                    foreignKey: false,
+                    initialValue: "FALSE",
+                },
+                wErrorMessage: {
+                    name: "wErrorMessage",
+                    hidden: false,
+                    required: false,
+                    domainName: "Text",
+                    persistent: false,
+                    key: false,
+                    update: true,
+                    foreignKey: false,
+                },
                 fk_id_configuration: {
                     name: "fk_id_configuration",
                     hidden: true,
@@ -452,7 +574,9 @@ exports.Session_LodDef = {
             excludable: true,
             updatable: false,
             parentDelete: false,
-            childEntities: {},
+            childEntities: {
+                ThermometerConfig: {},
+            },
             attributes: {
                 Id: {
                     name: "Id",
@@ -593,6 +717,113 @@ exports.Session_LodDef = {
                     key: false,
                     update: false,
                     foreignKey: false,
+                },
+            }
+        },
+        ThermometerConfig: {
+            name: "ThermometerConfig",
+            erToken: "905181361",
+            create: false,
+            cardMax: 10,
+            hasInit: true,
+            creatable: false,
+            includable: false,
+            deletable: false,
+            excludable: false,
+            updatable: false,
+            parentDelete: false,
+            childEntities: {},
+            attributes: {
+                Id: {
+                    name: "Id",
+                    hidden: false,
+                    required: true,
+                    domainName: "GeneratedKey",
+                    persistent: true,
+                    key: true,
+                    update: true,
+                    foreignKey: false,
+                },
+                Name: {
+                    name: "Name",
+                    hidden: false,
+                    required: true,
+                    domainName: "Text",
+                    persistent: true,
+                    key: false,
+                    update: true,
+                    foreignKey: false,
+                },
+                AlarmLow: {
+                    name: "AlarmLow",
+                    hidden: false,
+                    required: false,
+                    domainName: "Integer",
+                    persistent: true,
+                    key: false,
+                    update: true,
+                    foreignKey: false,
+                },
+                AlarmHigh: {
+                    name: "AlarmHigh",
+                    hidden: false,
+                    required: false,
+                    domainName: "Integer",
+                    persistent: true,
+                    key: false,
+                    update: true,
+                    foreignKey: false,
+                },
+                AlarmOn: {
+                    name: "AlarmOn",
+                    hidden: false,
+                    required: false,
+                    domainName: "Boolean",
+                    persistent: true,
+                    key: false,
+                    update: true,
+                    foreignKey: false,
+                },
+                wTemperatureWithinAlarmThreshold: {
+                    name: "wTemperatureWithinAlarmThreshold",
+                    hidden: false,
+                    required: false,
+                    domainName: "Boolean",
+                    persistent: false,
+                    key: false,
+                    update: true,
+                    foreignKey: false,
+                    initialValue: "FALSE",
+                },
+                wTemperatureError: {
+                    name: "wTemperatureError",
+                    hidden: false,
+                    required: false,
+                    domainName: "Boolean",
+                    persistent: false,
+                    key: false,
+                    update: true,
+                    foreignKey: false,
+                },
+                autoseq: {
+                    name: "autoseq",
+                    hidden: true,
+                    required: false,
+                    domainName: "Integer",
+                    persistent: true,
+                    key: false,
+                    update: false,
+                    foreignKey: false,
+                },
+                fk_id_configuration: {
+                    name: "fk_id_configuration",
+                    hidden: true,
+                    required: true,
+                    domainName: "GeneratedKey",
+                    persistent: true,
+                    key: false,
+                    update: true,
+                    foreignKey: true,
                 },
             }
         },

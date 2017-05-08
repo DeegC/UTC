@@ -1,4 +1,4 @@
-z1000-Zeidon    UTC      TZCMLPLO 04/30/17   23:10:48 1.0a2    
+z1000-Zeidon    UTC      TZCMLPLO 05/06/17   22:45:29 1.0a2    
 eLPLR      1
 aName      UTC
 aDesc      Universal Temperature Controller
@@ -6,7 +6,7 @@ aZKey      92726748
 aPgmSrcDir C:\zeidon\zapp\utc
 aExecDir   C:\zeidon\zapp\utc\bin
 aMetaSrcDir C:\zeidon\zapp\utc
-aTaskUseCount 0
+aTaskUseCount 2
 aLastBuildDate 20170307144610609
 aLPLR_Type 3
 aTempDesc  Universal Temperature Controller
@@ -174,8 +174,8 @@ aCPLR_ZKey 929210658
 aStatus    1
 aUpdateInd 2
 aName      Session
-aLastSyncDate 20170307163020707
-aLastUpdateDate 20170307163020707
+aLastSyncDate 20170506224529152
+aLastUpdateDate 20170506224529152
 
 eW_MetaType 2
 aType      8
@@ -332,6 +332,20 @@ eW_MetaDef 3
 aGroupName TZAPDMAA
 
 eW_MetaDef 3
+aCPLR_ZKey 905180737
+aStatus    1
+aName      Temperature
+aLastUpdateDate 20170422002040581
+aGroupName UDS
+
+eW_MetaDef 3
+aCPLR_ZKey 905180731
+aStatus    1
+aName      TemperatureUnit
+aLastUpdateDate 20170422002040581
+aGroupName UDS
+
+eW_MetaDef 3
 aGroupName TZAPDMAA
 
 eW_MetaDef 3
@@ -343,18 +357,6 @@ aStatus    1
 aName      Y/N
 aLastUpdateDate 20170307182030142
 aGroupName Base
-
-eW_MetaDef 3
-aCPLR_ZKey 905180731
-aStatus    1
-aName      TemperatureUnit
-aGroupName UDS
-
-eW_MetaDef 3
-aCPLR_ZKey 905180737
-aStatus    1
-aName      Temperature
-aGroupName UDS
 
 eW_MetaType 2
 aType      2004
@@ -477,13 +479,13 @@ eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.DateTimeDomain
 
 i56        5
-i57        6
-i58        7
+i59        6
+i60        7
 i63        20
 i66        23
-i68        26
-i69        25
-i70        28
+i68        28
+i69        26
+i70        25
 i71        27
 i74        34
 i75        32

@@ -3,6 +3,7 @@
  * Adjust as necessary for your application needs.
  */
 (function (global) {
+  window.zeidonRestPort = 8080;
   System.config({
     paths: {
       // paths serve as alias

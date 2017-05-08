@@ -87,8 +87,10 @@ var BooleanDomainFunctions = (function (_super) {
             case false:
                 return value;
             case "true":
+            case "TRUE":
                 return true;
             case "false":
+            case "FALSE":
                 return false;
             case null:
             case "":

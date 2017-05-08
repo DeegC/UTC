@@ -28,7 +28,7 @@ var zeidon_1 = require("./zeidon");
 var zeidon_rest_client_1 = require("./zeidon-rest-client");
 var zeidon_rest_client_2 = require("./zeidon-rest-client");
 var REST_VALUES = {
-    restUrl: "http://" + window.location.hostname + ":" + window.location.port + "/api/utc"
+    restUrl: "http://" + window.location.hostname + ":" + (window.zeidonRestPort || window.location.port) + "/api/utc"
 };
 var AppModule = (function () {
     // This constructor is required to force Angular injector to load the ZeidonConfiguration.

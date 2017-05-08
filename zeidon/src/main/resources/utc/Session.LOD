@@ -1,7 +1,7 @@
-z1000-Zeidon    SESSION  TZZOLODO 03/08/17   13:47:32 1.0a2    
+z1000-Zeidon    SESSION  TZZOLODO 05/06/17   22:45:28 1.0a2    
 eLOD       1
 aZKey      929210658
-aNextZKeyToAssign 929210692
+aNextZKeyToAssign 929210707
 aName      Session
 
 eLOD_EntityParent 2
@@ -38,6 +38,158 @@ aParentDeleteBehave E
 aRelLinkIndicator H
 aDesc      Config options for a monitoring session.
 
+eLOD_EntityChild 4
+aName      ThermometerConfig
+aIndentName       ThermometerConfig
+aIndentLvl 6
+aZKey      929210693
+aCreate    N
+aDelete    N
+aUpdate    N
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aParentDeleteBehave R
+aRelLinkIndicator L
+aDesc      Config values for the thermometer
+
+eLOD_AttributeRec 5
+aZKey      929210694
+
+eER_AttributeRec 6
+aName      Id
+aZKey      905181362
+aNotNull   Y
+aSAP_Attribute 0
+
+eDomainRec 7
+aZKey      905181242
+aName      GeneratedKey
+aDomainType E
+aDataType  L
+aMaxStringLth 64
+aDesc      Generic DB-generated key
+aContextRestriction N
+
+eLOD_AttributeRec 5
+aZKey      929210702
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 6
+aName      wTemperatureError
+aZKey      929210703
+
+eDomainRec 7
+aZKey      905181228
+aName      Boolean
+aDomainType E
+aDataType  L
+aMaxStringLth 1
+aContextRestriction N
+
+eLOD_AttributeRec 5
+aZKey      929210695
+
+eER_AttributeRec 6
+aName      Name
+aZKey      905181363
+aLth       255
+aNotNull   Y
+aDesc      The name of this thermometer that will be displayed in the UI.
+
+eDomainRec 7
+aZKey      905181158
+aName      Text
+aDomainType E
+aDataType  S
+aMaxStringLth 10000
+aDesc      Any Character String
+aContextRestriction N
+
+eLOD_AttributeRec 5
+aZKey      929210696
+
+eER_AttributeRec 6
+aName      AlarmLow
+aZKey      905181364
+aDesc      Sound the alarm if this thermometer goes below this value
+
+eDomainRec 7
+aZKey      905181155
+aName      Integer
+aDomainType E
+aDataType  L
+aMaxStringLth 4
+aDecimalFormat 0
+aDesc      Integer numbers from -lots to +lots
+aContextRestriction N
+
+eLOD_AttributeRec 5
+aZKey      929210697
+
+eER_AttributeRec 6
+aName      AlarmHigh
+aZKey      905181365
+aDesc      Sound the alarm if this thermometer goes over this value.
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      929210698
+
+eER_AttributeRec 6
+aName      AlarmOn
+aZKey      905181366
+aDesc      Sound the temperature alarm only when this is on.
+
+eDomainRec 7
+
+eLOD_AttributeRec 5
+aZKey      929210699
+aUpdate    Y
+aInit      FALSE
+aSeqOrder  A
+
+eER_AttributeRec 6
+aName      wTemperatureWithinAlarmThreshold
+aZKey      905181367
+aDesc      Used only when AlarmOn is Y--this keeps track of when the temperature for this thermometer has ever been within the AlarmLow and AlarmHigh threshold.
+aWork      Y
+
+eDomainRec 7
+
+eER_EntityRec 5
+aName      ThermometerConfig
+aZKey      905181361
+aPurpose   A
+aDesc      Config values for the thermometer
+aER_DiagramPosX 52
+aER_DiagramPosY 5
+aSAP_Entity 0
+
+eER_RelLinkRec 5
+aName      has
+aAutoSeq   Y
+aHangingForeignKeyEntity N
+aZKey      905181389
+aCardMin   1
+aCardMax   10
+aTE_NoForeignKeyPrefix N
+
+eER_RelTypeRec 6
+aZKey      905181388
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 37
+aER_DiagramE1PosY 7
+aER_DiagramE2PosX 51
+aER_DiagramE2PosY 7
+
 eLOD_AttributeRec 4
 aZKey      929210678
 
@@ -48,13 +200,6 @@ aNotNull   Y
 aSAP_Attribute 0
 
 eDomainRec 6
-aZKey      905181242
-aName      GeneratedKey
-aDomainType E
-aDataType  L
-aMaxStringLth 64
-aDesc      Generic DB-generated key
-aContextRestriction N
 
 eLOD_AttributeRec 4
 aZKey      929210679
@@ -67,13 +212,6 @@ aNotNull   Y
 aDesc      Description of this session.
 
 eDomainRec 6
-aZKey      905181158
-aName      Text
-aDomainType E
-aDataType  S
-aMaxStringLth 10000
-aDesc      Any Character String
-aContextRestriction N
 
 eLOD_AttributeRec 4
 aZKey      929210680
@@ -95,14 +233,6 @@ aZKey      905181397
 aNotNull   Y
 
 eDomainRec 6
-aZKey      905181155
-aName      Integer
-aDomainType E
-aDataType  L
-aMaxStringLth 4
-aDecimalFormat 0
-aDesc      Integer numbers from -lots to +lots
-aContextRestriction N
 
 eLOD_AttributeRec 4
 aZKey      929210683
@@ -129,12 +259,6 @@ aZKey      905181337
 aDesc      If 'Y', then record the smoker sesson.
 
 eDomainRec 6
-aZKey      905181228
-aName      Boolean
-aDomainType E
-aDataType  L
-aMaxStringLth 1
-aContextRestriction N
 
 eLOD_AttributeRec 4
 aZKey      929210685
@@ -455,6 +579,33 @@ aDesc      Notes regarding this session
 
 eDomainRec 5
 
+eLOD_AttributeRec 3
+aZKey      929210704
+aWork      Y
+aUpdate    Y
+aInit      FALSE
+aSeqOrder  Y
+
+eER_AttributeRec 4
+aName      wError
+aZKey      929210705
+aDesc      If true then an alarm has been triggered
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      929210706
+aWork      Y
+aUpdate    Y
+aSeqOrder  Y
+
+eER_AttributeRec 4
+aName      wErrorMessage
+aZKey      929210707
+aDesc      If there is an error, this holds th error description
+
+eDomainRec 5
+
 eER_EntityRec 3
 aName      Session
 aZKey      905181347
@@ -465,6 +616,7 @@ aER_DiagramPosY 17
 aSAP_Entity 0
 
 eLOD_Entity 2
+awkSelectedAttributeForDragSort 4
 
 eLOD_Attribute 3
 awkSequence 1
@@ -489,6 +641,20 @@ eDomain    5
 
 eLOD_Attribute 3
 awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 5
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 6
 
 eER_Attribute 4
 
@@ -584,6 +750,64 @@ eDomain    5
 
 eLOD_Attribute 3
 awkSequence 13
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
+eLOD_Entity 2
+awkSelectedAttributeForDragSort 6
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 5
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 6
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 7
 
 eER_Attribute 4
 
@@ -708,121 +932,161 @@ aGenerateExecutable kzhsqllb
 aDisplayOwner N
 aTranslateNamesToLowerUnderscore Y
 
-i11        8
-i23        14
-i29        26
-i32        14
-i35        20
-i38        14
-i41        14
+i18        15
+i21        9
+i24        9
+i30        6
+i33        12
+i36        12
+i39        15
+i45        9
+i48        15
 i54        51
-i57        51
-i60        51
-i63        51
-i66        51
-i69        51
-i72        51
-i75        51
-i78        14
-i81        51
-i87        5
-i90        48
-i93        48
-i96        8
-i98        1
-i99        85
-i100       86
-i101       5
-i102       88
-i103       89
-i104       48
-i105       91
-i106       92
-i107       48
-i108       94
-i109       95
-i110       8
-i111       97
-i112       2
-i113       3
-i114       4
-i115       5
-i116       6
-i117       7
-i118       8
-i119       9
-i120       10
-i121       8
-i122       12
-i123       13
-i124       14
-i125       15
-i126       16
-i127       17
-i128       18
-i129       19
-i130       20
-i131       21
-i132       22
-i133       14
-i134       24
-i135       25
-i136       26
-i137       27
-i138       28
-i139       26
-i140       30
-i141       31
-i142       14
-i143       33
-i144       34
-i145       20
-i146       36
-i147       37
-i148       14
-i149       39
-i150       40
-i151       14
-i152       42
-i153       43
-i154       44
-i155       45
-i156       46
-i157       47
-i158       48
-i159       49
-i160       50
-i161       51
-i162       52
-i163       53
-i164       51
-i165       55
-i166       56
-i167       51
-i168       58
-i169       59
-i170       51
-i171       61
-i172       62
+i57        15
+i60        9
+i63        15
+i66        15
+i79        76
+i82        76
+i85        76
+i88        76
+i91        76
+i94        76
+i97        76
+i100       76
+i103       15
+i106       76
+i112       6
+i115       73
+i118       73
+i121       12
+i124       9
+i127       12
+i129       1
+i130       110
+i131       111
+i132       6
+i133       113
+i134       114
+i135       73
+i136       116
+i137       117
+i138       73
+i139       119
+i140       120
+i141       12
+i142       122
+i143       123
+i144       9
+i145       125
+i146       126
+i147       12
+i148       128
+i149       2
+i150       28
+i151       29
+i152       6
+i153       31
+i154       32
+i155       12
+i156       34
+i157       35
+i158       12
+i159       37
+i160       38
+i161       15
+i162       40
+i163       41
+i164       42
+i165       43
+i166       44
+i167       9
+i168       46
+i169       47
+i170       15
+i171       49
+i172       50
 i173       51
-i174       64
-i175       65
+i174       52
+i175       53
 i176       51
-i177       67
-i178       68
-i179       51
-i180       70
-i181       71
-i182       51
-i183       73
-i184       74
-i185       51
-i186       76
-i187       77
-i188       14
-i189       79
-i190       80
-i191       51
-i192       82
-i193       83
-i194       84
+i177       55
+i178       56
+i179       15
+i180       58
+i181       59
+i182       9
+i183       61
+i184       62
+i185       15
+i186       64
+i187       65
+i188       15
+i189       67
+i190       68
+i191       69
+i192       3
+i193       4
+i194       5
+i195       6
+i196       10
+i197       11
+i198       12
+i199       13
+i200       14
+i201       15
+i202       16
+i203       17
+i204       15
+i205       19
+i206       20
+i207       9
+i208       22
+i209       23
+i210       9
+i211       7
+i212       8
+i213       9
+i214       25
+i215       26
+i216       27
+i217       70
+i218       71
+i219       72
+i220       73
+i221       74
+i222       75
+i223       76
+i224       77
+i225       78
+i226       76
+i227       80
+i228       81
+i229       76
+i230       83
+i231       84
+i232       76
+i233       86
+i234       87
+i235       76
+i236       89
+i237       90
+i238       76
+i239       92
+i240       93
+i241       76
+i242       95
+i243       96
+i244       76
+i245       98
+i246       99
+i247       76
+i248       101
+i249       102
+i250       15
+i251       104
+i252       105
+i253       76
+i254       107
+i255       108
+i256       109
