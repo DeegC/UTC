@@ -1,0 +1,230 @@
+z1000-Zeidon    TWITTERCOTZZOLODO 05/09/17   21:18:39 1.0a2    
+eLOD       1
+aZKey      508222936
+aNextZKeyToAssign 508222945
+aName      TwitterConfig
+
+eLOD_EntityParent 2
+aName      Twitter
+aIndentName Twitter
+aIndentLvl 0
+aZKey      508222937
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      N
+aParentDeleteBehave D
+aDupEntityInstance N
+aDupRelationshipInstance N
+aDesc      Config options for Twitter/tweeting.
+
+eLOD_AttributeRec 3
+aZKey      508222938
+
+eER_AttributeRec 4
+aName      Id
+aZKey      905181371
+aNotNull   Y
+
+eDomainRec 5
+aZKey      905181242
+aName      GeneratedKey
+aDomainType E
+aDataType  L
+aMaxStringLth 64
+aDesc      Generic DB-generated key
+aContextRestriction N
+
+eLOD_AttributeRec 3
+aZKey      508222939
+
+eER_AttributeRec 4
+aName      ConsumerKey
+aZKey      905181372
+aLth       200
+aDesc      Twitter OAuth ConsumerKey
+
+eDomainRec 5
+aZKey      905181158
+aName      Text
+aDomainType E
+aDataType  S
+aMaxStringLth 10000
+aDesc      Any Character String
+aContextRestriction N
+
+eLOD_AttributeRec 3
+aZKey      508222940
+
+eER_AttributeRec 4
+aName      ConsumerSecret
+aZKey      905181373
+aLth       200
+aDesc      Twitter OAuth ConsumerSecret
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      508222941
+
+eER_AttributeRec 4
+aName      AccessToken
+aZKey      905181374
+aLth       200
+aDesc      Twitter OAuth AccessToken
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      508222942
+
+eER_AttributeRec 4
+aName      AccessTokenSecret
+aZKey      905181375
+aLth       200
+aDesc      Twitter OAuth AccessTokenSecret
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      508222943
+
+eER_AttributeRec 4
+aName      Username
+aZKey      905181376
+aLth       255
+aDesc      Username for twitter account
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      508222944
+
+eER_AttributeRec 4
+aName      TweetPeriodInMinutes
+aZKey      905181377
+aDesc      How often, in minutes, to tweet status.
+
+eDomainRec 5
+aZKey      905181155
+aName      Integer
+aDomainType E
+aDataType  L
+aMaxStringLth 4
+aDecimalFormat 0
+aDesc      Integer numbers from -lots to +lots
+aContextRestriction N
+
+eER_EntityRec 3
+aName      TwitterConfig
+aZKey      905181370
+aPurpose   F
+aDesc      Config options for Twitter/tweeting.
+aER_DiagramPosX 52
+aER_DiagramPosY 14
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 5
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 6
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 7
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+ePOD       2
+aNAME      TwitterConfig
+aZKey      508222945
+aTE_SourceZKey 1896
+
+eTE_DB_Environ 3
+aName      UTC
+aZKey      1894
+aDesc      Universal Temperature Controller
+aType      P
+
+eTE_DBMS_Source 4
+aName      Sqlite
+aZKey      1896
+aParadigm  R
+aDBMS      Sqlite
+aGenerateExecutable kzhsqllb
+aDisplayOwner N
+aTranslateNamesToLowerUnderscore Y
+
+i10        7
+i13        7
+i16        7
+i19        7
+i24        1
+i25        2
+i26        3
+i27        4
+i28        5
+i29        6
+i30        7
+i31        8
+i32        9
+i33        7
+i34        11
+i35        12
+i36        7
+i37        14
+i38        15
+i39        7
+i40        17
+i41        18
+i42        7
+i43        20
+i44        21
+i45        22
+i46        23

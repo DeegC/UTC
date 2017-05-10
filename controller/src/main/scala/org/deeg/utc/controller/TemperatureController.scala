@@ -38,6 +38,8 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
 
     private var currentInstant: View = null
 
+    private val twitter = new TwitterFeed( currentSession )
+
     /**
      * Main method for processing a single tick of the controller.
      */
@@ -48,6 +50,7 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
         blinkGreenLed
         saveInstantToDb
         checkForTemperatureErrors
+        twitter.tweetSmokerStatus( currentInstant )
     }
 
     private def blinkGreenLed {
@@ -77,10 +80,10 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
 
             thermCount += 1
 
-            if ( ! tc.AlarmOn )
+            if ( ! tc.AlarmOn.isTruthy )
                 next()
 
-            var temperature = currentInstant.Instant.getAttribute( s"Therm${thermCount}" )
+            val temperature = currentInstant.Instant.getAttribute( s"Therm${thermCount}" )
 
             // Start by assuming the measured temperature is within the alarm values.
             var inThreshold = true

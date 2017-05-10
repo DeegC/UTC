@@ -1,4 +1,4 @@
-z1000-Zeidon    UTC      TZCMLPLO 05/06/17   22:45:29 1.0a2    
+z1000-Zeidon    UTC      TZCMLPLO 05/09/17   21:20:12 1.0a2    
 eLPLR      1
 aName      UTC
 aDesc      Universal Temperature Controller
@@ -6,7 +6,7 @@ aZKey      92726748
 aPgmSrcDir C:\zeidon\zapp\utc
 aExecDir   C:\zeidon\zapp\utc\bin
 aMetaSrcDir C:\zeidon\zapp\utc
-aTaskUseCount 2
+aTaskUseCount 1
 aLastBuildDate 20170307144610609
 aLPLR_Type 3
 aTempDesc  Universal Temperature Controller
@@ -121,8 +121,8 @@ aStatus    1
 aUpdateInd 2
 aName      UTC
 aDesc      UDS Digital Supervisor (android)
-aLastSyncDate 20170307163020711
-aLastUpdateDate 20170307163020711
+aLastSyncDate 20170509211815313
+aLastUpdateDate 20170509211815313
 
 eW_MetaType 2
 aType      5
@@ -136,8 +136,8 @@ aStatus    1
 aUpdateInd 2
 aName      UTC
 aDesc      Universal Temperature Controller
-aLastSyncDate 20170307151450721
-aLastUpdateDate 20170307151450721
+aLastSyncDate 20170509211827175
+aLastUpdateDate 20170509211827175
 
 eW_MetaType 2
 aType      7
@@ -174,8 +174,16 @@ aCPLR_ZKey 929210658
 aStatus    1
 aUpdateInd 2
 aName      Session
-aLastSyncDate 20170506224529152
-aLastUpdateDate 20170506224529152
+aLastSyncDate 20170509211603665
+aLastUpdateDate 20170509211603665
+
+eW_MetaDef 3
+aCPLR_ZKey 508222936
+aStatus    1
+aUpdateInd 2
+aName      TwitterConfig
+aLastSyncDate 20170508223032704
+aLastUpdateDate 20170508223032704
 
 eW_MetaType 2
 aType      8
@@ -218,6 +226,15 @@ aName      Session
 aDesc      VOR automatically built from LOD Dialog
 aLastSyncDate 20170307163020707
 aLastUpdateDate 20170307163020707
+
+eW_MetaDef 3
+aCPLR_ZKey 508223033
+aStatus    1
+aUpdateInd 2
+aName      TwitterConfig
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20170508223032848
+aLastUpdateDate 20170508223032848
 
 eW_MetaType 2
 aType      10
@@ -382,11 +399,15 @@ eW_MetaDef 3
 
 eW_MetaDef 3
 
+eW_MetaDef 3
+
 eW_MetaType 2
 aType      2008
 
 eW_MetaType 2
 aType      2009
+
+eW_MetaDef 3
 
 eW_MetaDef 3
 
@@ -478,20 +499,22 @@ aJavaClassName com.quinsoft.zeidon.domains.BooleanDomain
 eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.DateTimeDomain
 
-i56        5
-i59        6
-i60        7
-i63        20
-i66        23
-i68        28
-i69        26
-i70        25
-i71        27
-i74        34
-i75        32
-i76        33
-i77        31
-i82        42
-i83        39
-i84        40
-i85        41
+i58        5
+i61        6
+i62        7
+i65        20
+i68        23
+i70        28
+i71        29
+i72        26
+i73        25
+i74        27
+i77        35
+i78        36
+i79        33
+i80        34
+i81        32
+i86        44
+i87        41
+i88        42
+i89        43

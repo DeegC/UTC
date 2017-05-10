@@ -1,3 +1,3 @@
 #!/bin/bash
 
-curl -d ""  "$UTC_SERVER/utc/stopSession"
+curl -d ""  "$UTC_SERVER/api/utc/stopSession"

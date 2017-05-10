@@ -1,4 +1,4 @@
-z1000-Zeidon    CONFIGURATZZOLODO 03/08/17   13:47:32 1.0a2    
+z1000-Zeidon    CONFIGURATZZOLODO 05/09/17   21:18:38 1.0a2    
 eLOD       1
 aZKey      910225831
 aNextZKeyToAssign 910225854
@@ -306,17 +306,6 @@ aDesc      If 'Y', then periodically tweet status.
 eDomainRec 5
 
 eLOD_AttributeRec 3
-aZKey      910225845
-aUpdate    Y
-aSeqOrder  A
-
-eER_AttributeRec 4
-aName      TweetPeriodInMinutes
-aZKey      905181343
-
-eDomainRec 5
-
-eLOD_AttributeRec 3
 aZKey      910225846
 aUpdate    Y
 aSeqOrder  A
@@ -424,13 +413,6 @@ eER_Attribute 4
 
 eDomain    5
 
-eLOD_Attribute 3
-awkSequence 13
-
-eER_Attribute 4
-
-eDomain    5
-
 eER_Entity 3
 
 eLOD_Entity 2
@@ -515,67 +497,63 @@ i50        47
 i53        11
 i56        17
 i59        11
-i62        11
-i64        1
-i65        24
-i66        25
-i67        5
-i68        27
-i69        28
+i61        1
+i62        24
+i63        25
+i64        5
+i65        27
+i66        28
+i67        8
+i68        30
+i69        31
 i70        8
-i71        30
-i72        31
-i73        8
-i74        33
-i75        34
-i76        11
-i77        36
-i78        37
-i79        38
-i80        39
-i81        40
-i82        17
-i83        42
-i84        43
-i85        11
-i86        45
-i87        46
+i71        33
+i72        34
+i73        11
+i74        36
+i75        37
+i76        38
+i77        39
+i78        40
+i79        17
+i80        42
+i81        43
+i82        11
+i83        45
+i84        46
+i85        47
+i86        48
+i87        49
 i88        47
-i89        48
-i90        49
-i91        47
-i92        51
-i93        52
-i94        11
-i95        54
-i96        55
-i97        17
-i98        57
-i99        58
-i100       11
-i101       60
-i102       61
-i103       11
-i104       63
-i105       2
-i106       3
-i107       4
-i108       5
-i109       6
-i110       7
-i111       8
-i112       9
-i113       10
-i114       11
-i115       12
-i116       13
-i117       11
-i118       15
-i119       16
-i120       17
-i121       18
-i122       19
-i123       17
-i124       21
-i125       22
-i126       23
+i89        51
+i90        52
+i91        11
+i92        54
+i93        55
+i94        17
+i95        57
+i96        58
+i97        11
+i98        60
+i99        2
+i100       3
+i101       4
+i102       5
+i103       6
+i104       7
+i105       8
+i106       9
+i107       10
+i108       11
+i109       12
+i110       13
+i111       11
+i112       15
+i113       16
+i114       17
+i115       18
+i116       19
+i117       17
+i118       21
+i119       22
+i120       23

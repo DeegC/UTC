@@ -1,5 +1,5 @@
 /*
-  Generated from LOD Session on 2017-05-06T23:09:27.794
+  Generated from LOD Session on 2017-05-09T21:52:07.449
 
 */
 "use strict";
@@ -245,14 +245,6 @@ var Session_Configuration = (function (_super) {
     Object.defineProperty(Session_Configuration.prototype, "TweetOn", {
         get: function () { return this.getAttribute("TweetOn"); },
         set: function (value) { this.setAttribute("TweetOn", value); },
-        enumerable: true,
-        configurable: true
-    });
-    ;
-    ;
-    Object.defineProperty(Session_Configuration.prototype, "TweetPeriodInMinutes", {
-        get: function () { return this.getAttribute("TweetPeriodInMinutes"); },
-        set: function (value) { this.setAttribute("TweetPeriodInMinutes", value); },
         enumerable: true,
         configurable: true
     });
@@ -567,7 +559,7 @@ exports.Session_LodDef = {
             erToken: "905181331",
             create: false,
             cardMax: 1,
-            hasInit: false,
+            hasInit: true,
             creatable: false,
             includable: true,
             deletable: false,
@@ -687,16 +679,7 @@ exports.Session_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                },
-                TweetPeriodInMinutes: {
-                    name: "TweetPeriodInMinutes",
-                    hidden: false,
-                    required: false,
-                    domainName: "Integer",
-                    persistent: true,
-                    key: false,
-                    update: true,
-                    foreignKey: false,
+                    initialValue: "false",
                 },
                 PwmFrequency: {
                     name: "PwmFrequency",

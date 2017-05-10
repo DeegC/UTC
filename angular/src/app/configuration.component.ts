@@ -58,13 +58,6 @@ import * as zeidon from './zeidon-angular';
         <div #tweetError class="alert alert-danger" style="display:none"></div>
       </div>
 
-      <div>
-        <label>Tweet Period: </label>
-        <input type="number" formControlName="TweetPeriodInMinutes" [zeidonErrorElement]="periodError"
-               placeholder="Tweet period" style="width:3em" />
-      </div>
-      <div #periodError class="alert alert-danger" style="display:none"></div>
-
       <h3>Thermometers</h3>
       <div formArrayName="ThermometerConfig">
         <div *ngFor="let therm of form.controls.ThermometerConfig.controls; let i = index;" >

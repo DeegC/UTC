@@ -7,4 +7,6 @@ Project name: ${project.name}
 // In this section you declare the dependencies for your production and test code
 dependencies {
     compile project( ':utc-zeidon' )
+    compile 'org.twitter4j:twitter4j-core:4.0.+'
+    compile 'org.twitter4j:twitter4j-async:4.0.+'
 }

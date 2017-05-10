@@ -1,6 +1,6 @@
 
 /*
-  Generated from LOD Configuration on 2017-05-06T23:09:27.731
+  Generated from LOD Configuration on 2017-05-09T21:52:06.857
 
 */
 
@@ -83,9 +83,6 @@ export class Configuration_Configuration extends zeidon.EntityInstance {
 
     get TweetOn(): string { return this.getAttribute("TweetOn") };
     set TweetOn(value: string) { this.setAttribute("TweetOn", value) };
-
-    get TweetPeriodInMinutes(): string { return this.getAttribute("TweetPeriodInMinutes") };
-    set TweetPeriodInMinutes(value: string) { this.setAttribute("TweetPeriodInMinutes", value) };
 
     get PwmFrequency(): string { return this.getAttribute("PwmFrequency") };
     set PwmFrequency(value: string) { this.setAttribute("PwmFrequency", value) };
@@ -254,16 +251,6 @@ export const Configuration_LodDef = {
                     hidden:       false,
                     required:     false,
                     domainName:   "Boolean",
-                    persistent:   true,
-                    key:          false,
-                    update:       true,
-                    foreignKey:   false,
-                },
-                TweetPeriodInMinutes: {
-                    name:         "TweetPeriodInMinutes",
-                    hidden:       false,
-                    required:     false,
-                    domainName:   "Integer",
                     persistent:   true,
                     key:          false,
                     update:       true,
