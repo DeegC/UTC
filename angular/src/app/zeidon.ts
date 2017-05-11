@@ -124,7 +124,7 @@ export class ObjectInstance {
     }
 
     public get isEmpty(): boolean {
-        return this.roots.length == 0;
+        return this.roots.length === 0;
     }
 
     createFromJson( initialize, options: CreateOptions = DEFAULT_CREATE_OPTIONS ): this {
@@ -146,7 +146,7 @@ export class ObjectInstance {
              // not set the update flag when the attribute value is set.  The
              // flags will be set by the incrementals.
              if ( oimeta && oimeta.incremental ) {
-                 if ( options.incrementalsSpecified == undefined ) {
+                 if ( options.incrementalsSpecified === undefined ) {
                      // We're going to change the options so create a new one so we
                      // don't override the original one.
                      options = Object.assign( {}, options );
@@ -308,7 +308,7 @@ export class EntityInstance {
                 continue;
             }
 
-            if ( attr == ".meta" ) {
+            if ( attr === ".meta" ) {
                 this.parseEntityMeta( initialize[attr] );
                 continue;
             }
@@ -360,8 +360,9 @@ export class EntityInstance {
 
         // Perform some validations unless incrementals are specified.
         if ( ! options.incrementalsSpecified ) {
-            if ( ! attributeDef.update )
+            if ( ! attributeDef.update ) {
                 error( `Attribute ${this.entityDef.name}.${attr} is read only` );
+            }
 
             if ( this.deleted || this.excluded )
                 error( `Can't set attribute for hidden EntityInstance: ${this.entityDef.name}.${attr}` );

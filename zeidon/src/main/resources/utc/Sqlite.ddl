@@ -23,7 +23,6 @@ CREATE TABLE configuration (
            pid_d                                                            double             NOT NULL, 
            max_pwm                                                          int                NULL    , 
            tweet_on                                                         int                NULL    , 
-           tweet_period_in_minutes                                          int                NULL    , 
            pwm_frequency                                                    int                NULL    , 
            autoseq                                                          int                NULL     ) ;
  
@@ -41,6 +40,8 @@ CREATE TABLE instant (
            therm7                                                           double             NULL    , 
            pw_m0                                                            int                NULL    , 
            cpu_temperature                                                  double             NULL    , 
+           error                                                            int                NULL    , 
+           error_message                                                    longtext           NULL    , 
            fk_id_session                                                    INTEGER            NOT NULL ) ;
  
 /* Entity - Session */

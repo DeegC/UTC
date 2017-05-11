@@ -1,9 +1,9 @@
-z1000-Zeidon    UTC      TZEREMDO 05/09/17   21:18:14 1.0a2    
+z1000-Zeidon    UTC      TZEREMDO 05/10/17   22:57:11 1.0a2    
 eEntpER_Model 1
 aName      UTC
 aZKey      905181310
-aNextZKeyToAssign 905181401
-aLastSyncDate 20170509211814940
+aNextZKeyToAssign 905181403
+aLastSyncDate 20170510225711550
 aDesc      UDS Digital Supervisor (android)
 
 eER_Entity 2
@@ -277,7 +277,7 @@ aPurpose   A
 aDesc      This entity records all the readings of a moment in time in a UTC run.
 aER_DiagramPosX 28
 aER_DiagramPosY 28
-awkSelectedAttributeForDragSort 2
+awkSelectedAttributeForDragSort 12
 
 eER_Attribute 3
 aName      Timestamp
@@ -390,6 +390,22 @@ eER_Attribute 3
 aName      CpuTemperature
 aZKey      905181401
 awkSequence 12
+
+eDomain    4
+
+eER_Attribute 3
+aName      Error
+aZKey      905181402
+aDesc      If true there is an error
+awkSequence 13
+
+eDomain    4
+
+eER_Attribute 3
+aName      ErrorMessage
+aZKey      905181403
+aLth       255
+awkSequence 14
 
 eDomain    4
 
@@ -710,64 +726,66 @@ i67        53
 i69        53
 i71        19
 i73        53
-i77        43
-i78        51
-i80        76
+i75        23
+i77        15
 i81        43
-i82        50
-i83        48
-i84        43
-i86        3
-i90        49
-i92        49
-i94        15
-i95        76
-i96        75
-i97        74
-i98        47
-i99        42
-i100       41
-i101       40
-i102       9
-i103       88
-i104       87
-i105       85
-i106       39
-i108       3
-i112       15
-i114       19
-i116       19
-i118       23
-i120       23
-i121       38
-i122       37
-i123       36
-i124       9
-i125       110
-i126       109
-i127       107
-i130       3
-i134       15
-i136       15
+i82        51
+i84        80
+i85        43
+i86        50
+i87        48
+i88        43
+i90        3
+i94        49
+i96        49
+i98        15
+i99        80
+i100       79
+i101       78
+i102       47
+i103       42
+i104       41
+i105       40
+i106       9
+i107       92
+i108       91
+i109       89
+i110       39
+i112       3
+i116       15
+i118       19
+i120       19
+i122       23
+i124       23
+i125       38
+i126       37
+i127       36
+i128       9
+i129       114
+i130       113
+i131       111
+i134       3
 i138       15
 i140       15
 i142       15
-i144       19
-i145       132
-i146       131
-i147       129
-i148       75
-i149       76
-i150       43
-i151       74
-i152       47
-i153       37
-i154       36
-i155       9
-i156       38
-i157       39
-i158       41
-i159       40
-i160       9
-i161       42
-i162       43
+i144       15
+i146       15
+i148       19
+i149       136
+i150       135
+i151       133
+i152       79
+i153       80
+i154       43
+i155       78
+i156       47
+i157       37
+i158       36
+i159       9
+i160       38
+i161       39
+i162       41
+i163       40
+i164       9
+i165       42
+i166       43

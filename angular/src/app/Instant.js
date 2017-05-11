@@ -1,5 +1,5 @@
 /*
-  Generated from LOD Instant on 2017-05-09T21:52:07.397
+  Generated from LOD Instant on 2017-05-10T23:12:16.638
 
 */
 "use strict";
@@ -168,6 +168,22 @@ var Instant_Instant = (function (_super) {
     });
     ;
     ;
+    Object.defineProperty(Instant_Instant.prototype, "Error", {
+        get: function () { return this.getAttribute("Error"); },
+        set: function (value) { this.setAttribute("Error", value); },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    ;
+    Object.defineProperty(Instant_Instant.prototype, "ErrorMessage", {
+        get: function () { return this.getAttribute("ErrorMessage"); },
+        set: function (value) { this.setAttribute("ErrorMessage", value); },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    ;
     return Instant_Instant;
 }(zeidon.EntityInstance));
 exports.Instant_Instant = Instant_Instant;
@@ -306,6 +322,26 @@ exports.Instant_LodDef = {
                     hidden: false,
                     required: false,
                     domainName: "Temperature",
+                    persistent: true,
+                    key: false,
+                    update: true,
+                    foreignKey: false,
+                },
+                Error: {
+                    name: "Error",
+                    hidden: false,
+                    required: false,
+                    domainName: "Boolean",
+                    persistent: true,
+                    key: false,
+                    update: true,
+                    foreignKey: false,
+                },
+                ErrorMessage: {
+                    name: "ErrorMessage",
+                    hidden: false,
+                    required: false,
+                    domainName: "Text",
                     persistent: true,
                     key: false,
                     update: true,

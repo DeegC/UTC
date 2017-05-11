@@ -1,5 +1,5 @@
 /*
-  Generated from LOD Session on 2017-05-09T21:52:07.449
+  Generated from LOD Session on 2017-05-10T23:12:16.647
 
 */
 "use strict";
@@ -99,22 +99,6 @@ var Session_Session = (function (_super) {
     Object.defineProperty(Session_Session.prototype, "Notes", {
         get: function () { return this.getAttribute("Notes"); },
         set: function (value) { this.setAttribute("Notes", value); },
-        enumerable: true,
-        configurable: true
-    });
-    ;
-    ;
-    Object.defineProperty(Session_Session.prototype, "wError", {
-        get: function () { return this.getAttribute("wError"); },
-        set: function (value) { this.setAttribute("wError", value); },
-        enumerable: true,
-        configurable: true
-    });
-    ;
-    ;
-    Object.defineProperty(Session_Session.prototype, "wErrorMessage", {
-        get: function () { return this.getAttribute("wErrorMessage"); },
-        set: function (value) { this.setAttribute("wErrorMessage", value); },
         enumerable: true,
         configurable: true
     });
@@ -452,6 +436,22 @@ var Session_Instant = (function (_super) {
     });
     ;
     ;
+    Object.defineProperty(Session_Instant.prototype, "Error", {
+        get: function () { return this.getAttribute("Error"); },
+        set: function (value) { this.setAttribute("Error", value); },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    ;
+    Object.defineProperty(Session_Instant.prototype, "ErrorMessage", {
+        get: function () { return this.getAttribute("ErrorMessage"); },
+        set: function (value) { this.setAttribute("ErrorMessage", value); },
+        enumerable: true,
+        configurable: true
+    });
+    ;
+    ;
     return Session_Instant;
 }(zeidon.EntityInstance));
 exports.Session_Instant = Session_Instant;
@@ -469,7 +469,7 @@ exports.Session_LodDef = {
             erToken: "905181347",
             create: true,
             cardMax: 0,
-            hasInit: true,
+            hasInit: false,
             creatable: true,
             includable: false,
             deletable: true,
@@ -517,27 +517,6 @@ exports.Session_LodDef = {
                     required: false,
                     domainName: "Text",
                     persistent: true,
-                    key: false,
-                    update: true,
-                    foreignKey: false,
-                },
-                wError: {
-                    name: "wError",
-                    hidden: false,
-                    required: false,
-                    domainName: "Boolean",
-                    persistent: false,
-                    key: false,
-                    update: true,
-                    foreignKey: false,
-                    initialValue: "FALSE",
-                },
-                wErrorMessage: {
-                    name: "wErrorMessage",
-                    hidden: false,
-                    required: false,
-                    domainName: "Text",
-                    persistent: false,
                     key: false,
                     update: true,
                     foreignKey: false,
@@ -939,6 +918,26 @@ exports.Session_LodDef = {
                     hidden: false,
                     required: false,
                     domainName: "Temperature",
+                    persistent: true,
+                    key: false,
+                    update: true,
+                    foreignKey: false,
+                },
+                Error: {
+                    name: "Error",
+                    hidden: false,
+                    required: false,
+                    domainName: "Boolean",
+                    persistent: true,
+                    key: false,
+                    update: true,
+                    foreignKey: false,
+                },
+                ErrorMessage: {
+                    name: "ErrorMessage",
+                    hidden: false,
+                    required: false,
+                    domainName: "Text",
                     persistent: true,
                     key: false,
                     update: true,

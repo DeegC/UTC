@@ -20,7 +20,6 @@ class Configuration( var task: Task ) extends ZeidonOperations {
             config.Configuration.RecordTemperatures = false
             config.Configuration.MaxPWM = 255
             config.Configuration.TweetOn = false
-            config.Configuration.TweetPeriodInMinutes = 5
             config.Configuration.PwmFrequency = 100
             config.Configuration.PidP = 3
             config.Configuration.PidI = 0.005

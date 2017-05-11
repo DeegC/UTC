@@ -1,7 +1,7 @@
-z1000-Zeidon    INSTANT  TZZOLODO 05/09/17   21:18:38 1.0a2    
+z1000-Zeidon    INSTANT  TZZOLODO 05/10/17   23:08:34 1.0a2    
 eLOD       1
 aZKey      929210436
-aNextZKeyToAssign 929210455
+aNextZKeyToAssign 929210457
 aName      Instant
 aDesc      Records the status of the sensors at a particular time.
 
@@ -161,6 +161,41 @@ aZKey      905181401
 
 eDomainRec 5
 
+eLOD_AttributeRec 3
+aZKey      929210456
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      Error
+aZKey      905181402
+aDesc      If true there is an error
+
+eDomainRec 5
+aZKey      905181228
+aName      Boolean
+aDomainType E
+aDataType  L
+aMaxStringLth 1
+aContextRestriction N
+
+eLOD_AttributeRec 3
+aZKey      929210457
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      ErrorMessage
+aZKey      905181403
+aLth       255
+
+eDomainRec 5
+aZKey      905181158
+aName      Text
+aDomainType E
+aDataType  S
+aMaxStringLth 10000
+aDesc      Any Character String
+aContextRestriction N
+
 eER_EntityRec 3
 aName      Instant
 aZKey      905181315
@@ -170,7 +205,7 @@ aER_DiagramPosX 28
 aER_DiagramPosY 28
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 11
+awkSelectedAttributeForDragSort 12
 
 eLOD_Attribute 3
 awkSequence 1
@@ -256,6 +291,20 @@ eER_Attribute 4
 
 eDomain    5
 
+eLOD_Attribute 3
+awkSequence 13
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 14
+
+eER_Attribute 4
+
+eDomain    5
+
 eER_Entity 3
 
 ePOD       2
@@ -287,41 +336,47 @@ i25        7
 i28        7
 i31        7
 i37        7
-i39        1
-i40        2
-i41        3
-i42        4
-i43        5
-i44        6
-i45        7
-i46        8
-i47        9
-i48        7
-i49        11
-i50        12
+i45        1
+i46        2
+i47        3
+i48        4
+i49        5
+i50        6
 i51        7
-i52        14
-i53        15
+i52        8
+i53        9
 i54        7
-i55        17
-i56        18
+i55        11
+i56        12
 i57        7
-i58        20
-i59        21
+i58        14
+i59        15
 i60        7
-i61        23
-i62        24
+i61        17
+i62        18
 i63        7
-i64        26
-i65        27
+i64        20
+i65        21
 i66        7
-i67        29
-i68        30
+i67        23
+i68        24
 i69        7
-i70        32
-i71        33
-i72        34
-i73        35
-i74        36
+i70        26
+i71        27
+i72        7
+i73        29
+i74        30
 i75        7
-i76        38
+i76        32
+i77        33
+i78        34
+i79        35
+i80        36
+i81        7
+i82        38
+i83        39
+i84        40
+i85        41
+i86        42
+i87        43
+i88        44

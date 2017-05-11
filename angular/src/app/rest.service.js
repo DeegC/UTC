@@ -92,10 +92,10 @@ var RestService = (function () {
             .map(function (response) { return response.text(); });
     };
     RestService.prototype.parseCommitResponse = function (oi, response) {
-        if (response.text() == "{}")
+        if (response.text() === "{}")
             return oi;
         var data = response.json();
-        return oi.createFromJson(data);
+        return oi.createFromJson(data, { incrementalsSpecified: true });
     };
     return RestService;
 }());

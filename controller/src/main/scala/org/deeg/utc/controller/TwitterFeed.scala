@@ -86,6 +86,10 @@ class TwitterFeed( session: View @basedOn( "Session" ) ) extends TwitterAdapter 
             else
                 message
 
+        // Add a counter so the status messages are different.  Without the counter
+        // Twitter won't update the status if two messages are the same.
+        msg ++= " :" + (tweetCount % 10 );
+
         // Send a message asynchronously.
         val status = new StatusUpdate( message )
 //        if ( chart != null )

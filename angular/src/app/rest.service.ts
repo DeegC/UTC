@@ -92,10 +92,10 @@ export class RestService {
     }
 
     parseCommitResponse( oi: ObjectInstance, response ): ObjectInstance {
-        if ( response.text() == "{}" )
+        if ( response.text() === "{}" )
             return oi;
 
         let data = response.json();
-        return oi.createFromJson( data );
+        return oi.createFromJson( data , { incrementalsSpecified: true} );
     }
 }

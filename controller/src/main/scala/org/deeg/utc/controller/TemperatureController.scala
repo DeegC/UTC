@@ -186,6 +186,8 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
      */
     def currentState : View @basedOn( "Instant" ) = {
         val instant = hardware.readSensors( currentSession )
+        instant.Instant.Error = true
+        instant.Instant.ErrorMessage = "This is a test message"
         instant.Instant.TargetTemperature = currentSession.Configuration.TargetTemperature
         return instant
 

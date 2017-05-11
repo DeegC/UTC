@@ -1,6 +1,6 @@
 
 /*
-  Generated from LOD Instant on 2017-05-09T21:52:07.397
+  Generated from LOD Instant on 2017-05-10T23:12:16.638
 
 */
 
@@ -86,6 +86,12 @@ export class Instant_Instant extends zeidon.EntityInstance {
 
     get CpuTemperature(): string { return this.getAttribute("CpuTemperature") };
     set CpuTemperature(value: string) { this.setAttribute("CpuTemperature", value) };
+
+    get Error(): string { return this.getAttribute("Error") };
+    set Error(value: string) { this.setAttribute("Error", value) };
+
+    get ErrorMessage(): string { return this.getAttribute("ErrorMessage") };
+    set ErrorMessage(value: string) { this.setAttribute("ErrorMessage", value) };
 }
 
 const InstantEntityPrototypes = {
@@ -225,6 +231,26 @@ export const Instant_LodDef = {
                     hidden:       false,
                     required:     false,
                     domainName:   "Temperature",
+                    persistent:   true,
+                    key:          false,
+                    update:       true,
+                    foreignKey:   false,
+                },
+                Error: {
+                    name:         "Error",
+                    hidden:       false,
+                    required:     false,
+                    domainName:   "Boolean",
+                    persistent:   true,
+                    key:          false,
+                    update:       true,
+                    foreignKey:   false,
+                },
+                ErrorMessage: {
+                    name:         "ErrorMessage",
+                    hidden:       false,
+                    required:     false,
+                    domainName:   "Text",
                     persistent:   true,
                     key:          false,
                     update:       true,

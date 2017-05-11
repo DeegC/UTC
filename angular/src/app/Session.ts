@@ -1,6 +1,6 @@
 
 /*
-  Generated from LOD Session on 2017-05-09T21:52:07.449
+  Generated from LOD Session on 2017-05-10T23:12:16.647
 
 */
 
@@ -62,12 +62,6 @@ export class Session_Session extends zeidon.EntityInstance {
 
     get Notes(): string { return this.getAttribute("Notes") };
     set Notes(value: string) { this.setAttribute("Notes", value) };
-
-    get wError(): string { return this.getAttribute("wError") };
-    set wError(value: string) { this.setAttribute("wError", value) };
-
-    get wErrorMessage(): string { return this.getAttribute("wErrorMessage") };
-    set wErrorMessage(value: string) { this.setAttribute("wErrorMessage", value) };
 
     get Configuration(): zeidon.EntityArray<Session_Configuration> {
         return this.getChildEntityArray("Configuration") as zeidon.EntityArray<Session_Configuration>;
@@ -197,6 +191,12 @@ export class Session_Instant extends zeidon.EntityInstance {
 
     get CpuTemperature(): string { return this.getAttribute("CpuTemperature") };
     set CpuTemperature(value: string) { this.setAttribute("CpuTemperature", value) };
+
+    get Error(): string { return this.getAttribute("Error") };
+    set Error(value: string) { this.setAttribute("Error", value) };
+
+    get ErrorMessage(): string { return this.getAttribute("ErrorMessage") };
+    set ErrorMessage(value: string) { this.setAttribute("ErrorMessage", value) };
 }
 
 const SessionEntityPrototypes = {
@@ -214,7 +214,7 @@ export const Session_LodDef = {
             erToken:    "905181347",
             create:     true,
             cardMax:    0,
-            hasInit:    true,
+            hasInit:    false,
             creatable:  true,
             includable: false,
             deletable:  true,
@@ -262,27 +262,6 @@ export const Session_LodDef = {
                     required:     false,
                     domainName:   "Text",
                     persistent:   true,
-                    key:          false,
-                    update:       true,
-                    foreignKey:   false,
-                },
-                wError: {
-                    name:         "wError",
-                    hidden:       false,
-                    required:     false,
-                    domainName:   "Boolean",
-                    persistent:   false,
-                    key:          false,
-                    update:       true,
-                    foreignKey:   false,
-                    initialValue: "FALSE",
-                },
-                wErrorMessage: {
-                    name:         "wErrorMessage",
-                    hidden:       false,
-                    required:     false,
-                    domainName:   "Text",
-                    persistent:   false,
                     key:          false,
                     update:       true,
                     foreignKey:   false,
@@ -689,6 +668,26 @@ export const Session_LodDef = {
                     hidden:       false,
                     required:     false,
                     domainName:   "Temperature",
+                    persistent:   true,
+                    key:          false,
+                    update:       true,
+                    foreignKey:   false,
+                },
+                Error: {
+                    name:         "Error",
+                    hidden:       false,
+                    required:     false,
+                    domainName:   "Boolean",
+                    persistent:   true,
+                    key:          false,
+                    update:       true,
+                    foreignKey:   false,
+                },
+                ErrorMessage: {
+                    name:         "ErrorMessage",
+                    hidden:       false,
+                    required:     false,
+                    domainName:   "Text",
                     persistent:   true,
                     key:          false,
                     update:       true,

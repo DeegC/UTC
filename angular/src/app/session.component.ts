@@ -12,15 +12,16 @@ import { Instant } from './Instant';
   </div>
 
   <div *ngIf="currentSession && ! currentSession.isEmpty" >
-      <div *ngIf="currentSession.Session.wError" >
-        <h2>{{currentSession.Session.wErrorMessage}}</h2>
-      </div>
 
       <div><label>Configuration: </label>{{currentSession.Session$.Configuration$.Description}}</div>
       <div><label>Started at: </label>{{currentSession.Session$.Date}}</div>
       <div><label>Target Temp: </label>{{currentSession.Session$.Configuration$.TargetTemperature}}</div>
 
       <div *ngIf="currentState && ! currentState.isEmpty" >
+        <div *ngIf="currentState.Instant$.Error" class="alert alert-danger" >
+            <h4>{{currentState.Instant$.ErrorMessage}}</h4>
+        </div>
+
         <div><label>Fan: </label>{{currentState.Instant$.PWM0}}</div>
         <div><label>Pit: </label>{{currentState.Instant$.Therm0}}</div>
         <div><label>Therm 1: </label>{{currentState.Instant$.Therm1}}</div>

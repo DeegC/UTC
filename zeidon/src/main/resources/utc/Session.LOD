@@ -1,7 +1,7 @@
-z1000-Zeidon    SESSION  TZZOLODO 05/09/17   21:18:39 1.0a2    
+z1000-Zeidon    SESSION  TZZOLODO 05/10/17   23:10:03 1.0a2    
 eLOD       1
 aZKey      929210658
-aNextZKeyToAssign 929210707
+aNextZKeyToAssign 929210709
 aName      Session
 
 eLOD_EntityParent 2
@@ -508,6 +508,28 @@ aZKey      905181401
 
 eDomainRec 6
 
+eLOD_AttributeRec 4
+aZKey      929210708
+aUpdate    Y
+
+eER_AttributeRec 5
+aName      Error
+aZKey      905181402
+aDesc      If true there is an error
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      929210709
+aUpdate    Y
+
+eER_AttributeRec 5
+aName      ErrorMessage
+aZKey      905181403
+aLth       255
+
+eDomainRec 6
+
 eER_EntityRec 4
 aName      Instant
 aZKey      905181315
@@ -564,39 +586,14 @@ eDomainRec 5
 
 eLOD_AttributeRec 3
 aZKey      929210663
+aUpdate    Y
+aSeqOrder  A
 
 eER_AttributeRec 4
 aName      Notes
 aZKey      905181351
 aLth       10000
 aDesc      Notes regarding this session
-
-eDomainRec 5
-
-eLOD_AttributeRec 3
-aZKey      929210704
-aWork      Y
-aUpdate    Y
-aInit      FALSE
-aSeqOrder  Y
-
-eER_AttributeRec 4
-aName      wError
-aZKey      929210705
-aDesc      If true then an alarm has been triggered
-
-eDomainRec 5
-
-eLOD_AttributeRec 3
-aZKey      929210706
-aWork      Y
-aUpdate    Y
-aSeqOrder  Y
-
-eER_AttributeRec 4
-aName      wErrorMessage
-aZKey      929210707
-aDesc      If there is an error, this holds th error description
 
 eDomainRec 5
 
@@ -610,7 +607,7 @@ aER_DiagramPosY 17
 aSAP_Entity 0
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 4
+awkSelectedAttributeForDragSort 5
 
 eLOD_Attribute 3
 awkSequence 1
@@ -635,20 +632,6 @@ eDomain    5
 
 eLOD_Attribute 3
 awkSequence 4
-
-eER_Attribute 4
-
-eDomain    5
-
-eLOD_Attribute 3
-awkSequence 5
-
-eER_Attribute 4
-
-eDomain    5
-
-eLOD_Attribute 3
-awkSequence 6
 
 eER_Attribute 4
 
@@ -808,7 +791,7 @@ eER_RelLink 3
 eER_RelType 4
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 11
+awkSelectedAttributeForDragSort 12
 
 eLOD_Attribute 3
 awkSequence 1
@@ -894,6 +877,20 @@ eER_Attribute 4
 
 eDomain    5
 
+eLOD_Attribute 3
+awkSequence 13
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 14
+
+eER_Attribute 4
+
+eDomain    5
+
 eER_Entity 3
 
 eER_RelLink 3
@@ -943,134 +940,134 @@ i94        73
 i97        73
 i100       15
 i103       73
-i109       6
-i112       70
-i115       70
-i118       12
-i121       9
+i106       9
+i109       12
+i115       6
+i118       70
+i121       70
 i124       12
 i126       1
-i127       107
-i128       108
+i127       113
+i128       114
 i129       6
-i130       110
-i131       111
+i130       116
+i131       117
 i132       70
-i133       113
-i134       114
+i133       119
+i134       120
 i135       70
-i136       116
-i137       117
+i136       122
+i137       123
 i138       12
-i139       119
-i140       120
-i141       9
-i142       122
-i143       123
-i144       12
-i145       125
-i146       2
-i147       28
-i148       29
-i149       6
-i150       31
-i151       32
-i152       12
-i153       34
-i154       35
-i155       12
-i156       37
-i157       38
-i158       15
-i159       40
-i160       41
-i161       42
-i162       43
-i163       44
-i164       9
-i165       46
-i166       47
-i167       15
-i168       49
-i169       50
-i170       51
-i171       52
-i172       53
-i173       51
-i174       55
-i175       56
+i139       125
+i140       2
+i141       28
+i142       29
+i143       6
+i144       31
+i145       32
+i146       12
+i147       34
+i148       35
+i149       12
+i150       37
+i151       38
+i152       15
+i153       40
+i154       41
+i155       42
+i156       43
+i157       44
+i158       9
+i159       46
+i160       47
+i161       15
+i162       49
+i163       50
+i164       51
+i165       52
+i166       53
+i167       51
+i168       55
+i169       56
+i170       15
+i171       58
+i172       59
+i173       9
+i174       61
+i175       62
 i176       15
-i177       58
-i178       59
-i179       9
-i180       61
-i181       62
-i182       15
-i183       64
-i184       65
-i185       66
-i186       3
-i187       4
-i188       5
-i189       6
-i190       10
-i191       11
-i192       12
-i193       13
-i194       14
-i195       15
-i196       16
-i197       17
-i198       15
-i199       19
-i200       20
+i177       64
+i178       65
+i179       66
+i180       3
+i181       4
+i182       5
+i183       6
+i184       10
+i185       11
+i186       12
+i187       13
+i188       14
+i189       15
+i190       16
+i191       17
+i192       15
+i193       19
+i194       20
+i195       9
+i196       22
+i197       23
+i198       9
+i199       7
+i200       8
 i201       9
-i202       22
-i203       23
-i204       9
-i205       7
-i206       8
-i207       9
-i208       25
-i209       26
-i210       27
-i211       67
-i212       68
-i213       69
-i214       70
-i215       71
-i216       72
+i202       25
+i203       26
+i204       27
+i205       67
+i206       68
+i207       69
+i208       70
+i209       71
+i210       72
+i211       73
+i212       74
+i213       75
+i214       73
+i215       77
+i216       78
 i217       73
-i218       74
-i219       75
+i218       80
+i219       81
 i220       73
-i221       77
-i222       78
+i221       83
+i222       84
 i223       73
-i224       80
-i225       81
+i224       86
+i225       87
 i226       73
-i227       83
-i228       84
+i227       89
+i228       90
 i229       73
-i230       86
-i231       87
+i230       92
+i231       93
 i232       73
-i233       89
-i234       90
+i233       95
+i234       96
 i235       73
-i236       92
-i237       93
-i238       73
-i239       95
-i240       96
+i236       98
+i237       99
+i238       15
+i239       101
+i240       102
 i241       73
-i242       98
-i243       99
-i244       15
-i245       101
-i246       102
-i247       73
-i248       104
-i249       105
-i250       106
+i242       104
+i243       105
+i244       9
+i245       107
+i246       108
+i247       12
+i248       110
+i249       111
+i250       112
