@@ -46,6 +46,7 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
     private def tick() {
         logger.debug( "Main controller tick..." )
         currentInstant = hardware.readSensors( currentSession )
+        currentInstant.Instant.TargetTemperature = currentSession.Configuration.TargetTemperature
 
         blinkGreenLed
         saveInstantToDb
@@ -74,8 +75,8 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
     }
 
     private def checkForTemperatureErrors = {
-        var error = false;
         var thermCount = -1
+        var error = false
         currentSession.ThermometerConfig.foreach { tc =>
 
             thermCount += 1
@@ -104,14 +105,8 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
                 // If we get here then we have been within the threshold.  If we're no longer
                 // in the threshold then set an error.
                 if ( ! inThreshold ) {
-                    error = true;
-                    tc.wTemperatureError = true
-                    currentSession.Session.wError = true
-                    currentSession.Session.wErrorMessage = "Thermometer is outside its threshold"
+                    error = true
                 }
-                else
-                    tc.wTemperatureError = false
-
             }
             else
             {
@@ -119,6 +114,16 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
                 if ( inThreshold )
                     tc.wTemperatureWithinAlarmThreshold = true // Now we are.
             }
+        }
+
+        hardware.setRedLed( error )
+        if ( error ) {
+            currentInstant.Instant.Error = true
+            currentInstant.Instant.ErrorMessage = "Thermometer is outside its threshold"
+        }
+        else {
+            currentInstant.Instant.Error = false
+            currentInstant.Instant.ErrorMessage = ""
         }
     }
 
@@ -185,12 +190,13 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
      *
      */
     def currentState : View @basedOn( "Instant" ) = {
-        val instant = hardware.readSensors( currentSession )
-        instant.Instant.Error = true
-        instant.Instant.ErrorMessage = "This is a test message"
-        instant.Instant.TargetTemperature = currentSession.Configuration.TargetTemperature
-        return instant
-
+        if ( currentInstant != null )
+            return currentInstant
+        else {
+            val instant = hardware.readSensors( currentSession )
+            instant.Instant.TargetTemperature = currentSession.Configuration.TargetTemperature
+            return instant
+        }
     }
 
     def serializeSession() : String = {

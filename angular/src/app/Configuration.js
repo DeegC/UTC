@@ -1,5 +1,5 @@
 /*
-  Generated from LOD Configuration on 2017-05-10T23:12:16.611
+  Generated from LOD Configuration on 2017-05-11T23:42:22.916
 
 */
 "use strict";
@@ -411,7 +411,7 @@ exports.Configuration_LodDef = {
             erToken: "905181361",
             create: true,
             cardMax: 10,
-            hasInit: false,
+            hasInit: true,
             creatable: true,
             includable: false,
             deletable: true,
@@ -479,6 +479,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
+                    initialValue: "TRUE",
                 },
                 autoseq: {
                     name: "autoseq",

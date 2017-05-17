@@ -1,4 +1,4 @@
-z1000-Zeidon    CONFIGURATZZOXODO 05/10/17   22:58:05 1.0a2    
+z1000-Zeidon    CONFIGURATZZOXODO 05/12/17   00:08:52 1.0a2    
 eOBJECT    1
 aNAME      Configuration
 aZKey      910225831
@@ -346,6 +346,8 @@ aAPDM_TOK  905181228
 aDOMAIN    Boolean
 aTYPE      L
 aLTH       4
+aINIT      false
+aSEQ_AD    A
 aUPDATE    Y
 aXVAATT_TOK 19
 

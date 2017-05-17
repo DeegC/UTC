@@ -32,6 +32,9 @@ trait HardwareInterface {
 
     def convertTemperature( session: View @basedOn( "Session" ),
                             tempKelvin : Double ) : Double = {
+        if ( tempKelvin.isNaN() )
+            return Double.NaN
+
         if ( session == null )
             tempKelvin
 
@@ -55,6 +58,7 @@ trait HardwareInterface {
     def setRedLed( on: Boolean )
     def setGreenLed( on: Boolean )
     def setYellowLed( on: Boolean )
+    def shutdown()
 }
 
 object HardwareInterface {

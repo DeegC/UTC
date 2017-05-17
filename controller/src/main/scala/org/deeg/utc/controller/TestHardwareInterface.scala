@@ -24,4 +24,8 @@ class TestHardwareInterface(val task: Task) extends HardwareInterface {
     override def setYellowLed(on: Boolean) {
         task.log().info(s"Turning Yellow LED: ${on}")
     }
+
+    override def shutdown() {
+        task.log().info("Pretending to shut down.")
+    }
 }

@@ -66,18 +66,22 @@ class ChipHardwareInterface(val task: Task) extends HardwareInterface {
     override def setRedLed(on: Boolean) {
         task.log().info( s"set-led.sh red ${on}".!! )
     }
-    
+
     override def setGreenLed( on: Boolean ) {
         task.log().info( s"set-led.sh green ${on}".!! )
     }
-    
+
     override def setYellowLed( on: Boolean ) {
         task.log().info( s"set-led.sh yellow ${on}".!! )
+    }
+
+    override def shutdown() {
+        "shutdown now".!!
     }
 }
 
 object ChipHardwareInterface {
     def main(args: Array[String]) {
         System.out.println( "Kelvin = ${x}" )
-    }  
+    }
 }

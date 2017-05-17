@@ -1,4 +1,4 @@
-z1000-Zeidon    UTC      TZCMLPLO 05/10/17   23:10:03 1.0a2    
+z1000-Zeidon    UTC      TZCMLPLO 05/12/17   00:08:52 1.0a2    
 eLPLR      1
 aName      UTC
 aDesc      Universal Temperature Controller
@@ -148,8 +148,8 @@ aStatus    1
 aUpdateInd 2
 aName      Configuration
 aDesc      Main configuration object
-aLastSyncDate 20170307163020711
-aLastUpdateDate 20170307163020711
+aLastSyncDate 20170512000852107
+aLastUpdateDate 20170512000852107
 
 eW_MetaDef 3
 aCPLR_ZKey 316000030

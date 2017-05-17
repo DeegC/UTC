@@ -27,6 +27,7 @@ class TwitterFeed( session: View @basedOn( "Session" ) ) extends TwitterAdapter 
      * If true then we are currently tweeting.
      */
     private var tweeting : Boolean = session.Configuration.TweetOn
+    logger.info("Loaded TwitterFeed with tweeting = %s", tweeting )
 
     //
     // Get session to twitter
@@ -60,14 +61,14 @@ class TwitterFeed( session: View @basedOn( "Session" ) ) extends TwitterAdapter 
             return
 
         val status = new StringBuilder
-        if ( session.Session.wError )
+        if ( instant.Instant.Error )
             status ++= "*ERROR* "
 
         status ++= "Pit=" ++= session.Configuration.TargetTemperature
         var thermCount = -1
         session.ThermometerConfig.foreach( tc => {
             thermCount += 1
-            val temperature = instant.Instant.getAttribute( s"Therm${thermCount}" )
+            val temperature = instant.Instant.getAttribute( s"Therm${thermCount}" ).getString( "###.#" )
             status ++= "  " ++= tc.Name ++= "=" ++= temperature
         } )
 
@@ -89,9 +90,10 @@ class TwitterFeed( session: View @basedOn( "Session" ) ) extends TwitterAdapter 
         // Add a counter so the status messages are different.  Without the counter
         // Twitter won't update the status if two messages are the same.
         msg ++= " :" + (tweetCount % 10 );
+        logger.debug( "Tweeting message: %s", msg )
 
         // Send a message asynchronously.
-        val status = new StatusUpdate( message )
+        val status = new StatusUpdate( msg )
 //        if ( chart != null )
 //            status.setMedia( chart )
         twitterSession.updateStatus( status )

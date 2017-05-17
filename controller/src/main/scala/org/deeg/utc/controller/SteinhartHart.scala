@@ -1,10 +1,10 @@
 package org.deeg.utc.controller
 
-/**                                                                                                                                                                                                                
- * Implementation of the Steinhart-Hart equation:                                                                                                                                                                  
- *                                                                                                                                                                                                                 
- * http://en.wikipedia.org/wiki/Steinhart%E2%80%93Hart_equation                                                                                                                                                    
- *                                                                                                                                                                                                                 
+/**
+ * Implementation of the Steinhart-Hart equation:
+ *
+ * http://en.wikipedia.org/wiki/Steinhart%E2%80%93Hart_equation
+ *
  */
 
 class SteinhartHart(val A : Double,
@@ -14,6 +14,9 @@ class SteinhartHart(val A : Double,
                     val voltageReference: Double ) {
 
     def computeTemperature( measuredVoltage: Double ): Double = {
+        if ( measuredVoltage > 3.22 )
+            return Double.NaN
+
         val diff = voltageReference - measuredVoltage
         val measuredR = measuredVoltage * R
         val resistence = measuredR / diff
@@ -35,5 +38,5 @@ object SteinhartHart {
 //        val alg = new SteinhartHart( 2.4723753e-04,2.3402251e-04,1.3879768e-07, 22200, 3.22 )
         val k = alg.computeTemperature( measuredVoltage )
         System.out.println( "Kelvin = " + k )
-    }  
+    }
 }

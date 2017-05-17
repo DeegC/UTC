@@ -1,4 +1,4 @@
-z1000-Zeidon    CONFIGURATZZOLODO 05/09/17   21:18:38 1.0a2    
+z1000-Zeidon    CONFIGURATZZOLODO 05/12/17   00:08:51 1.0a2    
 eLOD       1
 aZKey      910225831
 aNextZKeyToAssign 910225854
@@ -122,6 +122,9 @@ aContextRestriction N
 
 eLOD_AttributeRec 4
 aZKey      910225853
+aUpdate    Y
+aInit      false
+aSeqOrder  A
 
 eER_AttributeRec 5
 aName      wTemperatureWithinAlarmThreshold
@@ -416,6 +419,7 @@ eDomain    5
 eER_Entity 3
 
 eLOD_Entity 2
+awkSelectedAttributeForDragSort 6
 
 eLOD_Attribute 3
 awkSequence 1
