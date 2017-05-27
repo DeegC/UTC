@@ -22,6 +22,7 @@ class TwitterFeed( session: View @basedOn( "Session" ) ) extends TwitterAdapter 
     private val tweetPeriodMillis = twitterConfig.Twitter.TweetPeriodInMinutes.toInt * 1000 * 60
     private var nextTweetMillis : Long = 0
     private var tweetCount = 0
+    private var tweetedError = false
 
     /**
      * If true then we are currently tweeting.
@@ -50,9 +51,24 @@ class TwitterFeed( session: View @basedOn( "Session" ) ) extends TwitterAdapter 
         if ( ! tweeting )
             return
 
-        // If it's not time to tweet, skip it.
-        if ( nextTweetMillis > System.currentTimeMillis() )
-            return
+        // If it's not time to tweet, skip it unless there is an error.
+        if ( nextTweetMillis > System.currentTimeMillis() ) {
+            if ( instant.Instant.Error ) {
+                // If we get here then there's an error so we might tweet right away instead of
+                // waiting.  We only want to do this once, however.
+                if ( tweetedError ) // Did we already tweet it?
+                    return          // Yes, so get out.
+
+                tweetedError = true // Indicate that we're about to tweet the error.
+            } else {
+                // There's no error but if the last tweet was an error we'll tweet again
+                // to indicate it's off
+                if ( ! tweetedError )
+                    return
+
+                tweetedError = false
+            }
+        }
 
         nextTweetMillis = System.currentTimeMillis() + tweetPeriodMillis
 
