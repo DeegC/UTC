@@ -27,17 +27,16 @@ else
 fi
 
 set-pwm.sh 10000 0  # We may need to make freq configurable.
-set-led.sh green on
-set-led.sh yellow on
+set-led.sh green on # Leave yellow alone--it indicates network connection
 set-led.sh red on
 
 # Set up chart dir and clean out old files
 mkdir -p ./charts > /dev/null
-find ./charts -mtime +30 -exec rm {} \;
+find ./charts/* -mtime +30 -exec rm {} \;
 
 # Set up logs dir and clean out old files
 mkdir -p ./logs > /dev/null
-find ./logs -mtime +30 -exec rm {} \;
+find ./logs/* -mtime +30 -exec rm {} \;
 
 #java -Xmx100m $JETTY_DEBUG -DSQLITE_ROOT=$(pwd)/../sqlite -jar $JETTY_RUNNER --port $PORT --classes $(pwd)/../conf $UTC_WAR |& tee -a ./logs/jetty.log
 java -Xmx100m $JETTY_DEBUG -DSQLITE_ROOT=$(pwd)/../sqlite -jar $JETTY_RUNNER --port $PORT --classes $(pwd)/../conf $UTC_WAR

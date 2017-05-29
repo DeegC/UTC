@@ -1,5 +1,5 @@
 /*
-  Generated from LOD Configuration on 2017-05-11T23:42:22.916
+  Generated from LOD Configuration on 2017-05-29T12:43:24.877
 
 */
 "use strict";
@@ -479,7 +479,7 @@ exports.Configuration_LodDef = {
                     key: false,
                     update: true,
                     foreignKey: false,
-                    initialValue: "TRUE",
+                    initialValue: "false",
                 },
                 autoseq: {
                     name: "autoseq",

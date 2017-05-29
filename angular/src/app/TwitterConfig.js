@@ -1,5 +1,5 @@
 /*
-  Generated from LOD TwitterConfig on 2017-05-11T23:42:22.936
+  Generated from LOD TwitterConfig on 2017-05-29T12:43:24.938
 
 */
 "use strict";

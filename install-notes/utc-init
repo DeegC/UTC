@@ -1,0 +1,50 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          utc-init
+# Required-Start:    $all
+# Required-Stop:
+# Should-Start:
+# Default-Start:     2 3 4 5
+# Default-Stop:      8 1 6
+# Short-Description: Start up UTC
+# Description:       Starts the Universal Temperature Controller
+### END INIT INFO
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+. /lib/init/vars.sh
+
+do_start () {
+    
+    echo "Starting UTC on $(date)" >> /tmp/utc-init.log
+
+    # Initialize all LEDs/PWM to off
+    CHIPBIN/set-led.sh yellow off >> /tmp/utc-init.log
+    CHIPBIN/set-led.sh red off    >> /tmp/utc-init.log
+    CHIPBIN/set-led.sh green off  >> /tmp/utc-init.log
+    CHIPBIN/set-pwm.sh 10000 0    >> /tmp/utc-init.log
+}
+
+do_status () {
+    echo "No status yet"
+}
+
+case "$1" in
+  start|"")
+        do_start
+        ;;
+  restart|reload|force-reload)
+        echo "Error: argument '$1' not supported" >&2
+        exit 3
+        ;;
+  stop)
+        # No-op
+        ;;
+  status)
+        do_status
+        exit $?
+        ;;
+  *)
+        echo "Usage: utc-init [start|stop|status]" >&2
+        exit 3
+        ;;
+esac

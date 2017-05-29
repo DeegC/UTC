@@ -1,4 +1,4 @@
-z1000-Zeidon    UTC      TZCMLPLO 05/12/17   00:08:52 1.0a2    
+z1000-Zeidon    UTC      TZCMLPLO 05/28/17   23:04:43 1.0a2    
 eLPLR      1
 aName      UTC
 aDesc      Universal Temperature Controller
@@ -504,11 +504,11 @@ i61        6
 i62        7
 i65        20
 i68        23
-i70        27
+i70        25
 i71        28
-i72        29
-i73        26
-i74        25
+i72        27
+i73        29
+i74        26
 i77        35
 i78        36
 i79        33

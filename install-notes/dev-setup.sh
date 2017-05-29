@@ -5,6 +5,10 @@
 # Change following to be whatever user you want to use.
 user=dgc
 
+# Determine the CHIP bin
+SCRIPTPATH=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+CHIPBIN=$SCRIPTPATH/../bin/chip
+
 reboot=0
 
 if id -u $user; then
@@ -21,12 +25,8 @@ sed -i "s/PermitRootLogin yes/PermitRootLogin no/g" /etc/ssh/sshd_config
 
 # Add Oracle Java 8 ppa.  We need Oracle Java 8 for ARM for performance reasons.
 if [ ! -f /etc/apt/sources.list.d/webupd8team-java.list ]; then
-    echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" > /etc/apt/sources.list.d/webupd8team-java.list
-    echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" >> /etc/apt/sources.list.d/webupd8team-java.list
-fi
-
-# Don't run update if there is an argument.  Saves time on retries.
-if [ -z "$1" ]; then
+    echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main
+deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" > /etc/apt/sources.list.d/webupd8team-java.list
     apt-get update
 fi
 
@@ -61,10 +61,34 @@ if ! find /sys/class/pwm/pwmchip0 2> /dev/null; then
 fi
 
 # Add a script to send an email with the local IP whenever a network connection is made.
-if [ ! -f /etc/network/if-up.d/send-ip ]; then
-    echo "#!/bin/sh" > /etc/network/if-up.d/send-ip
-    echo "ip addr show wlan0  | mail -s\"Chip IP\" dgc@dgchristensen.net" >> /etc/network/if-up.d/send-ip
-    chmod +x /etc/network/if-up.d/send-ip
+maildir=/etc/NetworkManager/dispatcher.d
+#maildir=/etc/network/if-up.d
+if [ ! -f $maildir/send-ip ]; then
+    # For NetworkManager, first argument is interface name, second is action.
+
+    cat > $maildir/send-ip <<EOF
+#!/bin/sh
+# \$1 = interface name
+# \$2 = action: up/down (and others)
+
+if [ "\$2" = "up" ]; then
+    ip addr show wlan0  | mail -s"Chip IP" dgc@dgchristensen.net
+    $CHIPBIN/set-led yellow on
+fi
+
+if [ "\$2" = "down" ]; then
+    $CHIPBIN/set-led yellow off
+fi
+
+EOF
+    chmod +x $maildir/send-ip
+fi
+
+if [ ! -f /etc/init.d/utc-init ]; then
+    echo "Installing utc-init"
+    cat utc-init | sed -e "s|CHIPBIN|$CHIPBIN|g" > /etc/init.d/utc-init
+    chmod 755 /etc/init.d/utc-init
+    update-rc.d utc-init defaults
 fi
 
 
@@ -73,6 +97,6 @@ fi
 # Run this if language isn't set properly:
 #sudo locale-gen en_US en_US.UTF-8 && sudo dpkg-reconfigure locales
 
-if $reboot; then
+if [ "$reboot" = "1" ]; then
     echo You must reboot the system.
 fi
