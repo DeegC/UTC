@@ -12,20 +12,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var Session_1 = require("./Session");
 var rest_service_1 = require("./rest.service");
-var SessionListComponent = (function () {
-    function SessionListComponent(restService) {
+var HistoryComponent = (function () {
+    function HistoryComponent(restService) {
         this.restService = restService;
     }
-    SessionListComponent.prototype.ngOnInit = function () {
+    HistoryComponent.prototype.ngOnInit = function () {
         this.getSessionList();
     };
-    SessionListComponent.prototype.getSessionList = function () {
+    HistoryComponent.prototype.getSessionList = function () {
         var _this = this;
         Session_1.Session.activate().subscribe(function (sessionList) {
             _this.sessionList = sessionList;
         });
     };
-    SessionListComponent.prototype.onSelect = function (session) {
+    HistoryComponent.prototype.onSelect = function (session) {
         var _this = this;
         Session_1.Session.activate({ Id: session.Id }).subscribe(function (sessionOi) {
             _this.selectedSessionOi = sessionOi;
@@ -34,12 +34,12 @@ var SessionListComponent = (function () {
     /**
      * Delete the selected session from the OI list.
      */
-    SessionListComponent.prototype.onDelete = function (session) {
+    HistoryComponent.prototype.onDelete = function (session) {
         this.restService.deleteRoot(session);
     };
-    return SessionListComponent;
+    return HistoryComponent;
 }());
-SessionListComponent = __decorate([
+HistoryComponent = __decorate([
     core_1.Component({
         selector: 'history',
         template: "\n  <div *ngIf=\"sessionList && sessionList.isEmpty == false\">\n    <ul class=\"configurations\">\n        <li *ngFor=\"let session of sessionList.Session\"\n            [class.selected]=\"selectedSessionOi && selectedSessionOi.Session$.Id == session.Id\">\n            <span (click)=\"onSelect(session)\">\n                <span class=\"badge\">{{session.Id}}</span> {{session.Date | date:'yyyy-MM-dd hh:mm a'}}\n            </span>\n            <img src=\"/img/icons/red-x.png\" (click)=\"onDelete( session )\"/>\n        </li>\n    </ul>\n  </div>\n  <div *ngIf=\"selectedSessionOi\">\n    <session-detail [sessionOi]=\"selectedSessionOi\" >\n    </session-detail>\n  </div>\n",
@@ -47,6 +47,6 @@ SessionListComponent = __decorate([
         providers: [rest_service_1.RestService]
     }),
     __metadata("design:paramtypes", [rest_service_1.RestService])
-], SessionListComponent);
-exports.SessionListComponent = SessionListComponent;
-//# sourceMappingURL=session-list.component.js.map
+], HistoryComponent);
+exports.HistoryComponent = HistoryComponent;
+//# sourceMappingURL=history.component.js.map

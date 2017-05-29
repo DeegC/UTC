@@ -27,7 +27,7 @@ import * as zeidon from './zeidon';
     styleUrls: ['app/configuration.css'],
     providers: [RestService]
 })
-export class SessionListComponent implements OnInit {
+export class HistoryComponent implements OnInit {
     selectedSessionOi: Session;
     sessionList: Session;
 

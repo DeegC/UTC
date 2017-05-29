@@ -22,7 +22,7 @@ var zeidon_angular_1 = require("./zeidon-angular");
 var configuration_component_1 = require("./configuration.component");
 var rest_service_1 = require("./rest.service");
 var session_component_1 = require("./session.component");
-var session_list_component_1 = require("./session-list.component");
+var history_component_1 = require("./history.component");
 var session_detail_component_1 = require("./session-detail.component");
 var zeidon_1 = require("./zeidon");
 var zeidon_rest_client_1 = require("./zeidon-rest-client");
@@ -59,7 +59,7 @@ AppModule = __decorate([
                 },
                 {
                     path: 'history',
-                    component: session_list_component_1.SessionListComponent
+                    component: history_component_1.HistoryComponent
                 }
             ], { useHash: true } /* required for use with Jetty */)
         ],
@@ -67,7 +67,7 @@ AppModule = __decorate([
             configuration_list_component_1.ConfigurationListComponent,
             configuration_component_1.ConfigurationComponent,
             zeidon_angular_1.ErrorElementDirective,
-            session_list_component_1.SessionListComponent,
+            history_component_1.HistoryComponent,
             session_detail_component_1.SessionDetailComponent,
             session_component_1.SessionComponent],
         providers: [rest_service_1.RestService,

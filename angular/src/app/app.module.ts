@@ -12,7 +12,7 @@ import { ErrorElementDirective }   from './zeidon-angular';
 import { ConfigurationComponent }   from './configuration.component';
 import { RestService }   from './rest.service';
 import { SessionComponent }   from './session.component';
-import { SessionListComponent }   from './session-list.component';
+import { HistoryComponent }   from './history.component';
 import { SessionDetailComponent }   from './session-detail.component';
 
 import { ZeidonConfiguration } from './zeidon';
@@ -44,7 +44,7 @@ const REST_VALUES: ZeidonRestValues = {
                     },
                     {
                       path: 'history',
-                      component: SessionListComponent
+                      component: HistoryComponent
                     }
                     ], { useHash: true } /* required for use with Jetty */ )
    ],
@@ -52,7 +52,7 @@ const REST_VALUES: ZeidonRestValues = {
                   ConfigurationListComponent,
                   ConfigurationComponent,
                   ErrorElementDirective,
-                  SessionListComponent,
+                  HistoryComponent,
                   SessionDetailComponent,
                   SessionComponent ],
   providers: [ RestService,
