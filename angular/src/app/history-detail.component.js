@@ -12,29 +12,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var Session_1 = require("./Session");
 var rest_service_1 = require("./rest.service");
-var SessionDetailComponent = (function () {
-    function SessionDetailComponent(restService) {
+var HistoryDetailComponent = (function () {
+    function HistoryDetailComponent(restService) {
         this.restService = restService;
     }
-    SessionDetailComponent.prototype.ngOnChanges = function (changes) {
+    HistoryDetailComponent.prototype.ngOnChanges = function (changes) {
         var _this = this;
         this.restService.getChart(this.sessionOi.Session$.Id)
             .subscribe(function (url) { _this.chartUrl = url; });
     };
-    return SessionDetailComponent;
+    return HistoryDetailComponent;
 }());
 __decorate([
     core_1.Input(),
     __metadata("design:type", Session_1.Session)
-], SessionDetailComponent.prototype, "sessionOi", void 0);
-SessionDetailComponent = __decorate([
+], HistoryDetailComponent.prototype, "sessionOi", void 0);
+HistoryDetailComponent = __decorate([
     core_1.Component({
-        selector: 'session-detail',
+        selector: 'history-detail',
         template: "\n    <div>\n    =============================================================\n        {{sessionOi.Session$.Date | date:'yyyy-MM-dd hh:mm a'}}\n        <div *ngIf=\"chartUrl\">\n            <img [src]=\"chartUrl\" />\n        </div>\n    </div>\n",
         styleUrls: ['app/configuration.css'],
         providers: [rest_service_1.RestService]
     }),
     __metadata("design:paramtypes", [rest_service_1.RestService])
-], SessionDetailComponent);
-exports.SessionDetailComponent = SessionDetailComponent;
-//# sourceMappingURL=session-detail.component.js.map
+], HistoryDetailComponent);
+exports.HistoryDetailComponent = HistoryDetailComponent;
+//# sourceMappingURL=history-detail.component.js.map

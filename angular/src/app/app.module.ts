@@ -13,7 +13,7 @@ import { ConfigurationComponent }   from './configuration.component';
 import { RestService }   from './rest.service';
 import { SessionComponent }   from './session.component';
 import { HistoryComponent }   from './history.component';
-import { SessionDetailComponent }   from './session-detail.component';
+import { HistoryDetailComponent }   from './history-detail.component';
 
 import { ZeidonConfiguration } from './zeidon';
 import { ZeidonRestValues } from './zeidon-rest-client';
@@ -53,7 +53,7 @@ const REST_VALUES: ZeidonRestValues = {
                   ConfigurationComponent,
                   ErrorElementDirective,
                   HistoryComponent,
-                  SessionDetailComponent,
+                  HistoryDetailComponent,
                   SessionComponent ],
   providers: [ RestService,
                { provide: ZeidonRestValues, useValue: REST_VALUES },

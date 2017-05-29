@@ -42,7 +42,7 @@ var HistoryComponent = (function () {
 HistoryComponent = __decorate([
     core_1.Component({
         selector: 'history',
-        template: "\n  <div *ngIf=\"sessionList && sessionList.isEmpty == false\">\n    <ul class=\"configurations\">\n        <li *ngFor=\"let session of sessionList.Session\"\n            [class.selected]=\"selectedSessionOi && selectedSessionOi.Session$.Id == session.Id\">\n            <span (click)=\"onSelect(session)\">\n                <span class=\"badge\">{{session.Id}}</span> {{session.Date | date:'yyyy-MM-dd hh:mm a'}}\n            </span>\n            <img src=\"/img/icons/red-x.png\" (click)=\"onDelete( session )\"/>\n        </li>\n    </ul>\n  </div>\n  <div *ngIf=\"selectedSessionOi\">\n    <session-detail [sessionOi]=\"selectedSessionOi\" >\n    </session-detail>\n  </div>\n",
+        template: "\n  <div *ngIf=\"sessionList && sessionList.isEmpty == false\">\n    <ul class=\"configurations\">\n        <li *ngFor=\"let session of sessionList.Session\"\n            [class.selected]=\"selectedSessionOi && selectedSessionOi.Session$.Id == session.Id\">\n            <span (click)=\"onSelect(session)\">\n                <span class=\"badge\">{{session.Id}}</span> {{session.Date | date:'yyyy-MM-dd hh:mm a'}}\n            </span>\n            <img src=\"/img/icons/red-x.png\" (click)=\"onDelete( session )\"/>\n        </li>\n    </ul>\n  </div>\n  <div *ngIf=\"selectedSessionOi\">\n    <history-detail [sessionOi]=\"selectedSessionOi\" >\n    </history-detail>\n  </div>\n",
         styleUrls: ['app/configuration.css'],
         providers: [rest_service_1.RestService]
     }),

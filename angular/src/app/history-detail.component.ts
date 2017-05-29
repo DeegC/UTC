@@ -8,7 +8,7 @@ import { RestService } from './rest.service';
 import * as zeidon from './zeidon';
 
 @Component({
-    selector: 'session-detail',
+    selector: 'history-detail',
     template: `
     <div>
     =============================================================
@@ -21,7 +21,7 @@ import * as zeidon from './zeidon';
     styleUrls: ['app/configuration.css'],
     providers: [RestService]
 })
-export class SessionDetailComponent implements OnChanges {
+export class HistoryDetailComponent implements OnChanges {
     @Input() sessionOi: Session;
     chartUrl: SafeUrl;
 

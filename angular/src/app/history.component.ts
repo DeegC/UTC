@@ -20,8 +20,8 @@ import * as zeidon from './zeidon';
     </ul>
   </div>
   <div *ngIf="selectedSessionOi">
-    <session-detail [sessionOi]="selectedSessionOi" >
-    </session-detail>
+    <history-detail [sessionOi]="selectedSessionOi" >
+    </history-detail>
   </div>
 `,
     styleUrls: ['app/configuration.css'],
