@@ -14,21 +14,21 @@ import scala.collection.mutable.ArrayBuffer
 class ChartGenerator( val session: View @basedOn( "Session" ) ) {
     def generate() : String = {
         val thermCount = session.ThermometerConfig.count
-        val series = ArrayBuffer[TimeSeries]()
-        series.append( new TimeSeries( "target" ) )
+
+        // Create a collection of empty series.  We'll populate them later.
+        val allData = new TimeSeriesCollection( )
+        allData.addSeries( new TimeSeries( "target" ) )
         session.ThermometerConfig.foreach{ therm =>
-            series.append( new TimeSeries( therm.Name.getString() ) )
+            allData.addSeries( new TimeSeries( therm.Name.getString() ) )
         }
 
         session.Instant.foreach { inst =>
             val seconds = toSeconds( inst.Timestamp )
-            series(0).add( seconds, inst.TargetTemperature.toInt )
+            allData.getSeries(0).add( seconds, inst.TargetTemperature.toInt )
             for ( t <- 1 to thermCount )
-                series(t).add( seconds, inst.getAttribute( "Therm" + (t-1) ).toInt )
+                allData.getSeries(t).add( seconds, inst.getAttribute( "Therm" + (t-1) ).toInt )
         }
 
-        val allData = new TimeSeriesCollection( )
-        series.foreach { s => allData.addSeries(s) }
         val chart = XYLineChart( allData )
         val filename = s"charts/session-${session.Session.Id}.png"
         chart.saveAsPNG( filename )
