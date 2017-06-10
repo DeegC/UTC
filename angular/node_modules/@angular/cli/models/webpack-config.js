@@ -51,13 +51,13 @@ class NgCliWebpackConfig {
             development: {
                 environment: 'dev',
                 outputHashing: 'media',
-                sourcemap: true,
+                sourcemaps: true,
                 extractCss: false
             },
             production: {
                 environment: 'prod',
                 outputHashing: 'all',
-                sourcemap: false,
+                sourcemaps: false,
                 extractCss: true,
                 aot: true
             }

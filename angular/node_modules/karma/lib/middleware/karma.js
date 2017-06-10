@@ -174,10 +174,14 @@ var createKarmaMiddleware = function (
 
           var scriptTags = []
           var scriptUrls = []
-          for (var i in files.included) {
+          for (var i = 0; i < files.included.length; i++) {
             var file = files.included[i]
             var filePath = file.path
             var fileExt = path.extname(filePath)
+
+            if (!files.included.hasOwnProperty(i)) {
+              continue
+            }
 
             if (!file.isUrl) {
               filePath = filePathToUrlPath(filePath, basePath, urlRoot, proxyPath)

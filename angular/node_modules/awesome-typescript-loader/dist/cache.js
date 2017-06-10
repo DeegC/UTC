@@ -48,7 +48,6 @@ function filename(source, identifier, options) {
     hash.end(contents);
     return hash.read().toString('hex') + '.json.gzip';
 }
-;
 function cache(params) {
     var source = params.source;
     var options = params.options || {};
