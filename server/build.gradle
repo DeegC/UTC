@@ -17,6 +17,25 @@ dependencies {
 }
 
 war {
+    // Copy files from node_modules so that the server has all the required files.
+    // This allows the system to work without an internet connection.
+    from( "../angular/node_modules/" ) {
+        include( "@angular/core/bundles/core.umd.js" )
+        include( "@angular/common/bundles/common.umd.js" )
+        include( "@angular/compiler/bundles/compiler.umd.js" )
+        include( "@angular/platform-browser/bundles/platform-browser.umd.js" )
+        include( "@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js" )
+        include( "@angular/http/bundles/http.umd.js" )
+        include( "@angular/router/bundles/router.umd.js" )
+        include( "@angular/forms/bundles/forms.umd.js" )
+        include( "core-js/client/shim.min.js" )
+        include( "zone.js/dist/zone.js" )
+        include( "reflect-metadata/Reflect.js" )
+        include( "systemjs/dist/system.src.js" )
+        include( "rxjs/**" )
+        into( "node_modules" )
+    }
+    
     from( "../angular/src" )
     exclude( "**/index.html" )
     rename( "index.jetty.html", "index.html" )
