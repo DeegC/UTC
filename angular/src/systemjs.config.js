@@ -1,11 +1,6 @@
 /**
- * System configuration for Angular samples
- * Adjust as necessary for your application needs.
  */
 (function (global) {
-  // Following is so node can run angular on one port (eg. 3000) and rest server can run on another one.
-  // This makes it easier to test JavaScript/Typescript changes.
-  window.zeidonRestPort = 8080;
   System.config({
     paths: {
       // paths serve as alias

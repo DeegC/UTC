@@ -19,8 +19,16 @@ import { ZeidonConfiguration } from './zeidon';
 import { ZeidonRestValues } from './zeidon-rest-client';
 import { ZeidonRestConfiguration } from './zeidon-rest-client';
 
+// If we are running under browserSync then we'll set the port number to be 8080.
+// This makes it easier to switch back and forth between dev mode and running under Jetty.
+let zeidonRestPort = window.location.port;
+if ( (window as any).___browserSync___ ) {
+  console.log("Running under browserSync");
+  zeidonRestPort = "8080";  // Set port to be jetty running in different process.
+}
+
 const REST_VALUES: ZeidonRestValues = {
-  restUrl: `http://${window.location.hostname}:${(window as any).zeidonRestPort || window.location.port}/api/utc`
+  restUrl: `http://${window.location.hostname}:${zeidonRestPort}/api/utc`
 };
 
 @NgModule({
@@ -63,5 +71,5 @@ const REST_VALUES: ZeidonRestValues = {
 })
 export class AppModule {
   // This constructor is required to force Angular injector to load the ZeidonConfiguration.
-  constructor( private zeidonConfig: ZeidonConfiguration ) {}
+  constructor( private zeidonConfig: ZeidonConfiguration ) { }
 }

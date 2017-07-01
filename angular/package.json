@@ -2,7 +2,7 @@
   "name": "utc-angular",
   "version": "1.0.0",
   "private": true,
-  "description": "Master package.json, the superset of all dependencies for all of the _example package.json files. See _boilerplate/package.json for example npm scripts.",
+  "description": "Packages needed by UTC angular components",
   "scripts": {
     "build": "tsc -p src/",
     "build:watch": "tsc -p src/ -w",

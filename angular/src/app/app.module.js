@@ -27,8 +27,15 @@ var history_detail_component_1 = require("./history-detail.component");
 var zeidon_1 = require("./zeidon");
 var zeidon_rest_client_1 = require("./zeidon-rest-client");
 var zeidon_rest_client_2 = require("./zeidon-rest-client");
+// If we are running under browserSync then we'll set the port number to be 8080.
+// This makes it easier to switch back and forth between dev mode and running under Jetty.
+var zeidonRestPort = window.location.port;
+if (window.___browserSync___) {
+    console.log("Running under browserSync");
+    zeidonRestPort = "8080"; // Set port to be jetty running in different process.
+}
 var REST_VALUES = {
-    restUrl: "http://" + window.location.hostname + ":" + (window.zeidonRestPort || window.location.port) + "/api/utc"
+    restUrl: "http://" + window.location.hostname + ":" + zeidonRestPort + "/api/utc"
 };
 var AppModule = (function () {
     // This constructor is required to force Angular injector to load the ZeidonConfiguration.
