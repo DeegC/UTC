@@ -8,6 +8,7 @@ user=dgc
 # Determine the CHIP bin
 SCRIPTPATH=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 CHIPBIN=$SCRIPTPATH/../bin/chip
+SERVERBIN=$SCRIPTPATH/../server
 
 reboot=0
 
@@ -46,8 +47,6 @@ if [[ -z $(grep overlays/spi /etc/rc.local) ]]; then
     echo "
 mkdir -p /sys/kernel/config/device-tree/overlays/spi
 cat /lib/firmware/nextthingco/chip/sample-spi.dtbo > /sys/kernel/config/device-tree/overlays/spi/dtbo
-
-exit 0
 " >> /etc/rc.local
 fi
 
@@ -86,7 +85,7 @@ fi
 
 if [ ! -f /etc/init.d/utc-init ]; then
     echo "Installing utc-init"
-    cat utc-init | sed -e "s|CHIPBIN|$CHIPBIN|g" > /etc/init.d/utc-init
+    cat utc-init | sed -e "s|CHIPBIN|$CHIPBIN|g" -e "s|SERVERBIN|$SERVERBIN|g" > /etc/init.d/utc-init
     chmod 755 /etc/init.d/utc-init
     update-rc.d utc-init defaults
 fi

@@ -22,6 +22,8 @@ do_start () {
     CHIPBIN/set-led.sh red off    >> /tmp/utc-init.log
     CHIPBIN/set-led.sh green off  >> /tmp/utc-init.log
     CHIPBIN/set-pwm.sh 10000 0    >> /tmp/utc-init.log
+
+    SERVERBIN/start_server.sh
 }
 
 do_status () {
