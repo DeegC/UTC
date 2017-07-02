@@ -1,6 +1,6 @@
 
 /*
-  Generated from LOD Instant on 2017-06-11T16:03:29.808
+  Generated from LOD Instant
 
 */
 

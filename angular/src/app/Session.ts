@@ -1,6 +1,6 @@
 
 /*
-  Generated from LOD Session on 2017-06-11T16:03:29.822
+  Generated from LOD Session
 
 */
 

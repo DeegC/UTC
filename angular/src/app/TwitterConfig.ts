@@ -1,6 +1,6 @@
 
 /*
-  Generated from LOD TwitterConfig on 2017-06-11T16:03:29.864
+  Generated from LOD TwitterConfig
 
 */
 
