@@ -23,13 +23,11 @@ import { Instant } from './Instant';
         </div>
 
         <div><label>Fan: </label>{{currentState.Instant$.PWM0}}</div>
-        <div><label>Pit: </label>{{currentState.Instant$.Therm0}}</div>
-        <div><label>Therm 1: </label>{{currentState.Instant$.Therm1}}</div>
-        <div><label>Therm 2: </label>{{currentState.Instant$.Therm2}}</div>
-        <div><label>Therm 3: </label>{{currentState.Instant$.Therm3}}</div>
-        <div><label>Therm 4: </label>{{currentState.Instant$.Therm4}}</div>
-        <div><label>Therm 5: </label>{{currentState.Instant$.Therm5}}</div>
-        <div><label>Therm 6: </label>{{currentState.Instant$.Therm6}}</div>
+
+        <div *ngFor="let therm of currentSession.Session$.Configuration$.ThermometerConfig; let i = index;" >
+          <div><label>{{therm.Name}} </label>{{getThermTemperature( i ) }}</div>
+        </div>
+
         <div><label>CPU Temp: </label>{{currentState.Instant$.CpuTemperature}}</div>
         <div><label>Timestamp: </label>{{currentState.Instant$.Timestamp}}</div>
       </div>
@@ -89,5 +87,11 @@ export class SessionComponent implements OnInit {
             this.currentState = undefined;
             this.currentMessage = message;
         } );
+    }
+
+    getThermTemperature( index ): string {
+        let name = `Therm${index}`;
+        let attr = this.currentState.Instant$.getAttribute( `Therm${index}` );
+        return attr;
     }
 }

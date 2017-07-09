@@ -1,5 +1,5 @@
 /*
-  Generated from LOD Configuration on 2017-06-11T16:03:29.720
+  Generated from LOD Configuration
 
 */
 "use strict";
