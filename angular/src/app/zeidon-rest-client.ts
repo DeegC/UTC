@@ -16,7 +16,6 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
-import { RestService } from './rest.service';
 import { ObjectInstance } from './zeidon';
 import { ZeidonConfiguration } from './zeidon';
 import { Committer, CommitOptions } from './zeidon';

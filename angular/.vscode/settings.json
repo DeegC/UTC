@@ -16,6 +16,7 @@
 
     // Following for Numbered Bookmarks extension.
     "numberedBookmarks.saveBookmarksBetweenSessions": true,
-    "numberedBookmarks.useStickyBookmarks": true
-
+    "numberedBookmarks.useStickyBookmarks": true,
+    "window.title": "UTC: ${rootName}${separator}${activeEditorShort}"
+    
 }
