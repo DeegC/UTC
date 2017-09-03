@@ -8,6 +8,8 @@ package edu.wpi.first.wpilibj;
 
 import java.util.TimerTask;
 
+import com.quinsoft.zeidon.ZeidonLogger;
+
 /**
  * Class implements a PID Control Loop.
  *
@@ -38,6 +40,7 @@ public class PIDController
     PIDSource                  m_pidInput;
     PIDOutput                  m_pidOutput;
     java.util.Timer            m_controlLoop;
+    private final ZeidonLogger m_logger;
 
     /**
      * Tolerance is the type of tolerance used to specify if the PID controller is on target. The various
@@ -58,6 +61,7 @@ public class PIDController
             percentage = value;
         }
 
+        @Override
         public boolean onTarget()
         {
             return ( Math.abs( getError() ) < percentage / 100 * ( m_maximumInput - m_minimumInput ) );
@@ -73,6 +77,7 @@ public class PIDController
             this.value = value;
         }
 
+        @Override
         public boolean onTarget()
         {
             return Math.abs( getError() ) < value;
@@ -82,6 +87,7 @@ public class PIDController
     public class NullTolerance implements Tolerance
     {
 
+        @Override
         public boolean onTarget()
         {
             throw new RuntimeException( "No tolerance value set when using PIDController.onTarget()" );
@@ -102,6 +108,7 @@ public class PIDController
             m_controller = controller;
         }
 
+        @Override
         public void run()
         {
             m_controller.calculate();
@@ -110,7 +117,7 @@ public class PIDController
 
     /**
      * Allocate a PID object with the given constants for P, I, D, and F
-     * 
+     *
      * @param Kp
      *            the proportional coefficient
      * @param Ki
@@ -128,7 +135,7 @@ public class PIDController
      *            differential terms. The default is 50ms.
      */
     public PIDController( double Kp, double Ki, double Kd, double Kf, PIDSource source, PIDOutput output,
-                          double period )
+                          double period, ZeidonLogger logger )
     {
 
         if ( source == null )
@@ -150,63 +157,13 @@ public class PIDController
         m_pidInput = source;
         m_pidOutput = output;
         m_period = period;
+        m_logger = logger;
+
+        logger.info( "New PIDController with PID values: %s, %s, %s", m_P, m_I, m_D );
 
         m_controlLoop.schedule( new PIDTask( this ), 0L, (long) ( m_period * 1000 ) );
 
         m_tolerance = new NullTolerance();
-    }
-
-    /**
-     * Allocate a PID object with the given constants for P, I, D and period
-     * 
-     * @param Kp
-     * @param Ki
-     * @param Kd
-     * @param source
-     * @param output
-     * @param period
-     */
-    public PIDController( double Kp, double Ki, double Kd, PIDSource source, PIDOutput output, double period )
-    {
-        this( Kp, Ki, Kd, 0.0, source, output, period );
-    }
-
-    /**
-     * Allocate a PID object with the given constants for P, I, D, using a 50ms period.
-     * 
-     * @param Kp
-     *            the proportional coefficient
-     * @param Ki
-     *            the integral coefficient
-     * @param Kd
-     *            the derivative coefficient
-     * @param source
-     *            The PIDSource object that is used to get values
-     * @param output
-     *            The PIDOutput object that is set to the output percentage
-     */
-    public PIDController( double Kp, double Ki, double Kd, PIDSource source, PIDOutput output )
-    {
-        this( Kp, Ki, Kd, source, output, kDefaultPeriod );
-    }
-
-    /**
-     * Allocate a PID object with the given constants for P, I, D, using a 50ms period.
-     * 
-     * @param Kp
-     *            the proportional coefficient
-     * @param Ki
-     *            the integral coefficient
-     * @param Kd
-     *            the derivative coefficient
-     * @param source
-     *            The PIDSource object that is used to get values
-     * @param output
-     *            The PIDOutput object that is set to the output percentage
-     */
-    public PIDController( double Kp, double Ki, double Kd, double Kf, PIDSource source, PIDOutput output )
-    {
-        this( Kp, Ki, Kd, Kf, source, output, kDefaultPeriod );
     }
 
     /**
@@ -244,6 +201,7 @@ public class PIDController
         if ( enabled )
         {
             double input = pidInput.pidGet();
+            m_logger.info( "PID input = %s, setpoint = %s", input, m_setpoint );
             double result;
             PIDOutput pidOutput = null;
 
@@ -307,7 +265,7 @@ public class PIDController
 
     /**
      * Set the PID Controller gain parameters. Set the proportional, integral, and differential coefficients.
-     * 
+     *
      * @param p
      *            Proportional coefficient
      * @param i
@@ -324,7 +282,7 @@ public class PIDController
 
     /**
      * Set the PID Controller gain parameters. Set the proportional, integral, and differential coefficients.
-     * 
+     *
      * @param p
      *            Proportional coefficient
      * @param i
@@ -345,7 +303,7 @@ public class PIDController
 
     /**
      * Get the Proportional coefficient
-     * 
+     *
      * @return proportional coefficient
      */
     public double getP()
@@ -355,7 +313,7 @@ public class PIDController
 
     /**
      * Get the Integral coefficient
-     * 
+     *
      * @return integral coefficient
      */
     public double getI()
@@ -365,7 +323,7 @@ public class PIDController
 
     /**
      * Get the Differential coefficient
-     * 
+     *
      * @return differential coefficient
      */
     public synchronized double getD()
@@ -375,7 +333,7 @@ public class PIDController
 
     /**
      * Get the Feed forward coefficient
-     * 
+     *
      * @return feed forward coefficient
      */
     public synchronized double getF()
@@ -385,7 +343,7 @@ public class PIDController
 
     /**
      * Return the current PID result This is always centered on zero and constrained the the max and min outs
-     * 
+     *
      * @return the latest calculated output
      */
     public synchronized double get()
@@ -397,7 +355,7 @@ public class PIDController
      * Set the PID controller to consider the input to be continuous, Rather then using the max and min in as
      * constraints, it considers them to be the same point and automatically calculates the shortest route to the
      * setpoint.
-     * 
+     *
      * @param continuous
      *            Set to true turns on continuous, false turns off continuous
      */
@@ -455,7 +413,7 @@ public class PIDController
 
     /**
      * Set the setpoint for the PIDController
-     * 
+     *
      * @param setpoint
      *            the desired setpoint
      */
@@ -484,7 +442,7 @@ public class PIDController
 
     /**
      * Returns the current setpoint of the PIDController
-     * 
+     *
      * @return the current setpoint
      */
     public synchronized double getSetpoint()
@@ -494,7 +452,7 @@ public class PIDController
 
     /**
      * Returns the current difference of the input from the setpoint
-     * 
+     *
      * @return the current error
      */
     public synchronized double getError()
@@ -505,11 +463,12 @@ public class PIDController
 
     /**
      * Set the percentage error which is considered tolerable for use with OnTarget. (Input of 15.0 = 15 percent)
-     * 
+     *
      * @param percent
      *            error which is tolerable
      * @deprecated Use setTolerance(Tolerance), i.e. setTolerance(new PIDController.PercentageTolerance(15))
      */
+    @Deprecated
     public synchronized void setTolerance( double percent )
     {
         m_tolerance = new PercentageTolerance( percent );
@@ -519,7 +478,7 @@ public class PIDController
      * Set the PID tolerance using a Tolerance object. Tolerance can be specified as a percentage of the range or as an
      * absolute value. The Tolerance object encapsulates those options in an object. Use it by creating the type of
      * tolerance that you want to use: setTolerance(new PIDController.AbsoluteTolerance(0.1))
-     * 
+     *
      * @param tolerance
      *            a tolerance object of the right type, e.g. PercentTolerance or AbsoluteTolerance
      */
@@ -530,7 +489,7 @@ public class PIDController
 
     /**
      * Set the absolute error which is considered tolerable for use with OnTarget.
-     * 
+     *
      * @param absolute
      *            error which is tolerable in the units of the input object
      */
@@ -541,7 +500,7 @@ public class PIDController
 
     /**
      * Set the percentage error which is considered tolerable for use with OnTarget. (Input of 15.0 = 15 percent)
-     * 
+     *
      * @param percent
      *            error which is tolerable
      */
@@ -553,7 +512,7 @@ public class PIDController
     /**
      * Return true if the error is within the percentage of the total input range, determined by setTolerance. This
      * assumes that the maximum and minimum input were set using setInput.
-     * 
+     *
      * @return true if the error is less than the tolerance
      */
     public synchronized boolean onTarget()
