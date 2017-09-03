@@ -131,8 +131,10 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
      * Get the result to use in PIDController
      * @return the result to use in PIDController
      */
-    def pidGet(): Double = {
+    override def pidGet(): Double = {
         val instant = hardware.readSensors( currentSession )
+        logger.debug( s"PID value = ${instant.Instant.Therm0}" )
+
         return instant.Instant.Therm0
     }
 
@@ -140,13 +142,14 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
      * Set the output to the value calculated by PIDController
      * @param output the value calculated by PIDController
      */
-    def pidWrite(output: Double) {
+    override def pidWrite(output: Double) {
         logger.debug( "pidWrite %s", output )
         hardware.setPwm( output.toInt, currentSession.Configuration.PwmFrequency )
     }
 
     def run() {
         logger.info( "Starting up controller for config %s", currentSession.Configuration.Description )
+        currentSession.Configuration.logEntity()
 
         hardware.setGreenLed( false )
         hardware.setRedLed( false )
@@ -155,10 +158,10 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
         pid = new PIDController( currentSession.Configuration.PidP,
                                  currentSession.Configuration.PidI,
                                  currentSession.Configuration.PidD,
-                                 this, this, 5 );
+                                 0.0, this, this, 5.0, logger );
 
         pid.setOutputRange( 0, 100 );
-        pid.setSetpoint( 250 );
+        pid.setSetpoint( currentSession.Configuration.TargetTemperature );
         pid.enable()
 
         // Run until someone calls stop()
