@@ -4,7 +4,7 @@
 
 */
 
-import * as zeidon from './zeidon';
+import * as zeidon from '../zeidon';
 import { Observable } from 'rxjs';
 import { UTC_DomainList } from './UTC-DomainList';
 import { UTC_DomainFunctions } from './UTC-DomainFunctions';
@@ -54,11 +54,11 @@ export class Session_Session extends zeidon.EntityInstance {
     get Id(): string { return this.getAttribute("Id") };
     set Id(value: string) { this.setAttribute("Id", value) };
 
-    get Date(): string { return this.getAttribute("Date") };
-    set Date(value: string) { this.setAttribute("Date", value) };
+    get Date(): Date { return this.getAttribute("Date") };
+    set Date(value: Date) { this.setAttribute("Date", value) };
 
-    get EndDate(): string { return this.getAttribute("EndDate") };
-    set EndDate(value: string) { this.setAttribute("EndDate", value) };
+    get EndDate(): Date { return this.getAttribute("EndDate") };
+    set EndDate(value: Date) { this.setAttribute("EndDate", value) };
 
     get Notes(): string { return this.getAttribute("Notes") };
     set Notes(value: string) { this.setAttribute("Notes", value) };
@@ -92,32 +92,32 @@ export class Session_Configuration extends zeidon.EntityInstance {
     get Notes(): string { return this.getAttribute("Notes") };
     set Notes(value: string) { this.setAttribute("Notes", value) };
 
-    get TargetTemperature(): string { return this.getAttribute("TargetTemperature") };
-    set TargetTemperature(value: string) { this.setAttribute("TargetTemperature", value) };
+    get TargetTemperature(): number { return this.getAttribute("TargetTemperature") };
+    set TargetTemperature(value: number) { this.setAttribute("TargetTemperature", value) };
 
     get TemperatureUnit(): string { return this.getAttribute("TemperatureUnit") };
     set TemperatureUnit(value: string) { this.setAttribute("TemperatureUnit", value) };
 
-    get RecordTemperatures(): string { return this.getAttribute("RecordTemperatures") };
-    set RecordTemperatures(value: string) { this.setAttribute("RecordTemperatures", value) };
+    get RecordTemperatures(): boolean { return this.getAttribute("RecordTemperatures") };
+    set RecordTemperatures(value: boolean) { this.setAttribute("RecordTemperatures", value) };
 
-    get PidP(): string { return this.getAttribute("PidP") };
-    set PidP(value: string) { this.setAttribute("PidP", value) };
+    get PidP(): number { return this.getAttribute("PidP") };
+    set PidP(value: number) { this.setAttribute("PidP", value) };
 
-    get PidI(): string { return this.getAttribute("PidI") };
-    set PidI(value: string) { this.setAttribute("PidI", value) };
+    get PidI(): number { return this.getAttribute("PidI") };
+    set PidI(value: number) { this.setAttribute("PidI", value) };
 
-    get PidD(): string { return this.getAttribute("PidD") };
-    set PidD(value: string) { this.setAttribute("PidD", value) };
+    get PidD(): number { return this.getAttribute("PidD") };
+    set PidD(value: number) { this.setAttribute("PidD", value) };
 
-    get MaxPWM(): string { return this.getAttribute("MaxPWM") };
-    set MaxPWM(value: string) { this.setAttribute("MaxPWM", value) };
+    get MaxPWM(): number { return this.getAttribute("MaxPWM") };
+    set MaxPWM(value: number) { this.setAttribute("MaxPWM", value) };
 
-    get TweetOn(): string { return this.getAttribute("TweetOn") };
-    set TweetOn(value: string) { this.setAttribute("TweetOn", value) };
+    get TweetOn(): boolean { return this.getAttribute("TweetOn") };
+    set TweetOn(value: boolean) { this.setAttribute("TweetOn", value) };
 
-    get PwmFrequency(): string { return this.getAttribute("PwmFrequency") };
-    set PwmFrequency(value: string) { this.setAttribute("PwmFrequency", value) };
+    get PwmFrequency(): number { return this.getAttribute("PwmFrequency") };
+    set PwmFrequency(value: number) { this.setAttribute("PwmFrequency", value) };
 
     get ThermometerConfig(): zeidon.EntityArray<Session_ThermometerConfig> {
         return this.getChildEntityArray("ThermometerConfig") as zeidon.EntityArray<Session_ThermometerConfig>;
@@ -137,63 +137,63 @@ export class Session_ThermometerConfig extends zeidon.EntityInstance {
     get Name(): string { return this.getAttribute("Name") };
     set Name(value: string) { this.setAttribute("Name", value) };
 
-    get AlarmLow(): string { return this.getAttribute("AlarmLow") };
-    set AlarmLow(value: string) { this.setAttribute("AlarmLow", value) };
+    get AlarmLow(): number { return this.getAttribute("AlarmLow") };
+    set AlarmLow(value: number) { this.setAttribute("AlarmLow", value) };
 
-    get AlarmHigh(): string { return this.getAttribute("AlarmHigh") };
-    set AlarmHigh(value: string) { this.setAttribute("AlarmHigh", value) };
+    get AlarmHigh(): number { return this.getAttribute("AlarmHigh") };
+    set AlarmHigh(value: number) { this.setAttribute("AlarmHigh", value) };
 
-    get AlarmOn(): string { return this.getAttribute("AlarmOn") };
-    set AlarmOn(value: string) { this.setAttribute("AlarmOn", value) };
+    get AlarmOn(): boolean { return this.getAttribute("AlarmOn") };
+    set AlarmOn(value: boolean) { this.setAttribute("AlarmOn", value) };
 
-    get wTemperatureWithinAlarmThreshold(): string { return this.getAttribute("wTemperatureWithinAlarmThreshold") };
-    set wTemperatureWithinAlarmThreshold(value: string) { this.setAttribute("wTemperatureWithinAlarmThreshold", value) };
+    get wTemperatureWithinAlarmThreshold(): boolean { return this.getAttribute("wTemperatureWithinAlarmThreshold") };
+    set wTemperatureWithinAlarmThreshold(value: boolean) { this.setAttribute("wTemperatureWithinAlarmThreshold", value) };
 
-    get wTemperatureError(): string { return this.getAttribute("wTemperatureError") };
-    set wTemperatureError(value: string) { this.setAttribute("wTemperatureError", value) };
+    get wTemperatureError(): boolean { return this.getAttribute("wTemperatureError") };
+    set wTemperatureError(value: boolean) { this.setAttribute("wTemperatureError", value) };
 }
 
 export class Session_Instant extends zeidon.EntityInstance {
     public get entityName(): string { return "Instant" };
 
-    get Timestamp(): string { return this.getAttribute("Timestamp") };
-    set Timestamp(value: string) { this.setAttribute("Timestamp", value) };
+    get Timestamp(): Date { return this.getAttribute("Timestamp") };
+    set Timestamp(value: Date) { this.setAttribute("Timestamp", value) };
 
-    get TargetTemperature(): string { return this.getAttribute("TargetTemperature") };
-    set TargetTemperature(value: string) { this.setAttribute("TargetTemperature", value) };
+    get TargetTemperature(): number { return this.getAttribute("TargetTemperature") };
+    set TargetTemperature(value: number) { this.setAttribute("TargetTemperature", value) };
 
-    get Therm0(): string { return this.getAttribute("Therm0") };
-    set Therm0(value: string) { this.setAttribute("Therm0", value) };
+    get Therm0(): number { return this.getAttribute("Therm0") };
+    set Therm0(value: number) { this.setAttribute("Therm0", value) };
 
-    get Therm1(): string { return this.getAttribute("Therm1") };
-    set Therm1(value: string) { this.setAttribute("Therm1", value) };
+    get Therm1(): number { return this.getAttribute("Therm1") };
+    set Therm1(value: number) { this.setAttribute("Therm1", value) };
 
-    get Therm2(): string { return this.getAttribute("Therm2") };
-    set Therm2(value: string) { this.setAttribute("Therm2", value) };
+    get Therm2(): number { return this.getAttribute("Therm2") };
+    set Therm2(value: number) { this.setAttribute("Therm2", value) };
 
-    get Therm3(): string { return this.getAttribute("Therm3") };
-    set Therm3(value: string) { this.setAttribute("Therm3", value) };
+    get Therm3(): number { return this.getAttribute("Therm3") };
+    set Therm3(value: number) { this.setAttribute("Therm3", value) };
 
-    get Therm4(): string { return this.getAttribute("Therm4") };
-    set Therm4(value: string) { this.setAttribute("Therm4", value) };
+    get Therm4(): number { return this.getAttribute("Therm4") };
+    set Therm4(value: number) { this.setAttribute("Therm4", value) };
 
-    get Therm5(): string { return this.getAttribute("Therm5") };
-    set Therm5(value: string) { this.setAttribute("Therm5", value) };
+    get Therm5(): number { return this.getAttribute("Therm5") };
+    set Therm5(value: number) { this.setAttribute("Therm5", value) };
 
-    get Therm6(): string { return this.getAttribute("Therm6") };
-    set Therm6(value: string) { this.setAttribute("Therm6", value) };
+    get Therm6(): number { return this.getAttribute("Therm6") };
+    set Therm6(value: number) { this.setAttribute("Therm6", value) };
 
-    get Therm7(): string { return this.getAttribute("Therm7") };
-    set Therm7(value: string) { this.setAttribute("Therm7", value) };
+    get Therm7(): number { return this.getAttribute("Therm7") };
+    set Therm7(value: number) { this.setAttribute("Therm7", value) };
 
-    get PWM0(): string { return this.getAttribute("PWM0") };
-    set PWM0(value: string) { this.setAttribute("PWM0", value) };
+    get PWM0(): number { return this.getAttribute("PWM0") };
+    set PWM0(value: number) { this.setAttribute("PWM0", value) };
 
-    get CpuTemperature(): string { return this.getAttribute("CpuTemperature") };
-    set CpuTemperature(value: string) { this.setAttribute("CpuTemperature", value) };
+    get CpuTemperature(): number { return this.getAttribute("CpuTemperature") };
+    set CpuTemperature(value: number) { this.setAttribute("CpuTemperature", value) };
 
-    get Error(): string { return this.getAttribute("Error") };
-    set Error(value: string) { this.setAttribute("Error", value) };
+    get Error(): boolean { return this.getAttribute("Error") };
+    set Error(value: boolean) { this.setAttribute("Error", value) };
 
     get ErrorMessage(): string { return this.getAttribute("ErrorMessage") };
     set ErrorMessage(value: string) { this.setAttribute("ErrorMessage", value) };

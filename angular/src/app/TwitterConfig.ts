@@ -4,7 +4,7 @@
 
 */
 
-import * as zeidon from './zeidon';
+import * as zeidon from '../zeidon';
 import { Observable } from 'rxjs';
 import { UTC_DomainList } from './UTC-DomainList';
 import { UTC_DomainFunctions } from './UTC-DomainFunctions';
@@ -69,8 +69,8 @@ export class TwitterConfig_Twitter extends zeidon.EntityInstance {
     get Username(): string { return this.getAttribute("Username") };
     set Username(value: string) { this.setAttribute("Username", value) };
 
-    get TweetPeriodInMinutes(): string { return this.getAttribute("TweetPeriodInMinutes") };
-    set TweetPeriodInMinutes(value: string) { this.setAttribute("TweetPeriodInMinutes", value) };
+    get TweetPeriodInMinutes(): number { return this.getAttribute("TweetPeriodInMinutes") };
+    set TweetPeriodInMinutes(value: number) { this.setAttribute("TweetPeriodInMinutes", value) };
 }
 
 const TwitterConfigEntityPrototypes = {

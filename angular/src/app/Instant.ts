@@ -4,7 +4,7 @@
 
 */
 
-import * as zeidon from './zeidon';
+import * as zeidon from '../zeidon';
 import { Observable } from 'rxjs';
 import { UTC_DomainList } from './UTC-DomainList';
 import { UTC_DomainFunctions } from './UTC-DomainFunctions';
@@ -51,44 +51,44 @@ export class Instant extends zeidon.ObjectInstance {
 export class Instant_Instant extends zeidon.EntityInstance {
     public get entityName(): string { return "Instant" };
 
-    get Timestamp(): string { return this.getAttribute("Timestamp") };
-    set Timestamp(value: string) { this.setAttribute("Timestamp", value) };
+    get Timestamp(): Date { return this.getAttribute("Timestamp") };
+    set Timestamp(value: Date) { this.setAttribute("Timestamp", value) };
 
-    get TargetTemperature(): string { return this.getAttribute("TargetTemperature") };
-    set TargetTemperature(value: string) { this.setAttribute("TargetTemperature", value) };
+    get TargetTemperature(): number { return this.getAttribute("TargetTemperature") };
+    set TargetTemperature(value: number) { this.setAttribute("TargetTemperature", value) };
 
-    get Therm0(): string { return this.getAttribute("Therm0") };
-    set Therm0(value: string) { this.setAttribute("Therm0", value) };
+    get Therm0(): number { return this.getAttribute("Therm0") };
+    set Therm0(value: number) { this.setAttribute("Therm0", value) };
 
-    get Therm1(): string { return this.getAttribute("Therm1") };
-    set Therm1(value: string) { this.setAttribute("Therm1", value) };
+    get Therm1(): number { return this.getAttribute("Therm1") };
+    set Therm1(value: number) { this.setAttribute("Therm1", value) };
 
-    get Therm2(): string { return this.getAttribute("Therm2") };
-    set Therm2(value: string) { this.setAttribute("Therm2", value) };
+    get Therm2(): number { return this.getAttribute("Therm2") };
+    set Therm2(value: number) { this.setAttribute("Therm2", value) };
 
-    get Therm3(): string { return this.getAttribute("Therm3") };
-    set Therm3(value: string) { this.setAttribute("Therm3", value) };
+    get Therm3(): number { return this.getAttribute("Therm3") };
+    set Therm3(value: number) { this.setAttribute("Therm3", value) };
 
-    get Therm4(): string { return this.getAttribute("Therm4") };
-    set Therm4(value: string) { this.setAttribute("Therm4", value) };
+    get Therm4(): number { return this.getAttribute("Therm4") };
+    set Therm4(value: number) { this.setAttribute("Therm4", value) };
 
-    get Therm5(): string { return this.getAttribute("Therm5") };
-    set Therm5(value: string) { this.setAttribute("Therm5", value) };
+    get Therm5(): number { return this.getAttribute("Therm5") };
+    set Therm5(value: number) { this.setAttribute("Therm5", value) };
 
-    get Therm6(): string { return this.getAttribute("Therm6") };
-    set Therm6(value: string) { this.setAttribute("Therm6", value) };
+    get Therm6(): number { return this.getAttribute("Therm6") };
+    set Therm6(value: number) { this.setAttribute("Therm6", value) };
 
-    get Therm7(): string { return this.getAttribute("Therm7") };
-    set Therm7(value: string) { this.setAttribute("Therm7", value) };
+    get Therm7(): number { return this.getAttribute("Therm7") };
+    set Therm7(value: number) { this.setAttribute("Therm7", value) };
 
-    get PWM0(): string { return this.getAttribute("PWM0") };
-    set PWM0(value: string) { this.setAttribute("PWM0", value) };
+    get PWM0(): number { return this.getAttribute("PWM0") };
+    set PWM0(value: number) { this.setAttribute("PWM0", value) };
 
-    get CpuTemperature(): string { return this.getAttribute("CpuTemperature") };
-    set CpuTemperature(value: string) { this.setAttribute("CpuTemperature", value) };
+    get CpuTemperature(): number { return this.getAttribute("CpuTemperature") };
+    set CpuTemperature(value: number) { this.setAttribute("CpuTemperature", value) };
 
-    get Error(): string { return this.getAttribute("Error") };
-    set Error(value: string) { this.setAttribute("Error", value) };
+    get Error(): boolean { return this.getAttribute("Error") };
+    set Error(value: boolean) { this.setAttribute("Error", value) };
 
     get ErrorMessage(): string { return this.getAttribute("ErrorMessage") };
     set ErrorMessage(value: string) { this.setAttribute("ErrorMessage", value) };

@@ -4,7 +4,7 @@
 
 */
 
-import * as zeidon from './zeidon';
+import * as zeidon from '../zeidon';
 import { Observable } from 'rxjs';
 import { UTC_DomainList } from './UTC-DomainList';
 import { UTC_DomainFunctions } from './UTC-DomainFunctions';
