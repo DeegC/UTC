@@ -1,9 +1,17 @@
 #!/bin/bash
 
 # Used to set up dev environment for UTC.  Run on the CHIP as root.
+if [ "$(whoami)" != "root" ]; then
+    echo "Run as root"
+    exit 1
+fi
 
-# Change following to be whatever user you want to use.
-user=dgc
+if [ -z "$1" ]; then
+    echo "Dev user must be first argument"
+    exit 1
+fi
+
+user=$1
 
 # Determine the CHIP bin
 SCRIPTPATH=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
@@ -21,7 +29,7 @@ else
     service ssh reload
 fi
 
-# Don't allow root to ssh into server.  This disallows chip user from logging in.
+# Don't allow root to ssh into server.  This disallows chip user from logging in remotely.
 sed -i "s/PermitRootLogin yes/PermitRootLogin no/g" /etc/ssh/sshd_config
 
 # Add Oracle Java 8 ppa.  We need Oracle Java 8 for ARM for performance reasons.
@@ -47,6 +55,7 @@ if [[ -z $(grep overlays/spi /etc/rc.local) ]]; then
     echo "
 mkdir -p /sys/kernel/config/device-tree/overlays/spi
 cat /lib/firmware/nextthingco/chip/sample-spi.dtbo > /sys/kernel/config/device-tree/overlays/spi/dtbo
+exit 0
 " >> /etc/rc.local
 fi
 
@@ -59,19 +68,27 @@ if ! find /sys/class/pwm/pwmchip0 2> /dev/null; then
     reboot=1
 fi
 
+if [ ! -f /etc/init.d/utc-init ]; then
+    echo "Installing utc-init"
+    cat utc-init | sed -e "s|CHIPBIN|$CHIPBIN|g" -e "s|SERVERBIN|$SERVERBIN|g" > /etc/init.d/utc-init
+    chmod 755 /etc/init.d/utc-init
+    update-rc.d utc-init defaults
+fi
+
 # Add a script to send an email with the local IP whenever a network connection is made.
 maildir=/etc/NetworkManager/dispatcher.d
 #maildir=/etc/network/if-up.d
 if [ ! -f $maildir/send-ip ]; then
-    # For NetworkManager, first argument is interface name, second is action.
-
-    cat > $maildir/send-ip <<EOF
+    echo "Enter email address to receive notification of CHIP IP address every time it starts."
+    read -p "Use a blank value to indicate you don't want email" emailaddress
+    if [ ! -z "$emailaddress" ]; then
+	cat > $maildir/send-ip <<EOF
 #!/bin/sh
 # \$1 = interface name
 # \$2 = action: up/down (and others)
 
 if [ "\$2" = "up" ]; then
-    ip addr show wlan0  | mail -s"Chip IP" dgc@dgchristensen.net
+    ip addr show wlan0  | mail -s"Chip IP" $emailaddress
     $CHIPBIN/set-led yellow on
 fi
 
@@ -80,14 +97,9 @@ if [ "\$2" = "down" ]; then
 fi
 
 EOF
-    chmod +x $maildir/send-ip
-fi
-
-if [ ! -f /etc/init.d/utc-init ]; then
-    echo "Installing utc-init"
-    cat utc-init | sed -e "s|CHIPBIN|$CHIPBIN|g" -e "s|SERVERBIN|$SERVERBIN|g" > /etc/init.d/utc-init
-    chmod 755 /etc/init.d/utc-init
-    update-rc.d utc-init defaults
+	chmod +x $maildir/send-ip
+	echo "Email script added to $maildir/send-ip.  Note that you may still have to install an email server."
+    fi
 fi
 
 
