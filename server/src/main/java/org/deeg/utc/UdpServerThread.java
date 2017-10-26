@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.quinsoft.zeidon.ObjectEngine;
 import com.quinsoft.zeidon.Task;
@@ -19,7 +19,7 @@ import com.quinsoft.zeidon.Task;
 /**
  * Starts up a thread to listen on UDP port 4445.  When it recieves a UDP packet
  * it responds with the IP addresses.
- * 
+ *
  * @author dgc
  *
  */
@@ -34,14 +34,14 @@ public class UdpServerThread extends Thread
     public UdpServerThread( ObjectEngine oe ) throws IOException
     {
         super( "UDP Server" );
-        
+
         systemTask = oe.getSystemTask();
         List<String> addresses = new ArrayList<>();
-        
+
         Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
         Collections.list( interfaces )
                    .stream()
-                   .forEach( iface -> { 
+                   .forEach( iface -> {
                        Collections.list( iface.getInetAddresses() )
                                   .stream()
                                   .filter( ip -> ! ip.isLoopbackAddress() )
@@ -54,6 +54,7 @@ public class UdpServerThread extends Thread
         socket = new DatagramSocket( 4445 );
     }
 
+    @Override
     public void run()
     {
 
