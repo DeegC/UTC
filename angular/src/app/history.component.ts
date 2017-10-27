@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { Session } from './Session';
-import { Session_Session } from './Session';
+import { Session } from './lod/Session';
+import { Session_Session } from './lod/Session';
 import { RestService } from './rest.service';
 import * as zeidon from './zeidon';
 

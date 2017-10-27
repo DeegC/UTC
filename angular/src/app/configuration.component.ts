@@ -1,8 +1,8 @@
 import { Component, Input, Output, OnInit, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
-import { Configuration } from './Configuration';
+import { Configuration } from './lod/Configuration';
 import { RestService } from './rest.service';
-import { Configuration_ThermometerConfig } from './Configuration';
-import { Session } from './Session';
+import { Configuration_ThermometerConfig } from './lod/Configuration';
+import { Session } from './lod/Session';
 import { FormGroup, Validators } from '@angular/forms';
 import * as zeidon from './zeidon-angular';
 
@@ -76,8 +76,9 @@ import * as zeidon from './zeidon-angular';
       </div>
 
       <div>
+       length = {{ configOi.Configuration$.ThermometerConfig.length }}
         <button type="button" class="btn btn-default" (click)="newThermometer()"
-               [disabled]="configOi.Configuration$.ThermometerConfig.length > 3" >
+               [disabled]="configOi.Configuration$.ThermometerConfig.length > 8" >
             New Thermometer
         </button>
       </div>

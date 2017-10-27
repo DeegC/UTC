@@ -5,9 +5,9 @@ import './rxjs-extensions';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
 
-import { Configuration, Configuration_Configuration } from './Configuration';
-import { Session } from './Session';
-import { Instant } from './Instant';
+import { Configuration, Configuration_Configuration } from './lod/Configuration';
+import { Session } from './lod/Session';
+import { Instant } from './lod/Instant';
 import { ZeidonRestValues } from './zeidon-rest-client';
 import { ObjectInstance, EntityInstance } from './zeidon';
 

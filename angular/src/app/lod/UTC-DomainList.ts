@@ -1,4 +1,4 @@
-import { Domain } from "./zeidon"
+import { Domain } from "../zeidon"
 
 // Should some day be generated from the zeidon.xdm.
 

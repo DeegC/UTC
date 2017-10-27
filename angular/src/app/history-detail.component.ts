@@ -1,9 +1,9 @@
 import { Component, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { SafeUrl} from '@angular/platform-browser';
 import { OnInit } from '@angular/core';
-import { Configuration } from './Configuration';
-import { Configuration_Configuration } from './Configuration';
-import { Session } from './Session';
+import { Configuration } from './lod/Configuration';
+import { Configuration_Configuration } from './lod/Configuration';
+import { Session } from './lod/Session';
 import { RestService } from './rest.service';
 import * as zeidon from './zeidon';
 

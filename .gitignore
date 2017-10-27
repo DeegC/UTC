@@ -9,3 +9,4 @@ eclipse-bin/
 server/charts
 server/logs
 zeidon/logs
+angular/dist

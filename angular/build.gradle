@@ -1,0 +1,9 @@
+// The build file is only used to build the angular code when building
+// the entire Northwind system.  Generally just use npm commands for dev work.
+description ="""
+Angular application for UTC.
+
+Project name: ${project.name}
+"""
+
+

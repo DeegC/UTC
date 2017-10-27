@@ -3,11 +3,13 @@
     "target": "es5",
     "module": "commonjs",
     "moduleResolution": "node",
-    "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": [ "es2015", "dom" ],
     "suppressImplicitAnyIndexErrors": true,
+    "outDir": "../dist",
+    "inlineSourceMap": true,
+    "inlineSources": true,
     "typeRoots": [
       "../node_modules/@types/"
     ]

@@ -9,4 +9,7 @@ dependencies {
     compile project( ':utc-zeidon' )
     compile 'org.twitter4j:twitter4j-core:4.0.+'
     compile 'org.twitter4j:twitter4j-async:4.0.+'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.scalatest:scalatest_2.12:3.0.4'
+    testRuntime 'org.scala-lang.modules:scala-xml_2.12:1.0.5'
 }

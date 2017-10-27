@@ -17,7 +17,7 @@ import { HistoryDetailComponent }   from './history-detail.component';
 
 import { ZeidonConfiguration } from './zeidon';
 import { ZeidonRestValues } from './zeidon-rest-client';
-import { ZeidonRestConfiguration } from './zeidon-rest-client';
+import { ZeidonAngularConfiguration } from './zeidon-angular';
 
 // If we are running under browserSync then we'll set the port number to be 8080.
 // This makes it easier to switch back and forth between dev mode and running under Jetty.
@@ -65,7 +65,7 @@ const REST_VALUES: ZeidonRestValues = {
                   SessionComponent ],
   providers: [ RestService,
                { provide: ZeidonRestValues, useValue: REST_VALUES },
-               { provide: ZeidonConfiguration, useClass: ZeidonRestConfiguration },
+               { provide: ZeidonConfiguration, useClass: ZeidonAngularConfiguration },
              ],
   bootstrap: [ AppComponent ]
 })

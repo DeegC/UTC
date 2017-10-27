@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from './rest.service';
-import { Session } from './Session';
-import { Instant } from './Instant';
+import { Session } from './lod/Session';
+import { Instant } from './lod/Instant';
 
 @Component({
   selector: 'session',

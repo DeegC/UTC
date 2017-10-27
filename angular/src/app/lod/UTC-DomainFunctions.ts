@@ -1,5 +1,5 @@
-import { Domain } from "./zeidon"
-import { AttributeValueError } from "./zeidon"
+import { Domain } from "../zeidon"
+import { AttributeValueError } from "../zeidon"
 
 /**
  * User-written code to process domains.

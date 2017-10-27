@@ -20,8 +20,9 @@
       '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
       '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
       // other libraries
-      'rxjs':                      'npm:rxjs',
-      'angular-in-memory-web-api': 'npm:angular-in-memory-web-api',
+      'rxjs':                        'npm:rxjs',
+      'rx-http-request':             'npm:rx-http-request/browser.js',
+      'angular-date-value-accessor': 'npm:angular-date-value-accessor',
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -32,7 +33,7 @@
       rxjs: {
         defaultExtension: 'js'
       },
-      'angular-in-memory-web-api': {
+      'angular-date-value-accessor': {
         main: './index.js',
         defaultExtension: 'js'
       }
