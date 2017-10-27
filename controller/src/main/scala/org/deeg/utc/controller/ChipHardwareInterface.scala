@@ -32,7 +32,7 @@ class ChipHardwareInterface(val task: Task) extends HardwareInterface {
 
     override def readTemperature(probe: Int): Double = {
         read_mcp3008()
-        return voltageArray(probe)
+        return voltageArray(probe + 1) // "+ 1" is a hack to get around short-term error in hardware.
     }
 
     private def read_mcp3008(): Unit = {
@@ -45,7 +45,7 @@ class ChipHardwareInterface(val task: Task) extends HardwareInterface {
                 return
         }
 
-        val voltages = "read_therms".!!
+        val voltages = "read_therms".!! + "0.0\n"
         task.log().debug("Measured voltages =\n%s", voltages)
         voltageArray = voltages.split("\n").map { vstr => steinhart.computeTemperature(vstr.toDouble) }
         lastRead = now

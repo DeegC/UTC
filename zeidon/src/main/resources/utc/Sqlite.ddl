@@ -72,10 +72,3 @@ CREATE TABLE twitter_config (
            username                                                         longtext           NULL    , 
            tweet_period_in_minutes                                          int                NULL     ) ;
  
-GRANT ALL ON base TO PUBLIC 
-GRANT ALL ON configuration TO PUBLIC 
-GRANT ALL ON instant TO PUBLIC 
-GRANT ALL ON session TO PUBLIC 
-GRANT ALL ON thermometer_config TO PUBLIC 
-GRANT ALL ON twitter_config TO PUBLIC 
-

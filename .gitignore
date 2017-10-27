@@ -10,3 +10,4 @@ server/charts
 server/logs
 zeidon/logs
 angular/dist
+sqlite/utc.sqlite.db

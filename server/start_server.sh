@@ -26,6 +26,11 @@ else
     export PATH="$PATH:../bin/test"  # Test files.
 fi
 
+# Make sure sqlite db exists.  If not, copy empty one.
+if [ ! -f ../sqlite/utc.sqlite.db ]; then
+    cp ../sqlite/utc.sqlite.empty.db ../sqlite/utc.sqlite.db
+fi
+
 set-pwm.sh 10000 0  # We may need to make freq configurable.
 set-led.sh green on # Leave yellow alone--it indicates network connection
 set-led.sh red on
@@ -37,6 +42,8 @@ find ./charts/* -mtime +30 -exec rm {} \;
 # Set up logs dir and clean out old files
 mkdir -p ./logs > /dev/null
 find ./logs/* -mtime +30 -exec rm {} \;
+
+
 
 java -Xmx100m $JETTY_DEBUG -DSQLITE_ROOT=$(pwd)/../sqlite -jar $JETTY_RUNNER --port $PORT --classes $(pwd)/../conf $UTC_WAR |& tee -a ./logs/jetty.log
 #java -Xmx100m $JETTY_DEBUG -DSQLITE_ROOT=$(pwd)/../sqlite -jar $JETTY_RUNNER --port $PORT --classes $(pwd)/../conf $UTC_WAR
