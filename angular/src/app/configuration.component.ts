@@ -76,9 +76,8 @@ import * as zeidon from './zeidon-angular';
       </div>
 
       <div>
-       length = {{ configOi.Configuration$.ThermometerConfig.length }}
         <button type="button" class="btn btn-default" (click)="newThermometer()"
-               [disabled]="configOi.Configuration$.ThermometerConfig.length > 8" >
+               [disabled]="configOi.Configuration$.ThermometerConfig.length > 7" >
             New Thermometer
         </button>
       </div>

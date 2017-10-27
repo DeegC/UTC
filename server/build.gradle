@@ -34,6 +34,7 @@ war {
         include( "zone.js/dist/zone.js" )
         include( "reflect-metadata/Reflect.js" )
         include( "systemjs/dist/system.src.js" )
+        include( "rx-http-request/browser.js" )
         include( "rxjs/**" )
         into( "node_modules" )
     }
