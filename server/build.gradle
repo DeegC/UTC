@@ -42,3 +42,11 @@ war {
     from( "../angular/src" )
     from( "../angular/dist" )
 }
+
+task deploy (dependsOn: war){
+    copy {
+        from "build/libs"
+        into "run-time"
+        include "*.war"
+    }
+}

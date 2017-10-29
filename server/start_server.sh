@@ -5,8 +5,8 @@ DIR=$(readlink -e $0)
 cd $(dirname $DIR) > /dev/null
 pwd
 
-JETTY_RUNNER=$(find jetty -name jetty-runner*)
-UTC_WAR=$(find build -name utc-server*.war)
+JETTY_RUNNER=$(find run-time -name jetty-runner*)
+UTC_WAR=$(find run-time -name utc-server*.war)
 PORT=8080
 
 JETTY_DEBUG=
