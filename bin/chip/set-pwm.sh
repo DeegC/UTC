@@ -15,7 +15,7 @@ fi
 # enable PWM channel using set- must be done before period or duty_cycle are set)
 echo 1 > /sys/class/pwm/pwmchip0/pwm0/enable
 
-hz=$((1000000000 / freq))
+hz=$((1000000000 / $freq))
 echo "hz  =$hz"
 # set the period to 1 second (adjust as needed in nanoseconds)
 echo "$hz" > /sys/class/pwm/pwmchip0/pwm0/period

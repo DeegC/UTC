@@ -32,7 +32,7 @@ class ChipHardwareInterface(val task: Task) extends HardwareInterface {
 
     override def readTemperature(probe: Int): Double = {
         read_mcp3008()
-        return voltageArray(probe + 1) // "+ 1" is a hack to get around short-term error in hardware.
+        return voltageArray(probe) // "+ 1" is a hack to get around short-term error in hardware.
     }
 
     private def read_mcp3008(): Unit = {

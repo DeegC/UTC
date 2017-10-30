@@ -588,7 +588,7 @@ export class EntityInstance {
 
             let attributeDef = this.getAttributeDef( key );
             if ( attributeDef ) {
-                if ( ! attributeDef.updatable )
+                if ( ! attributeDef.update )
                     continue;
 
                 if ( ! this.entityDef.updatable )

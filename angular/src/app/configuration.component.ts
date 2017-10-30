@@ -51,6 +51,13 @@ import * as zeidon from './zeidon-angular';
       <div #pwmError class="alert alert-danger" style="display:none"></div>
 
       <div>
+        <label>PWM Frequency: </label>
+        <input type="number" formControlName="PwmFrequency" [zeidonErrorElement]="freqError"
+               placeholder="freq" style="width:3em" />
+      </div>
+      <div #freqError class="alert alert-danger" style="display:none"></div>
+
+      <div>
         <label>Tweet On: </label>
         <input type="checkbox"
             formControlName="TweetOn" placeholder="tweet on" [zeidonErrorElement]="tweetError"
