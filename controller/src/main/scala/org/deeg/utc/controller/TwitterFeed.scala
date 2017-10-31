@@ -27,7 +27,7 @@ class TwitterFeed( session: View @basedOn( "Session" ) ) extends TwitterAdapter 
     /**
      * If true then we are currently tweeting.
      */
-    private var tweeting : Boolean = session.Configuration.TweetOn
+    private var tweeting = session.Configuration.TweetOn.isTruthy
     logger.info("Loaded TwitterFeed with tweeting = %s", tweeting )
 
     //
