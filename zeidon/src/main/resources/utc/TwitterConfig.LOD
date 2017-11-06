@@ -1,4 +1,4 @@
-z1000-Zeidon    TWITTERCOTZZOLODO 05/09/17   21:18:39 1.0a2    
+z1000-Zeidon    TWITTERCOTZZOLODO 11/01/17   00:31:21 1.0a2    
 eLOD       1
 aZKey      508222936
 aNextZKeyToAssign 508222945
@@ -125,7 +125,7 @@ aName      TwitterConfig
 aZKey      905181370
 aPurpose   F
 aDesc      Config options for Twitter/tweeting.
-aER_DiagramPosX 52
+aER_DiagramPosX 14
 aER_DiagramPosY 14
 
 eLOD_Entity 2

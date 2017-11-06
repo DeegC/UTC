@@ -443,13 +443,13 @@ export class EntityInstance {
         }
     }
 
-    public getAttribute( attr: string ): any {
+    public getAttribute( attr: string, context: string = undefined ): any {
         let attribs = this.getAttribHash( attr );
         let value = attribs[ attr ];
 
         let attributeDef = this.getAttributeDef( attr );
         if ( attributeDef.domain && attributeDef.domain.domainFunctions ) {
-            value = attributeDef.domain.domainFunctions.convertToJsType( value, attributeDef );
+            value = attributeDef.domain.domainFunctions.convertToJsType( value, attributeDef, context );
         }
 
         return value;
@@ -1298,13 +1298,16 @@ export interface Domain {
     name: string,
     class: string,
     maxLength?: number,
+    defaultContext?: string,
     contexts?: any,
+    domainType?: string,
     domainFunctions?: any,
 }
 
 export interface DomainFunctions {
-    convertExternalValue?( value: any, attributeDef: any, context?: any ): any;
-    convertToJsType( value: any, attributeDef: any ): any;
+    convertExternalValue( value: any, attributeDef: any, context?: any ): any;
+    convertToJsType( value: any, attributeDef: any, context?: string ): any;
+    getTableEntries?( attributeDef: any, context?: string ): any;
 }
 
 export class BaseDomainFunctions implements DomainFunctions {
@@ -1313,12 +1316,12 @@ export class BaseDomainFunctions implements DomainFunctions {
             throw new AttributeValueError( `Value is required.`, attributeDef );
     }
 
-    convertExternalValue?( value: any, attributeDef: any, context?: any ): any {
+    convertExternalValue( value: any, attributeDef: any, context?: any ): any {
         this.checkForRequiredValue( value, attributeDef );
         return value;
     }
 
-    convertToJsType( value: any, attributeDef: any ): any {
+    convertToJsType( value: any, attributeDef: any, context = undefined ): any {
         return value;
     }
 }

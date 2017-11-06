@@ -35,23 +35,16 @@ export const UTC_DomainList = {
     "TemperatureUnit": {
         name: "TemperatureUnit",
         class: "com.quinsoft.zeidon.domains.StaticTableDomain",
+        domainType: "T",
+        defaultContext: "Unit",
         contexts: {
             "Unit": {
                 name: "Unit",
-                entries: [
-                    {
-                        internalValue: "F",
-                        externalValue: "Fahrenehit"
-                    },
-                    {
-                        internalValue: "C",
-                        externalValue: "Celsius"
-                    },
-                    {
-                        internalValue: "K",
-                        externalValue: "Kelvin"
-                    },
-                ]
+                entries: {
+                    "F": "Fahrenehit",
+                    "C": "Celsius",
+                    "K": "Kelvin",
+                }
             }
         }
     } as Domain,

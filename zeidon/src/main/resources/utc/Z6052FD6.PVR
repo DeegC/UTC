@@ -1,0 +1,12 @@
+z1000-Zeidon    Z6052FD6 TZWDVORO 11/01/17   00:32:21 1.0a2    
+eViewObjRef 1
+aZKey      101003222
+aNextZKeyToAssign 101003222
+aName      ThermometerType
+aDesc      VOR automatically built from LOD Dialog
+
+eLOD       2
+aZKey      101003202
+aName      ThermometerType
+aDesc      Used to edit thermometer types.
+

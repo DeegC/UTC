@@ -1,9 +1,9 @@
-z1000-Zeidon    UTC      TZEREMDO 05/10/17   22:57:11 1.0a2    
+z1000-Zeidon    UTC      TZEREMDO 11/02/17   23:31:15 1.0a2    
 eEntpER_Model 1
 aName      UTC
 aZKey      905181310
-aNextZKeyToAssign 905181403
-aLastSyncDate 20170510225711550
+aNextZKeyToAssign 905181445
+aLastSyncDate 20171102233115008
 aDesc      UDS Digital Supervisor (android)
 
 eER_Entity 2
@@ -264,6 +264,37 @@ aDesc      A controller session; i.e. a cook.
 aER_DiagramPosX 28
 aER_DiagramPosY 17
 
+eER_RelLink 3
+aName      for
+aZKey      905181439
+aCardMin   1
+aCardMax   1
+
+eER_RelType_1 4
+aZKey      905181437
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 28
+aER_DiagramBendPosY 16
+aER_DiagramE1PosX 23
+aER_DiagramE1PosY 16
+aER_DiagramE2PosX 28
+aER_DiagramE2PosY 10
+
+eER_RelLink_Other 5
+aName      has
+aZKey      905181438
+aCardMin   0
+aCardMax   m
+
+eER_Entity_Other 6
+aSAP_Entity 0
+aName      ThermometerType
+aZKey      905181408
+aPurpose   F
+aDesc      Defines the diffferent thermometer types and the algorithms used to compute temperatures.
+aER_DiagramPosX 14
+aER_DiagramPosY 15
+
 eER_EntIdentifier 3
 
 eER_FactType 4
@@ -513,6 +544,63 @@ eER_FactType 4
 eER_AttributeIdentifier 5
 
 eER_Entity 2
+aName      SteinhartHartConfig
+aZKey      905181414
+aPurpose   A
+aDesc      Config values for SteinhartHart algorithm.
+aER_DiagramPosX 13
+aER_DiagramPosY 26
+aSAP_Entity 0
+awkSelectedAttributeForDragSort 1
+
+eER_Attribute 3
+aName      Id
+aZKey      905181415
+aNotNull   Y
+aSAP_Attribute 0
+awkSequence 1
+
+eDomain    4
+
+eER_FactTypeForDelete 4
+aZKey      905181417
+
+eER_EntIdentifierForDelete 5
+aName      Id
+aZKey      905181416
+aSystemMaintained Y
+
+eER_RelLink 3
+aName      for
+aZKey      905181423
+aCardMin   1
+aCardMax   1
+
+eER_RelType_1 4
+aZKey      905181421
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 18
+aER_DiagramE1PosY 20
+aER_DiagramE2PosX 18
+aER_DiagramE2PosY 25
+
+eER_RelLink_Other 5
+aName      has
+aZKey      905181422
+aCardMin   0
+aCardMax   1
+
+eER_Entity_Other 6
+
+eER_EntIdentifier 3
+
+eER_FactType 4
+
+eER_AttributeIdentifier 5
+
+eER_Entity 2
 awkSelectedAttributeForDragSort 1
 
 eER_Attribute 3
@@ -590,12 +678,117 @@ eER_FactType 4
 eER_AttributeIdentifier 5
 
 eER_Entity 2
+awkSelectedAttributeForDragSort 2
+
+eER_Attribute 3
+aName      Id
+aZKey      905181409
+aNotNull   Y
+aSAP_Attribute 0
+awkSequence 1
+
+eDomain    4
+
+eER_FactTypeForDelete 4
+aZKey      905181411
+
+eER_EntIdentifierForDelete 5
+aName      Id
+aZKey      905181410
+aSystemMaintained Y
+
+eER_Attribute 3
+aName      Name
+aZKey      905181412
+aLth       32
+aNotNull   Y
+aDesc      Name of the thermo type
+awkSequence 2
+
+eDomain    4
+
+eER_Attribute 3
+aName      Description
+aZKey      905181413
+awkSequence 3
+
+eDomain    4
+
+eER_Attribute 3
+aName      ProbeAlgorithm
+aZKey      905181433
+aDesc      The name of the algorithm used to determine the probe's temperature.
+awkSequence 4
+
+eDomain    4
+aZKey      905180743
+aDesc      Thy type of algorithm used to determine the measured temperature of a probe.
+aName      ProbeAlgorithm
+aDataType  S
+aMaxStringLth 64
+aDomainType T
+aContextRestriction N
+
+eER_RelLink 3
+
+eER_RelType_1 4
+
+eER_RelLink_Other 5
+
+eER_Entity_Other 6
+
+eER_RelLink 3
+
+eER_RelType_1 4
+
+eER_RelLink_Other 5
+
+eER_Entity_Other 6
+
+eER_RelLink 3
+aName      is default for
+aZKey      905181444
+aCardMin   0
+aCardMax   m
+
+eER_RelType_1 4
+aZKey      905181443
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 18
+aER_DiagramE1PosY 14
+aER_DiagramE2PosX 18
+aER_DiagramE2PosY 10
+
+eER_RelLink_Other 5
+aName      has default
+aZKey      905181445
+aCardMin   1
+aCardMax   1
+
+eER_Entity_Other 6
+aSAP_Entity 0
+aName      UtcConfig
+aZKey      905181404
+aPurpose   F
+aDesc      Main configuration for UTC.
+aER_DiagramPosX 14
+aER_DiagramPosY 5
+
+eER_EntIdentifier 3
+
+eER_FactType 4
+
+eER_AttributeIdentifier 5
+
+eER_Entity 2
 aName      TwitterConfig
 aZKey      905181370
 aPurpose   F
 aDesc      Config options for Twitter/tweeting.
-aER_DiagramPosX 52
-aER_DiagramPosY 14
+aER_DiagramPosX 41
+aER_DiagramPosY 26
 awkSelectedAttributeForDragSort 1
 
 eER_Attribute 3
@@ -673,6 +866,70 @@ eER_FactType 4
 
 eER_AttributeIdentifier 5
 
+eER_Entity 2
+awkSelectedAttributeForDragSort 1
+
+eER_Attribute 3
+aName      Id
+aZKey      905181405
+aNotNull   Y
+aSAP_Attribute 0
+awkSequence 1
+
+eDomain    4
+
+eER_FactTypeForDelete 4
+aZKey      905181407
+
+eER_EntIdentifierForDelete 5
+aName      Id
+aZKey      905181406
+aSystemMaintained Y
+
+eER_RelLink 3
+
+eER_RelType_1 4
+
+eER_RelLink_Other 5
+
+eER_Entity_Other 6
+
+eER_EntIdentifier 3
+
+eER_FactType 4
+
+eER_AttributeIdentifier 5
+
+eER_RelType 2
+
+eER_RelLink_2 3
+
+eER_Entity_2 4
+
+eER_RelLink_2 3
+
+eER_Entity_2 4
+
+eER_RelType 2
+
+eER_RelLink_2 3
+
+eER_Entity_2 4
+
+eER_RelLink_2 3
+
+eER_Entity_2 4
+
+eER_RelType 2
+
+eER_RelLink_2 3
+
+eER_Entity_2 4
+
+eER_RelLink_2 3
+
+eER_Entity_2 4
+
 eER_RelType 2
 
 eER_RelLink_2 3
@@ -713,79 +970,123 @@ i29        27
 i31        19
 i33        23
 i35        19
-i44        13
-i45        12
-i46        10
-i55        53
-i57        53
-i59        53
-i61        53
-i63        53
-i65        53
-i67        53
-i69        53
-i71        19
-i73        53
-i75        23
-i77        15
-i81        43
-i82        51
-i84        80
+i48        13
+i49        12
+i50        10
+i59        57
+i61        57
+i63        57
+i65        57
+i67        57
+i69        57
+i71        57
+i73        57
+i75        19
+i77        57
+i79        23
+i81        15
 i85        43
-i86        50
-i87        48
-i88        43
-i90        3
-i94        49
-i96        49
-i98        15
-i99        80
-i100       79
-i101       78
-i102       47
-i103       42
-i104       41
-i105       40
-i106       9
-i107       92
-i108       91
-i109       89
-i110       39
-i112       3
-i116       15
-i118       19
-i120       19
-i122       23
-i124       23
-i125       38
-i126       37
-i127       36
-i128       9
-i129       114
-i130       113
-i131       111
-i134       3
-i138       15
-i140       15
-i142       15
-i144       15
-i146       15
-i148       19
-i149       136
-i150       135
-i151       133
-i152       79
-i153       80
-i154       43
-i155       78
-i156       47
-i157       37
-i158       36
-i159       9
-i160       38
-i161       39
-i162       41
-i163       40
-i164       9
-i165       42
-i166       43
+i86        55
+i88        84
+i89        43
+i90        54
+i91        52
+i92        43
+i94        3
+i98        53
+i100       53
+i102       15
+i103       84
+i104       83
+i105       82
+i106       51
+i107       42
+i108       41
+i109       40
+i110       9
+i111       96
+i112       95
+i113       93
+i116       3
+i122       47
+i123       118
+i124       117
+i125       115
+i126       39
+i128       3
+i132       15
+i134       19
+i136       19
+i138       23
+i140       23
+i141       38
+i142       37
+i143       36
+i144       9
+i145       130
+i146       129
+i147       127
+i148       47
+i150       3
+i154       15
+i156       15
+i159       121
+i160       120
+i161       119
+i162       114
+i163       46
+i164       45
+i165       44
+i166       9
+i171       152
+i172       151
+i173       149
+i176       3
+i180       15
+i182       15
+i184       15
+i186       15
+i188       15
+i190       19
+i191       178
+i192       177
+i193       175
+i194       170
+i196       3
+i199       169
+i200       168
+i201       167
+i202       47
+i203       198
+i204       197
+i205       195
+i206       83
+i207       84
+i208       43
+i209       82
+i210       51
+i211       120
+i212       121
+i213       47
+i214       119
+i215       114
+i216       168
+i217       167
+i218       47
+i219       169
+i220       170
+i221       37
+i222       36
+i223       9
+i224       38
+i225       39
+i226       41
+i227       40
+i228       9
+i229       42
+i230       43
+i231       45
+i232       46
+i233       47
+i234       44
+i235       9

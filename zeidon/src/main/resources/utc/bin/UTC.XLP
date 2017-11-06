@@ -1,4 +1,4 @@
-z1000-Zeidon    UTC      TZCMLPLO 10/27/17   00:16:52 1.0a2    
+z1000-Zeidon    UTC      TZCMLPLO 11/06/17   15:05:36 1.0a2    
 eLPLR      1
 aName      UTC
 aDesc      Universal Temperature Controller
@@ -6,7 +6,7 @@ aZKey      92726748
 aPgmSrcDir C:\zeidon\zapp\utc
 aExecDir   C:\zeidon\zapp\utc\bin
 aMetaSrcDir C:\zeidon\zapp\utc
-aTaskUseCount 1
+aTaskUseCount 2
 aLastBuildDate 20170307144610609
 aLPLR_Type 3
 aTempDesc  Universal Temperature Controller
@@ -112,6 +112,24 @@ aStatus    1
 aName      Temperature
 aGroupName UDS
 
+eW_MetaDef 3
+aCPLR_ZKey 905180731
+aStatus    1
+aName      TemperatureUnit
+aGroupName UDS
+
+eW_MetaDef 3
+aCPLR_ZKey 905180743
+aStatus    1
+aName      ProbeAlgorithm
+aGroupName UDS
+
+eW_MetaDef 3
+aCPLR_ZKey 905180737
+aStatus    1
+aName      Temperature
+aGroupName UDS
+
 eW_MetaType 2
 aType      4
 
@@ -121,8 +139,8 @@ aStatus    1
 aUpdateInd 2
 aName      UTC
 aDesc      UDS Digital Supervisor (android)
-aLastSyncDate 20170510225711578
-aLastUpdateDate 20170510225711578
+aLastSyncDate 20171102233115550
+aLastUpdateDate 20171102233115550
 
 eW_MetaType 2
 aType      5
@@ -136,8 +154,8 @@ aStatus    1
 aUpdateInd 2
 aName      UTC
 aDesc      Universal Temperature Controller
-aLastSyncDate 20170510225748545
-aLastUpdateDate 20170510225748545
+aLastSyncDate 20171102233201000
+aLastUpdateDate 20171102233201000
 
 eW_MetaType 2
 aType      7
@@ -148,8 +166,8 @@ aStatus    1
 aUpdateInd 2
 aName      Configuration
 aDesc      Main configuration object
-aLastSyncDate 20170512000852107
-aLastUpdateDate 20170512000852107
+aLastSyncDate 20171102233939746
+aLastUpdateDate 20171102233939746
 
 eW_MetaDef 3
 aCPLR_ZKey 316000030
@@ -176,6 +194,15 @@ aUpdateInd 2
 aName      Session
 aLastSyncDate 20170510231003404
 aLastUpdateDate 20170510231003404
+
+eW_MetaDef 3
+aCPLR_ZKey 101003202
+aStatus    1
+aUpdateInd 2
+aName      ThermometerType
+aDesc      Used to edit thermometer types.
+aLastSyncDate 20171101003221414
+aLastUpdateDate 20171101003221414
 
 eW_MetaDef 3
 aCPLR_ZKey 508222936
@@ -226,6 +253,15 @@ aName      Session
 aDesc      VOR automatically built from LOD Dialog
 aLastSyncDate 20170307163020707
 aLastUpdateDate 20170307163020707
+
+eW_MetaDef 3
+aCPLR_ZKey 101003222
+aStatus    1
+aUpdateInd 2
+aName      ThermometerType
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20171101003221535
+aLastUpdateDate 20171101003221535
 
 eW_MetaDef 3
 aCPLR_ZKey 508223033
@@ -279,8 +315,8 @@ aStatus    1
 aUpdateInd 2
 aName      UDS
 aDesc      UDS domains
-aLastSyncDate 20170422002040581
-aLastUpdateDate 20170422002040581
+aLastSyncDate 20171101002836434
+aLastUpdateDate 20171101002836434
 
 eW_MetaType 2
 aType      14
@@ -349,17 +385,24 @@ eW_MetaDef 3
 aGroupName TZAPDMAA
 
 eW_MetaDef 3
+aCPLR_ZKey 905180743
+aStatus    1
+aName      ProbeAlgorithm
+aLastUpdateDate 20171101002836434
+aGroupName UDS
+
+eW_MetaDef 3
 aCPLR_ZKey 905180737
 aStatus    1
 aName      Temperature
-aLastUpdateDate 20170422002040581
+aLastUpdateDate 20171101002836434
 aGroupName UDS
 
 eW_MetaDef 3
 aCPLR_ZKey 905180731
 aStatus    1
 aName      TemperatureUnit
-aLastUpdateDate 20170422002040581
+aLastUpdateDate 20171101002836434
 aGroupName UDS
 
 eW_MetaDef 3
@@ -401,11 +444,15 @@ eW_MetaDef 3
 
 eW_MetaDef 3
 
+eW_MetaDef 3
+
 eW_MetaType 2
 aType      2008
 
 eW_MetaType 2
 aType      2009
+
+eW_MetaDef 3
 
 eW_MetaDef 3
 
@@ -499,22 +546,24 @@ aJavaClassName com.quinsoft.zeidon.domains.BooleanDomain
 eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.DateTimeDomain
 
-i58        5
-i61        6
-i62        7
-i65        20
-i68        23
-i70        25
-i71        28
-i72        27
-i73        29
+i63        5
+i67        6
+i68        7
+i71        23
 i74        26
-i77        35
-i78        36
-i79        33
-i80        34
-i81        32
-i86        44
-i87        41
-i88        42
-i89        43
+i76        28
+i77        32
+i78        31
+i79        30
+i80        33
+i81        29
+i84        39
+i85        40
+i86        41
+i87        37
+i88        38
+i89        36
+i94        49
+i95        46
+i96        47
+i97        48

@@ -1,7 +1,7 @@
-z1000-Zeidon    CONFIGURATZZOLODO 05/12/17   00:08:51 1.0a2    
+z1000-Zeidon    CONFIGURATZZOLODO 11/02/17   23:39:39 1.0a2    
 eLOD       1
 aZKey      910225831
-aNextZKeyToAssign 910225854
+aNextZKeyToAssign 910225866
 aName      Configuration
 aDesc      Main configuration object
 
@@ -161,6 +161,97 @@ aER_DiagramE1PosX 37
 aER_DiagramE1PosY 7
 aER_DiagramE2PosX 51
 aER_DiagramE2PosY 7
+
+eLOD_EntityChild 3
+aName      ThermometerType
+aIndentName    ThermometerType
+aIndentLvl 3
+aZKey      910225860
+aCreate    N
+aDelete    N
+aUpdate    N
+aInclude   Y
+aInclSrc   Y
+aExclude   Y
+aRecursive N
+aDerived   N
+aParentDeleteBehave E
+aRelLinkIndicator H
+aDesc      Defines the diffferent thermometer types and the algorithms used to compute temperatures.
+
+eLOD_AttributeRec 4
+aZKey      910225861
+
+eER_AttributeRec 5
+aName      Id
+aZKey      905181409
+aNotNull   Y
+aSAP_Attribute 0
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      910225862
+
+eER_AttributeRec 5
+aName      Name
+aZKey      905181412
+aLth       32
+aNotNull   Y
+aDesc      Name of the thermo type
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      910225863
+
+eER_AttributeRec 5
+aName      Description
+aZKey      905181413
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      910225864
+
+eER_AttributeRec 5
+aName      ProbeAlgorithm
+aZKey      905181433
+aDesc      The name of the algorithm used to determine the probe's temperature.
+
+eDomainRec 6
+aZKey      905180743
+aName      ProbeAlgorithm
+aDomainType T
+aDataType  S
+aMaxStringLth 64
+aDesc      Thy type of algorithm used to determine the measured temperature of a probe.
+aContextRestriction N
+
+eER_EntityRec 4
+aName      ThermometerType
+aZKey      905181408
+aPurpose   F
+aDesc      Defines the diffferent thermometer types and the algorithms used to compute temperatures.
+aER_DiagramPosX 14
+aER_DiagramPosY 15
+aSAP_Entity 0
+
+eER_RelLinkRec 4
+aName      for
+aZKey      905181439
+aCardMin   1
+aCardMax   1
+
+eER_RelTypeRec 5
+aZKey      905181437
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 28
+aER_DiagramBendPosY 16
+aER_DiagramE1PosX 23
+aER_DiagramE1PosY 16
+aER_DiagramE2PosX 28
+aER_DiagramE2PosY 10
 
 eLOD_AttributeRec 3
 aZKey      910225833
@@ -469,6 +560,42 @@ eER_RelLink 3
 
 eER_RelType 4
 
+eLOD_Entity 2
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
 ePOD       2
 aNAME      Configuration
 aZKey      910225854
@@ -491,73 +618,92 @@ aTranslateNamesToLowerUnderscore Y
 
 i14        11
 i20        17
-i26        5
-i29        8
-i32        8
-i35        11
-i41        17
-i44        11
-i50        47
-i53        11
-i56        17
-i59        11
-i61        1
-i62        24
-i63        25
-i64        5
-i65        27
-i66        28
-i67        8
-i68        30
-i69        31
-i70        8
-i71        33
-i72        34
-i73        11
-i74        36
-i75        37
-i76        38
-i77        39
+i27        5
+i30        8
+i33        8
+i42        5
+i45        8
+i48        8
+i51        11
+i57        17
+i60        11
+i66        63
+i69        11
+i72        17
+i75        11
+i77        1
 i78        40
-i79        17
-i80        42
+i79        41
+i80        5
 i81        43
-i82        11
-i83        45
+i82        44
+i83        8
 i84        46
 i85        47
-i86        48
+i86        8
 i87        49
-i88        47
-i89        51
+i88        50
+i89        11
 i90        52
-i91        11
+i91        53
 i92        54
 i93        55
-i94        17
-i95        57
+i94        56
+i95        17
 i96        58
-i97        11
-i98        60
-i99        2
-i100       3
-i101       4
-i102       5
-i103       6
-i104       7
-i105       8
-i106       9
-i107       10
-i108       11
-i109       12
-i110       13
-i111       11
-i112       15
-i113       16
-i114       17
-i115       18
-i116       19
-i117       17
-i118       21
-i119       22
-i120       23
+i97        59
+i98        11
+i99        61
+i100       62
+i101       63
+i102       64
+i103       65
+i104       63
+i105       67
+i106       68
+i107       11
+i108       70
+i109       71
+i110       17
+i111       73
+i112       74
+i113       11
+i114       76
+i115       2
+i116       3
+i117       4
+i118       5
+i119       6
+i120       7
+i121       8
+i122       9
+i123       10
+i124       11
+i125       12
+i126       13
+i127       11
+i128       15
+i129       16
+i130       17
+i131       18
+i132       19
+i133       17
+i134       21
+i135       22
+i136       23
+i137       24
+i138       25
+i139       26
+i140       5
+i141       28
+i142       29
+i143       8
+i144       31
+i145       32
+i146       8
+i147       34
+i148       35
+i149       36
+i150       37
+i151       38
+i152       39

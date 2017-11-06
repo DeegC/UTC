@@ -1,11 +1,11 @@
-z1000-Zeidon    SESSION  TZZOXODO 05/10/17   23:10:03 1.0a2    
+z1000-Zeidon    SESSION  TZZOXODO 11/01/17   00:31:21 1.0a2    
 eOBJECT    1
 aNAME      Session
 aZKey      929210658
 aDFT_DBNAME Sqlite
 aDATABASE  Sqlite
 aOPER_LIBNM Session
-aER_DATE   20170510225711550
+aER_DATE   20171101002940862
 
 eENTITY    2
 aNAME      Session
@@ -69,7 +69,7 @@ aXVAATT_TOK 4
 
 eATTRIB    3
 aNAME      fk_id_configuration
-aERATT_TOK 2310
+aERATT_TOK 2383
 aPERSIST   Y
 aAPDM_TOK  905181242
 aDOMAIN    GeneratedKey
@@ -273,7 +273,7 @@ aXVAATT_TOK 17
 
 eATTRIB    4
 aNAME      autoseq
-aERATT_TOK 2307
+aERATT_TOK 2379
 aPERSIST   Y
 aAPDM_TOK  905181155
 aDOMAIN    Integer
@@ -381,7 +381,7 @@ aCARDMIN   1
 aCARDMAX   10
 aPDELETE   R
 aINCLSRC   Y
-aMAX_LTH   344
+aMAX_LTH   355
 aHANG_FK   N
 
 eATTRIB    5
@@ -468,7 +468,7 @@ aXVAATT_TOK 25
 
 eATTRIB    5
 aNAME      autoseq
-aERATT_TOK 2306
+aERATT_TOK 2378
 aPERSIST   Y
 aAPDM_TOK  905181155
 aDOMAIN    Integer
@@ -480,7 +480,7 @@ aAUTO_SEQ  Y
 
 eATTRIB    5
 aNAME      fk_id_configuration
-aERATT_TOK 2309
+aERATT_TOK 2382
 aPERSIST   Y
 aAPDM_TOK  905181242
 aDOMAIN    GeneratedKey
@@ -490,6 +490,20 @@ aREQUIRED  Y
 aHIDDEN    Y
 aUPDATE    Y
 aXVAATT_TOK 27
+aFORKEY    Y
+
+eATTRIB    5
+aNAME      fk_id_thermometer_type
+aERATT_TOK 2384
+aPERSIST   Y
+aAPDM_TOK  905181242
+aDOMAIN    GeneratedKey
+aTYPE      L
+aLTH       4
+aREQUIRED  Y
+aHIDDEN    Y
+aUPDATE    Y
+aXVAATT_TOK 28
 aFORKEY    Y
 
 eDATARECORD 5
@@ -538,6 +552,12 @@ aFLDNAME   fk_id_configuration
 aFLDTYPE   A
 aXVAATT_TOK 27
 
+eDATAFIELD 6
+aFLDLTH    64
+aFLDNAME   fk_id_thermometer_type
+aFLDTYPE   A
+aXVAATT_TOK 28
+
 eRELRECORD 6
 aOWNER_MEMB O
 
@@ -572,7 +592,7 @@ aLTH       6
 aKEY       Y
 aREQUIRED  Y
 aUPDATE    Y
-aXVAATT_TOK 28
+aXVAATT_TOK 29
 
 eATTRIB    4
 aNAME      TargetTemperature
@@ -584,7 +604,7 @@ aTYPE      M
 aLTH       8
 aREQUIRED  Y
 aUPDATE    Y
-aXVAATT_TOK 29
+aXVAATT_TOK 30
 
 eATTRIB    4
 aNAME      Therm0
@@ -595,7 +615,7 @@ aDOMAIN    Temperature
 aTYPE      M
 aLTH       8
 aUPDATE    Y
-aXVAATT_TOK 30
+aXVAATT_TOK 31
 
 eATTRIB    4
 aNAME      Therm1
@@ -606,7 +626,7 @@ aDOMAIN    Temperature
 aTYPE      M
 aLTH       8
 aUPDATE    Y
-aXVAATT_TOK 31
+aXVAATT_TOK 32
 
 eATTRIB    4
 aNAME      Therm2
@@ -617,7 +637,7 @@ aDOMAIN    Temperature
 aTYPE      M
 aLTH       8
 aUPDATE    Y
-aXVAATT_TOK 32
+aXVAATT_TOK 33
 
 eATTRIB    4
 aNAME      Therm3
@@ -628,7 +648,7 @@ aDOMAIN    Temperature
 aTYPE      M
 aLTH       8
 aUPDATE    Y
-aXVAATT_TOK 33
+aXVAATT_TOK 34
 
 eATTRIB    4
 aNAME      Therm4
@@ -639,7 +659,7 @@ aDOMAIN    Temperature
 aTYPE      M
 aLTH       8
 aUPDATE    Y
-aXVAATT_TOK 34
+aXVAATT_TOK 35
 
 eATTRIB    4
 aNAME      Therm5
@@ -650,7 +670,7 @@ aDOMAIN    Temperature
 aTYPE      M
 aLTH       8
 aUPDATE    Y
-aXVAATT_TOK 35
+aXVAATT_TOK 36
 
 eATTRIB    4
 aNAME      Therm6
@@ -661,7 +681,7 @@ aDOMAIN    Temperature
 aTYPE      M
 aLTH       8
 aUPDATE    Y
-aXVAATT_TOK 36
+aXVAATT_TOK 37
 
 eATTRIB    4
 aNAME      Therm7
@@ -672,7 +692,7 @@ aDOMAIN    Temperature
 aTYPE      M
 aLTH       8
 aUPDATE    Y
-aXVAATT_TOK 37
+aXVAATT_TOK 38
 
 eATTRIB    4
 aNAME      PWM0
@@ -683,7 +703,7 @@ aDOMAIN    Integer
 aTYPE      L
 aLTH       4
 aUPDATE    Y
-aXVAATT_TOK 38
+aXVAATT_TOK 39
 
 eATTRIB    4
 aNAME      CpuTemperature
@@ -694,7 +714,7 @@ aDOMAIN    Temperature
 aTYPE      M
 aLTH       8
 aUPDATE    Y
-aXVAATT_TOK 39
+aXVAATT_TOK 40
 
 eATTRIB    4
 aNAME      Error
@@ -705,7 +725,7 @@ aDOMAIN    Boolean
 aTYPE      L
 aLTH       4
 aUPDATE    Y
-aXVAATT_TOK 40
+aXVAATT_TOK 41
 
 eATTRIB    4
 aNAME      ErrorMessage
@@ -716,11 +736,11 @@ aDOMAIN    Text
 aTYPE      S
 aLTH       255
 aUPDATE    Y
-aXVAATT_TOK 41
+aXVAATT_TOK 42
 
 eATTRIB    4
 aNAME      fk_id_session
-aERATT_TOK 2308
+aERATT_TOK 2380
 aPERSIST   Y
 aAPDM_TOK  905181242
 aDOMAIN    GeneratedKey
@@ -730,7 +750,7 @@ aKEY       Y
 aREQUIRED  Y
 aHIDDEN    Y
 aUPDATE    Y
-aXVAATT_TOK 42
+aXVAATT_TOK 43
 aFORKEY    Y
 
 eDATARECORD 4
@@ -741,96 +761,96 @@ eDATAFIELD 5
 aFLDLTH    4
 aFLDNAME   timestamp
 aFLDTYPE   T
-aXVAATT_TOK 28
+aXVAATT_TOK 29
 
 eDATAFIELD 5
 aFLDLTH    40
 aFLDNAME   target_temperature
 aFLDTYPE   M
-aXVAATT_TOK 29
+aXVAATT_TOK 30
 
 eDATAFIELD 5
 aFLDLTH    40
 aFLDNAME   therm0
 aFLDTYPE   M
-aXVAATT_TOK 30
+aXVAATT_TOK 31
 
 eDATAFIELD 5
 aFLDLTH    40
 aFLDNAME   therm1
 aFLDTYPE   M
-aXVAATT_TOK 31
+aXVAATT_TOK 32
 
 eDATAFIELD 5
 aFLDLTH    40
 aFLDNAME   therm2
 aFLDTYPE   M
-aXVAATT_TOK 32
+aXVAATT_TOK 33
 
 eDATAFIELD 5
 aFLDLTH    40
 aFLDNAME   therm3
 aFLDTYPE   M
-aXVAATT_TOK 33
+aXVAATT_TOK 34
 
 eDATAFIELD 5
 aFLDLTH    40
 aFLDNAME   therm4
 aFLDTYPE   M
-aXVAATT_TOK 34
+aXVAATT_TOK 35
 
 eDATAFIELD 5
 aFLDLTH    40
 aFLDNAME   therm5
 aFLDTYPE   M
-aXVAATT_TOK 35
+aXVAATT_TOK 36
 
 eDATAFIELD 5
 aFLDLTH    40
 aFLDNAME   therm6
 aFLDTYPE   M
-aXVAATT_TOK 36
+aXVAATT_TOK 37
 
 eDATAFIELD 5
 aFLDLTH    40
 aFLDNAME   therm7
 aFLDTYPE   M
-aXVAATT_TOK 37
+aXVAATT_TOK 38
 
 eDATAFIELD 5
 aFLDLTH    4
 aFLDNAME   pw_m0
 aFLDTYPE   L
-aXVAATT_TOK 38
+aXVAATT_TOK 39
 
 eDATAFIELD 5
 aFLDLTH    40
 aFLDNAME   cpu_temperature
 aFLDTYPE   M
-aXVAATT_TOK 39
+aXVAATT_TOK 40
 
 eDATAFIELD 5
 aFLDLTH    4
 aFLDNAME   error
 aFLDTYPE   L
-aXVAATT_TOK 40
+aXVAATT_TOK 41
 
 eDATAFIELD 5
 aFLDLTH    255
 aFLDNAME   error_message
 aFLDTYPE   V
-aXVAATT_TOK 41
+aXVAATT_TOK 42
 
 eDATAFIELD 5
 aFLDLTH    64
 aFLDNAME   fk_id_session
 aFLDTYPE   A
-aXVAATT_TOK 42
+aXVAATT_TOK 43
 
 eRELRECORD 5
 aOWNER_MEMB O
 
 eRELFIELD  6
-aRELXVAATT_TOK 42
+aRELXVAATT_TOK 43
 aSRCXVAATT_TOK 1
 

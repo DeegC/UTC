@@ -65,6 +65,16 @@ import * as zeidon from './zeidon-angular';
         <div #tweetError class="alert alert-danger" style="display:none"></div>
       </div>
 
+      <div>
+        <select (change)="onTemperatureUnitSelected($event.target.selectedIndex)">
+          <option *ngFor="let pair of tableEntries"
+            [value]="pair[0]"
+            >
+            {{ pair[1] }}
+          </option>
+        </select>
+      </div>
+
       <h3>Thermometers</h3>
       <div formArrayName="ThermometerConfig">
         <div *ngFor="let therm of form.controls.ThermometerConfig.controls; let i = index;" >
@@ -109,6 +119,7 @@ export class ConfigurationComponent implements OnChanges {
     @Input() configOi: Configuration;
     @Input() configurationList: Configuration;
     @Output() onSessionStarted = new EventEmitter<Session>();
+    tableEntries: any;
     form: FormGroup;
 
     constructor(private restService: RestService) {
@@ -124,6 +135,9 @@ export class ConfigurationComponent implements OnChanges {
     }
 
     buildForm() {
+        let ad = this.configOi.Configuration$.getAttributeDef( 'TemperatureUnit' );
+        let entries = ad.domain.domainFunctions.getTableEntries( ad );
+        this.tableEntries = Object.keys( entries ).map( k => [ k, entries[k] ] );
         this.form = new zeidon.ZeidonFormBuilder().group( this.configOi.Configuration$ );
     }
 

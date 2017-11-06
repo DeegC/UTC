@@ -3,8 +3,11 @@ DROP TABLE IF EXISTS base ;
 DROP TABLE IF EXISTS configuration ;
 DROP TABLE IF EXISTS instant ;
 DROP TABLE IF EXISTS session ;
+DROP TABLE IF EXISTS steinhart_hart_config ;
 DROP TABLE IF EXISTS thermometer_config ;
+DROP TABLE IF EXISTS thermometer_type ;
 DROP TABLE IF EXISTS twitter_config ;
+DROP TABLE IF EXISTS utc_config ;
 
 /* Entity - Base */
 CREATE TABLE base ( 
@@ -52,6 +55,11 @@ CREATE TABLE session (
            notes                                                            longtext           NULL    , 
            fk_id_configuration                                              INTEGER            NOT NULL ) ;
  
+/* Entity - SteinhartHartConfig */
+CREATE TABLE steinhart_hart_config ( 
+           id                                                               INTEGER PRIMARY KEY NOT NULL, 
+           fk_id_thermometer_type                                           INTEGER            NOT NULL ) ;
+ 
 /* Entity - ThermometerConfig */
 CREATE TABLE thermometer_config ( 
            id                                                               INTEGER PRIMARY KEY NOT NULL, 
@@ -60,7 +68,15 @@ CREATE TABLE thermometer_config (
            alarm_high                                                       int                NULL    , 
            alarm_on                                                         int                NULL    , 
            autoseq                                                          int                NULL    , 
-           fk_id_configuration                                              INTEGER            NOT NULL ) ;
+           fk_id_configuration                                              INTEGER            NOT NULL, 
+           fk_id_thermometer_type                                           INTEGER            NOT NULL ) ;
+ 
+/* Entity - ThermometerType */
+CREATE TABLE thermometer_type ( 
+           id                                                               INTEGER PRIMARY KEY NOT NULL, 
+           name                                                             varchar( 32 )      NOT NULL, 
+           description                                                      longtext           NULL    , 
+           probe_algorithm                                                  varchar( 64 )      NULL     ) ;
  
 /* Entity - TwitterConfig */
 CREATE TABLE twitter_config ( 
@@ -72,3 +88,17 @@ CREATE TABLE twitter_config (
            username                                                         longtext           NULL    , 
            tweet_period_in_minutes                                          int                NULL     ) ;
  
+/* Entity - UtcConfig */
+CREATE TABLE utc_config ( 
+           id                                                               INTEGER PRIMARY KEY NOT NULL ) ;
+ 
+GRANT ALL ON base TO PUBLIC 
+GRANT ALL ON configuration TO PUBLIC 
+GRANT ALL ON instant TO PUBLIC 
+GRANT ALL ON session TO PUBLIC 
+GRANT ALL ON steinhart_hart_config TO PUBLIC 
+GRANT ALL ON thermometer_config TO PUBLIC 
+GRANT ALL ON thermometer_type TO PUBLIC 
+GRANT ALL ON twitter_config TO PUBLIC 
+GRANT ALL ON utc_config TO PUBLIC 
+
