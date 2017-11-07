@@ -66,11 +66,13 @@ import * as zeidon from './zeidon-angular';
       </div>
 
       <div>
-        <select (change)="onTemperatureUnitSelected($event.target.selectedIndex)">
+        <select formControlName="TemperatureUnit" (change)="onTemperatureUnitSelected($event.target)">
           <option *ngFor="let pair of tableEntries"
             [value]="pair[0]"
-            >
-            {{ pair[1] }}
+            [selected]="(pair[1] === configOi.Configuration$.TemperatureUnit)" >
+            {{ pair[1] }} {{ configOi.Configuration$.TemperatureUnit }}
+            {{ pair[1] === configOi.Configuration$.TemperatureUnit }}
+
           </option>
         </select>
       </div>
@@ -177,5 +179,10 @@ export class ConfigurationComponent implements OnChanges {
         this.configOi.Configuration$.ThermometerConfig.create({Name: "New therm" });
         // Rebuild the form with the new therm.
         this.buildForm();
+    }
+
+    onTemperatureUnitSelected( target ): void {
+        let value = target.selectedOptions.item( 0 ).label;
+        console.log(target);
     }
 }

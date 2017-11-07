@@ -131,7 +131,7 @@ export class ZeidonFormBuilder {
 
         // Add a FormControl to the form for each attribute.  If ei is blank
         // then set the attribute value to undefined and read-only.  This allows the page
-        // to display a non-existent entity isntance without throwing an error.
+        // to display a non-existent entity instance without throwing an error.
         for ( let attrName in entityDef.attributes ) {
             let attributeDef = entityDef.attributes[ attrName ];
             if ( attributeDef.hidden )
