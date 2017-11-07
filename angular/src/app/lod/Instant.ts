@@ -25,14 +25,17 @@ export class Instant extends zeidon.ObjectInstance {
         return Instant_LodDef;
     };
 
-    public getDomain( name: string ): zeidon.Domain {
+    public getDomain( name: string ): zeidon.Domain { 
         return UTC_DomainList[name];
     };
 
     public getDomainFunctions( domain: zeidon.Domain ): zeidon.DomainFunctions {
-        return new ( UTC_DomainFunctions[ domain.class ] )( domain );
-    }
+        let f = UTC_DomainFunctions[ domain.class ];
+        if ( f )
+            return new f( domain );
 
+        return undefined;
+    }
 
     get Instant(): zeidon.EntityArray<Instant_Instant> {
         return this.roots as zeidon.EntityArray<Instant_Instant>;
@@ -95,7 +98,7 @@ export class Instant_Instant extends zeidon.EntityInstance {
 }
 
 const InstantEntityPrototypes = {
-    Instant: Instant_Instant.prototype,
+    Instant: Instant_Instant.prototype, 
 }
 
 export const Instant_LodDef = {

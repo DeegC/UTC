@@ -1,5 +1,25 @@
-import { Domain, BaseDomainFunctions } from "./zeidon"
+import { Domain, DomainFunctions } from "./zeidon"
 import { ZeidonError, AttributeValueError } from "./zeidon"
+
+export class BaseDomainFunctions implements DomainFunctions {
+    domain: Domain;
+
+    constructor( domain: Domain ) { this.domain = domain }
+
+    checkForRequiredValue( value: any, attributeDef: any ) {
+        if ( attributeDef.required && ( value === undefined || value === null || value === "" ) )
+            throw new AttributeValueError( `Value is required.`, attributeDef );
+    }
+
+    convertExternalValue( value: any, attributeDef: any, context?: any ): any {
+        this.checkForRequiredValue( value, attributeDef );
+        return value;
+    }
+
+    convertToJsType( value: any, attributeDef: any, context = undefined ): any {
+        return value;
+    }
+}
 
 /**
  * User-written code to process domains.
@@ -100,33 +120,31 @@ export class DoubleDomainFunctions extends BaseDomainFunctions {
 }
 
 export class StaticTableDomainFunctions extends BaseDomainFunctions {
-    private getImplicitContext( attributeDef: any, context: string ): string {
-        let domain = attributeDef.domain as Domain;
-        if ( !domain.contexts )
+    private getImplicitContext( context: string ): string {
+        if ( !this.domain.contexts )
             throw new ZeidonError( "Table domain has no contexts" );
 
         if ( !context )
-            context = domain.defaultContext;
+            context = this.domain.defaultContext;
 
         if ( !context )
             throw new ZeidonError( `Invalid context ${context}` );
 
-        let entries = domain.contexts[ context ];
+        let entries = this.domain.contexts[ context ];
         if ( !entries )
-            throw new ZeidonError( `Context ${context} not found in domain ${domain.name}` );
+            throw new ZeidonError( `Context ${context} not found in domain ${this.domain.name}` );
 
         return context;
     }
 
-    private getEntries( attributeDef: any, context: string ): any {
-        context = this.getImplicitContext( attributeDef, context );
-        let domain = attributeDef.domain as Domain;
-        return domain.contexts[ context ].entries;
+    private getEntries( context: string ): any {
+        context = this.getImplicitContext( context );
+        return this.domain.contexts[ context ].entries;
     }
 
     convertExternalValue( externalValue: any, attributeDef: any, context? : string ): any {
         this.checkForRequiredValue( externalValue, attributeDef );
-        let entries = this.getEntries( attributeDef, context );
+        let entries = this.getEntries( context );
 
         // If externalValue maps to key in entries then externalValue is actually
         // an internal value.  Just return it.
@@ -142,7 +160,7 @@ export class StaticTableDomainFunctions extends BaseDomainFunctions {
     }
 
     convertToJsType( internalValue: any, attributeDef: any, context? : string ): any {
-        let entries = this.getEntries( attributeDef, context );
+        let entries = this.getEntries( context );
 
         // If there is a mapping of internalValue to external value, then return the
         // external value.
@@ -154,10 +172,14 @@ export class StaticTableDomainFunctions extends BaseDomainFunctions {
         return internalValue;
     }
 
-    getTableEntries?( attributeDef: any, context?: string ): any {
-        return this.getEntries( attributeDef, context );
+    getTableEntries?( context?: string ): any {
+        return this.getEntries( context );
     }
 
+    getTableValues?( context?: string ): Array<string> {
+        let entries = this.getEntries( context );
+        return Object.keys( entries ).map( key => entries[ key ] );
+    }
 }
 
 // Dummy class for copying.

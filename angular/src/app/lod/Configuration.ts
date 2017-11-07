@@ -25,7 +25,7 @@ export class Configuration extends zeidon.ObjectInstance {
         return Configuration_LodDef;
     };
 
-    public getDomain( name: string ): zeidon.Domain {
+    public getDomain( name: string ): zeidon.Domain { 
         return UTC_DomainList[name];
     };
 
@@ -36,7 +36,6 @@ export class Configuration extends zeidon.ObjectInstance {
 
         return undefined;
     }
-
 
     get Configuration(): zeidon.EntityArray<Configuration_Configuration> {
         return this.roots as zeidon.EntityArray<Configuration_Configuration>;
@@ -98,6 +97,14 @@ export class Configuration_Configuration extends zeidon.EntityInstance {
     get ThermometerConfig$(): Configuration_ThermometerConfig {
         return this.getChildEntityArray("ThermometerConfig").selected() as Configuration_ThermometerConfig;
     }
+
+    get ThermometerType(): zeidon.EntityArray<Configuration_ThermometerType> {
+        return this.getChildEntityArray("ThermometerType") as zeidon.EntityArray<Configuration_ThermometerType>;
+    }
+
+    get ThermometerType$(): Configuration_ThermometerType {
+        return this.getChildEntityArray("ThermometerType").selected() as Configuration_ThermometerType;
+    }
 }
 
 export class Configuration_ThermometerConfig extends zeidon.EntityInstance {
@@ -122,9 +129,26 @@ export class Configuration_ThermometerConfig extends zeidon.EntityInstance {
     set wTemperatureWithinAlarmThreshold(value: boolean) { this.setAttribute("wTemperatureWithinAlarmThreshold", value) };
 }
 
+export class Configuration_ThermometerType extends zeidon.EntityInstance {
+    public get entityName(): string { return "ThermometerType" };
+
+    get Id(): string { return this.getAttribute("Id") };
+    set Id(value: string) { this.setAttribute("Id", value) };
+
+    get Name(): string { return this.getAttribute("Name") };
+    set Name(value: string) { this.setAttribute("Name", value) };
+
+    get Description(): string { return this.getAttribute("Description") };
+    set Description(value: string) { this.setAttribute("Description", value) };
+
+    get ProbeAlgorithm(): string { return this.getAttribute("ProbeAlgorithm") };
+    set ProbeAlgorithm(value: string) { this.setAttribute("ProbeAlgorithm", value) };
+}
+
 const ConfigurationEntityPrototypes = {
-    Configuration: Configuration_Configuration.prototype,
-    ThermometerConfig: Configuration_ThermometerConfig.prototype,
+    Configuration: Configuration_Configuration.prototype, 
+    ThermometerConfig: Configuration_ThermometerConfig.prototype, 
+    ThermometerType: Configuration_ThermometerType.prototype, 
 }
 
 export const Configuration_LodDef = {
@@ -144,6 +168,7 @@ export const Configuration_LodDef = {
             parentDelete: true,
             childEntities: {
                 ThermometerConfig: {},
+                ThermometerType: {},
             },
             attributes: {
                 Id: {
@@ -280,6 +305,16 @@ export const Configuration_LodDef = {
                     update:       false,
                     foreignKey:   false,
                 },
+                fk_id_thermometer_type: {
+                    name:         "fk_id_thermometer_type",
+                    hidden:       true,
+                    required:     true,
+                    domainName:   "GeneratedKey",
+                    persistent:   true,
+                    key:          false,
+                    update:       true,
+                    foreignKey:   true,
+                },
             }
         },
 
@@ -380,6 +415,66 @@ export const Configuration_LodDef = {
                     key:          false,
                     update:       true,
                     foreignKey:   true,
+                },
+            }
+        },
+
+        ThermometerType: {
+            name:        "ThermometerType",
+            erToken:     "905181408",
+            isErRelLink: false,
+            relToken:    "905181437",
+            create:      false,
+            cardMax:     1,
+            hasInit:     false,
+            creatable:   false,
+            includable:  true,
+            deletable:   false,
+            excludable:  true,
+            updatable:   false,
+            parentDelete: false,
+            childEntities: {
+            },
+            attributes: {
+                Id: {
+                    name:         "Id",
+                    hidden:       false,
+                    required:     true,
+                    domainName:   "GeneratedKey",
+                    persistent:   true,
+                    key:          true,
+                    update:       true,
+                    foreignKey:   false,
+                },
+                Name: {
+                    name:         "Name",
+                    hidden:       false,
+                    required:     true,
+                    domainName:   "Text",
+                    persistent:   true,
+                    key:          false,
+                    update:       true,
+                    foreignKey:   false,
+                },
+                Description: {
+                    name:         "Description",
+                    hidden:       false,
+                    required:     false,
+                    domainName:   "Text",
+                    persistent:   true,
+                    key:          false,
+                    update:       true,
+                    foreignKey:   false,
+                },
+                ProbeAlgorithm: {
+                    name:         "ProbeAlgorithm",
+                    hidden:       false,
+                    required:     false,
+                    domainName:   "ProbeAlgorithm",
+                    persistent:   true,
+                    key:          false,
+                    update:       true,
+                    foreignKey:   false,
                 },
             }
         },

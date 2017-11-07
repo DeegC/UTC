@@ -67,10 +67,10 @@ import * as zeidon from './zeidon-angular';
 
       <div>
         <select id="TemperatureUnit" class="form-control" formControlName="TemperatureUnit">
-          <option *ngFor="let pair of tableEntries"
-            [selected]="(pair[1] === configOi.Configuration$.TemperatureUnit)"
-            [value]="pair[1]" >
-            {{ pair[1] }}
+          <option *ngFor="let entry of configOi.Configuration$.getAttributeDef( 'TemperatureUnit' ).domain.domainFunctions.getTableValues()"
+            [selected]="(entry === configOi.Configuration$.TemperatureUnit)"
+            [value]="entry" >
+            {{ entry }}
           </option>
         </select>
       </div>
@@ -119,15 +119,10 @@ export class ConfigurationComponent implements OnChanges {
     @Input() configOi: Configuration;
     @Input() configurationList: Configuration;
     @Output() onSessionStarted = new EventEmitter<Session>();
-    tableEntries: any;
     form: FormGroup;
 
     constructor(private restService: RestService) {
     }
-
-    // ngOnInit() {
-    //     console.log("nOnInit");
-    // }
 
     ngOnChanges(changes: SimpleChanges) {
         this.buildForm();
@@ -135,9 +130,6 @@ export class ConfigurationComponent implements OnChanges {
     }
 
     buildForm() {
-        let ad = this.configOi.Configuration$.getAttributeDef( 'TemperatureUnit' );
-        let entries = ad.domain.domainFunctions.getTableEntries( ad );
-        this.tableEntries = Object.keys( entries ).map( k => [ k, entries[k] ] );
         this.form = new zeidon.ZeidonFormBuilder().group( this.configOi.Configuration$ );
     }
 

@@ -1308,27 +1308,8 @@ export interface Domain {
 export interface DomainFunctions {
     convertExternalValue( value: any, attributeDef: any, context?: any ): any;
     convertToJsType( value: any, attributeDef: any, context?: string ): any;
-    getTableEntries?( attributeDef: any, context?: string ): any;
-}
-
-export class BaseDomainFunctions implements DomainFunctions {
-    domain: Domain;
-
-    constructor( domain: Domain ) { this.domain = domain }
-
-    checkForRequiredValue( value: any, attributeDef: any ) {
-        if ( attributeDef.required && ( value === undefined || value === null || value === "" ) )
-            throw new AttributeValueError( `Value is required.`, attributeDef );
-    }
-
-    convertExternalValue( value: any, attributeDef: any, context?: any ): any {
-        this.checkForRequiredValue( value, attributeDef );
-        return value;
-    }
-
-    convertToJsType( value: any, attributeDef: any, context = undefined ): any {
-        return value;
-    }
+    getTableEntries?( context?: string ): any;
+    getTableValues?( context?: string ): Array<string>;
 }
 
 const debugError = function ( message: string ) {

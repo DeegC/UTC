@@ -25,14 +25,17 @@ export class Session extends zeidon.ObjectInstance {
         return Session_LodDef;
     };
 
-    public getDomain( name: string ): zeidon.Domain {
+    public getDomain( name: string ): zeidon.Domain { 
         return UTC_DomainList[name];
     };
 
     public getDomainFunctions( domain: zeidon.Domain ): zeidon.DomainFunctions {
-        return new ( UTC_DomainFunctions[ domain.class ] )( domain );
-    }
+        let f = UTC_DomainFunctions[ domain.class ];
+        if ( f )
+            return new f( domain );
 
+        return undefined;
+    }
 
     get Session(): zeidon.EntityArray<Session_Session> {
         return this.roots as zeidon.EntityArray<Session_Session>;
@@ -200,10 +203,10 @@ export class Session_Instant extends zeidon.EntityInstance {
 }
 
 const SessionEntityPrototypes = {
-    Session: Session_Session.prototype,
-    Configuration: Session_Configuration.prototype,
-    ThermometerConfig: Session_ThermometerConfig.prototype,
-    Instant: Session_Instant.prototype,
+    Session: Session_Session.prototype, 
+    Configuration: Session_Configuration.prototype, 
+    ThermometerConfig: Session_ThermometerConfig.prototype, 
+    Instant: Session_Instant.prototype, 
 }
 
 export const Session_LodDef = {
@@ -531,6 +534,16 @@ export const Session_LodDef = {
                 },
                 fk_id_configuration: {
                     name:         "fk_id_configuration",
+                    hidden:       true,
+                    required:     true,
+                    domainName:   "GeneratedKey",
+                    persistent:   true,
+                    key:          false,
+                    update:       true,
+                    foreignKey:   true,
+                },
+                fk_id_thermometer_type: {
+                    name:         "fk_id_thermometer_type",
                     hidden:       true,
                     required:     true,
                     domainName:   "GeneratedKey",

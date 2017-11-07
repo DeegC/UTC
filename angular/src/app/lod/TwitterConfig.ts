@@ -25,14 +25,17 @@ export class TwitterConfig extends zeidon.ObjectInstance {
         return TwitterConfig_LodDef;
     };
 
-    public getDomain( name: string ): zeidon.Domain {
+    public getDomain( name: string ): zeidon.Domain { 
         return UTC_DomainList[name];
     };
 
     public getDomainFunctions( domain: zeidon.Domain ): zeidon.DomainFunctions {
-        return new ( UTC_DomainFunctions[ domain.class ] )( domain );
-    }
+        let f = UTC_DomainFunctions[ domain.class ];
+        if ( f )
+            return new f( domain );
 
+        return undefined;
+    }
 
     get Twitter(): zeidon.EntityArray<TwitterConfig_Twitter> {
         return this.roots as zeidon.EntityArray<TwitterConfig_Twitter>;
@@ -74,7 +77,7 @@ export class TwitterConfig_Twitter extends zeidon.EntityInstance {
 }
 
 const TwitterConfigEntityPrototypes = {
-    Twitter: TwitterConfig_Twitter.prototype,
+    Twitter: TwitterConfig_Twitter.prototype, 
 }
 
 export const TwitterConfig_LodDef = {
