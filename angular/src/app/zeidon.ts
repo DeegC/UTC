@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs/Observable';
+import * as domains from "./zeidon-domains"
 
 let configurationInstance: ZeidonConfiguration = undefined;
 
@@ -38,7 +39,7 @@ export class ObjectInstance {
     public getDomain( name: string ): Domain { throw "getDomain() must be overriden" };
     public getEntityDef( name: string ): any { return this.getLodDef().entities[ name ] }
 
-    public getDomainFunctions( name: string ): any {
+    public getDomainFunctions( domain: Domain ): DomainFunctions {
         // Can be overwritten but not necessary.
         return undefined;
     }
@@ -300,7 +301,7 @@ export class EntityInstance {
             if ( domain ) {
                 attributeDef.domain = domain;
                 if ( !domain.domainFunctions )
-                    domain.domainFunctions = this.oi.getDomainFunctions( domain.class );
+                    domain.domainFunctions = this.oi.getDomainFunctions( domain );
             }
             else {
                 console.log( `Couldn't find domain '${attributeDef.domain}' for attribute ${this.entityDef.name}.${attributeDef.name}` );
@@ -1311,6 +1312,10 @@ export interface DomainFunctions {
 }
 
 export class BaseDomainFunctions implements DomainFunctions {
+    domain: Domain;
+
+    constructor( domain: Domain ) { this.domain = domain }
+
     checkForRequiredValue( value: any, attributeDef: any ) {
         if ( attributeDef.required && ( value === undefined || value === null || value === "" ) )
             throw new AttributeValueError( `Value is required.`, attributeDef );

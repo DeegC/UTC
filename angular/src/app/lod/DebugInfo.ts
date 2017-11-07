@@ -25,12 +25,12 @@ export class DebugInfo extends zeidon.ObjectInstance {
         return DebugInfo_LodDef;
     };
 
-    public getDomain( name: string ): zeidon.Domain { 
+    public getDomain( name: string ): zeidon.Domain {
         return UTC_DomainList[name];
     };
 
-    public getDomainFunctions( name: string ): any { 
-        return UTC_DomainFunctions[name];
+    public getDomainFunctions( domain: zeidon.Domain ): zeidon.DomainFunctions {
+        return new ( UTC_DomainFunctions[ domain.class ] )( domain );
     }
 
 
@@ -71,8 +71,8 @@ export class DebugInfo_File extends zeidon.EntityInstance {
 }
 
 const DebugInfoEntityPrototypes = {
-    DebugInfo: DebugInfo_DebugInfo.prototype, 
-    File: DebugInfo_File.prototype, 
+    DebugInfo: DebugInfo_DebugInfo.prototype,
+    File: DebugInfo_File.prototype,
 }
 
 export const DebugInfo_LodDef = {

@@ -25,12 +25,12 @@ export class Session extends zeidon.ObjectInstance {
         return Session_LodDef;
     };
 
-    public getDomain( name: string ): zeidon.Domain { 
+    public getDomain( name: string ): zeidon.Domain {
         return UTC_DomainList[name];
     };
 
-    public getDomainFunctions( name: string ): any { 
-        return UTC_DomainFunctions[name];
+    public getDomainFunctions( domain: zeidon.Domain ): zeidon.DomainFunctions {
+        return new ( UTC_DomainFunctions[ domain.class ] )( domain );
     }
 
 
@@ -200,10 +200,10 @@ export class Session_Instant extends zeidon.EntityInstance {
 }
 
 const SessionEntityPrototypes = {
-    Session: Session_Session.prototype, 
-    Configuration: Session_Configuration.prototype, 
-    ThermometerConfig: Session_ThermometerConfig.prototype, 
-    Instant: Session_Instant.prototype, 
+    Session: Session_Session.prototype,
+    Configuration: Session_Configuration.prototype,
+    ThermometerConfig: Session_ThermometerConfig.prototype,
+    Instant: Session_Instant.prototype,
 }
 
 export const Session_LodDef = {
