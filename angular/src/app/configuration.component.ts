@@ -66,13 +66,11 @@ import * as zeidon from './zeidon-angular';
       </div>
 
       <div>
-        <select formControlName="TemperatureUnit" (change)="onTemperatureUnitSelected($event.target)">
+        <select id="TemperatureUnit" class="form-control" formControlName="TemperatureUnit">
           <option *ngFor="let pair of tableEntries"
-            [value]="pair[0]"
-            [selected]="(pair[1] === configOi.Configuration$.TemperatureUnit)" >
-            {{ pair[1] }} {{ configOi.Configuration$.TemperatureUnit }}
-            {{ pair[1] === configOi.Configuration$.TemperatureUnit }}
-
+            [selected]="(pair[1] === configOi.Configuration$.TemperatureUnit)"
+            [value]="pair[1]" >
+            {{ pair[1] }}
           </option>
         </select>
       </div>

@@ -41,7 +41,7 @@ export const UTC_DomainList = {
             "Unit": {
                 name: "Unit",
                 entries: {
-                    "F": "Fahrenehit",
+                    "F": "Fahrenheit",
                     "C": "Celsius",
                     "K": "Kelvin",
                 }
