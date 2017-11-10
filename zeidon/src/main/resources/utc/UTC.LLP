@@ -1,4 +1,4 @@
-z1000-Zeidon    UTC      TZCMLPLO 11/06/17   15:05:36 1.0a2    
+z1000-Zeidon    UTC      TZCMLPLO 11/07/17   23:23:47 1.0a2    
 eLPLR      1
 aName      UTC
 aDesc      Universal Temperature Controller
@@ -6,7 +6,7 @@ aZKey      92726748
 aPgmSrcDir C:\zeidon\zapp\utc
 aExecDir   C:\zeidon\zapp\utc\bin
 aMetaSrcDir C:\zeidon\zapp\utc
-aTaskUseCount 2
+aTaskUseCount 1
 aLastBuildDate 20170307144610609
 aLPLR_Type 3
 aTempDesc  Universal Temperature Controller
@@ -139,8 +139,8 @@ aStatus    1
 aUpdateInd 2
 aName      UTC
 aDesc      UDS Digital Supervisor (android)
-aLastSyncDate 20171102233115550
-aLastUpdateDate 20171102233115550
+aLastSyncDate 20171107232017633
+aLastUpdateDate 20171107232017633
 
 eW_MetaType 2
 aType      5
@@ -154,8 +154,8 @@ aStatus    1
 aUpdateInd 2
 aName      UTC
 aDesc      Universal Temperature Controller
-aLastSyncDate 20171102233201000
-aLastUpdateDate 20171102233201000
+aLastSyncDate 20171107232049004
+aLastUpdateDate 20171107232049004
 
 eW_MetaType 2
 aType      7
@@ -201,8 +201,8 @@ aStatus    1
 aUpdateInd 2
 aName      ThermometerType
 aDesc      Used to edit thermometer types.
-aLastSyncDate 20171101003221414
-aLastUpdateDate 20171101003221414
+aLastSyncDate 20171107225555731
+aLastUpdateDate 20171107225555731
 
 eW_MetaDef 3
 aCPLR_ZKey 508222936
@@ -211,6 +211,15 @@ aUpdateInd 2
 aName      TwitterConfig
 aLastSyncDate 20170508223032704
 aLastUpdateDate 20170508223032704
+
+eW_MetaDef 3
+aCPLR_ZKey 107230446
+aStatus    1
+aUpdateInd 2
+aName      UtcConfig
+aDesc      Global config options
+aLastSyncDate 20171107230630954
+aLastUpdateDate 20171107230630954
 
 eW_MetaType 2
 aType      8
@@ -271,6 +280,15 @@ aName      TwitterConfig
 aDesc      VOR automatically built from LOD Dialog
 aLastSyncDate 20170508223032848
 aLastUpdateDate 20170508223032848
+
+eW_MetaDef 3
+aCPLR_ZKey 107230459
+aStatus    1
+aUpdateInd 2
+aName      UtcConfig
+aDesc      VOR automatically built from LOD Dialog
+aLastSyncDate 20171107230458607
+aLastUpdateDate 20171107230458607
 
 eW_MetaType 2
 aType      10
@@ -446,11 +464,15 @@ eW_MetaDef 3
 
 eW_MetaDef 3
 
+eW_MetaDef 3
+
 eW_MetaType 2
 aType      2008
 
 eW_MetaType 2
 aType      2009
+
+eW_MetaDef 3
 
 eW_MetaDef 3
 
@@ -546,24 +568,26 @@ aJavaClassName com.quinsoft.zeidon.domains.BooleanDomain
 eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.DateTimeDomain
 
-i63        5
-i67        6
-i68        7
-i71        23
-i74        26
-i76        28
-i77        32
-i78        31
-i79        30
-i80        33
-i81        29
-i84        39
-i85        40
-i86        41
-i87        37
-i88        38
-i89        36
-i94        49
-i95        46
-i96        47
-i97        48
+i65        5
+i69        6
+i70        7
+i73        23
+i76        26
+i78        34
+i79        32
+i80        28
+i81        31
+i82        30
+i83        33
+i84        29
+i87        40
+i88        43
+i89        41
+i90        42
+i91        38
+i92        39
+i93        37
+i98        51
+i99        48
+i100       49
+i101       50

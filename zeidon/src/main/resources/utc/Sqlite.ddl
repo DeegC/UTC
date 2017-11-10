@@ -27,7 +27,8 @@ CREATE TABLE configuration (
            max_pwm                                                          int                NULL    , 
            tweet_on                                                         int                NULL    , 
            pwm_frequency                                                    int                NULL    , 
-           autoseq                                                          int                NULL     ) ;
+           autoseq                                                          int                NULL    , 
+           fk_id_thermometer_type                                           INTEGER            NOT NULL ) ;
  
 /* Entity - Instant */
 CREATE TABLE instant ( 
@@ -58,6 +59,11 @@ CREATE TABLE session (
 /* Entity - SteinhartHartConfig */
 CREATE TABLE steinhart_hart_config ( 
            id                                                               INTEGER PRIMARY KEY NOT NULL, 
+           a                                                                double             NOT NULL, 
+           b                                                                double             NOT NULL, 
+           c                                                                double             NOT NULL, 
+           r                                                                double             NOT NULL, 
+           voltage_reference                                                double             NOT NULL, 
            fk_id_thermometer_type                                           INTEGER            NOT NULL ) ;
  
 /* Entity - ThermometerConfig */
@@ -68,8 +74,7 @@ CREATE TABLE thermometer_config (
            alarm_high                                                       int                NULL    , 
            alarm_on                                                         int                NULL    , 
            autoseq                                                          int                NULL    , 
-           fk_id_configuration                                              INTEGER            NOT NULL, 
-           fk_id_thermometer_type                                           INTEGER            NOT NULL ) ;
+           fk_id_configuration                                              INTEGER            NOT NULL ) ;
  
 /* Entity - ThermometerType */
 CREATE TABLE thermometer_type ( 
@@ -90,7 +95,8 @@ CREATE TABLE twitter_config (
  
 /* Entity - UtcConfig */
 CREATE TABLE utc_config ( 
-           id                                                               INTEGER PRIMARY KEY NOT NULL ) ;
+           id                                                               INTEGER PRIMARY KEY NOT NULL, 
+           fk_id_thermometer_type                                           INTEGER            NOT NULL ) ;
  
 GRANT ALL ON base TO PUBLIC 
 GRANT ALL ON configuration TO PUBLIC 

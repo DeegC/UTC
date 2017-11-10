@@ -20,33 +20,34 @@ import com.quinsoft.zeidon.ZeidonException
 class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
 
     val oe = JavaObjectEngine.getInstance()
+    Initialize.initialize(oe)
+
     if ( oe.getSystemTask.readZeidonConfig("UTC", "StartUdpServer", "N" ) == "Y" ) {
-      new UdpServerThread( oe ).start();
+        new UdpServerThread( oe ).start();
     }
 
     // --
     // Initialize OE and Configuration
     // --
-    
+
+
     val task = oe.createTask("UTC")
-    val configuration = new Configuration( task )
-    configuration.createDefaultConfiguration()
-    
+
     val logger = task.log()
-    
+
     private val hardware = HardwareInterface.getHardwareInterface( task )
-    
+
     // Indicate via LEDs that we're up and ready to go.
     hardware.setGreenLed( true )
     hardware.setRedLed( false )
     hardware.setYellowLed( false )
 
     @volatile var controller : TemperatureController = null
-    
+
     def getObjectEngine(): ObjectEngine = {
         return oe
     }
-    
+
     options("/*") {
         //response.setHeader("Access-Control-Allow-Methods", "GET,POST");
         response.setHeader("Access-Control-Allow-Headers", request.getHeader("Access-Control-Request-Headers"));
@@ -61,7 +62,7 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
             controller.serializeSession()
         }
     }
-    
+
     get("/utc/getCurrentState") {
         if ( controller == null ) {
             logger.debug( "No current session" )
@@ -72,14 +73,14 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
             serializeResponse( view )
         }
     }
-    
+
     get("/utc/getChart/:id") {
         contentType = "image/png"
         oe.forTask( "UTC" ) { task =>
             val session = new View( task ) basedOn "Session"
             session.activateWhere( _.Session.Id = params( "id" ) )
             session.logOi
-            
+
             val generator = new ChartGenerator( session )
             val filename = generator.generate()
             val file = new java.io.File( filename )
@@ -87,20 +88,20 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
             file
         }
     }
-    
+
     get("/utc/getLogFile/:name") {
         contentType = "text/plain"
         val filename = params( "name" )
-        
+
         // Try to prevent someone from getting a file outside of logs.
         if ( filename.contains(".." ) || filename.contains( "/" ) )
             throw new ZeidonException( "Invalid filename" );
-                
+
         val file = new java.io.File( "./logs/" + filename )
         response.setHeader("Content-Disposition", "attachment; filename=" + file.getName)
         file
     }
-    
+
     /**
      * Return values retrieved from the hardware without a session.  Mostly used as
      * a way to test the hardware.
@@ -109,15 +110,15 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
         val instant = hardware.readSensors( null )
         serializeResponse( instant )
     }
-    
+
     post("/utc/startSession/:id") {
         if ( controller == null ) {
             controller = TemperatureController.startController(oe, params( "id" ).toInt, hardware )
         }
-        
+
         controller.serializeSession()
     }
-    
+
     post("/utc/stopSession") {
         if ( controller == null ) {
             """{ "message": "No session running" }"""
@@ -128,7 +129,7 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
             """{ "message": "Session stopped." }"""
         }
     }
-    
+
     get("/utc/getDebugInfo") {
         oe.forTask( "UTC" ) { task =>
             val info = task.newView("DebugInfo") activateEmpty()
@@ -143,9 +144,9 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
                 }
             }
             serializeResponse( info )
-        }            
+        }
     }
-    
+
     private def startUdpServer() = {
     }
 }

@@ -8,6 +8,7 @@ apply plugin: 'war'
 
 dependencies {
     compile project(':utc-controller')
+    compile( "com.quinsoft.zeidon:object-browser:${versions.zeidon}" )
     compile( "com.quinsoft.zeidon:zeidon-scalatra-rest:${versions.zeidon}" ) {
         exclude module: 'scala-xml_2.12' // To save space.
     }

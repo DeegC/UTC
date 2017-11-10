@@ -1,0 +1,12 @@
+z1000-Zeidon    Z66434FB TZWDVORO 11/07/17   23:04:58 1.0a2    
+eViewObjRef 1
+aZKey      107230459
+aNextZKeyToAssign 107230459
+aName      UtcConfig
+aDesc      VOR automatically built from LOD Dialog
+
+eLOD       2
+aZKey      107230446
+aName      UtcConfig
+aDesc      Global config options
+

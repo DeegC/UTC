@@ -1,11 +1,11 @@
-z1000-Zeidon    SESSION  TZZOXODO 11/01/17   00:31:21 1.0a2    
+z1000-Zeidon    SESSION  TZZOXODO 11/07/17   23:21:50 1.0a2    
 eOBJECT    1
 aNAME      Session
 aZKey      929210658
 aDFT_DBNAME Sqlite
 aDATABASE  Sqlite
 aOPER_LIBNM Session
-aER_DATE   20171101002940862
+aER_DATE   20171107232017586
 
 eENTITY    2
 aNAME      Session
@@ -69,7 +69,7 @@ aXVAATT_TOK 4
 
 eATTRIB    3
 aNAME      fk_id_configuration
-aERATT_TOK 2383
+aERATT_TOK 2618
 aPERSIST   Y
 aAPDM_TOK  905181242
 aDOMAIN    GeneratedKey
@@ -126,7 +126,7 @@ aPDELETE   E
 aINCLUDE   Y
 aEXCLUDE   Y
 aINCLSRC   Y
-aMAX_LTH   10391
+aMAX_LTH   10402
 
 eATTRIB    4
 aNAME      Id
@@ -273,7 +273,7 @@ aXVAATT_TOK 17
 
 eATTRIB    4
 aNAME      autoseq
-aERATT_TOK 2379
+aERATT_TOK 2613
 aPERSIST   Y
 aAPDM_TOK  905181155
 aDOMAIN    Integer
@@ -281,6 +281,20 @@ aTYPE      L
 aLTH       4
 aHIDDEN    Y
 aXVAATT_TOK 18
+
+eATTRIB    4
+aNAME      fk_id_thermometer_type
+aERATT_TOK 2619
+aPERSIST   Y
+aAPDM_TOK  905181242
+aDOMAIN    GeneratedKey
+aTYPE      L
+aLTH       4
+aREQUIRED  Y
+aHIDDEN    Y
+aUPDATE    Y
+aXVAATT_TOK 19
+aFORKEY    Y
 
 eDATARECORD 4
 aRECNAME   configuration
@@ -364,6 +378,12 @@ aFLDNAME   autoseq
 aFLDTYPE   L
 aXVAATT_TOK 18
 
+eDATAFIELD 5
+aFLDLTH    64
+aFLDNAME   fk_id_thermometer_type
+aFLDTYPE   A
+aXVAATT_TOK 19
+
 eRELRECORD 5
 aOWNER_MEMB M
 
@@ -381,7 +401,7 @@ aCARDMIN   1
 aCARDMAX   10
 aPDELETE   R
 aINCLSRC   Y
-aMAX_LTH   355
+aMAX_LTH   344
 aHANG_FK   N
 
 eATTRIB    5
@@ -396,7 +416,7 @@ aKEY       Y
 aGENKEY    Y
 aREQUIRED  Y
 aUPDATE    Y
-aXVAATT_TOK 19
+aXVAATT_TOK 20
 
 eATTRIB    5
 aNAME      Name
@@ -408,7 +428,7 @@ aTYPE      S
 aLTH       255
 aREQUIRED  Y
 aUPDATE    Y
-aXVAATT_TOK 20
+aXVAATT_TOK 21
 
 eATTRIB    5
 aNAME      AlarmLow
@@ -419,7 +439,7 @@ aDOMAIN    Integer
 aTYPE      L
 aLTH       4
 aUPDATE    Y
-aXVAATT_TOK 21
+aXVAATT_TOK 22
 
 eATTRIB    5
 aNAME      AlarmHigh
@@ -430,7 +450,7 @@ aDOMAIN    Integer
 aTYPE      L
 aLTH       4
 aUPDATE    Y
-aXVAATT_TOK 22
+aXVAATT_TOK 23
 
 eATTRIB    5
 aNAME      AlarmOn
@@ -441,7 +461,7 @@ aDOMAIN    Boolean
 aTYPE      L
 aLTH       4
 aUPDATE    Y
-aXVAATT_TOK 23
+aXVAATT_TOK 24
 
 eATTRIB    5
 aNAME      wTemperatureWithinAlarmThreshold
@@ -453,7 +473,7 @@ aLTH       4
 aINIT      FALSE
 aSEQ_AD    A
 aUPDATE    Y
-aXVAATT_TOK 24
+aXVAATT_TOK 25
 
 eATTRIB    5
 aNAME      wTemperatureError
@@ -464,37 +484,23 @@ aTYPE      L
 aLTH       4
 aSEQ_AD    Y
 aUPDATE    Y
-aXVAATT_TOK 25
+aXVAATT_TOK 26
 
 eATTRIB    5
 aNAME      autoseq
-aERATT_TOK 2378
+aERATT_TOK 2612
 aPERSIST   Y
 aAPDM_TOK  905181155
 aDOMAIN    Integer
 aTYPE      L
 aLTH       4
 aHIDDEN    Y
-aXVAATT_TOK 26
+aXVAATT_TOK 27
 aAUTO_SEQ  Y
 
 eATTRIB    5
 aNAME      fk_id_configuration
-aERATT_TOK 2382
-aPERSIST   Y
-aAPDM_TOK  905181242
-aDOMAIN    GeneratedKey
-aTYPE      L
-aLTH       4
-aREQUIRED  Y
-aHIDDEN    Y
-aUPDATE    Y
-aXVAATT_TOK 27
-aFORKEY    Y
-
-eATTRIB    5
-aNAME      fk_id_thermometer_type
-aERATT_TOK 2384
+aERATT_TOK 2617
 aPERSIST   Y
 aAPDM_TOK  905181242
 aDOMAIN    GeneratedKey
@@ -514,47 +520,41 @@ eDATAFIELD 6
 aFLDLTH    64
 aFLDNAME   id
 aFLDTYPE   A
-aXVAATT_TOK 19
+aXVAATT_TOK 20
 
 eDATAFIELD 6
 aFLDLTH    255
 aFLDNAME   name
 aFLDTYPE   V
-aXVAATT_TOK 20
+aXVAATT_TOK 21
 
 eDATAFIELD 6
 aFLDLTH    4
 aFLDNAME   alarm_low
 aFLDTYPE   L
-aXVAATT_TOK 21
+aXVAATT_TOK 22
 
 eDATAFIELD 6
 aFLDLTH    4
 aFLDNAME   alarm_high
 aFLDTYPE   L
-aXVAATT_TOK 22
+aXVAATT_TOK 23
 
 eDATAFIELD 6
 aFLDLTH    4
 aFLDNAME   alarm_on
 aFLDTYPE   L
-aXVAATT_TOK 23
+aXVAATT_TOK 24
 
 eDATAFIELD 6
 aFLDLTH    4
 aFLDNAME   autoseq
 aFLDTYPE   L
-aXVAATT_TOK 26
-
-eDATAFIELD 6
-aFLDLTH    64
-aFLDNAME   fk_id_configuration
-aFLDTYPE   A
 aXVAATT_TOK 27
 
 eDATAFIELD 6
 aFLDLTH    64
-aFLDNAME   fk_id_thermometer_type
+aFLDNAME   fk_id_configuration
 aFLDTYPE   A
 aXVAATT_TOK 28
 
@@ -562,7 +562,7 @@ eRELRECORD 6
 aOWNER_MEMB O
 
 eRELFIELD  7
-aRELXVAATT_TOK 27
+aRELXVAATT_TOK 28
 aSRCXVAATT_TOK 6
 
 eCHILDENTITY 3
@@ -740,7 +740,7 @@ aXVAATT_TOK 42
 
 eATTRIB    4
 aNAME      fk_id_session
-aERATT_TOK 2380
+aERATT_TOK 2614
 aPERSIST   Y
 aAPDM_TOK  905181242
 aDOMAIN    GeneratedKey

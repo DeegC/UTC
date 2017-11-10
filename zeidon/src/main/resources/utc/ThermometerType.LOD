@@ -1,7 +1,7 @@
-z1000-Zeidon    THERMOMETTZZOLODO 11/01/17   00:32:21 1.0a2    
+z1000-Zeidon    THERMOMETTZZOLODO 11/07/17   23:21:51 1.0a2    
 eLOD       1
 aZKey      101003202
-aNextZKeyToAssign 101003210
+aNextZKeyToAssign 101003215
 aName      ThermometerType
 aDesc      Used to edit thermometer types.
 
@@ -57,13 +57,78 @@ aMaxStringLth 64
 aDesc      Generic DB-generated key
 aContextRestriction N
 
+eLOD_AttributeRec 4
+aZKey      101003211
+aUpdate    Y
+
+eER_AttributeRec 5
+aName      A
+aZKey      905181446
+aNotNull   Y
+aDesc      Value "A" for Steinhart-Hart algoritrm
+
+eDomainRec 6
+aZKey      905181226
+aName      Double
+aDomainType E
+aDataType  M
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      101003212
+aUpdate    Y
+
+eER_AttributeRec 5
+aName      B
+aZKey      905181447
+aNotNull   Y
+aDesc      Value "B" for Steinhart-Hart algoritrm
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      101003213
+aUpdate    Y
+
+eER_AttributeRec 5
+aName      C
+aZKey      905181448
+aNotNull   Y
+aDesc      Value "C" for Steinhart-Hart algoritrm
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      101003214
+aUpdate    Y
+
+eER_AttributeRec 5
+aName      R
+aZKey      905181449
+aNotNull   Y
+aDesc      Value "R" for Steinhart-Hart algoritrm
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      101003215
+aUpdate    Y
+
+eER_AttributeRec 5
+aName      VoltageReference
+aZKey      905181450
+aNotNull   Y
+aDesc      VoltageReference for Steinhart-Hart algoritrm
+
+eDomainRec 6
+
 eER_EntityRec 4
 aName      SteinhartHartConfig
 aZKey      905181414
 aPurpose   A
 aDesc      Config values for SteinhartHart algorithm.
-aER_DiagramPosX 52
-aER_DiagramPosY 27
+aER_DiagramPosX 13
+aER_DiagramPosY 26
 aSAP_Entity 0
 
 eER_RelLinkRec 4
@@ -77,10 +142,10 @@ aZKey      905181421
 aFact      Added thru ER Dialog
 aER_DiagramBendPosX 0
 aER_DiagramBendPosY 0
-aER_DiagramE1PosX 56
-aER_DiagramE1PosY 21
-aER_DiagramE2PosX 56
-aER_DiagramE2PosY 26
+aER_DiagramE1PosX 18
+aER_DiagramE1PosY 20
+aER_DiagramE2PosX 18
+aER_DiagramE2PosY 25
 
 eLOD_AttributeRec 3
 aZKey      101003204
@@ -143,8 +208,8 @@ aName      ThermometerType
 aZKey      905181408
 aPurpose   F
 aDesc      Defines the diffferent thermometer types and the algorithms used to compute temperatures.
-aER_DiagramPosX 52
-aER_DiagramPosY 16
+aER_DiagramPosX 14
+aER_DiagramPosY 15
 aSAP_Entity 0
 
 eLOD_Entity 2
@@ -180,9 +245,45 @@ eDomain    5
 eER_Entity 3
 
 eLOD_Entity 2
+awkSelectedAttributeForDragSort 1
 
 eLOD_Attribute 3
 awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 5
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 6
 
 eER_Attribute 4
 
@@ -214,26 +315,45 @@ aGenerateExecutable kzhsqllb
 aDisplayOwner N
 aTranslateNamesToLowerUnderscore Y
 
-i11        5
-i17        14
-i22        1
-i23        9
-i24        10
-i25        5
-i26        12
-i27        13
-i28        14
-i29        15
-i30        16
-i31        14
-i32        18
-i33        19
-i34        20
-i35        21
-i36        2
-i37        3
-i38        4
-i39        5
-i40        6
-i41        7
-i42        8
+i11        8
+i14        8
+i17        8
+i20        8
+i26        5
+i32        29
+i37        1
+i38        24
+i39        25
+i40        5
+i41        27
+i42        28
+i43        29
+i44        30
+i45        31
+i46        29
+i47        33
+i48        34
+i49        35
+i50        36
+i51        2
+i52        3
+i53        4
+i54        5
+i55        6
+i56        7
+i57        8
+i58        9
+i59        10
+i60        8
+i61        12
+i62        13
+i63        8
+i64        15
+i65        16
+i66        8
+i67        18
+i68        19
+i69        8
+i70        21
+i71        22
+i72        23

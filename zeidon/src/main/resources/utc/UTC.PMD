@@ -1,9 +1,9 @@
-z1000-Zeidon    UTC      TZEREMDO 11/02/17   23:31:15 1.0a2    
+z1000-Zeidon    UTC      TZEREMDO 11/07/17   23:20:17 1.0a2    
 eEntpER_Model 1
 aName      UTC
 aZKey      905181310
-aNextZKeyToAssign 905181445
-aLastSyncDate 20171102233115008
+aNextZKeyToAssign 905181450
+aLastSyncDate 20171107232017586
 aDesc      UDS Digital Supervisor (android)
 
 eER_Entity 2
@@ -570,6 +570,51 @@ aName      Id
 aZKey      905181416
 aSystemMaintained Y
 
+eER_Attribute 3
+aName      A
+aZKey      905181446
+aNotNull   Y
+aDesc      Value "A" for Steinhart-Hart algoritrm
+awkSequence 2
+
+eDomain    4
+
+eER_Attribute 3
+aName      B
+aZKey      905181447
+aNotNull   Y
+aDesc      Value "B" for Steinhart-Hart algoritrm
+awkSequence 3
+
+eDomain    4
+
+eER_Attribute 3
+aName      C
+aZKey      905181448
+aNotNull   Y
+aDesc      Value "C" for Steinhart-Hart algoritrm
+awkSequence 4
+
+eDomain    4
+
+eER_Attribute 3
+aName      R
+aZKey      905181449
+aNotNull   Y
+aDesc      Value "R" for Steinhart-Hart algoritrm
+awkSequence 5
+
+eDomain    4
+
+eER_Attribute 3
+aName      VoltageReference
+aZKey      905181450
+aNotNull   Y
+aDesc      VoltageReference for Steinhart-Hart algoritrm
+awkSequence 6
+
+eDomain    4
+
 eER_RelLink 3
 aName      for
 aZKey      905181423
@@ -1008,85 +1053,90 @@ i111       96
 i112       95
 i113       93
 i116       3
-i122       47
-i123       118
-i124       117
-i125       115
-i126       39
-i128       3
-i132       15
-i134       19
-i136       19
-i138       23
-i140       23
-i141       38
-i142       37
-i143       36
-i144       9
-i145       130
-i146       129
-i147       127
-i148       47
-i150       3
-i154       15
-i156       15
-i159       121
-i160       120
-i161       119
-i162       114
-i163       46
-i164       45
-i165       44
-i166       9
-i171       152
-i172       151
-i173       149
-i176       3
-i180       15
-i182       15
-i184       15
-i186       15
-i188       15
-i190       19
-i191       178
-i192       177
-i193       175
-i194       170
-i196       3
-i199       169
-i200       168
-i201       167
-i202       47
-i203       198
-i204       197
-i205       195
-i206       83
-i207       84
-i208       43
-i209       82
-i210       51
-i211       120
-i212       121
-i213       47
-i214       119
-i215       114
-i216       168
-i217       167
-i218       47
-i219       169
-i220       170
-i221       37
-i222       36
-i223       9
-i224       38
-i225       39
-i226       41
-i227       40
-i228       9
-i229       42
-i230       43
-i231       45
-i232       46
-i233       47
-i234       44
-i235       9
+i120       27
+i122       27
+i124       27
+i126       27
+i128       27
+i132       47
+i133       118
+i134       117
+i135       115
+i136       39
+i138       3
+i142       15
+i144       19
+i146       19
+i148       23
+i150       23
+i151       38
+i152       37
+i153       36
+i154       9
+i155       140
+i156       139
+i157       137
+i158       47
+i160       3
+i164       15
+i166       15
+i169       131
+i170       130
+i171       129
+i172       114
+i173       46
+i174       45
+i175       44
+i176       9
+i181       162
+i182       161
+i183       159
+i186       3
+i190       15
+i192       15
+i194       15
+i196       15
+i198       15
+i200       19
+i201       188
+i202       187
+i203       185
+i204       180
+i206       3
+i209       179
+i210       178
+i211       177
+i212       47
+i213       208
+i214       207
+i215       205
+i216       83
+i217       84
+i218       43
+i219       82
+i220       51
+i221       130
+i222       131
+i223       47
+i224       129
+i225       114
+i226       178
+i227       177
+i228       47
+i229       179
+i230       180
+i231       37
+i232       36
+i233       9
+i234       38
+i235       39
+i236       41
+i237       40
+i238       9
+i239       42
+i240       43
+i241       45
+i242       46
+i243       47
+i244       44
+i245       9

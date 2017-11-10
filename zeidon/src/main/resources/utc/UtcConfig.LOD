@@ -1,0 +1,242 @@
+z1000-Zeidon    UTCCONFIGTZZOLODO 11/07/17   23:21:51 1.0a2    
+eLOD       1
+aZKey      107230446
+aNextZKeyToAssign 107230454
+aName      UtcConfig
+aDesc      Global config options
+
+eLOD_EntityParent 2
+aName      UtcConfig
+aIndentName UtcConfig
+aIndentLvl 0
+aZKey      107230447
+aCreate    Y
+aDelete    Y
+aUpdate    Y
+aInclude   N
+aInclSrc   Y
+aExclude   N
+aRecursive N
+aDerived   N
+aWork      N
+aParentDeleteBehave D
+aDesc      Main configuration for UTC.
+
+eLOD_EntityChild 3
+aName      DefaultThermometerType
+aIndentName    DefaultThermometerType
+aIndentLvl 3
+aZKey      107230449
+aCreate    N
+aDelete    N
+aUpdate    N
+aInclude   Y
+aInclSrc   Y
+aExclude   Y
+aRecursive N
+aDerived   N
+aWork      N
+aParentDeleteBehave E
+aDupEntityInstance N
+aDupRelationshipInstance N
+aRelLinkIndicator H
+aDesc      Defines the diffferent thermometer types and the algorithms used to compute temperatures.
+
+eLOD_AttributeRec 4
+aZKey      107230450
+
+eER_AttributeRec 5
+aName      Id
+aZKey      905181409
+aNotNull   Y
+aSAP_Attribute 0
+
+eDomainRec 6
+aZKey      905181242
+aName      GeneratedKey
+aDomainType E
+aDataType  L
+aMaxStringLth 64
+aDesc      Generic DB-generated key
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      107230451
+
+eER_AttributeRec 5
+aName      Name
+aZKey      905181412
+aLth       32
+aNotNull   Y
+aDesc      Name of the thermo type
+
+eDomainRec 6
+aZKey      905181158
+aName      Text
+aDomainType E
+aDataType  S
+aMaxStringLth 10000
+aDesc      Any Character String
+aContextRestriction N
+
+eLOD_AttributeRec 4
+aZKey      107230452
+
+eER_AttributeRec 5
+aName      Description
+aZKey      905181413
+
+eDomainRec 6
+
+eLOD_AttributeRec 4
+aZKey      107230453
+
+eER_AttributeRec 5
+aName      ProbeAlgorithm
+aZKey      905181433
+aDesc      The name of the algorithm used to determine the probe's temperature.
+
+eDomainRec 6
+aZKey      905180743
+aName      ProbeAlgorithm
+aDomainType T
+aDataType  S
+aMaxStringLth 64
+aDesc      Thy type of algorithm used to determine the measured temperature of a probe.
+aContextRestriction N
+
+eER_EntityRec 4
+aName      ThermometerType
+aZKey      905181408
+aPurpose   F
+aDesc      Defines the diffferent thermometer types and the algorithms used to compute temperatures.
+aER_DiagramPosX 14
+aER_DiagramPosY 15
+aSAP_Entity 0
+
+eER_RelLinkRec 4
+aName      has default
+aZKey      905181445
+aCardMin   1
+aCardMax   1
+
+eER_RelTypeRec 5
+aZKey      905181443
+aFact      Added thru ER Dialog
+aER_DiagramBendPosX 0
+aER_DiagramBendPosY 0
+aER_DiagramE1PosX 18
+aER_DiagramE1PosY 14
+aER_DiagramE2PosX 18
+aER_DiagramE2PosY 10
+
+eLOD_AttributeRec 3
+aZKey      107230448
+
+eER_AttributeRec 4
+aName      Id
+aZKey      905181405
+aNotNull   Y
+aSAP_Attribute 0
+
+eDomainRec 5
+
+eER_EntityRec 3
+aName      UtcConfig
+aZKey      905181404
+aPurpose   F
+aDesc      Main configuration for UTC.
+aER_DiagramPosX 14
+aER_DiagramPosY 5
+aSAP_Entity 0
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eLOD_Entity 2
+
+eLOD_Attribute 3
+awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 3
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 4
+
+eER_Attribute 4
+
+eDomain    5
+
+eER_Entity 3
+
+eER_RelLink 3
+
+eER_RelType 4
+
+ePOD       2
+aNAME      UtcConfig
+aZKey      107230454
+aTE_SourceZKey 1896
+
+eTE_DB_Environ 3
+aName      UTC
+aZKey      1894
+aDesc      Universal Temperature Controller
+aType      P
+
+eTE_DBMS_Source 4
+aName      Sqlite
+aZKey      1896
+aParadigm  R
+aDBMS      Sqlite
+aGenerateExecutable kzhsqllb
+aDisplayOwner N
+aTranslateNamesToLowerUnderscore Y
+
+i11        8
+i20        5
+i22        1
+i23        18
+i24        19
+i25        5
+i26        21
+i27        2
+i28        3
+i29        4
+i30        5
+i31        6
+i32        7
+i33        8
+i34        9
+i35        10
+i36        8
+i37        12
+i38        13
+i39        14
+i40        15
+i41        16
+i42        17

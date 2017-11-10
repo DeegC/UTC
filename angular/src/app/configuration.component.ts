@@ -3,6 +3,7 @@ import { Configuration } from './lod/Configuration';
 import { RestService } from './rest.service';
 import { Configuration_ThermometerConfig } from './lod/Configuration';
 import { Session } from './lod/Session';
+import { ThermometerType } from './lod/ThermometerType';
 import { FormGroup, Validators } from '@angular/forms';
 import * as zeidon from './zeidon-angular';
 
@@ -11,13 +12,20 @@ import * as zeidon from './zeidon-angular';
     selector: 'configuration-detail',
     templateUrl: 'configuration.component.html'
 })
-export class ConfigurationComponent implements OnChanges {
+export class ConfigurationComponent implements OnChanges, OnInit {
     @Input() configOi: Configuration;
     @Input() configurationList: Configuration;
     @Output() onSessionStarted = new EventEmitter<Session>();
     form: FormGroup;
+    thermometerTypes: ThermometerType;
 
     constructor(private restService: RestService) {
+    }
+
+    ngOnInit() {
+        ThermometerType.activate( { rootOnly: true } ).subscribe( list => {
+            this.thermometerTypes = list;
+        } )
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -54,6 +62,16 @@ export class ConfigurationComponent implements OnChanges {
         this.configOi = undefined;
     }
 
+    onThermTypeSelected( typeIdx ): void {
+        // Subtract 1 from idx to take into account the blank option.
+        let type = this.thermometerTypes.ThermometerType[ typeIdx - 1 ];
+        if ( this.configOi.Configuration$.ThermometerType$ )
+            this.configOi.Configuration$.ThermometerType.exclude();
+
+        this.configOi.Configuration$.ThermometerType.include( type );
+        this.buildForm();
+    }
+
     deleteThermometer( therm: any, index: number ): void {
         therm.removeAt( index );
     }
@@ -65,10 +83,5 @@ export class ConfigurationComponent implements OnChanges {
         this.configOi.Configuration$.ThermometerConfig.create({Name: "New therm" });
         // Rebuild the form with the new therm.
         this.buildForm();
-    }
-
-    onTemperatureUnitSelected( target ): void {
-        let value = target.selectedOptions.item( 0 ).label;
-        console.log(target);
     }
 }

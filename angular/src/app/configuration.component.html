@@ -63,6 +63,21 @@
         </select>
       </div>
 
+      <div *ngIf="thermometerTypes; else loadingThermTypes">
+        Thermometer Type:
+        <select (change)="onThermTypeSelected($event.target.selectedIndex)">
+          <option selected disabled hidden style='display: none' value=''>Select Thermometer Type</option>
+          <option *ngFor="let type of thermometerTypes.ThermometerType"
+                  [value]="type.Name"
+                  [selected]="type.Name === (configOi.Configuration$.ThermometerType$ ? configOi.Configuration$.ThermometerType$.Name : undefined)">
+            {{ type.Name }} {{(configOi.Configuration$.ThermometerType$ ? configOi.Configuration$.ThermometerType$.Name : undefined) }}
+          </option>
+        </select>
+      </div>
+      <ng-template #loadingThermTypes>
+        Fetching therm data...
+      </ng-template>
+
       <h3>Thermometers</h3>
       <div formArrayName="ThermometerConfig">
         <div *ngFor="let therm of form.controls.ThermometerConfig.controls; let i = index;" >
