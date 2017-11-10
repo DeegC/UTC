@@ -45,6 +45,13 @@ export class Configuration extends zeidon.ObjectInstance {
         return this.roots.selected() as Configuration_Configuration;
     }
 
+    // Returns the current entity instance if it exists, otherwise returns an instance
+    // that will returned 'undefined' for any property values.  This is the 
+    // equivalent to the "elvis operator"
+    get Configuration$$(): Configuration_Configuration {
+        return (this.roots.selected() as Configuration_Configuration) || zeidon.SAFE_INSTANCE;
+    }
+
     public static activate( qual?: any ): Observable<Configuration> {
         return zeidon.ObjectInstance.activateOi( new Configuration(), qual );
     }
@@ -94,16 +101,26 @@ export class Configuration_Configuration extends zeidon.EntityInstance {
         return this.getChildEntityArray("ThermometerConfig") as zeidon.EntityArray<Configuration_ThermometerConfig>;
     }
 
+
     get ThermometerConfig$(): Configuration_ThermometerConfig {
         return this.getChildEntityArray("ThermometerConfig").selected() as Configuration_ThermometerConfig;
+    }
+
+    get ThermometerConfig$$(): Configuration_ThermometerConfig {
+        return (this.getChildEntityArray("ThermometerConfig").selected() as Configuration_ThermometerConfig) || zeidon.SAFE_INSTANCE;
     }
 
     get ThermometerType(): zeidon.EntityArray<Configuration_ThermometerType> {
         return this.getChildEntityArray("ThermometerType") as zeidon.EntityArray<Configuration_ThermometerType>;
     }
 
+
     get ThermometerType$(): Configuration_ThermometerType {
         return this.getChildEntityArray("ThermometerType").selected() as Configuration_ThermometerType;
+    }
+
+    get ThermometerType$$(): Configuration_ThermometerType {
+        return (this.getChildEntityArray("ThermometerType").selected() as Configuration_ThermometerType) || zeidon.SAFE_INSTANCE;
     }
 }
 

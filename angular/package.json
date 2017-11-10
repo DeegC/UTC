@@ -18,7 +18,8 @@
     "serve:aot": "lite-server -c bs-config.aot.json",
     "copy-dist-files": "node ./copy-dist-files.js",
     "i18n": "ng-xi18n",
-    "clean": "rm -r dist"
+      "clean": "rm -r dist",
+      "test-script": "node dist/app/test-scripts.js"
   },
   "keywords": [],
   "author": "",

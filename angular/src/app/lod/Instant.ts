@@ -45,6 +45,13 @@ export class Instant extends zeidon.ObjectInstance {
         return this.roots.selected() as Instant_Instant;
     }
 
+    // Returns the current entity instance if it exists, otherwise returns an instance
+    // that will returned 'undefined' for any property values.  This is the 
+    // equivalent to the "elvis operator"
+    get Instant$$(): Instant_Instant {
+        return (this.roots.selected() as Instant_Instant) || zeidon.SAFE_INSTANCE;
+    }
+
     public static activate( qual?: any ): Observable<Instant> {
         return zeidon.ObjectInstance.activateOi( new Instant(), qual );
     }

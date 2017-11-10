@@ -1162,6 +1162,31 @@ export class EntityArray<T extends EntityInstance> extends Array<T> {
     allEntities: () => Array<T>;
 }
 
+// Used to create SAFE_INSTANCE.
+var handler = {
+    get: function ( target, key ) {
+        if ( key.endsWith( '$$' ) )
+            return target;
+
+        return undefined;
+    }
+};
+
+/**
+    This is the Zeidon equivalent to the "elvis operator".  It allows code to reference
+    a lower-level entity without blowing up if a mid-tier element doesn't exist.
+
+    Example: assume that Configuration entity is empty (e.g. undefined).  The following
+    will blow up:
+
+            newConfig.Configuration$.ThermometerConfig$.AlarmHigh
+
+    Using Elvis ('$$' instead of '$') will return 'undefined':
+
+            newConfig.Configuration$$.ThermometerConfig$$.AlarmHigh
+*/
+export const SAFE_INSTANCE = new Proxy( {}, handler );
+
 export interface CreateOptions {
     incrementalsSpecified?: boolean;
     position?: CursorPosition;

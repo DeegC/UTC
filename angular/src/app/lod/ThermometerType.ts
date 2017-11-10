@@ -45,6 +45,13 @@ export class ThermometerType extends zeidon.ObjectInstance {
         return this.roots.selected() as ThermometerType_ThermometerType;
     }
 
+    // Returns the current entity instance if it exists, otherwise returns an instance
+    // that will returned 'undefined' for any property values.  This is the 
+    // equivalent to the "elvis operator"
+    get ThermometerType$$(): ThermometerType_ThermometerType {
+        return (this.roots.selected() as ThermometerType_ThermometerType) || zeidon.SAFE_INSTANCE;
+    }
+
     public static activate( qual?: any ): Observable<ThermometerType> {
         return zeidon.ObjectInstance.activateOi( new ThermometerType(), qual );
     }
@@ -70,8 +77,13 @@ export class ThermometerType_ThermometerType extends zeidon.EntityInstance {
         return this.getChildEntityArray("SteinhartHartConfig") as zeidon.EntityArray<ThermometerType_SteinhartHartConfig>;
     }
 
+
     get SteinhartHartConfig$(): ThermometerType_SteinhartHartConfig {
         return this.getChildEntityArray("SteinhartHartConfig").selected() as ThermometerType_SteinhartHartConfig;
+    }
+
+    get SteinhartHartConfig$$(): ThermometerType_SteinhartHartConfig {
+        return (this.getChildEntityArray("SteinhartHartConfig").selected() as ThermometerType_SteinhartHartConfig) || zeidon.SAFE_INSTANCE;
     }
 }
 

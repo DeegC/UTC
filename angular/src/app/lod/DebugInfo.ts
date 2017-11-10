@@ -45,6 +45,13 @@ export class DebugInfo extends zeidon.ObjectInstance {
         return this.roots.selected() as DebugInfo_DebugInfo;
     }
 
+    // Returns the current entity instance if it exists, otherwise returns an instance
+    // that will returned 'undefined' for any property values.  This is the 
+    // equivalent to the "elvis operator"
+    get DebugInfo$$(): DebugInfo_DebugInfo {
+        return (this.roots.selected() as DebugInfo_DebugInfo) || zeidon.SAFE_INSTANCE;
+    }
+
     public static activate( qual?: any ): Observable<DebugInfo> {
         return zeidon.ObjectInstance.activateOi( new DebugInfo(), qual );
     }
@@ -58,8 +65,13 @@ export class DebugInfo_DebugInfo extends zeidon.EntityInstance {
         return this.getChildEntityArray("File") as zeidon.EntityArray<DebugInfo_File>;
     }
 
+
     get File$(): DebugInfo_File {
         return this.getChildEntityArray("File").selected() as DebugInfo_File;
+    }
+
+    get File$$(): DebugInfo_File {
+        return (this.getChildEntityArray("File").selected() as DebugInfo_File) || zeidon.SAFE_INSTANCE;
     }
 }
 
