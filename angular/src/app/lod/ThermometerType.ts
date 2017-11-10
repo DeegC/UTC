@@ -45,6 +45,13 @@ export class ThermometerType extends zeidon.ObjectInstance {
         return this.roots.selected() as ThermometerType_ThermometerType;
     }
 
+    // Returns the current entity instance if it exists, otherwise returns an instance
+    // that will returned 'undefined' for any property values.  This is the 
+    // equivalent to the "elvis operator"
+    get ThermometerType$$(): ThermometerType_ThermometerType {
+        return (this.roots.selected() as ThermometerType_ThermometerType) || zeidon.SAFE_INSTANCE;
+    }
+
     public static activate( qual?: any ): Observable<ThermometerType> {
         return zeidon.ObjectInstance.activateOi( new ThermometerType(), qual );
     }
@@ -70,8 +77,13 @@ export class ThermometerType_ThermometerType extends zeidon.EntityInstance {
         return this.getChildEntityArray("SteinhartHartConfig") as zeidon.EntityArray<ThermometerType_SteinhartHartConfig>;
     }
 
+
     get SteinhartHartConfig$(): ThermometerType_SteinhartHartConfig {
         return this.getChildEntityArray("SteinhartHartConfig").selected() as ThermometerType_SteinhartHartConfig;
+    }
+
+    get SteinhartHartConfig$$(): ThermometerType_SteinhartHartConfig {
+        return (this.getChildEntityArray("SteinhartHartConfig").selected() as ThermometerType_SteinhartHartConfig) || zeidon.SAFE_INSTANCE;
     }
 }
 
@@ -80,6 +92,21 @@ export class ThermometerType_SteinhartHartConfig extends zeidon.EntityInstance {
 
     get Id(): string { return this.getAttribute("Id") };
     set Id(value: string) { this.setAttribute("Id", value) };
+
+    get A(): number { return this.getAttribute("A") };
+    set A(value: number) { this.setAttribute("A", value) };
+
+    get B(): number { return this.getAttribute("B") };
+    set B(value: number) { this.setAttribute("B", value) };
+
+    get C(): number { return this.getAttribute("C") };
+    set C(value: number) { this.setAttribute("C", value) };
+
+    get R(): number { return this.getAttribute("R") };
+    set R(value: number) { this.setAttribute("R", value) };
+
+    get VoltageReference(): number { return this.getAttribute("VoltageReference") };
+    set VoltageReference(value: number) { this.setAttribute("VoltageReference", value) };
 }
 
 const ThermometerTypeEntityPrototypes = {
@@ -173,6 +200,56 @@ export const ThermometerType_LodDef = {
                     domainName:   "GeneratedKey",
                     persistent:   true,
                     key:          true,
+                    update:       true,
+                    foreignKey:   false,
+                },
+                A: {
+                    name:         "A",
+                    hidden:       false,
+                    required:     true,
+                    domainName:   "Double",
+                    persistent:   true,
+                    key:          false,
+                    update:       true,
+                    foreignKey:   false,
+                },
+                B: {
+                    name:         "B",
+                    hidden:       false,
+                    required:     true,
+                    domainName:   "Double",
+                    persistent:   true,
+                    key:          false,
+                    update:       true,
+                    foreignKey:   false,
+                },
+                C: {
+                    name:         "C",
+                    hidden:       false,
+                    required:     true,
+                    domainName:   "Double",
+                    persistent:   true,
+                    key:          false,
+                    update:       true,
+                    foreignKey:   false,
+                },
+                R: {
+                    name:         "R",
+                    hidden:       false,
+                    required:     true,
+                    domainName:   "Double",
+                    persistent:   true,
+                    key:          false,
+                    update:       true,
+                    foreignKey:   false,
+                },
+                VoltageReference: {
+                    name:         "VoltageReference",
+                    hidden:       false,
+                    required:     true,
+                    domainName:   "Double",
+                    persistent:   true,
+                    key:          false,
                     update:       true,
                     foreignKey:   false,
                 },

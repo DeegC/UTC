@@ -45,6 +45,13 @@ export class Session extends zeidon.ObjectInstance {
         return this.roots.selected() as Session_Session;
     }
 
+    // Returns the current entity instance if it exists, otherwise returns an instance
+    // that will returned 'undefined' for any property values.  This is the 
+    // equivalent to the "elvis operator"
+    get Session$$(): Session_Session {
+        return (this.roots.selected() as Session_Session) || zeidon.SAFE_INSTANCE;
+    }
+
     public static activate( qual?: any ): Observable<Session> {
         return zeidon.ObjectInstance.activateOi( new Session(), qual );
     }
@@ -70,16 +77,26 @@ export class Session_Session extends zeidon.EntityInstance {
         return this.getChildEntityArray("Configuration") as zeidon.EntityArray<Session_Configuration>;
     }
 
+
     get Configuration$(): Session_Configuration {
         return this.getChildEntityArray("Configuration").selected() as Session_Configuration;
+    }
+
+    get Configuration$$(): Session_Configuration {
+        return (this.getChildEntityArray("Configuration").selected() as Session_Configuration) || zeidon.SAFE_INSTANCE;
     }
 
     get Instant(): zeidon.EntityArray<Session_Instant> {
         return this.getChildEntityArray("Instant") as zeidon.EntityArray<Session_Instant>;
     }
 
+
     get Instant$(): Session_Instant {
         return this.getChildEntityArray("Instant").selected() as Session_Instant;
+    }
+
+    get Instant$$(): Session_Instant {
+        return (this.getChildEntityArray("Instant").selected() as Session_Instant) || zeidon.SAFE_INSTANCE;
     }
 }
 
@@ -126,8 +143,13 @@ export class Session_Configuration extends zeidon.EntityInstance {
         return this.getChildEntityArray("ThermometerConfig") as zeidon.EntityArray<Session_ThermometerConfig>;
     }
 
+
     get ThermometerConfig$(): Session_ThermometerConfig {
         return this.getChildEntityArray("ThermometerConfig").selected() as Session_ThermometerConfig;
+    }
+
+    get ThermometerConfig$$(): Session_ThermometerConfig {
+        return (this.getChildEntityArray("ThermometerConfig").selected() as Session_ThermometerConfig) || zeidon.SAFE_INSTANCE;
     }
 }
 
@@ -431,6 +453,16 @@ export const Session_LodDef = {
                     update:       false,
                     foreignKey:   false,
                 },
+                fk_id_thermometer_type: {
+                    name:         "fk_id_thermometer_type",
+                    hidden:       true,
+                    required:     true,
+                    domainName:   "GeneratedKey",
+                    persistent:   true,
+                    key:          false,
+                    update:       true,
+                    foreignKey:   true,
+                },
             }
         },
 
@@ -534,16 +566,6 @@ export const Session_LodDef = {
                 },
                 fk_id_configuration: {
                     name:         "fk_id_configuration",
-                    hidden:       true,
-                    required:     true,
-                    domainName:   "GeneratedKey",
-                    persistent:   true,
-                    key:          false,
-                    update:       true,
-                    foreignKey:   true,
-                },
-                fk_id_thermometer_type: {
-                    name:         "fk_id_thermometer_type",
                     hidden:       true,
                     required:     true,
                     domainName:   "GeneratedKey",

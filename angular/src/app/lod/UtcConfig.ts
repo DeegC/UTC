@@ -45,6 +45,13 @@ export class UtcConfig extends zeidon.ObjectInstance {
         return this.roots.selected() as UtcConfig_UtcConfig;
     }
 
+    // Returns the current entity instance if it exists, otherwise returns an instance
+    // that will returned 'undefined' for any property values.  This is the 
+    // equivalent to the "elvis operator"
+    get UtcConfig$$(): UtcConfig_UtcConfig {
+        return (this.roots.selected() as UtcConfig_UtcConfig) || zeidon.SAFE_INSTANCE;
+    }
+
     public static activate( qual?: any ): Observable<UtcConfig> {
         return zeidon.ObjectInstance.activateOi( new UtcConfig(), qual );
     }
@@ -61,8 +68,13 @@ export class UtcConfig_UtcConfig extends zeidon.EntityInstance {
         return this.getChildEntityArray("DefaultThermometerType") as zeidon.EntityArray<UtcConfig_DefaultThermometerType>;
     }
 
+
     get DefaultThermometerType$(): UtcConfig_DefaultThermometerType {
         return this.getChildEntityArray("DefaultThermometerType").selected() as UtcConfig_DefaultThermometerType;
+    }
+
+    get DefaultThermometerType$$(): UtcConfig_DefaultThermometerType {
+        return (this.getChildEntityArray("DefaultThermometerType").selected() as UtcConfig_DefaultThermometerType) || zeidon.SAFE_INSTANCE;
     }
 }
 

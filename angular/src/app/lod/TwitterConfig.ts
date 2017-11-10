@@ -45,6 +45,13 @@ export class TwitterConfig extends zeidon.ObjectInstance {
         return this.roots.selected() as TwitterConfig_Twitter;
     }
 
+    // Returns the current entity instance if it exists, otherwise returns an instance
+    // that will returned 'undefined' for any property values.  This is the 
+    // equivalent to the "elvis operator"
+    get Twitter$$(): TwitterConfig_Twitter {
+        return (this.roots.selected() as TwitterConfig_Twitter) || zeidon.SAFE_INSTANCE;
+    }
+
     public static activate( qual?: any ): Observable<TwitterConfig> {
         return zeidon.ObjectInstance.activateOi( new TwitterConfig(), qual );
     }
