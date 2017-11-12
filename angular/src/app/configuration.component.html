@@ -53,6 +53,7 @@
         <div #tweetError class="alert alert-danger" style="display:none"></div>
       </div>
 
+      <!--
       <div>
         <select id="TemperatureUnit" class="form-control" formControlName="TemperatureUnit">
           <option *ngFor="let entry of configOi.Configuration$.getAttributeDef( 'TemperatureUnit' ).domain.domainFunctions.getTableValues()"
@@ -62,15 +63,16 @@
           </option>
         </select>
       </div>
+    -->
 
       <div *ngIf="thermometerTypes; else loadingThermTypes">
         Thermometer Type:
         <select (change)="onThermTypeSelected($event.target.selectedIndex)">
-          <option selected disabled hidden style='display: none' value=''>Select Thermometer Type</option>
+          <option selected disabled hidden value=''>Select Thermometer Type</option>
           <option *ngFor="let type of thermometerTypes.ThermometerType"
                   [value]="type.Name"
-                  [selected]="type.Name === (configOi.Configuration$.ThermometerType$ ? configOi.Configuration$.ThermometerType$.Name : undefined)">
-            {{ type.Name }} {{(configOi.Configuration$.ThermometerType$ ? configOi.Configuration$.ThermometerType$.Name : undefined) }}
+                  [selected]="type.Name === configOi.Configuration$$.ThermometerType$$.Name">
+            {{ type.Name }}
           </option>
         </select>
       </div>
