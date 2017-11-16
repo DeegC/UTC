@@ -1,14 +1,26 @@
 package org.deeg.utc.controller
 
-import com.quinsoft.zeidon.scala.basedOn
-import com.quinsoft.zeidon.scala.View
-import com.quinsoft.zeidon.scala.Implicits._
+import scala.sys.process._
+
 import com.quinsoft.zeidon.Task
-import sys.process._
+import com.quinsoft.zeidon.scala.Implicits._
+import com.quinsoft.zeidon.scala.View
+import com.quinsoft.zeidon.scala.basedOn
+import com.quinsoft.zeidon.ZeidonException
 
 trait HardwareInterface {
+    val task : Task
+
     private var currentPwm: Int = 0
     private var currentFreq: Int = 0
+
+    protected val utcConfig = task.activate( "UtcConfig" ).all()
+    if ( utcConfig.UtcConfig.count != 1 ) {
+        utcConfig.logOi
+        throw new ZeidonException( "Unexpected number of UtcConfig entities" )
+    }
+
+    protected val probeConverter = ProbeConverter.getConfiguredConverter(utcConfig)
 
     /**
      * Read the value of different sensors and create a new Instant entity.
@@ -45,7 +57,6 @@ trait HardwareInterface {
         }
     }
 
-    def task: Task
     def readCpuTemperature: Int
     def readTemperature(probe: Int): Double
     def setPwm(pwm: Int, freq: Int) = {

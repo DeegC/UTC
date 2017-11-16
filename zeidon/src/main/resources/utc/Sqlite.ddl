@@ -59,11 +59,11 @@ CREATE TABLE session (
 /* Entity - SteinhartHartConfig */
 CREATE TABLE steinhart_hart_config ( 
            id                                                               INTEGER PRIMARY KEY NOT NULL, 
-           a                                                                double             NOT NULL, 
-           b                                                                double             NOT NULL, 
-           c                                                                double             NOT NULL, 
-           r                                                                double             NOT NULL, 
-           voltage_reference                                                double             NOT NULL, 
+           a                                                                varchar(20)        NOT NULL, 
+           b                                                                varchar(20)        NOT NULL, 
+           c                                                                varchar(20)        NOT NULL, 
+           r                                                                varchar(20)        NOT NULL, 
+           voltage_reference                                                varchar(20)        NOT NULL, 
            fk_id_thermometer_type                                           INTEGER            NOT NULL ) ;
  
 /* Entity - ThermometerConfig */

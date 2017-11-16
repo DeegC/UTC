@@ -1,4 +1,4 @@
-z1000-Zeidon    BASE     TZDGSRCO 03/07/17   18:20:30 1.0a2    
+z1000-Zeidon    BASE     TZDGSRCO 11/15/17   23:16:31 1.0a2    
 eDomainGroup 1
 aZKey      905181202
 aNextZKeyToAssign 905181253
@@ -74,6 +74,7 @@ aContextRestriction N
 eContext   3
 aZKey      905181227
 aName      Double
+aJavaEditString #,###.###########
 aIsDefault Y
 
 eDomain    2

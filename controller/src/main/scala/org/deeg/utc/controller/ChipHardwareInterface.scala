@@ -12,11 +12,6 @@ class ChipHardwareInterface(val task: Task) extends HardwareInterface {
 
     task.log().info("Using ChipHardwareInterface");
 
-    /**
-     * Set up steinhart algorithm for use with Maverick probes.  Some day we can
-     * make this configurable to work with other probes.
-     */
-    val steinhart = new SteinhartHart(2.3067434E-4, 2.3696596E-4, 1.2636414E-7, 22100, 3.3)
     var lastRead: DateTime = null
     var voltageArray: Array[Double] = null
 
@@ -47,7 +42,7 @@ class ChipHardwareInterface(val task: Task) extends HardwareInterface {
 
         val voltages = "read_therms".!! + "0.0\n"
         task.log().debug("Measured voltages =\n%s", voltages)
-        voltageArray = voltages.split("\n").map { vstr => steinhart.computeTemperature(vstr.toDouble) }
+        voltageArray = voltages.split("\n").map { vstr => probeConverter.computeTemperatureKelvin( vstr.toDouble ) }
         lastRead = now
     }
 

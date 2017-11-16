@@ -220,8 +220,7 @@ object TemperatureController {
                          configId : Int,
                          hardwareInterface: HardwareInterface ) : TemperatureController = {
         val task = oe.createTask( "UTC" )
-        val configOi = task.newView( "Configuration" )
-                           .activateWhere( _.Configuration.Id = configId )
+        val configOi = task.activate( "Configuration" ){ _.Configuration.Id = configId  }
         val currentSession = task.newView( "Session" ).activateEmpty()
         currentSession.Session.create()
         currentSession.Session.Date = "NOW"
