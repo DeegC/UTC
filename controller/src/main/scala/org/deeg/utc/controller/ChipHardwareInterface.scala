@@ -4,11 +4,13 @@ import com.quinsoft.zeidon.scala.Implicits._
 import sys.process._
 import com.quinsoft.zeidon.Task
 import org.joda.time.DateTime
+import com.quinsoft.zeidon.scala.basedOn
+import com.quinsoft.zeidon.scala.View
 
 /**
  * Interface with a C.H.I.P.
  */
-class ChipHardwareInterface(val task: Task) extends HardwareInterface {
+class ChipHardwareInterface(val configOi : View @basedOn( "Configuration" ) ) extends HardwareInterface {
 
     task.log().info("Using ChipHardwareInterface");
 

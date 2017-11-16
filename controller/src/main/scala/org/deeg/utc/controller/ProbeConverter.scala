@@ -14,10 +14,10 @@ trait ProbeConverter {
 
 object ProbeConverter {
 
-    def getConfiguredConverter( utcConfig : View @basedOn( "UtcConfig" ) ): ProbeConverter = {
-        val task = utcConfig.task
+    def getConfiguredConverter( configOi : View @basedOn( "Configuration" ) ): ProbeConverter = {
+        val task = configOi.task
         val thermometerType = task.activate( "ThermometerType" ) {
-            _.ThermometerType.Id = utcConfig.DefaultThermometerType.Id
+            _.ThermometerType = configOi.ThermometerType
         }
 
         // Right now we only support Steinhart.

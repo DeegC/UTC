@@ -9,7 +9,8 @@ import com.quinsoft.zeidon.scala.basedOn
 import com.quinsoft.zeidon.ZeidonException
 
 trait HardwareInterface {
-    val task : Task
+    val configOi : View
+    val task = configOi.task
 
     private var currentPwm: Int = 0
     private var currentFreq: Int = 0
@@ -78,7 +79,7 @@ object HardwareInterface {
    * Attempt to figure out which HardwareInterface to use depending on the
    * local hardware.
    */
-  def getHardwareInterface( task: Task ): HardwareInterface = {
+  def getHardwareInterface( configOi : View @basedOn( "Configuration" ) ): HardwareInterface = {
 
     val arch =
       try {
@@ -89,13 +90,13 @@ object HardwareInterface {
         case e: Exception => e.getMessage
       }
 
-    task.slog.info( s"CPU architecture = '$arch'" )
+    configOi.task.slog.info( s"CPU architecture = '$arch'" )
 
     arch match {
-      case "armv7l" => new ChipHardwareInterface( task )
+      case "armv7l" => new ChipHardwareInterface( configOi )
       case _ => {
-        task.slog.warn( s"Using TestHardwareInterface for architecture = '$arch'" )
-        new TestHardwareInterface( task )
+        configOi.task.slog.warn( s"Using TestHardwareInterface for architecture = '$arch'" )
+        new TestHardwareInterface( configOi )
       }
     }
 

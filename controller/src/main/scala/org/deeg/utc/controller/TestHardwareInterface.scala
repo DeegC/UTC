@@ -1,11 +1,13 @@
 package org.deeg.utc.controller
 
 import com.quinsoft.zeidon.Task
+import com.quinsoft.zeidon.scala.basedOn
+import com.quinsoft.zeidon.scala.View
 
 /**
  * A dummy implementation of HardwareInterface used for tests.
  */
-class TestHardwareInterface(val task: Task) extends HardwareInterface {
+class TestHardwareInterface(val configOi : View @basedOn( "Configuration" )) extends HardwareInterface {
 
     override def readTemperature(probe: Int): Double = {
         return 100.0 + probe
