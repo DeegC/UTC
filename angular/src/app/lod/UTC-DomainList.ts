@@ -48,6 +48,20 @@ export const UTC_DomainList = {
             }
         }
     } as Domain,
+    "ProbeAlgorithm": {
+        name: "ProbeAlgorithm",
+        class: "com.quinsoft.zeidon.domains.StaticTableDomain",
+        domainType: "T",
+        defaultContext: "ProbeAlgorithm",
+        contexts: {
+            "ProbeAlgorithm": {
+                name: "ProbeAlgorithm",
+                entries: {
+                    "SteinhartHart": "SteinhartHart",
+                }
+            }
+        }
+    } as Domain,
     "Text": {
         name: "Text",
         class: "com.quinsoft.zeidon.domains.StringDomain",

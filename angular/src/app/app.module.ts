@@ -8,6 +8,7 @@ import './rxjs-extensions';
 
 import { AppComponent }   from './app.component';
 import { ConfigurationListComponent }   from './configuration-list.component';
+import { UtcComponent } from './utc.component';
 import { ErrorElementDirective }   from './zeidon-angular';
 import { ConfigurationComponent }   from './configuration.component';
 import { RestService }   from './rest.service';
@@ -53,6 +54,10 @@ const REST_VALUES: ZeidonRestValues = {
                     {
                       path: 'history',
                       component: HistoryComponent
+                    },
+                    {
+                      path: 'utc',
+                      component: UtcComponent
                     }
                     ], { useHash: true } /* required for use with Jetty */ )
    ],
@@ -62,6 +67,7 @@ const REST_VALUES: ZeidonRestValues = {
                   ErrorElementDirective,
                   HistoryComponent,
                   HistoryDetailComponent,
+                  UtcComponent,
                   SessionComponent ],
   providers: [ RestService,
                { provide: ZeidonRestValues, useValue: REST_VALUES },
