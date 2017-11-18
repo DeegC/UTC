@@ -27,6 +27,18 @@ object Initialize {
                 thermType.SteinhartHartConfig.R = 22100
                 thermType.SteinhartHartConfig.VoltageReference = 3.3
 
+                thermType.ThermometerType.create()
+                thermType.ThermometerType.Name = "ET-72/73 10000k"
+                thermType.ThermometerType.Description = "Maverick ET-72/73 probes using 10000K ohm resistors"
+                thermType.ThermometerType.ProbeAlgorithm = "SteinhartHart"
+
+                thermType.SteinhartHartConfig.create()
+                thermType.SteinhartHartConfig.A = 2.3067434E-4
+                thermType.SteinhartHartConfig.B = 2.3696596E-4
+                thermType.SteinhartHartConfig.C = 1.2636414E-7
+                thermType.SteinhartHartConfig.R = 10000000
+                thermType.SteinhartHartConfig.VoltageReference = 3.3
+
                 thermType.commit()
             }
 
@@ -38,6 +50,7 @@ object Initialize {
             if ( utcConfig.isEmpty ) {
                 utcConfig.activateEmpty()
                 utcConfig.UtcConfig.create()
+                thermType.ThermometerType.setFirst()
                 utcConfig.DefaultThermometerType.include( thermType.ThermometerType )
 
                 utcConfig.commit()

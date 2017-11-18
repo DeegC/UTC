@@ -10,7 +10,7 @@ import com.quinsoft.zeidon.scala.View
 /**
  * Interface with a C.H.I.P.
  */
-class ChipHardwareInterface(val configOi : View @basedOn( "Configuration" ) ) extends HardwareInterface {
+class ChipHardwareInterface(val task : Task ) extends HardwareInterface {
 
     task.log().info("Using ChipHardwareInterface");
 

@@ -45,7 +45,7 @@ if ! which node; then
     curl -sL https://deb.nodesource.com/setup_7.x | bash -
 fi
 
-apt-get install ssmtp mailutils vim oracle-java8-installer git x11vnc emacs ruby htop wireless-tools screen gcc make nodejs device-tree-compiler
+apt-get install ssmtp mailutils vim oracle-java8-installer git x11vnc emacs ruby htop wireless-tools screen gcc make nodejs device-tree-compiler sqlite3
 
 # Install file into device-tree to enable SPI support in the CHIP
 # Add lines to /etc/rc.local if they don't currently exist.

@@ -9,8 +9,8 @@ import com.quinsoft.zeidon.scala.basedOn
 import com.quinsoft.zeidon.ZeidonException
 
 trait HardwareInterface {
-    val configOi : View
-    val task = configOi.task
+    val task : Task
+    private var configOi : View = null
 
     private var currentPwm: Int = 0
     private var currentFreq: Int = 0
@@ -21,7 +21,12 @@ trait HardwareInterface {
         throw new ZeidonException( "Unexpected number of UtcConfig entities" )
     }
 
-    protected val probeConverter = ProbeConverter.getConfiguredConverter(utcConfig)
+    protected var probeConverter : ProbeConverter = null
+
+    def setConfigOi( configOi : View @basedOn( "Configuration" ) ) = {
+        this.configOi = configOi
+        probeConverter = ProbeConverter.getConfiguredConverter( configOi )
+    }
 
     /**
      * Read the value of different sensors and create a new Instant entity.
@@ -79,7 +84,7 @@ object HardwareInterface {
    * Attempt to figure out which HardwareInterface to use depending on the
    * local hardware.
    */
-  def getHardwareInterface( configOi : View @basedOn( "Configuration" ) ): HardwareInterface = {
+  def getHardwareInterface( task : Task ): HardwareInterface = {
 
     val arch =
       try {
@@ -90,13 +95,13 @@ object HardwareInterface {
         case e: Exception => e.getMessage
       }
 
-    configOi.task.slog.info( s"CPU architecture = '$arch'" )
+    task.slog.info( s"CPU architecture = '$arch'" )
 
     arch match {
-      case "armv7l" => new ChipHardwareInterface( configOi )
+      case "armv7l" => new ChipHardwareInterface( task )
       case _ => {
-        configOi.task.slog.warn( s"Using TestHardwareInterface for architecture = '$arch'" )
-        new TestHardwareInterface( configOi )
+        task.slog.warn( s"Using TestHardwareInterface for architecture = '$arch'" )
+        new TestHardwareInterface( task )
       }
     }
 

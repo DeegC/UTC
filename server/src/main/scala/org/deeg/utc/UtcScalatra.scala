@@ -30,7 +30,6 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
     // Initialize OE and Configuration
     // --
 
-
     val task = oe.createTask("UTC")
 
     val logger = task.log()
@@ -100,15 +99,6 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
         val file = new java.io.File( "./logs/" + filename )
         response.setHeader("Content-Disposition", "attachment; filename=" + file.getName)
         file
-    }
-
-    /**
-     * Return values retrieved from the hardware without a session.  Mostly used as
-     * a way to test the hardware.
-     */
-    get("/utc/getHardware") {
-        val instant = hardware.readSensors( null )
-        serializeResponse( instant )
     }
 
     post("/utc/startSession/:id") {
