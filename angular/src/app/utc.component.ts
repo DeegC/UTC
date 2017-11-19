@@ -20,11 +20,12 @@ import * as zeidon from './zeidon-angular';
             <span (click)="onSelect(therm)">
                 <span class="badge">{{therm.Name}}</span> {{therm.Description}}
             </span>
-            <img src="/img/icons/red-x.png" (click)="onDelete( config )"/>
+            <img src="/img/icons/red-x.png" (click)="onDelete( therm )"/>
         </li>
     </ul>
   </div>
 
+  <h4>Thermometer Type Configuration:</h4>
   <div *ngIf="! selectedTherm.isEmpty">
     <form [formGroup]="form" (ngSubmit)="saveTherm($event)">
       <div>
@@ -38,10 +39,8 @@ import * as zeidon from './zeidon-angular';
 
       <div>
         <label>Description: </label>
-        <input type="text"
-               formControlName="Description" [zeidonErrorElement]="descriptionError"
-               placeholder="Description"
-        />
+        <textarea formControlName="Description" [zeidonErrorElement]="descriptionError" rows="4" cols="50">
+        </textarea>
       </div>
       <div #descriptionError class="alert alert-danger" style="display:none"></div>
 
@@ -59,11 +58,32 @@ import * as zeidon from './zeidon-angular';
         <div>
             <label>A: </label>
             <input type="number"
-                formControlName="A" [zeidonErrorElement]="aError"
+                formControlName="A" [zeidonErrorElement]="steinhartError"
                 placeholder="steinhart A value"
             />
         </div>
-        <div #aError class="alert alert-danger" style="display:none"></div>
+        <div>
+            <label>B: </label>
+            <input type="number"
+                formControlName="B" [zeidonErrorElement]="steinhartError"
+                placeholder="steinhart B value"
+            />
+        </div>
+        <div>
+            <label>C: </label>
+            <input type="number"
+                formControlName="C" [zeidonErrorElement]="steinhartError"
+                placeholder="steinhart C value"
+            />
+        </div>
+        <div>
+            <label>R: </label>
+            <input type="number"
+                formControlName="R" [zeidonErrorElement]="steinhartError"
+                placeholder="steinhart R value"
+            />
+        </div>
+        <div #steinhartError class="alert alert-danger" style="display:none"></div>
 
         <div>
             <label>Voltage Reference: </label>
@@ -76,6 +96,14 @@ import * as zeidon from './zeidon-angular';
 
       </div>
 
+        <div>
+            <button type="submit" class="btn btn-default" [disabled]="false">
+                Save Configuration
+            </button>
+            <button type="button" class="btn btn-default" (click)="cancel()" >
+                Cancel
+            </button>
+        </div>
     </form>
   </div>
 `,
@@ -87,7 +115,7 @@ export class UtcComponent implements OnInit {
     selectedTherm : ThermometerType = new ThermometerType();
     form: FormGroup;
 
-    constructor() { }
+    constructor( private zeidonRestService: zeidon.ZeidonRestService ) { }
 
     ngOnInit(): void {
         UtcConfig.activate().subscribe( config => {
@@ -103,11 +131,28 @@ export class UtcComponent implements OnInit {
         this.form = new zeidon.ZeidonFormBuilder().group( this.selectedTherm.ThermometerType$$ );
     }
 
+    saveTherm( event ): void {
+        this.selectedTherm.ThermometerType$.update( this.form.value );
+        this.selectedTherm.commit().subscribe( therm => {
+            this.selectedTherm = therm;
+            this.buildForm();
+            this.thermometerList.reload();
+        } );
+    }
+
+    cancel(): void {
+        this.selectedTherm = new ThermometerType();
+    }
+
     onSelect( therm: ThermometerType_ThermometerType ): void {
         ThermometerType.activate( { Id: therm.Id } ).subscribe( thermType => {
             this.selectedTherm = thermType;
             this.buildForm();
             console.log( "onSelect utcConfig" );
         } );
+    }
+
+    onDelete( therm: ThermometerType_ThermometerType ): void {
+        this.zeidonRestService.deleteRoot( therm );
     }
 }
