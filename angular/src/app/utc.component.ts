@@ -25,13 +25,17 @@ import * as zeidon from './zeidon-angular';
     </ul>
   </div>
 
+  <button type="button" class="btn btn-default" (click)="newThermometerType()">
+        New Thermometer Type
+  </button>
+
   <h4>Thermometer Type Configuration:</h4>
   <div *ngIf="! selectedTherm.isEmpty">
     <form [formGroup]="form" (ngSubmit)="saveTherm($event)">
       <div>
         <label>Name: </label>
         <input type="text"
-               formControlName="Name" [zeidonErrorElement]="NameError"
+               formControlName="Name" [zeidonErrorElement]="nameError"
                placeholder="name"
         />
       </div>
@@ -138,6 +142,17 @@ export class UtcComponent implements OnInit {
             this.buildForm();
             this.thermometerList.reload();
         } );
+    }
+
+    newThermometerType(): void {
+        // Instantiate a new thermometer type.
+        this.selectedTherm = new ThermometerType( {
+                ProbeAlgorithm: "SteinhartHart",
+                SteinhartHartConfig: {
+
+                }
+        } );
+        this.buildForm();
     }
 
     cancel(): void {

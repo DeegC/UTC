@@ -235,6 +235,12 @@ export class ZeidonRestService {
     constructor( private http: Http,
                  private values: ZeidonRestValues ) { }
 
+    /**
+     * Deletes a root entity instance (and all its children) just from the
+     * EI id.
+     *
+     * @param root
+     */
     deleteRoot( root: EntityInstance ) {
         let oi = root.oi;
         let lodName = oi.getLodDef().name;

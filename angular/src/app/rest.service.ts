@@ -17,22 +17,18 @@ export class RestService {
                  private sanitizer: DomSanitizer,
                  private values: ZeidonRestValues) { }
 
-    handleError( e ) {
-        console.log("There was an error: " + e );
-    }
-
     getCurrentSession( ) {
         let url = `${this.values.restUrl}/getCurrentSession`;
         let session = new Session();
         return this.http.get( url )
-                .map( response => this.parseCommitResponse( session, response ) ) as Observable<Session>;
+                .map( response => this.parseJsonResponse( session, response ) ) as Observable<Session>;
     }
 
     getCurrentState( ) {
         let url = `${this.values.restUrl}/getCurrentState`;
         let session = new Instant();
         return this.http.get( url )
-                .map( response => this.parseCommitResponse( session, response ) ) as Observable<Instant>;
+                .map( response => this.parseJsonResponse( session, response ) ) as Observable<Instant>;
     }
 
     getChart( id ) {
@@ -54,7 +50,7 @@ export class RestService {
         let session = new Session();
 
         return this.http.post( url, body, reqOptions)
-            .map(response => this.parseCommitResponse( session, response ) ) as  Observable<Session>;
+            .map(response => this.parseJsonResponse( session, response ) ) as  Observable<Session>;
     }
 
     stopSession(): Observable<string> {
@@ -67,7 +63,7 @@ export class RestService {
             .map(response => response.text() ) as  Observable<string>;
     }
 
-    parseCommitResponse( oi: ObjectInstance, response ): ObjectInstance {
+    parseJsonResponse( oi: ObjectInstance, response ): ObjectInstance {
         if ( response.text() === "{}" )
             return oi;
 

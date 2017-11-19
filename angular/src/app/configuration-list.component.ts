@@ -72,8 +72,6 @@ export class ConfigurationListComponent implements OnInit {
     }
 
     onSessionStarted( sessionOi: Session ) {
-        console.log( "onSessionStarted" );
-        sessionOi.logOi();
         this.sessionOi = sessionOi;
     }
 }
