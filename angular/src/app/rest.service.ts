@@ -21,30 +21,6 @@ export class RestService {
         console.log("There was an error: " + e );
     }
 
-    deleteRoot( root: EntityInstance ) {
-        let oi = root.oi;
-        let lodName = oi.getLodDef().name;
-        let url = `${this.values.restUrl}/${lodName}/${root.key}`;
-        this.http.delete( url )
-            .toPromise()
-            .then( () => root.drop() )
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
-    }
-
-    deleteOi( oi: ObjectInstance ) {
-        // For now we only handle a single root.  No real reason it can't handle more
-        // but the semantics of calling the server need to be worked out.
-        if ( oi.root.length != 1 )
-            throw( "deleteOi may only be called on OI with a single root.");
-
-        let lodName = oi.getLodDef().name;
-        let url = `${this.values.restUrl}/${lodName}/${oi.root[0].key}`;
-        this.http.delete( url )
-            .toPromise()
-            .then( () => oi.root[0].drop() )
-            .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
-    }
-
     getCurrentSession( ) {
         let url = `${this.values.restUrl}/getCurrentSession`;
         let session = new Session();

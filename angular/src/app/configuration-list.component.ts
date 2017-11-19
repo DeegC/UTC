@@ -5,6 +5,7 @@ import { Configuration_Configuration } from './lod/Configuration';
 import { Session } from './lod/Session';
 import { RestService } from './rest.service';
 import * as zeidon from './zeidon';
+import { ZeidonRestService } from './zeidon-angular';
 
 @Component({
     selector: 'configuration-list',
@@ -40,7 +41,7 @@ export class ConfigurationListComponent implements OnInit {
     configurationList: Configuration;
     sessionOi: Session;
 
-    constructor( private restService: RestService ) { }
+    constructor( private zeidonRestService: ZeidonRestService ) { }
 
     ngOnInit(): void {
         this.getConfigurationList();
@@ -62,7 +63,7 @@ export class ConfigurationListComponent implements OnInit {
      * Delete the selected configuration from the OI list.
      */
     onDelete( config: Configuration_Configuration ): void {
-        this.restService.deleteRoot( config );
+        this.zeidonRestService.deleteRoot( config );
     }
 
     newConfiguration(): void {

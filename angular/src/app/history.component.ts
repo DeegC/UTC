@@ -4,6 +4,7 @@ import { Session } from './lod/Session';
 import { Session_Session } from './lod/Session';
 import { RestService } from './rest.service';
 import * as zeidon from './zeidon';
+import { ZeidonRestService } from './zeidon-angular';
 
 @Component({
     selector: 'history',
@@ -31,7 +32,7 @@ export class HistoryComponent implements OnInit {
     selectedSessionOi: Session;
     sessionList: Session;
 
-    constructor( private restService: RestService ) { }
+    constructor( private zeidonRestService: ZeidonRestService ) { }
 
     ngOnInit(): void {
         this.getSessionList();
@@ -53,6 +54,6 @@ export class HistoryComponent implements OnInit {
      * Delete the selected session from the OI list.
      */
     onDelete( session: Session_Session ): void {
-        this.restService.deleteRoot( session );
+        this.zeidonRestService.deleteRoot( session );
     }
 }
