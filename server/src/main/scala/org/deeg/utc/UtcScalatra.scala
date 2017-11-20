@@ -120,6 +120,12 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
         }
     }
 
+    post("/utc/shutdown") {
+        task.log().info( "Initiating shutdown" )
+        hardware.shutdown()
+        Ok
+    }
+
     get("/utc/getDebugInfo") {
         oe.forTask( "UTC" ) { task =>
             val info = task.newView("DebugInfo") activateEmpty()

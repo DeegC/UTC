@@ -63,6 +63,18 @@ export class RestService {
             .map(response => response.text() ) as  Observable<string>;
     }
 
+    shutdown() {
+        let url = `${this.values.restUrl}/shutdown`;
+        let body = "{}";
+        let headers = new Headers( { 'Content-Type': 'application/json' } );
+        let reqOptions = new RequestOptions( { headers: headers } );
+
+        return this.http.post( url, body, reqOptions )
+            .toPromise()
+            .then(() => console.log( "Shutdown requested" ) )
+            .catch(( error: any ) => Observable.throw( error.json().error || 'Server error' ) );
+    }
+
     parseJsonResponse( oi: ObjectInstance, response ): ObjectInstance {
         if ( response.text() === "{}" )
             return oi;
