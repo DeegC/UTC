@@ -45,9 +45,9 @@ war {
 }
 
 task deploy (dependsOn: war){
-    copy {
+    doLast { copy {
         from "build/libs"
         into "run-time"
         include "*.war"
-    }
+    } }
 }

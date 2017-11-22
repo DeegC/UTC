@@ -40,6 +40,7 @@ dependencies {
 
     generateTypescriptFiles "com.quinsoft.zeidon:javascript:${versions.zeidon}"
     generateTypescriptFiles  group: 'ch.qos.logback', name: 'logback-classic', version: '1.+'
+    generateTypescriptFiles "com.quinsoft.zeidon:object-browser:${versions.zeidon}"
 }
 
 task writeClasspath {
@@ -64,7 +65,7 @@ task generateTypescriptFiles( type: JavaExec ) {
     classpath( configurations.generateTypescriptFiles, sourceSets.main.runtimeClasspath, '../conf' )
     standardInput System.in
     args( 'UTC', typescriptDir )
-//    jvmArgs( '-Xdebug', '-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n' )
+//    jvmArgs( '-Xdebug', '-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=y' )
 }
 
 jar.dependsOn generateTypescriptFiles
