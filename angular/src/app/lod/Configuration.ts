@@ -25,7 +25,7 @@ export class Configuration extends zeidon.ObjectInstance {
         return Configuration_LodDef;
     };
 
-    public getDomain( name: string ): zeidon.Domain { 
+    public getDomain( name: string ): zeidon.Domain {
         return UTC_DomainList[name];
     };
 
@@ -46,7 +46,7 @@ export class Configuration extends zeidon.ObjectInstance {
     }
 
     // Returns the current entity instance if it exists, otherwise returns an instance
-    // that will returned 'undefined' for any property values.  This is the 
+    // that will returned 'undefined' for any property values.  This is the
     // equivalent to the "elvis operator"
     get Configuration$$(): Configuration_Configuration {
         return (this.roots.selected() as Configuration_Configuration) || zeidon.SAFE_INSTANCE;

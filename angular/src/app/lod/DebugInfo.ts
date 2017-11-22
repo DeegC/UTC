@@ -25,7 +25,7 @@ export class DebugInfo extends zeidon.ObjectInstance {
         return DebugInfo_LodDef;
     };
 
-    public getDomain( name: string ): zeidon.Domain { 
+    public getDomain( name: string ): zeidon.Domain {
         return UTC_DomainList[name];
     };
 
@@ -46,7 +46,7 @@ export class DebugInfo extends zeidon.ObjectInstance {
     }
 
     // Returns the current entity instance if it exists, otherwise returns an instance
-    // that will returned 'undefined' for any property values.  This is the 
+    // that will returned 'undefined' for any property values.  This is the
     // equivalent to the "elvis operator"
     get DebugInfo$$(): DebugInfo_DebugInfo {
         return (this.roots.selected() as DebugInfo_DebugInfo) || zeidon.SAFE_INSTANCE;
