@@ -39,7 +39,7 @@ Hardware: J Haddad
         <form [formGroup]="form" (ngSubmit)="saveTherm($event)">
         <div>
             <label>Name: </label>
-            <input type="text"
+            <input type="text" class="my-class"
                 formControlName="Name" [zeidonErrorElement]="nameError"
                 placeholder="name"
             />
