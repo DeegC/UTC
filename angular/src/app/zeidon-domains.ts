@@ -182,6 +182,40 @@ export class StaticTableDomainFunctions extends BaseDomainFunctions {
     }
 }
 
+export class DateTimeDomainFunctions extends BaseDomainFunctions {
+    convertToDate?( value: any, attributeDef: any, context? : any ): any {
+        this.checkForRequiredValue( value, attributeDef );
+        if ( Object.prototype.toString.call( value ) === '[object Date]' )
+            return value;
+
+        if ( value === "NOW" )
+            return new Date();
+
+        let date = Date.parse( value );
+        if ( isNaN( date ) )
+            throw new AttributeValueError(`Invalid date/time value: ${value}`, attributeDef );
+
+        return new Date( date );
+    }
+
+    convertExternalValue( value: any, attributeDef: any, context?: any ): any {
+        let date = this.convertToDate( value, attributeDef );
+
+        if ( Object.prototype.toString.call( date ) === '[object Date]' )
+            return date;
+
+        throw new AttributeValueError( `Invalid date/time value: ${value}`, attributeDef );
+    }
+}
+
+export class DateDomainFunctions extends DateTimeDomainFunctions {
+    convertExternalValue( value: any, attributeDef: any, context? : any ): any {
+        let date = super.convertExternalValue( value, attributeDef ) as Date;
+        date.setUTCHours( 0, 0, 0, 0 );
+        return date;
+    }
+}
+
 // Dummy class for copying.
 export class xxxDomainFunctions extends BaseDomainFunctions {
     convertExternalValue( value: any, attributeDef: any, context?: any ): any {
