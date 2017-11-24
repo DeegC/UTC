@@ -12,18 +12,6 @@ import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { CanDeactivate } from '@angular/router';
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
-// Observable class extensions
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-
 import { ZeidonConfiguration } from './zeidon';
 import { ZeidonRestValues, RestActivator, RestCommitter } from './zeidon-rest-client';
 
@@ -221,14 +209,14 @@ export class DropViewsOnDeactivate implements CanDeactivate<ZeidonComponentWithO
 class HttpWrapper {
     constructor( private http: Http ) {}
 
-    get( url: string ) : Observable<any> {
-        return this.http.get( url ).map( response => { return { "body": response.text() } } );
+    get( url: string ) : Promise<any> {
+        return this.http.get( url ).map( response => { return { "body": response.text() } } ).toPromise();
     }
 
-    post( url: string, body: string, headers: Object ) : Observable<any> {
+    post( url: string, body: string, headers: Object ) : Promise<any> {
         let rheaders = new Headers( headers );
         let reqOptions = new RequestOptions({ headers: rheaders });
-        return this.http.post( url, body, reqOptions).map( response => { return { "body": response.text() } } );
+        return this.http.post( url, body, reqOptions).map( response => { return { "body": response.text() } } ).toPromise();
     }
 }
 
@@ -259,7 +247,7 @@ export class ZeidonRestService {
         this.http.delete( url )
             .toPromise()
             .then(() => root.drop() )
-            .catch(( error: any ) => Observable.throw( error.json().error || 'Server error' ) );
+            .catch(( error: any ) => { throw ( error.json().error || 'Server error' ) } );
     }
 
     deleteOi( oi: ObjectInstance ) {
@@ -273,6 +261,6 @@ export class ZeidonRestService {
         this.http.delete( url )
             .toPromise()
             .then(() => oi.root[ 0 ].drop() )
-            .catch(( error: any ) => Observable.throw( error.json().error || 'Server error' ) );
+            .catch(( error: any ) => { throw( error.json().error || 'Server error' ) } );
     }
 }

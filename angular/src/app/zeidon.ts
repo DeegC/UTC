@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs/Observable';
 import * as domains from "./zeidon-domains"
 
 let configurationInstance: ZeidonConfiguration = undefined;
@@ -101,7 +100,7 @@ export class ObjectInstance {
         return wrapper;
     }
 
-    public static activateOi<T extends ObjectInstance>( oi: T, qual?: any ): Observable<T> {
+    public static activateOi<T extends ObjectInstance>( oi: T, qual?: any ): Promise<T> {
         let config = configurationInstance;
         if ( !config )
             error( "ZeidonConfiguration not properly initiated." )
@@ -110,12 +109,12 @@ export class ObjectInstance {
         return config.getActivator().activateOi( oi, qual );
     }
 
-    public commit( options?: CommitOptions ): Observable<this> {
+    public commit( options?: CommitOptions ): Promise<this> {
         let config = configurationInstance;
         if ( !config )
             error( "ZeidonConfiguration not properly initiated." )
 
-        return config.getCommitter().commitOi( this, options ) as Observable<this>;
+        return config.getCommitter().commitOi( this, options ) as Promise<this>;
     }
 
     /**
@@ -126,10 +125,9 @@ export class ObjectInstance {
         this.isUpdated = false;
     }
 
-    public reload(): Observable<this> {
+    public reload(): Promise<this> {
         this.reset();
         let obs = ObjectInstance.activateOi( this, this.activateQual );
-        obs.toPromise();
         return obs;
     }
 
@@ -1218,7 +1216,7 @@ const DEFAULT_CREATE_OPTIONS = {
 };
 
 export class Activator {
-    activateOi<T extends ObjectInstance>( oi: T, options?: any ): Observable<T> {
+    activateOi<T extends ObjectInstance>( oi: T, options?: any ): Promise<T> {
         throw "activateOi has not been implemented"
     }
 
@@ -1227,7 +1225,7 @@ export class Activator {
 }
 
 export class Committer {
-    commitOi( oi: ObjectInstance, options?: CommitOptions ): Observable<ObjectInstance> {
+    commitOi( oi: ObjectInstance, options?: CommitOptions ): Promise<ObjectInstance> {
         throw "commitOi has not been implemented"
     }
 

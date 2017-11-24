@@ -1,22 +1,7 @@
-import { Observable } from 'rxjs/Observable';
-
-// Observable class extensions
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/throw';
-import { RxHttpRequest } from 'rx-http-request';
-
-// Observable operators
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-
 import { ObjectInstance } from './zeidon';
 import { ZeidonConfiguration } from './zeidon';
 import { Committer, CommitOptions, ActivateLockError } from './zeidon';
+import { RxHttpRequest } from 'rx-http-request';
 
 /**
  * Interface for wrapping different HTTP clients into a form that can be used by Zeidon.
@@ -26,14 +11,14 @@ import { Committer, CommitOptions, ActivateLockError } from './zeidon';
  * }
  */
 export interface HttpClient {
-    get( url: string ): Observable<Response>;
-    post( url: string, body: string, headers: Object ): Observable<Response>;
+    get( url: string ): Promise<Response>;
+    post( url: string, body: string, headers: Object ): Promise<Response>;
 }
 
 export class RestActivator {
     constructor( private values: ZeidonRestValues, private http: HttpClient ) { }
 
-    activateOi<T extends ObjectInstance>( oi: T, qual?: any ): Observable<T> {
+    activateOi<T extends ObjectInstance>( oi: T, qual?: any ): Promise<T> {
         if ( qual == undefined )
             qual = { rootOnly: true };
 
@@ -48,7 +33,7 @@ export class RestActivator {
 
         let url = `${this.values.restUrl}/${lodName}?qual=${encodeURIComponent( JSON.stringify( qual ) )}`;
         return this.http.get( url )
-            .map( response => mapResponse( response ) );
+            .then( response => mapResponse( response ) );
     }
 }
 
@@ -62,13 +47,13 @@ export class ZeidonRestValues {
 export class RestCommitter implements Committer {
     constructor( private values: ZeidonRestValues, private http: HttpClient ) { }
 
-    commitOi( oi: ObjectInstance, options?: CommitOptions ): Observable<ObjectInstance> {
+    commitOi( oi: ObjectInstance, options?: CommitOptions ): Promise<ObjectInstance> {
         let lodName = oi.getLodDef().name;
         let body = JSON.stringify( oi.toZeidonMeta() );
         let url = `${this.values.restUrl}/${lodName}`;
 
         return this.http.post( url, body, { 'Content-Type': 'application/json' } )
-            .map( response => this.parseCommitResponse( oi, response ) );
+            .then( response => this.parseCommitResponse( oi, response ) );
     }
 
     dropOi( oi: ObjectInstance, options?: CommitOptions ) {
@@ -84,7 +69,7 @@ export class RestCommitter implements Committer {
         let url = `${this.values.restUrl}/${lodName}/dropLock`;
 
         return this.http.post( url, body, { 'Content-Type': 'application/x-www-form-urlencoded' } )
-            .subscribe( response => console.log( "DropOi response = " + response.body ) );
+            .then( response => console.log( "DropOi response = " + response.body ) );
     }
 
     parseCommitResponse( oi: ObjectInstance, response ): ObjectInstance {
@@ -96,10 +81,10 @@ export class RestCommitter implements Committer {
 }
 
 /**
- * A simple wrapper around the standard node HTTP module that returns observables.
+ * A simple wrapper around the standard node HTTP module that returns Promises.
  */
 export class RxHttpWrapper {
-    get( url: string ): Observable<Response> {
+    get( url: string ): Promise<Response> {
         return RxHttpRequest.get( url )
             .map( response => {
                 return {
@@ -109,7 +94,7 @@ export class RxHttpWrapper {
             } );
     }
 
-    post( url: string, body: string, headers: Object ): Observable<any> {
+    post( url: string, body: string, headers: Object ): Promise<any> {
         const options = {
             body: body
         };

@@ -133,11 +133,11 @@ export class UtcComponent implements OnInit {
                  private zeidonRestService: zeidon.ZeidonRestService ) { }
 
     ngOnInit(): void {
-        UtcConfig.activate().subscribe( config => {
+        UtcConfig.activate().then( config => {
             this.utcConfig = config;
         } );
 
-        ThermometerType.activate().subscribe( list => {
+        ThermometerType.activate().then( list => {
             this.thermometerList = list;
         } );
     }
@@ -148,7 +148,7 @@ export class UtcComponent implements OnInit {
 
     saveTherm( event ): void {
         this.selectedTherm.ThermometerType$.update( this.form.value );
-        this.selectedTherm.commit().subscribe( therm => {
+        this.selectedTherm.commit().then( therm => {
             this.selectedTherm = therm;
             this.buildForm();
             this.thermometerList.reload();
@@ -171,7 +171,7 @@ export class UtcComponent implements OnInit {
     }
 
     onSelect( therm: ThermometerType_ThermometerType ): void {
-        ThermometerType.activate( { Id: therm.Id } ).subscribe( thermType => {
+        ThermometerType.activate( { Id: therm.Id } ).then( thermType => {
             this.selectedTherm = thermType;
             this.buildForm();
             console.log( "onSelect utcConfig" );

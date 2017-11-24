@@ -48,13 +48,13 @@ export class ConfigurationListComponent implements OnInit {
     }
 
     getConfigurationList(): void {
-        Configuration.activate().subscribe( configList => {
+        Configuration.activate().then( configList => {
             this.configurationList = configList;
         } );
     }
 
     onSelect(config: Configuration_Configuration): void {
-        Configuration.activate( { Id: config.Id } ).subscribe( configOi => {
+        Configuration.activate( { Id: config.Id } ).then( configOi => {
             this.selectedConfigOi = configOi;
         } );
     }

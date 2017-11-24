@@ -23,7 +23,7 @@ export class ConfigurationComponent implements OnChanges, OnInit {
     }
 
     ngOnInit() {
-        ThermometerType.activate( { rootOnly: true } ).subscribe( list => {
+        ThermometerType.activate( { rootOnly: true } ).then( list => {
             this.thermometerTypes = list;
         } )
     }
@@ -39,7 +39,7 @@ export class ConfigurationComponent implements OnChanges, OnInit {
 
     saveConfig( event ): void {
         this.configOi.Configuration$.update( this.form.value );
-        this.configOi.commit().subscribe(config => {
+        this.configOi.commit().then(config => {
             this.configOi = config;
             this.buildForm();
             this.configurationList.reload();
@@ -48,7 +48,7 @@ export class ConfigurationComponent implements OnChanges, OnInit {
 
     startSession(): void {
         // Commit the current changes to the config.
-        this.configOi.commit().subscribe(configOi => {
+        this.configOi.commit().then(configOi => {
             this.configOi = configOi;
             this.configurationList.reload();
             // Now call the server to start a new session.

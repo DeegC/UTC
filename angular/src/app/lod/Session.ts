@@ -5,7 +5,6 @@
 */
 
 import * as zeidon from '../zeidon';
-import { Observable } from 'rxjs';
 import { UTC_DomainList } from './UTC-DomainList';
 import { UTC_DomainFunctions } from './UTC-DomainFunctions';
 
@@ -52,7 +51,7 @@ export class Session extends zeidon.ObjectInstance {
         return (this.roots.selected() as Session_Session) || zeidon.SAFE_INSTANCE;
     }
 
-    public static activate( qual?: any ): Observable<Session> {
+    public static activate( qual?: any ): Promise<Session> {
         return zeidon.ObjectInstance.activateOi( new Session(), qual );
     }
 }

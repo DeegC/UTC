@@ -1,7 +1,6 @@
 import { Injectable }    from '@angular/core';
 import { Headers, Http, RequestOptions, ResponseContentType } from '@angular/http';
 import { DomSanitizer} from '@angular/platform-browser';
-import './rxjs-extensions';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
 

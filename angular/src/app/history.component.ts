@@ -39,13 +39,13 @@ export class HistoryComponent implements OnInit {
     }
 
     getSessionList(): void {
-        Session.activate().subscribe( sessionList => {
+        Session.activate().then( sessionList => {
             this.sessionList = sessionList;
         } );
     }
 
     onSelect(session: Session_Session): void {
-        Session.activate( { Id: session.Id } ).subscribe( sessionOi => {
+        Session.activate( { Id: session.Id } ).then( sessionOi => {
             this.selectedSessionOi = sessionOi;
         } );
     }

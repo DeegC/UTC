@@ -5,7 +5,6 @@
 */
 
 import * as zeidon from '../zeidon';
-import { Observable } from 'rxjs';
 import { UTC_DomainList } from './UTC-DomainList';
 import { UTC_DomainFunctions } from './UTC-DomainFunctions';
 
@@ -52,7 +51,7 @@ export class ThermometerType extends zeidon.ObjectInstance {
         return (this.roots.selected() as ThermometerType_ThermometerType) || zeidon.SAFE_INSTANCE;
     }
 
-    public static activate( qual?: any ): Observable<ThermometerType> {
+    public static activate( qual?: any ): Promise<ThermometerType> {
         return zeidon.ObjectInstance.activateOi( new ThermometerType(), qual );
     }
 }
