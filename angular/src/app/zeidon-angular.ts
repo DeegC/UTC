@@ -1,7 +1,7 @@
 /**
  * Classes for dealing specifically with Angular 2+ apps.
  */
-import { Headers, Http, RequestOptions } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { OnInit, SimpleChanges, OnChanges } from '@angular/core';
 import { Input } from '@angular/core';
 import { ElementRef, Renderer, ViewContainerRef } from '@angular/core';
@@ -207,22 +207,20 @@ export class DropViewsOnDeactivate implements CanDeactivate<ZeidonComponentWithO
  * Converts calls from Angular HTTP to Zeidon's HttpClient.
  */
 class HttpWrapper {
-    constructor( private http: Http ) {}
+    constructor( private http: HttpClient ) {}
 
     get( url: string ) : Promise<any> {
-        return this.http.get( url ).map( response => { return { "body": response.text() } } ).toPromise();
+        return this.http.get( url ).map( response => { return { "body": response } } ).toPromise();
     }
 
-    post( url: string, body: string, headers: Object ) : Promise<any> {
-        let rheaders = new Headers( headers );
-        let reqOptions = new RequestOptions({ headers: rheaders });
-        return this.http.post( url, body, reqOptions).map( response => { return { "body": response.text() } } ).toPromise();
+    post( url: string, body: string, headers?: string | { [ name: string]: string | string[]; } ) : Promise<any> {
+        return this.http.post( url, body, { headers: new HttpHeaders( headers ) } ).toPromise();
     }
 }
 
 @Injectable()
 export class ZeidonAngularConfiguration extends ZeidonConfiguration {
-    constructor( private values: ZeidonRestValues, private http: Http ) {
+    constructor( private values: ZeidonRestValues, private http: HttpClient ) {
         super( new RestActivator( values, new HttpWrapper( http ) ),
                new RestCommitter( values, new HttpWrapper( http ) ) );
         console.log("--- ZeidonRestConfiguration --- " + values.restUrl );
@@ -231,7 +229,7 @@ export class ZeidonAngularConfiguration extends ZeidonConfiguration {
 
 @Injectable()
 export class ZeidonRestService {
-    constructor( private http: Http,
+    constructor( private http: HttpClient,
                  private values: ZeidonRestValues ) { }
 
     /**

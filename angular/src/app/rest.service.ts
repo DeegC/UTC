@@ -1,5 +1,5 @@
 import { Injectable }    from '@angular/core';
-import { Headers, Http, RequestOptions, ResponseContentType } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DomSanitizer} from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
@@ -12,7 +12,7 @@ import { ObjectInstance, EntityInstance } from './zeidon';
 
 @Injectable()
 export class RestService {
-    constructor( private http: Http,
+    constructor( private http: HttpClient,
                  private sanitizer: DomSanitizer,
                  private values: ZeidonRestValues) { }
 
@@ -32,43 +32,40 @@ export class RestService {
 
     getChart( id ) {
         let url = `${this.values.restUrl}/getChart/${id}`;
-        let headers = new Headers({ 'Content-Type': 'image/png' });
+        let headers = new HttpHeaders().set( 'Content-Type', 'image/png' );
         return this.http.get( url, { headers: headers,
-                                     responseType: ResponseContentType.Blob } )
+                                     responseType: 'blob' } )
                          .map(res => {
                              var urlCreator = window.URL;
-                             return  this.sanitizer.bypassSecurityTrustUrl(urlCreator.createObjectURL(res.blob()));
+                             return  this.sanitizer.bypassSecurityTrustUrl(urlCreator.createObjectURL(res));
                          })
     }
 
     startSession( configOi: Configuration ): Observable<Session> {
         let url = `${this.values.restUrl}/startSession/${configOi.Configuration$.Id}`;
         let body = "{}";
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let reqOptions = new RequestOptions({ headers: headers });
+        let headers = new HttpHeaders().set( 'Content-Type', 'application/json' );
         let session = new Session();
 
-        return this.http.post( url, body, reqOptions)
+        return this.http.post( url, body, { headers: headers } )
             .map(response => this.parseJsonResponse( session, response ) ) as  Observable<Session>;
     }
 
     stopSession(): Observable<string> {
         let url = `${this.values.restUrl}/stopSession`;
         let body = "{}";
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let reqOptions = new RequestOptions({ headers: headers });
+        let headers = new HttpHeaders().set( 'Content-Type', 'application/json' );
 
-        return this.http.post( url, body, reqOptions)
-            .map(response => response.text() ) as  Observable<string>;
+        return this.http.post( url, body, { headers: headers } )
+            .map(response => response ) as  Observable<string>;
     }
 
     shutdown() {
         let url = `${this.values.restUrl}/shutdown`;
         let body = "{}";
-        let headers = new Headers( { 'Content-Type': 'application/json' } );
-        let reqOptions = new RequestOptions( { headers: headers } );
+        let headers = new HttpHeaders().set( 'Content-Type', 'application/json' );
 
-        return this.http.post( url, body, reqOptions )
+        return this.http.post( url, body, { headers: headers } )
             .toPromise()
             .then(() => console.log( "Shutdown requested" ) )
             .catch(( error: any ) => Observable.throw( error.json().error || 'Server error' ) );
