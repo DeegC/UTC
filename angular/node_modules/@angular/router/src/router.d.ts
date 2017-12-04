@@ -12,7 +12,7 @@ import { QueryParamsHandling, Routes } from './config';
 import { Event } from './events';
 import { RouteReuseStrategy } from './route_reuse_strategy';
 import { ChildrenOutletContexts } from './router_outlet_context';
-import { ActivatedRoute, RouterState, RouterStateSnapshot } from './router_state';
+import { ActivatedRoute, RouterState } from './router_state';
 import { Params } from './shared';
 import { UrlHandlingStrategy } from './url_handling_strategy';
 import { UrlSerializer, UrlTree } from './url_tree';
@@ -152,12 +152,12 @@ export declare class Router {
     private currentUrlTree;
     private rawUrlTree;
     private navigations;
-    private routerEvents;
-    private currentRouterState;
     private locationSubscription;
     private navigationId;
     private configLoader;
     private ngModule;
+    readonly events: Observable<Event>;
+    readonly routerState: RouterState;
     /**
      * Error handler that is invoked when a navigation errors.
      *
@@ -185,12 +185,8 @@ export declare class Router {
      * Sets up the location change listener.
      */
     setUpLocationChangeListener(): void;
-    /** The current route state */
-    readonly routerState: RouterState;
     /** The current url */
     readonly url: string;
-    /** An observable of router events */
-    readonly events: Observable<Event>;
     /**
      * Resets the configuration used for navigation and generating links.
      *
@@ -307,31 +303,4 @@ export declare class Router {
     private executeScheduledNavigation({id, rawUrl, extras, resolve, reject});
     private runNavigate(url, rawUrl, shouldPreventPushState, shouldReplaceUrl, id, precreatedState);
     private resetUrlToCurrentUrlTree();
-}
-export declare class PreActivation {
-    private future;
-    private curr;
-    private moduleInjector;
-    private canActivateChecks;
-    private canDeactivateChecks;
-    constructor(future: RouterStateSnapshot, curr: RouterStateSnapshot, moduleInjector: Injector);
-    traverse(parentContexts: ChildrenOutletContexts): void;
-    checkGuards(): Observable<boolean>;
-    resolveData(): Observable<any>;
-    isDeactivating(): boolean;
-    isActivating(): boolean;
-    private traverseChildRoutes(futureNode, currNode, contexts, futurePath);
-    private traverseRoutes(futureNode, currNode, parentContexts, futurePath);
-    private shouldRunGuardsAndResolvers(curr, future, mode);
-    private deactivateRouteAndItsChildren(route, context);
-    private runCanDeactivateChecks();
-    private runCanActivateChecks();
-    private runCanActivate(future);
-    private runCanActivateChild(path);
-    private extractCanActivateChild(p);
-    private runCanDeactivate(component, curr);
-    private runResolve(future);
-    private resolveNode(resolve, future);
-    private getResolver(injectionToken, future);
-    private getToken(token, snapshot);
 }
