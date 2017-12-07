@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Get the path of start_server.sh
-DIR=$(readlink -e $0)
+DIR=$(realpath -e $0)
 cd $(dirname $DIR) > /dev/null
 pwd
 
@@ -16,7 +16,11 @@ if [ "$1" == "-d" ]; then
 fi
 
 # Add bin directory to path depending on the local architecture.
-arch=$(lscpu | grep Arch | awk '{print $2}')
+arch="test"
+if which lscpu; then
+    arch=$(lscpu | grep Arch | awk '{print $2}')
+fi
+
 if [ "$arch" == "armv7l" ]; then
     PORT=80
     
@@ -45,5 +49,5 @@ find ./logs/* -mtime +30 -exec rm {} \;
 
 
 
-java -Xmx100m $JETTY_DEBUG -DSQLITE_ROOT=$(pwd)/../sqlite -jar $JETTY_RUNNER --port $PORT --classes $(pwd)/../conf $UTC_WAR |& tee -a ./logs/jetty.log
+java -Xmx100m $JETTY_DEBUG -DSQLITE_ROOT=$(pwd)/../sqlite -jar $JETTY_RUNNER --port $PORT --classes $(pwd)/../conf $UTC_WAR | tee -a ./logs/jetty.log
 #java -Xmx100m $JETTY_DEBUG -DSQLITE_ROOT=$(pwd)/../sqlite -jar $JETTY_RUNNER --port $PORT --classes $(pwd)/../conf $UTC_WAR
