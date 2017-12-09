@@ -626,6 +626,11 @@ export class EntityInstance {
                 childFingerprints[ valueChild.fingerprint ] = true;
                 eiChild.update( valueChild );
             }
+            // Do we have a fingerprint for every child entity?
+            if ( Object.keys( childFingerprints ).length < eiChildren.length ) {
+                // No.  Delete all child entities that are missing from the list of fingerprints.
+                eiChildren.deleteAll(( ei ) => !childFingerprints[ ei.fingerprint ] );
+            }
         }
     }
 

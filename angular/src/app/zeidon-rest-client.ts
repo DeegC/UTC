@@ -28,6 +28,9 @@ export class RestActivator {
             if ( response.statusCode === 423 )
                 throw new ActivateLockError( lodName );
 
+            if ( response.body === undefined )
+                throw "response.body is undefined";
+
             return oi.createFromJson( response.body, { incrementalsSpecified: true } ) as T;
         }
 

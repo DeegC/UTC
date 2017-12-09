@@ -51,13 +51,13 @@ export class RestService {
             .map(response => this.parseJsonResponse( session, response ) ) as  Observable<Session>;
     }
 
-    stopSession(): Observable<string> {
+    stopSession(): Observable<any> {
         let url = `${this.values.restUrl}/stopSession`;
         let body = "{}";
         let headers = new HttpHeaders().set( 'Content-Type', 'application/json' );
 
         return this.http.post( url, body, { headers: headers } )
-            .map(response => response ) as  Observable<string>;
+            .map(response => response );
     }
 
     shutdown() {
@@ -72,10 +72,9 @@ export class RestService {
     }
 
     parseJsonResponse( oi: ObjectInstance, response ): ObjectInstance {
-        if ( response.text() === "{}" )
+        if ( response === "{}" || Object.keys( response ).length === 0 )
             return oi;
 
-        let data = response.json();
-        return oi.createFromJson( data , { incrementalsSpecified: true} );
+        return oi.createFromJson( response , { incrementalsSpecified: true} );
     }
 }

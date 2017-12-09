@@ -214,7 +214,7 @@ class HttpWrapper {
     }
 
     post( url: string, body: string, headers?: string | { [ name: string]: string | string[]; } ) : Promise<any> {
-        return this.http.post( url, body, { headers: new HttpHeaders( headers ) } ).toPromise();
+        return this.http.post( url, body, { headers: new HttpHeaders( headers ) } ).map( response => { return { "body": response } } ).toPromise();
     }
 }
 
@@ -245,7 +245,7 @@ export class ZeidonRestService {
         this.http.delete( url )
             .toPromise()
             .then(() => root.drop() )
-            .catch(( error: any ) => { throw ( error.json().error || 'Server error' ) } );
+            .catch(( error: any ) => { throw ( error || 'Server error' ) } );
     }
 
     deleteOi( oi: ObjectInstance ) {

@@ -82,10 +82,11 @@ export class SessionComponent implements OnInit {
     }
 
     stopSession(): void {
-        this.restService.stopSession().subscribe( message => {
-            this.currentSession = undefined;
-            this.currentState = undefined;
-            this.currentMessage = message;
+        let self = this;
+        this.restService.stopSession().subscribe( response => {
+            self.currentSession = undefined;
+            self.currentState = undefined;
+            self.currentMessage = response.message;
         } );
     }
 
