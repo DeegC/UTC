@@ -68,10 +68,11 @@
       <div *ngIf="thermometerTypes; else loadingThermTypes">
         Thermometer Type:
         <select (change)="onThermTypeSelected($event.target.selectedIndex)">
-          <option selected disabled hidden value=''>Select Thermometer Type</option>
+          <option *ngIf="configOi.Configuration$.ThermometerType.length === 0"
+                  selected  value=''>Select Thermometer Type</option>
           <option *ngFor="let type of thermometerTypes.ThermometerType"
                   [value]="type.Name"
-                  [selected]="type.Name === configOi.Configuration$$.ThermometerType$$.Name">
+                  [selected]="type.Name === configOi.Configuration$.ThermometerType$$.Name">
             {{ type.Name }}
           </option>
         </select>

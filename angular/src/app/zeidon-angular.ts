@@ -210,11 +210,12 @@ class HttpWrapper {
     constructor( private http: HttpClient ) {}
 
     get( url: string ) : Promise<any> {
-        return this.http.get( url ).map( response => { return { "body": response } } ).toPromise();
+        return this.http.get( url ).map( response => { return { body: response } } ).toPromise();
     }
 
     post( url: string, body: string, headers?: string | { [ name: string]: string | string[]; } ) : Promise<any> {
-        return this.http.post( url, body, { headers: new HttpHeaders( headers ) } ).map( response => { return { "body": response } } ).toPromise();
+        return this.http.post( url, body, { headers: new HttpHeaders( headers ) } )
+                        .map( response => { return { body: response } } ).toPromise();
     }
 }
 
