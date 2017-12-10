@@ -6,8 +6,7 @@ eclipse-bin/
 .settings/
 .cache-main
 .cache-tests
-server/charts
-server/logs
+bin/tmp
 zeidon/logs
 angular/dist
 sqlite/utc.sqlite.db

@@ -7,9 +7,9 @@
     </encoder>
   </appender>
 
-
+<!--
   <appender name="LOGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <file>logs/utc.log</file>
+    <file>./tmp/logs/utcx.log</file>
     <encoder>
       <pattern>%d [%thread] %-5level - %msg%n</pattern>
     </encoder>
@@ -24,12 +24,15 @@
       <maxFileSize>5MB</maxFileSize>
     </triggeringPolicy>
   </appender>
- 
+  -->
+  
   <logger name="org.smartjava.scalatra" level="DEBUG"/>
   
   <logger name="com.quinsoft.zeidon.Task" level="DEBUG">
     <appender-ref ref="ZSTDOUT" />
-    <appender-ref ref="LOGFILE" />
+    <!--
+	<appender-ref ref="LOGFILE" />
+    -->
   </logger>
 
   <root level="DEBUG">

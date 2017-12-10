@@ -130,7 +130,7 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
         oe.forTask( "UTC" ) { task =>
             val info = task.newView("DebugInfo") activateEmpty()
             info.DebugInfo create()
-            val f = new File( "./logs" ).getAbsolutePath
+            val f = new File( s"${UtcScalatra.TEMP_DIR}/logs" ).getAbsolutePath
             task.log().info( f )
             new File( "./logs" ).listFiles().foreach{ file =>
                 if ( file.isFile() ) {
@@ -144,5 +144,12 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
     }
 
     private def startUdpServer() = {
+    }
+}
+
+object UtcScalatra {
+    val TEMP_DIR = {
+        // TODO: Check to see if an env var is set?
+        "./tmp/"
     }
 }

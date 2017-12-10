@@ -42,12 +42,10 @@ war {
     
     from( "../angular/src" )
     from( "../angular/dist" )
-}
 
-task deploy (dependsOn: war){
     doLast { copy {
         from "build/libs"
-        into "run-time"
+        into "../bin"
         include "*.war"
     } }
 }

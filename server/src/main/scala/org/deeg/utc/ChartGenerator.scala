@@ -30,7 +30,7 @@ class ChartGenerator( val session: View @basedOn( "Session" ) ) {
         }
 
         val chart = XYLineChart( allData )
-        val filename = s"charts/session-${session.Session.Id}.png"
+        val filename = s"${UtcScalatra.TEMP_DIR}/charts/session-${session.Session.Id}.png"
         chart.saveAsPNG( filename )
         return filename
     }
