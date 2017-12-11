@@ -16,7 +16,7 @@ user=$1
 # Determine the CHIP bin
 SCRIPTPATH=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 CHIPBIN=$SCRIPTPATH/../bin/chip
-SERVERBIN=$SCRIPTPATH/../server
+SERVERBIN=$SCRIPTPATH/../bin
 
 reboot=0
 
@@ -30,7 +30,7 @@ else
 fi
 
 # Don't allow root to ssh into server.  This disallows chip user from logging in remotely.
-#sed -i "s/PermitRootLogin yes/PermitRootLogin no/g" /etc/ssh/sshd_config
+sed -i "s/PermitRootLogin yes/PermitRootLogin no/g" /etc/ssh/sshd_config
 
 # Add Oracle Java 8 ppa.  We need Oracle Java 8 for ARM for performance reasons.
 if [ ! -f /etc/apt/sources.list.d/webupd8team-java.list ]; then

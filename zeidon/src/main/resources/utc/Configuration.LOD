@@ -1,7 +1,7 @@
-z1000-Zeidon    CONFIGURATZZOLODO 11/07/17   23:21:50 1.0a2    
+z1000-Zeidon    CONFIGURATZZOLODO 12/11/17   02:02:12 1.0a2    
 eLOD       1
 aZKey      910225831
-aNextZKeyToAssign 910225866
+aNextZKeyToAssign 910225868
 aName      Configuration
 aDesc      Main configuration object
 
@@ -289,6 +289,9 @@ eDomainRec 5
 
 eLOD_AttributeRec 3
 aZKey      910225836
+aUpdate    Y
+aInit      250
+aSeqOrder  A
 
 eER_AttributeRec 4
 aName      TargetTemperature
@@ -319,6 +322,7 @@ aContextRestriction N
 eLOD_AttributeRec 3
 aZKey      910225839
 aUpdate    Y
+aInit      false
 aSeqOrder  A
 
 eER_AttributeRec 4
@@ -378,6 +382,7 @@ eDomainRec 5
 eLOD_AttributeRec 3
 aZKey      910225843
 aUpdate    Y
+aInit      100
 aSeqOrder  A
 
 eER_AttributeRec 4
@@ -390,6 +395,7 @@ eDomainRec 5
 eLOD_AttributeRec 3
 aZKey      910225844
 aUpdate    Y
+aInit      false
 aSeqOrder  A
 
 eER_AttributeRec 4
@@ -402,12 +408,40 @@ eDomainRec 5
 eLOD_AttributeRec 3
 aZKey      910225846
 aUpdate    Y
+aInit      10000
 aSeqOrder  A
 
 eER_AttributeRec 4
 aName      PwmFrequency
 aZKey      905181344
 aDesc      Frequency of the PWM signal
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      910225867
+aUpdate    Y
+aInit      Generic switch
+aSeqOrder  A
+
+eER_AttributeRec 4
+aName      GenericSwitchName1
+aZKey      905181451
+aLth       100
+aDesc      Name of generic switch 1
+
+eDomainRec 5
+
+eLOD_AttributeRec 3
+aZKey      910225868
+aUpdate    Y
+aInit      false
+aSeqOrder  A
+
+eER_AttributeRec 4
+aName      GenericSwitch1
+aZKey      905181452
+aDesc      Boolean value for generic switch 1
 
 eDomainRec 5
 
@@ -421,7 +455,7 @@ aER_DiagramPosY 5
 aSAP_Entity 0
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 6
+awkSelectedAttributeForDragSort 4
 
 eLOD_Attribute 3
 awkSequence 1
@@ -502,6 +536,20 @@ eDomain    5
 
 eLOD_Attribute 3
 awkSequence 12
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 13
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 14
 
 eER_Attribute 4
 
@@ -631,79 +679,87 @@ i66        63
 i69        11
 i72        17
 i75        11
-i77        1
-i78        40
-i79        41
-i80        5
-i81        43
-i82        44
-i83        8
-i84        46
-i85        47
-i86        8
-i87        49
-i88        50
-i89        11
-i90        52
-i91        53
-i92        54
-i93        55
-i94        56
-i95        17
-i96        58
-i97        59
-i98        11
-i99        61
-i100       62
-i101       63
-i102       64
-i103       65
-i104       63
-i105       67
-i106       68
-i107       11
-i108       70
-i109       71
-i110       17
-i111       73
-i112       74
+i78        8
+i81        17
+i83        1
+i84        40
+i85        41
+i86        5
+i87        43
+i88        44
+i89        8
+i90        46
+i91        47
+i92        8
+i93        49
+i94        50
+i95        11
+i96        52
+i97        53
+i98        54
+i99        55
+i100       56
+i101       17
+i102       58
+i103       59
+i104       11
+i105       61
+i106       62
+i107       63
+i108       64
+i109       65
+i110       63
+i111       67
+i112       68
 i113       11
-i114       76
-i115       2
-i116       3
-i117       4
-i118       5
-i119       6
-i120       7
-i121       8
-i122       9
-i123       10
-i124       11
-i125       12
-i126       13
-i127       11
-i128       15
-i129       16
-i130       17
-i131       18
-i132       19
-i133       17
-i134       21
-i135       22
-i136       23
-i137       24
-i138       25
-i139       26
-i140       5
-i141       28
-i142       29
-i143       8
-i144       31
-i145       32
-i146       8
-i147       34
-i148       35
-i149       36
-i150       37
-i151       38
-i152       39
+i114       70
+i115       71
+i116       17
+i117       73
+i118       74
+i119       11
+i120       76
+i121       77
+i122       8
+i123       79
+i124       80
+i125       17
+i126       82
+i127       2
+i128       3
+i129       4
+i130       5
+i131       6
+i132       7
+i133       8
+i134       9
+i135       10
+i136       11
+i137       12
+i138       13
+i139       11
+i140       15
+i141       16
+i142       17
+i143       18
+i144       19
+i145       17
+i146       21
+i147       22
+i148       23
+i149       24
+i150       25
+i151       26
+i152       5
+i153       28
+i154       29
+i155       8
+i156       31
+i157       32
+i158       8
+i159       34
+i160       35
+i161       36
+i162       37
+i163       38
+i164       39

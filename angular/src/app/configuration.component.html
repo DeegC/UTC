@@ -104,6 +104,14 @@
             New Thermometer
         </button>
       </div>
+
+      <h3>Switches</h3>
+      <div>
+        <input type="text" formControlName="GenericSwitchName1" [zeidonErrorElement]="switchError" placeholder="Switch name" />
+        <input type="checkbox" formControlName="GeneriecSwitch1" [zeidonErrorElement]="switchError" />
+      </div>
+      <div #switchError class="alert alert-danger" style="display:none"></div>
+
       <div>
         <button type="submit" class="btn btn-default" [disabled]="false">
             Save Configuration

@@ -138,6 +138,12 @@ export class Session_Configuration extends zeidon.EntityInstance {
     get PwmFrequency(): number { return this.getAttribute("PwmFrequency") };
     set PwmFrequency(value: number) { this.setAttribute("PwmFrequency", value) };
 
+    get GenericSwitchName1(): string { return this.getAttribute("GenericSwitchName1") };
+    set GenericSwitchName1(value: string) { this.setAttribute("GenericSwitchName1", value) };
+
+    get GenericSwitch1(): boolean { return this.getAttribute("GenericSwitch1") };
+    set GenericSwitch1(value: boolean) { this.setAttribute("GenericSwitch1", value) };
+
     get ThermometerConfig(): zeidon.EntityArray<Session_ThermometerConfig> {
         return this.getChildEntityArray("ThermometerConfig") as zeidon.EntityArray<Session_ThermometerConfig>;
     }
@@ -437,6 +443,26 @@ export const Session_LodDef = {
                     hidden:       false,
                     required:     false,
                     domainName:   "Integer",
+                    persistent:   true,
+                    key:          false,
+                    update:       true,
+                    foreignKey:   false,
+                },
+                GenericSwitchName1: {
+                    name:         "GenericSwitchName1",
+                    hidden:       false,
+                    required:     false,
+                    domainName:   "Text",
+                    persistent:   true,
+                    key:          false,
+                    update:       true,
+                    foreignKey:   false,
+                },
+                GenericSwitch1: {
+                    name:         "GenericSwitch1",
+                    hidden:       false,
+                    required:     false,
+                    domainName:   "Boolean",
                     persistent:   true,
                     key:          false,
                     update:       true,

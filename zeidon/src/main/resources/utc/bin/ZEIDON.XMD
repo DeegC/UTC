@@ -1,4 +1,4 @@
-z1000-Zeidon    ZEIDON   TZEREMXO 11/07/17   22:55:55 1.0a2    
+z1000-Zeidon    ZEIDON   TZEREMXO 12/11/17   01:59:52 1.0a2    
 eMODEL     1
 aNumEnts   9
 aNumRels   6
@@ -14,7 +14,7 @@ aAPDM_TOK  905181242
 
 eENTITY    2
 aZKEY      905181331
-aNumAtts   13
+aNumAtts   15
 
 eATTRIB    3
 aZKEY      905181332
@@ -79,7 +79,18 @@ aNAME      PwmFrequency
 aAPDM_TOK  905181155
 
 eATTRIB    3
-aZKEY      2539
+aZKEY      905181451
+aNAME      GenericSwitchName1
+aAPDM_TOK  905181158
+aLTH       100
+
+eATTRIB    3
+aZKEY      905181452
+aNAME      GenericSwitch1
+aAPDM_TOK  905181228
+
+eATTRIB    3
+aZKEY      2701
 aNAME      fk_id_thermometer_type
 aAPDM_TOK  905181242
 aLTH       64
@@ -160,7 +171,7 @@ aAPDM_TOK  905181158
 aLTH       255
 
 eATTRIB    3
-aZKEY      2534
+aZKEY      2696
 aNAME      fk_id_session
 aAPDM_TOK  905181242
 aLTH       64
@@ -191,7 +202,7 @@ aAPDM_TOK  905181158
 aLTH       10000
 
 eATTRIB    3
-aZKEY      2538
+aZKEY      2700
 aNAME      fk_id_configuration
 aAPDM_TOK  905181242
 aLTH       64
@@ -223,7 +234,7 @@ aAPDM_TOK  905181226
 eATTRIB    3
 aZKEY      905181449
 aNAME      R
-aAPDM_TOK  905181215
+aAPDM_TOK  905181226
 
 eATTRIB    3
 aZKEY      905181450
@@ -231,7 +242,7 @@ aNAME      VoltageReference
 aAPDM_TOK  905181226
 
 eATTRIB    3
-aZKEY      2535
+aZKEY      2697
 aNAME      fk_id_thermometer_type
 aAPDM_TOK  905181242
 aLTH       64
@@ -272,7 +283,7 @@ aNAME      wTemperatureWithinAlarmThreshold
 aAPDM_TOK  905181228
 
 eATTRIB    3
-aZKEY      2537
+aZKEY      2699
 aNAME      fk_id_configuration
 aAPDM_TOK  905181242
 aLTH       64
@@ -356,7 +367,7 @@ aNAME      Id
 aAPDM_TOK  905181242
 
 eATTRIB    3
-aZKEY      2536
+aZKEY      2698
 aNAME      fk_id_thermometer_type
 aAPDM_TOK  905181242
 aLTH       64

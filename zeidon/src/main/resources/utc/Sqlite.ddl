@@ -28,6 +28,8 @@ CREATE TABLE configuration (
            tweet_on                                                         int                NULL    , 
            pwm_frequency                                                    int                NULL    , 
            autoseq                                                          int                NULL    , 
+           generic_switch_name1                                             varchar( 100 )     NULL    ,
+           generic_switch1                                                  int                NULL    ,
            fk_id_thermometer_type                                           INTEGER            NOT NULL ) ;
  
 /* Entity - Instant */
