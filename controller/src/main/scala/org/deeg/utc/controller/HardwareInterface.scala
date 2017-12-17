@@ -7,6 +7,7 @@ import com.quinsoft.zeidon.scala.Implicits._
 import com.quinsoft.zeidon.scala.View
 import com.quinsoft.zeidon.scala.basedOn
 import com.quinsoft.zeidon.ZeidonException
+import com.quinsoft.zeidon.utils.JoeUtils
 
 trait HardwareInterface {
     val task : Task
@@ -80,30 +81,18 @@ trait HardwareInterface {
 
 object HardwareInterface {
 
-  /**
-   * Attempt to figure out which HardwareInterface to use depending on the
-   * local hardware.
-   */
-  def getHardwareInterface( task : Task ): HardwareInterface = {
+    /**
+     * Attempt to figure out which HardwareInterface to use depending on the
+     * local hardware.
+     */
+    def getHardwareInterface(task: Task): HardwareInterface = {
 
-    val arch =
-      try {
-        val lscpu = "lscpu".!!
-        "Architecture:\\s*([^\\n]*)".r.findFirstMatchIn(lscpu).map(_ group 1).get
-      }
-      catch {
-        case e: Exception => e.getMessage
-      }
+        val arch = JoeUtils.getEnvProperty("HARDWARE")
 
-    task.slog.info( s"CPU architecture = '$arch'" )
-
-    arch match {
-      case "armv7l" => new ChipHardwareInterface( task )
-      case _ => {
-        task.slog.warn( s"Using TestHardwareInterface for architecture = '$arch'" )
-        new TestHardwareInterface( task )
-      }
+        arch match {
+            case "chip" => new ChipHardwareInterface(task)
+            case "test" => new TestHardwareInterface(task)
+            case _      => throw new ZeidonException(s"Unknown/unspecified hardware: ${arch}")
+        }
     }
-
-  }
 }

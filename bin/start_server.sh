@@ -25,11 +25,13 @@ else
 fi
 
 if [ "$arch" == "armv7l" ]; then
+    HARDWARE="chip"
     PORT=80
     
     # The directory that contains the bin files/scripts for interfacing with the CHIP hardware.
     export PATH="$PATH:../bin/chip"
 else
+    HARDWARE="test"
     export PATH="$PATH:../bin/test"  # Test files.
 fi
 
@@ -50,5 +52,5 @@ find ./tmp/charts/* -mtime +30 -exec rm {} \;
 mkdir -p ./tmp/logs > /dev/null
 find ./tmp/logs/* -mtime +30 -exec rm {} \;
 
-java -Xmx100m $JETTY_DEBUG -DSQLITE_ROOT=$(pwd)/../sqlite -jar $JETTY_RUNNER --port $PORT --classes $(pwd)/../conf $UTC_WAR 2>&1 | tee -a ./tmp/logs/jetty.log
+java -Xmx100m $JETTY_DEBUG -DHARDWARE=$HARDWARE -DSQLITE_ROOT=$(pwd)/../sqlite -jar $JETTY_RUNNER --port $PORT --classes $(pwd)/../conf $UTC_WAR 2>&1 | tee -a ./tmp/logs/jetty.log
 #java -Xmx100m $JETTY_DEBUG -DSQLITE_ROOT=$(pwd)/../sqlite -jar $JETTY_RUNNER --port $PORT --classes $(pwd)/../conf $UTC_WAR
