@@ -154,6 +154,7 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
         hardware.setGreenLed( false )
         hardware.setRedLed( false )
         hardware.setYellowLed( false )
+        hardware.setGenericSwitch( 1, currentSession.Configuration.GenericSwitch1 )
 
         pid = new PIDController( currentSession.Configuration.PidP,
                                  currentSession.Configuration.PidI,

@@ -96,7 +96,7 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
         if ( filename.contains(".." ) || filename.contains( "/" ) )
             throw new ZeidonException( "Invalid filename" );
 
-        val file = new java.io.File( "./logs/" + filename )
+        val file = new File( s"${UtcScalatra.TEMP_DIR}/logs/${filename}" )
         response.setHeader("Content-Disposition", "attachment; filename=" + file.getName)
         file
     }
@@ -126,20 +126,21 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
         Ok
     }
 
-    get("/utc/getDebugInfo") {
+    // Override the default Zeidon Scalatra server for activating DebugInfo
+    get("/utc/DebugInfo") {
         oe.forTask( "UTC" ) { task =>
             val info = task.newView("DebugInfo") activateEmpty()
             info.DebugInfo create()
             val f = new File( s"${UtcScalatra.TEMP_DIR}/logs" ).getAbsolutePath
             task.log().info( f )
-            new File( "./logs" ).listFiles().foreach{ file =>
+            new File( f ).listFiles().foreach{ file =>
                 if ( file.isFile() ) {
                     info.File create()
                     info.File.Name = file.getName
                     info.File.Size = FileUtils.byteCountToDisplaySize( file.length() )
                 }
             }
-            serializeResponse( info )
+            serializeResponse( info, withIncrementals = false )
         }
     }
 

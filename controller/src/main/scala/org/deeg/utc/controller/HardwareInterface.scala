@@ -76,6 +76,7 @@ trait HardwareInterface {
     def setRedLed( on: Boolean )
     def setGreenLed( on: Boolean )
     def setYellowLed( on: Boolean )
+    def setGenericSwitch( number: Int, on: Boolean )
     def shutdown()
 }
 

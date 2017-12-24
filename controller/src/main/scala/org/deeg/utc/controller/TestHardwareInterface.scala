@@ -37,6 +37,10 @@ class TestHardwareInterface(val task : Task) extends HardwareInterface {
         task.log().info(s"Turning Yellow LED: ${on}")
     }
 
+    override def setGenericSwitch( number: Int, on: Boolean ) {
+        task.log().info(s"Turning Generic switch ${number} to ${on}")
+    }
+
     override def shutdown() {
         task.log().info("Pretending to shut down.")
     }

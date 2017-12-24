@@ -72,6 +72,10 @@ class ChipHardwareInterface(val task : Task ) extends HardwareInterface {
         task.log().info( s"set-led.sh yellow ${on}".!! )
     }
 
+    override def setGenericSwitch( number: Int, on: Boolean ) {
+        task.log().warn(s"Generic switch ${number} not supported on CHIP.")
+    }
+
     override def shutdown() {
         "shutdown now".!!
     }

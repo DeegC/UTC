@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { UtcConfig } from './lod/UtcConfig';
 import { RestService } from './rest.service';
+import { DebugInfo } from './lod/DebugInfo';
 import { ThermometerType, ThermometerType_ThermometerType } from './lod/ThermometerType';
 import { FormGroup } from '@angular/forms';
 import * as zeidon from './zeidon-angular';
@@ -22,10 +23,10 @@ Hardware: J Haddad
         <ul class="thermometerList">
             <li *ngFor="let therm of thermometerList.ThermometerType"
                 [class.selected]="selectedTherm.ThermometerType$$.Id == therm.Id">
-                <span (click)="onSelect(therm)">
+                <span (click)="onSelectThermConfig(therm)">
                     <span class="badge">{{therm.Name}}</span> {{therm.Description}}
                 </span>
-                <img src="/img/icons/red-x.png" (click)="onDelete( therm )"/>
+                <img src="/img/icons/red-x.png" (click)="onDeleteThermConfig( therm )"/>
             </li>
         </ul>
     </div>
@@ -36,7 +37,7 @@ Hardware: J Haddad
 
     <h4>Thermometer Type Configuration:</h4>
     <div *ngIf="! selectedTherm.isEmpty">
-        <form [formGroup]="form" (ngSubmit)="saveTherm($event)">
+        <form [formGroup]="thermConfigForm" (ngSubmit)="saveTherm($event)">
         <div>
             <label>Name: </label>
             <input type="text" class="my-class"
@@ -117,6 +118,19 @@ Hardware: J Haddad
     </div>
   </div>
 
+  <h4>Log files</h4>
+  <div *ngIf="debugInfo && ! debugInfo.isEmpty">
+    <ul class="logFileList">
+        <li *ngFor="let file of debugInfo.DebugInfo$.File">
+            <a >
+                <span>{{file.Name}}</span> {{file.Size}}
+            </a>
+            <img src="/img/icons/red-x.png" (click)="onDeleteFile( file )"/>
+        </li>
+    </ul>
+
+  </div>
+
   <button type="button" class="btn btn-default" (click)="shutdown()" >
       Shutdown Computer
   </button>
@@ -127,7 +141,8 @@ export class UtcComponent implements OnInit {
     utcConfig: UtcConfig;
     thermometerList : ThermometerType;
     selectedTherm : ThermometerType = new ThermometerType();
-    form: FormGroup;
+    thermConfigForm: FormGroup;
+    debugInfo: DebugInfo;
 
     constructor( private utcRestService: RestService,
                  private zeidonRestService: zeidon.ZeidonRestService ) { }
@@ -140,17 +155,21 @@ export class UtcComponent implements OnInit {
         ThermometerType.activate().then( list => {
             this.thermometerList = list;
         } );
+
+        DebugInfo.activate().then( info => {
+            this.debugInfo = info;
+        } );
     }
 
-    buildForm() {
-        this.form = new zeidon.ZeidonFormBuilder().group( this.selectedTherm.ThermometerType$$ );
+    buildThermConfigForm() {
+        this.thermConfigForm = new zeidon.ZeidonFormBuilder().group( this.selectedTherm.ThermometerType$$ );
     }
 
     saveTherm( event ): void {
         this.selectedTherm.ThermometerType$.update( this.form.value );
         this.selectedTherm.commit().then( therm => {
             this.selectedTherm = therm;
-            this.buildForm();
+            this.buildThermConfigForm();
             this.thermometerList.reload();
         } );
     }
@@ -163,22 +182,21 @@ export class UtcComponent implements OnInit {
 
                 }
         } );
-        this.buildForm();
+        this.buildThermConfigForm();
     }
 
     cancel(): void {
         this.selectedTherm = new ThermometerType();
     }
 
-    onSelect( therm: ThermometerType_ThermometerType ): void {
+    onSelectThermConfig( therm: ThermometerType_ThermometerType ): void {
         ThermometerType.activate( { Id: therm.Id } ).then( thermType => {
             this.selectedTherm = thermType;
-            this.buildForm();
-            console.log( "onSelect utcConfig" );
+            this.buildThermConfigForm();
         } );
     }
 
-    onDelete( therm: ThermometerType_ThermometerType ): void {
+    onDeleteThermConfig( therm: ThermometerType_ThermometerType ): void {
         this.zeidonRestService.deleteRoot( therm );
     }
 
