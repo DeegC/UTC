@@ -24,16 +24,21 @@ else
     arch="test"
 fi
 
-if [ "$arch" == "armv7l" ]; then
-    HARDWARE="chip"
-    PORT=80
+case "$arch" in
     
-    # The directory that contains the bin files/scripts for interfacing with the CHIP hardware.
-    export PATH="$PATH:../bin/chip"
-else
-    HARDWARE="test"
-    export PATH="$PATH:../bin/test"  # Test files.
-fi
+    arm7l)
+	HARDWARE="chip"
+	PORT=80
+    
+	# The directory that contains the bin files/scripts for interfacing with the CHIP hardware.
+	export PATH="$PATH:../bin/chip"
+	;;
+    
+    *)
+	HARDWARE="test"
+	export PATH="$PATH:../bin/test"  # Test files.
+	;;
+esac
 
 # Make sure sqlite db exists.  If not, copy empty one.
 if [ ! -f ../sqlite/utc.sqlite.db ]; then

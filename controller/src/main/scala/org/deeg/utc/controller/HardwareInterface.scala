@@ -92,6 +92,7 @@ object HardwareInterface {
 
         arch match {
             case "chip" => new ChipHardwareInterface(task)
+            case "rpi"  => new RpiHardwareInterface(task)
             case "test" => new TestHardwareInterface(task)
             case _      => throw new ZeidonException(s"Unknown/unspecified hardware: ${arch}")
         }
