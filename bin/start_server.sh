@@ -38,7 +38,7 @@ case "$arch" in
 	HARDWARE="rpi"
 	PORT=80
     
-	export PATH="$PATH:../bin/chip"
+	export PATH="$PATH:../bin/rpi"
 	;;
     
     *)
