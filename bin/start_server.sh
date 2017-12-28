@@ -18,19 +18,26 @@ if [ "$1" == "-d" ]; then
 fi
 
 # Add bin directory to path depending on the local architecture.
-if which lscpu; then
-    arch=$(lscpu | grep Arch | awk '{print $2}')
+if which lsb_release; then
+    arch=$(lsb_release -a | grep 'Distributor ID:' | awk '{print $3}')
 else
     arch="test"
 fi
 
 case "$arch" in
     
-    arm7l)
+    chip)
 	HARDWARE="chip"
 	PORT=80
     
 	# The directory that contains the bin files/scripts for interfacing with the CHIP hardware.
+	export PATH="$PATH:../bin/chip"
+	;;
+    
+    Raspbian)
+	HARDWARE="rpi"
+	PORT=80
+    
 	export PATH="$PATH:../bin/chip"
 	;;
     
