@@ -6,4 +6,21 @@ Angular application for UTC.
 Project name: ${project.name}
 """
 
+configurations {
+    build
+    clean
+}
 
+dependencies {
+    build project( ':utc-zeidon' )
+}
+
+task build( type:Exec ) {
+    commandLine 'npm', 'run', 'build'
+}
+
+task clean( type:Exec ) {
+    commandLine 'rm', '-r', './dist'
+}
+
+build.dependsOn(':utc-controller:build')

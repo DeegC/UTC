@@ -1,6 +1,7 @@
-include 'zeidon', 'controller', 'angular', 'server'
+include 'zeidon', 'controller', 'angular', 'server', 'debian'
 
 project(":zeidon").name = "utc-zeidon"
 project(":controller").name = "utc-controller"
-project(":server").name = "utc-server"
 project(":angular").name = "utc-angular"
+project(":server").name = "utc-server"
+project(":debian").name = "utc-debian"

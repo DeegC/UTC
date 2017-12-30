@@ -1,15 +1,4 @@
-plugins {
-  id "com.palantir.npm-run" version "0.5.0" apply false
-}
-
 subprojects { subproject ->
-
-  if (subproject.name.startsWith("utc-angular")) {
-      apply plugin: 'com.palantir.npm-run'
-  } else {
-      apply plugin: 'scala'
-  }
-
   group = 'com.quinsoft.zeidon'
   version = '1.0'
   
@@ -22,6 +11,7 @@ subprojects { subproject ->
      mavenLocal()
      maven {
        url "https://oss.sonatype.org/content/repositories/snapshots"
+       url "https://plugins.gradle.org/m2/"
      }
      mavenCentral()
   }

@@ -9,4 +9,4 @@ eclipse-bin/
 bin/tmp
 zeidon/logs
 angular/dist
-sqlite/utc.sqlite.db
+utc.sqlite.db

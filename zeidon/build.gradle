@@ -1,3 +1,5 @@
+apply plugin: 'scala'
+
 description ="""
 Domain logic for UTC and the Zeidon objects.
 
@@ -62,7 +64,7 @@ task generateTypescriptFiles( type: JavaExec ) {
     outputs.files typescriptDir
 
     main = "com.quinsoft.zeidon.javascript.GenerateXodsForTypescript"
-    classpath( configurations.generateTypescriptFiles, sourceSets.main.runtimeClasspath, '../conf' )
+    classpath( configurations.generateTypescriptFiles, sourceSets.main.runtimeClasspath, '../bin/conf' )
     standardInput System.in
     args( 'UTC', typescriptDir )
 //    jvmArgs( '-Xdebug', '-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=y' )
