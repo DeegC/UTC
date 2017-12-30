@@ -24,8 +24,8 @@ else
 fi
 
 case "$arch" in
-    
     chip)
+	echo "Using C.H.I.P"
 	HARDWARE="chip"
 	PORT=80
     
@@ -34,6 +34,7 @@ case "$arch" in
 	;;
     
     Raspbian)
+	echo "Using Raspberry Pi"
 	HARDWARE="rpi"
 	PORT=80
 	export PATH="$PATH:./rpi"
