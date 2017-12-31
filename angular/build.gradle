@@ -23,4 +23,4 @@ task clean( type:Exec ) {
     commandLine 'rm', '-r', './dist'
 }
 
-build.dependsOn(':utc-controller:build')
+build.dependsOn(':utc-zeidon:build')

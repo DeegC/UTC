@@ -2,8 +2,12 @@ plugins {
   id "nebula.ospackage" version "4.5.1"
 }
 
+configurations {
+    generateDeb
+}
+
 dependencies {
-//    compile project( ':utc-server' )
+    generateDeb project( ':utc-server' )
 }
 
 // See https://github.com/nebula-plugins/gradle-ospackage-plugin/wiki/Deb-Plugin
@@ -25,3 +29,4 @@ task generateDeb(type: Deb) {
 }
 
 build.dependsOn 'generateDeb'
+generateDeb.dependsOn ':utc-server:war'

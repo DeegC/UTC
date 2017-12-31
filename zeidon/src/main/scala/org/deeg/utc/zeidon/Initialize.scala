@@ -1,4 +1,4 @@
-package com.deeg.utc.zeidon
+package org.deeg.utc.zeidon
 
 import com.quinsoft.zeidon.ObjectEngine
 import com.quinsoft.zeidon.scala.Implicits._

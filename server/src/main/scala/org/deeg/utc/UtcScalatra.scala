@@ -8,7 +8,7 @@ import com.quinsoft.zeidon.scala.Implicits._
 import com.quinsoft.zeidon.Task
 import com.quinsoft.zeidon.standardoe.IncrementalEntityFlags
 import com.quinsoft.zeidon.scala.QualBuilder
-import com.deeg.utc.zeidon._
+import org.deeg.utc.zeidon._
 import com.quinsoft.zeidon.ObjectEngine
 import com.quinsoft.zeidon.scalatra.ZeidonRestScalatra
 import org.deeg.utc.controller.TemperatureController

@@ -166,7 +166,7 @@ export class UtcComponent implements OnInit {
     }
 
     saveTherm( event ): void {
-        this.selectedTherm.ThermometerType$.update( this.form.value );
+        this.selectedTherm.ThermometerType$.update( this.thermConfigForm.value );
         this.selectedTherm.commit().then( therm => {
             this.selectedTherm = therm;
             this.buildThermConfigForm();

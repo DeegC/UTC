@@ -9,7 +9,7 @@ Project name: ${project.name}
 apply plugin: 'war'
 
 dependencies {
-    compile project(':utc-angular')
+    compile project(':utc-controller')
     compile( "com.quinsoft.zeidon:object-browser:${versions.zeidon}" )
     compile( "com.quinsoft.zeidon:zeidon-scalatra-rest:${versions.zeidon}" ) {
         exclude module: 'scala-xml_2.12' // To save space.
@@ -53,3 +53,6 @@ war {
         include "*.war"
     } }
 }
+
+war.dependsOn(':utc-angular:build')
+war.dependsOn(':utc-controller:build')

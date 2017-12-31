@@ -61,8 +61,6 @@ export class SessionComponent implements OnInit {
             }
             else
                 this.currentMessage = "No Session is currently running";
-
-            session.logOi();
         } );
     }
 
@@ -77,7 +75,6 @@ export class SessionComponent implements OnInit {
     getCurrentState() {
         this.restService.getCurrentState().subscribe( instant => {
             this.currentState = instant;
-            this.currentState.logOi();
         } );
     }
 
