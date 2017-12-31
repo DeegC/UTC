@@ -19,7 +19,9 @@ task generateDeb(type: Deb) {
     preInstall file('debianPreInstall.sh')
     
     into '/opt/utc'
-    from '../bin'
+    from( '../bin' ) {
+        exclude 'tmp'
+    }
     from '../sqlite/utc.sqlite.empty.db'
 
     from( 'utc-server' ) {

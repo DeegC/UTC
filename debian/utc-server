@@ -1,13 +1,14 @@
+#!/bin/bash
+
+
 USER="utc"
 case "$1" in
     start)
-	log_action_begin_msg "Starting UTC"
-	su ${USER} -c "/opt/utc/start_server.sh"
+	su ${USER} -s /bin/bash -c "/opt/utc/start_server.sh"
 	;;
 
     stop)
-	log_action_begin_msg "Stopping UTC"
-	su ${USER} -c "/opt/utc/stop_server.sh"
+	su ${USER} -s /bin/bash -c "/opt/utc/stop_server.sh"
 	;;
 
     restart)
