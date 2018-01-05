@@ -1,0 +1,14 @@
+[Unit]
+Description=Universal Temperature Controller.
+After=network.target
+
+[Service]
+User=utc
+Type=simple
+PIDFile=/run/utc.pid
+ExecStart=/opt/utc/start_server.sh
+ExecStop=/opt/utc/stop_server.sh
+TimeoutStopSec=Infinity
+
+[Install]
+WantedBy=multi-user.target

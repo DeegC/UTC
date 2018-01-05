@@ -17,6 +17,7 @@ task generateDeb(type: Deb) {
     user = 'utc'
 
     preInstall file('debianPreInstall.sh')
+    postInstall file('debianPostInstall.sh')
     
     into '/opt/utc'
     from( '../bin' ) {
@@ -24,8 +25,8 @@ task generateDeb(type: Deb) {
     }
     from '../sqlite/utc.sqlite.empty.db'
 
-    from( 'utc-server' ) {
-        into '/etc/init.d'
+    from( 'utc-server.service' ) {
+        into '/lib/systemd/system'
     }
 
 }
