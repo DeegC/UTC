@@ -1,4 +1,4 @@
-z1000-Zeidon    UTC      TZCMLPLO 12/11/17   02:11:36 1.0a2    
+z1000-Zeidon    UTC      TZCMLPLO 01/12/18   17:00:37 1.0a2    
 eLPLR      1
 aName      UTC
 aDesc      Universal Temperature Controller
@@ -6,7 +6,7 @@ aZKey      92726748
 aPgmSrcDir C:\zeidon\zapp\utc
 aExecDir   C:\zeidon\zapp\utc\bin
 aMetaSrcDir C:\zeidon\zapp\utc
-aTaskUseCount 0
+aTaskUseCount 1
 aLastBuildDate 20170307144610609
 aLPLR_Type 3
 aTempDesc  Universal Temperature Controller
@@ -400,6 +400,48 @@ eW_MetaType 2
 aType      2003
 
 eW_MetaDef 3
+aCPLR_ZKey 905181230
+aStatus    1
+aName      Blob
+aLastUpdateDate 20171115231631850
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181228
+aStatus    1
+aName      Boolean
+aLastUpdateDate 20171115231631850
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181232
+aStatus    1
+aName      Date
+aLastUpdateDate 20171115231631850
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181215
+aStatus    1
+aName      DateTime
+aLastUpdateDate 20171115231631850
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181226
+aStatus    1
+aName      Double
+aLastUpdateDate 20171115231631850
+aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905181242
+aStatus    1
+aName      GeneratedKey
+aLastUpdateDate 20171115231631850
+aGroupName Base
+
+eW_MetaDef 3
 aGroupName TZAPDMAA
 
 eW_MetaDef 3
@@ -430,45 +472,10 @@ eW_MetaDef 3
 aGroupName TablesA
 
 eW_MetaDef 3
-aCPLR_ZKey 905181228
-aStatus    1
-aName      Boolean
-aGroupName Base
-
-eW_MetaDef 3
-aCPLR_ZKey 905181230
-aStatus    1
-aName      Blob
-aGroupName Base
-
-eW_MetaDef 3
-aCPLR_ZKey 905181232
-aStatus    1
-aName      Date
-aGroupName Base
-
-eW_MetaDef 3
-aCPLR_ZKey 905181242
-aStatus    1
-aName      GeneratedKey
-aGroupName Base
-
-eW_MetaDef 3
-aCPLR_ZKey 905181226
-aStatus    1
-aName      Double
-aGroupName Base
-
-eW_MetaDef 3
 aCPLR_ZKey 905181217
 aStatus    1
 aName      Y/N
-aGroupName Base
-
-eW_MetaDef 3
-aCPLR_ZKey 905181215
-aStatus    1
-aName      DateTime
+aLastUpdateDate 20171115231631850
 aGroupName Base
 
 eW_MetaType 2
@@ -603,9 +610,9 @@ aJavaClassName com.quinsoft.zeidon.domains.BooleanDomain
 eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.DateTimeDomain
 
-i66        5
-i70        6
-i71        7
+i72        5
+i76        6
+i77        7
 i80        30
 i83        33
 i85        41
