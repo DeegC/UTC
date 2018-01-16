@@ -56,7 +56,7 @@ export const UTC_DomainList = {
 
     "Temperature" : {
         name:  "Temperature",
-        class: "com.quinsoft.zeidon.domains.DoubleDomain", 
+        class: "org.deeg.utc.zeidon.TemperatureDomain", 
     } as Domain,
 
     "TemperatureUnit" : {

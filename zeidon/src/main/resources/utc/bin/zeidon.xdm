@@ -1,4 +1,4 @@
-z1000-Zeidon    ZEIDON   TZDMXGPO 11/15/17   23:16:31 1.0a2    
+z1000-Zeidon    ZEIDON   TZDMXGPO 01/12/18   23:15:18 1.0a2    
 eDomainGroup 1
 aName      UTC
 
@@ -132,7 +132,7 @@ aExternalValue SteinhartHart
 aInternalValue SteinhartHart
 
 eDomain    2
-aJavaClass com.quinsoft.zeidon.domains.DoubleDomain
+aJavaClass org.deeg.utc.zeidon.TemperatureDomain
 aZKey      905180737
 aName      Temperature
 aDesc      Temperature stored as Fahrenheit.  Can be converted to C or K.
@@ -141,9 +141,17 @@ aDataType  M
 aContextRestriction N
 
 eContext   3
+aZKey      905180746
+aName      C
+
+eContext   3
 aZKey      905180738
 aName      F
 aIsDefault Y
+
+eContext   3
+aZKey      905180747
+aName      K
 
 eDomain    2
 aJavaClass com.quinsoft.zeidon.domains.StaticTableDomain

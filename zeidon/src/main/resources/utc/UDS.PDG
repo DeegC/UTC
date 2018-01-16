@@ -1,7 +1,7 @@
-z1000-Zeidon    UDS      TZDGSRCO 11/01/17   00:28:36 1.0a2    
+z1000-Zeidon    UDS      TZDGSRCO 01/12/18   23:15:18 1.0a2    
 eDomainGroup 1
 aZKey      905180724
-aNextZKeyToAssign 905180745
+aNextZKeyToAssign 905180747
 aName      UDS
 aDesc      UDS domains
 aExtension C
@@ -79,13 +79,23 @@ aZKey      905180737
 aName      Temperature
 aDesc      Temperature stored as Fahrenheit.  Can be converted to C or K.
 aDomainType E
-aJavaClass com.quinsoft.zeidon.domains.DoubleDomain
+aJavaClass org.deeg.utc.zeidon.TemperatureDomain
 aDataType  M
 aContextRestriction N
+
+eContext   3
+aZKey      905180746
+aDesc      Celsius
+aName      C
 
 eContext   3
 aZKey      905180738
 aDesc      Fahrenheit
 aName      F
 aIsDefault Y
+
+eContext   3
+aZKey      905180747
+aDesc      Kelvin
+aName      K
 
