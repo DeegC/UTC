@@ -89,6 +89,7 @@
                 <input type="text" formControlName="Name" placeholder="name" [zeidonErrorElement]="thermError"  />
                 <input type="checkbox" formControlName="AlarmOn" [zeidonErrorElement]="thermError" />
                 <input type="number" formControlName="AlarmLow" placeholder="low"
+                       zeidonContext="F"
                        [zeidonErrorElement]="thermError" maxlength="2" style="width:3em" />
                 <input type="number" formControlName="AlarmHigh" placeholder="high"
                        [zeidonErrorElement]="thermError" maxlength="2" style="width:3em" />

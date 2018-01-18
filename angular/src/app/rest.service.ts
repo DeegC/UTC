@@ -6,15 +6,23 @@ import 'rxjs/add/operator/toPromise';
 
 import { Configuration, Configuration_Configuration } from './lod/Configuration';
 import { Session } from './lod/Session';
+import { UtcConfig } from './lod/UtcConfig';
 import { Instant } from './lod/Instant';
 import { ZeidonRestValues } from './zeidon-rest-client';
 import { ObjectInstance, EntityInstance } from './zeidon';
 
 @Injectable()
 export class RestService {
+    private globalConfig: UtcConfig = undefined;
+
     constructor( private http: HttpClient,
                  private sanitizer: DomSanitizer,
-                 private values: ZeidonRestValues) { }
+                 private values: ZeidonRestValues) {
+
+        UtcConfig.activate().then( config => {
+            this.globalConfig = config;
+        } );
+    }
 
     getCurrentSession( ) {
         let url = `${this.values.restUrl}/getCurrentSession`;
@@ -76,5 +84,9 @@ export class RestService {
             return oi;
 
         return oi.createFromJson( response , { incrementalsSpecified: true} );
+    }
+
+    getCachedConfiguration(): UtcConfig {
+        return this.globalConfig;
     }
 }

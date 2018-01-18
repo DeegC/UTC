@@ -1,10 +1,10 @@
-import { Component, Input, Output, OnInit, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter, SimpleChanges, OnChanges, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 import { Configuration } from './lod/Configuration';
 import { RestService } from './rest.service';
 import { Configuration_ThermometerConfig } from './lod/Configuration';
 import { Session } from './lod/Session';
 import { ThermometerType } from './lod/ThermometerType';
-import { FormGroup  } from '@angular/forms';
+import { FormGroup, FormBuilder  } from '@angular/forms';
 import * as zeidon from './zeidon-angular';
 
 @Component({
@@ -12,20 +12,26 @@ import * as zeidon from './zeidon-angular';
     selector: 'configuration-detail',
     templateUrl: 'configuration.component.html'
 })
-export class ConfigurationComponent implements OnChanges, OnInit {
+export class ConfigurationComponent implements OnChanges, OnInit, AfterViewInit {
     @Input() configOi: Configuration;
     @Input() configurationList: Configuration;
     @Output() onSessionStarted = new EventEmitter<Session>();
+    @ViewChildren( zeidon.ErrorElementDirective ) viewChildren: QueryList<zeidon.ErrorElementDirective>;
     form: FormGroup;
     thermometerTypes: ThermometerType;
 
-    constructor(private restService: RestService) {
+    constructor(private restService: RestService, private formBuilder: FormBuilder ) {
     }
 
     ngOnInit() {
         ThermometerType.activate( { rootOnly: true } ).then( list => {
             this.thermometerTypes = list;
         } )
+    }
+
+    ngAfterViewInit() {
+        console.log( "ngAfterViewInit" );
+        this.buildForm();
     }
 
     ngOnChanges(changes: SimpleChanges) {

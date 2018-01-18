@@ -52,7 +52,7 @@ class TemperatureDomain( val application: Application,
         val t = contextName match {
             case "K" => c + 273.15
             case "C" => c
-            case "F" => ( c + 32.0 ) * TemperatureDomain.C_to_F_ratio
+            case "F" => ( c * TemperatureDomain.C_to_F_ratio ) + 32.0
             case _ => return c // If no context return the value.
         }
 

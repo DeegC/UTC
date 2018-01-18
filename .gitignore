@@ -10,3 +10,4 @@ bin/tmp
 zeidon/logs
 angular/dist
 utc.sqlite.db
+*.war
