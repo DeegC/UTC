@@ -824,7 +824,7 @@ class Relinker {
  */
 class ArrayDelegate<T extends EntityInstance> {
     hiddenEntities: Array<T>;
-    currentlySelected;
+    currentlySelected: any;
 
     constructor( private array: Array<T>,
         private entityName: string,

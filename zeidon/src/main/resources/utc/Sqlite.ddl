@@ -18,7 +18,7 @@ CREATE TABLE configuration (
            id                                                               INTEGER PRIMARY KEY NOT NULL, 
            description                                                      longtext           NOT NULL, 
            notes                                                            longtext           NULL    , 
-           target_temperature                                               int                NOT NULL, 
+           target_temperature                                               double             NOT NULL, 
            temperature_unit                                                 varchar( 1 )       NOT NULL, 
            record_temperatures                                              int                NULL    , 
            pid_p                                                            int                NOT NULL, 
@@ -27,9 +27,9 @@ CREATE TABLE configuration (
            max_pwm                                                          int                NULL    , 
            tweet_on                                                         int                NULL    , 
            pwm_frequency                                                    int                NULL    , 
+           generic_switch_name1                                             varchar( 100 )     NULL    , 
+           generic_switch1                                                  int                NULL    , 
            autoseq                                                          int                NULL    , 
-           generic_switch_name1                                             varchar( 100 )     NULL    ,
-           generic_switch1                                                  int                NULL    ,
            fk_id_thermometer_type                                           INTEGER            NOT NULL ) ;
  
 /* Entity - Instant */
@@ -61,11 +61,11 @@ CREATE TABLE session (
 /* Entity - SteinhartHartConfig */
 CREATE TABLE steinhart_hart_config ( 
            id                                                               INTEGER PRIMARY KEY NOT NULL, 
-           a                                                                varchar(20)        NOT NULL, 
-           b                                                                varchar(20)        NOT NULL, 
-           c                                                                varchar(20)        NOT NULL, 
-           r                                                                varchar(20)        NOT NULL, 
-           voltage_reference                                                varchar(20)        NOT NULL, 
+           a                                                                double             NOT NULL, 
+           b                                                                double             NOT NULL, 
+           c                                                                double             NOT NULL, 
+           r                                                                double             NOT NULL, 
+           voltage_reference                                                double             NOT NULL, 
            fk_id_thermometer_type                                           INTEGER            NOT NULL ) ;
  
 /* Entity - ThermometerConfig */

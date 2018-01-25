@@ -1,9 +1,9 @@
-z1000-Zeidon    UTC      TZEREMDO 12/11/17   01:57:54 1.0a2    
+z1000-Zeidon    UTC      TZEREMDO 01/23/18   22:21:07 1.0a2    
 eEntpER_Model 1
 aName      UTC
 aZKey      905181310
 aNextZKeyToAssign 905181452
-aLastSyncDate 20171211015754650
+aLastSyncDate 20180123222107384
 aDesc      UDS Digital Supervisor (android)
 
 eER_Entity 2
@@ -51,7 +51,7 @@ aDesc      Config options for a monitoring session.
 aER_DiagramPosX 28
 aER_DiagramPosY 5
 aSAP_Entity 0
-awkSelectedAttributeForDragSort 12
+awkSelectedAttributeForDragSort 4
 
 eER_Attribute 3
 aName      Id
@@ -103,12 +103,10 @@ aNotNull   Y
 awkSequence 4
 
 eDomain    4
-aZKey      905181155
-aDesc      Integer numbers from -lots to +lots
-aName      Integer
-aDataType  L
-aMaxStringLth 4
-aDecimalFormat 0
+aZKey      905180737
+aDesc      Temperature stored as Fahrenheit.  Can be converted to C or K.
+aName      Temperature
+aDataType  M
 aDomainType E
 aContextRestriction N
 
@@ -148,6 +146,14 @@ aDesc      P value for PID algorithm.
 awkSequence 7
 
 eDomain    4
+aZKey      905181155
+aDesc      Integer numbers from -lots to +lots
+aName      Integer
+aDataType  L
+aMaxStringLth 4
+aDecimalFormat 0
+aDomainType E
+aContextRestriction N
 
 eER_Attribute 3
 aName      PidI
@@ -357,12 +363,6 @@ aNotNull   Y
 awkSequence 2
 
 eDomain    4
-aZKey      905180737
-aDesc      Temperature stored as Fahrenheit.  Can be converted to C or K.
-aName      Temperature
-aDataType  M
-aDomainType E
-aContextRestriction N
 
 eER_Attribute 3
 aName      Therm0
@@ -1027,26 +1027,26 @@ i7         4
 i8         2
 i11        3
 i17        15
-i25        19
 i29        27
-i31        19
+i31        25
 i33        23
-i35        19
+i35        25
 i37        15
 i39        23
 i52        13
 i53        12
 i54        10
-i63        61
-i65        61
-i67        61
-i69        61
-i71        61
-i73        61
-i75        61
-i77        61
-i79        19
-i81        61
+i61        19
+i63        19
+i65        19
+i67        19
+i69        19
+i71        19
+i73        19
+i75        19
+i77        19
+i79        25
+i81        19
 i83        23
 i85        15
 i89        47
@@ -1084,8 +1084,8 @@ i139       119
 i140       43
 i142       3
 i146       15
-i148       19
-i150       19
+i148       25
+i150       25
 i152       23
 i154       23
 i155       42
@@ -1116,7 +1116,7 @@ i196       15
 i198       15
 i200       15
 i202       15
-i204       19
+i204       25
 i205       192
 i206       191
 i207       189

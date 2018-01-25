@@ -1,4 +1,4 @@
-z1000-Zeidon    UTC      TZCMLPLO 01/16/18   21:58:38 1.0a2    
+z1000-Zeidon    UTC      TZCMLPLO 01/23/18   22:21:49 1.0a2    
 eLPLR      1
 aName      UTC
 aDesc      Universal Temperature Controller
@@ -6,7 +6,7 @@ aZKey      92726748
 aPgmSrcDir c:\zeidon\zapp\utc
 aExecDir   c:\zeidon\zapp\utc\bin
 aMetaSrcDir c:\zeidon\zapp\utc
-aTaskUseCount 1
+aTaskUseCount 0
 aLastBuildDate 20180112231413763
 aLPLR_Type 3
 aTempDesc  Universal Temperature Controller
@@ -140,8 +140,8 @@ aStatus    1
 aUpdateInd 2
 aName      UTC
 aDesc      UDS Digital Supervisor (android)
-aLastSyncDate 20171225225854032
-aLastUpdateDate 20171225225854032
+aLastSyncDate 20180123222107438
+aLastUpdateDate 20180123222107438
 
 eW_MetaType 2
 aType      5
@@ -155,8 +155,8 @@ aStatus    1
 aUpdateInd 2
 aName      UTC
 aDesc      Universal Temperature Controller
-aLastSyncDate 20171225225854032
-aLastUpdateDate 20171225225854032
+aLastSyncDate 20180123222149551
+aLastUpdateDate 20180123222149551
 
 eW_MetaType 2
 aType      7
@@ -556,13 +556,13 @@ i69        8
 i70        13
 i72        22
 i75        25
-i77        30
-i78        27
-i79        33
-i80        29
+i77        27
+i78        28
+i79        29
+i80        30
 i81        31
-i82        28
-i83        32
+i82        32
+i83        33
 i86        36
 i87        37
 i88        38

@@ -4,16 +4,56 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { OnInit, SimpleChanges, OnChanges } from '@angular/core';
 import { Input } from '@angular/core';
-import { ElementRef, Renderer, ViewContainerRef } from '@angular/core';
+import { ElementRef, Renderer, Renderer2, ViewContainerRef } from '@angular/core';
 import { Directive } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, Validator } from '@angular/forms';
 import { ObjectInstance, EntityInstance, Domain } from './zeidon';
-import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormArray, Validators, NgControl } from '@angular/forms';
 import { CanDeactivate } from '@angular/router';
 import { Injectable } from '@angular/core';
 
 import { ZeidonConfiguration } from './zeidon';
 import { ZeidonRestValues, RestActivator, RestCommitter } from './zeidon-rest-client';
+
+@Directive( {
+    selector: '[attributeContext]',
+} )
+export class AttributeContextDirective implements OnInit, OnChanges {
+    @Input( "attributeContext" ) context: any;
+
+    constructor( private el: ElementRef,
+                 private ngControl: NgControl,
+                 private renderer: Renderer2,
+                 private viewContainer: ViewContainerRef ) {
+        let that = this;
+        ngControl.valueAccessor.writeValue = function( value: any ) {
+            that.setValueWithContext( that, value );
+        }
+    }
+
+    ngOnChanges( changes: SimpleChanges ) {
+        this.setValueWithContext( this );
+    }
+
+    ngOnInit(): void {
+        this.setValueWithContext( this );
+    }
+
+    private setValueWithContext( acd : AttributeContextDirective, value? : any ) {
+        let control = acd.ngControl.control as any;
+        if ( ! control ) {
+            acd.renderer.setProperty( acd.el.nativeElement, 'value', value );
+            return;
+        }
+
+        let ei = control.entityInstance;
+        let attributeDef = control.attributeDef;
+        value = ei ? ei.getAttribute( attributeDef.name, acd.context ) : undefined;
+        acd.renderer.setProperty( acd.el.nativeElement, 'value', value );
+        control.zeidonContext = acd.context;
+        control.root.hasZeidonContext = true;
+    }
+}
 
 /**
  * When added to an input element, this will automatically set the value of
@@ -101,6 +141,17 @@ let domainValidator = function( entityDef: any, attributeDef ) {
     };
 };
 
+class ZeidonFormControl extends FormControl {
+    // set value( newValue ) {
+    //     this.value = newValue;
+    // }
+
+    // get value() {
+    //     return ( this as { value: any } ).value;
+    // }
+
+}
+
 export interface ZeidonFormBuilderOptions {
     childEntities? : string[] // If undefined then add all, otherwise list of child entities to be added.
 }
@@ -112,11 +163,11 @@ export class ZeidonFormBuilder {
         return this.buildForms( ei, ei.oi.getLodDef(), ei.entityDef, options, form );
     }
 
-    buildForms( ei        : EntityInstance,
-                lodDef    : any,
-                entityDef : any,
-                options?  : ZeidonFormBuilderOptions,
-                form?     : FormGroup ) : FormGroup {
+    private buildForms( ei        : EntityInstance,
+                        lodDef    : any,
+                        entityDef : any,
+                        options?  : ZeidonFormBuilderOptions,
+                        form?     : FormGroup ) : FormGroup {
 
         // Set default values
         options = options || {};
@@ -131,13 +182,14 @@ export class ZeidonFormBuilder {
                 continue;
 
             let value = ei ? ei.getAttribute( attrName) : undefined;
-            let formControl = new FormControl( value, domainValidator( entityDef, attributeDef ) );
+            let formControl = new ZeidonFormControl( value, domainValidator( entityDef, attributeDef ) );
 
             // Add entityDef and attributeDef to the control so it can be used later to add to the class.
             // (See ErrorElementDirective.)
             let fc = formControl as any;
             fc.entityDef = entityDef;
             fc.attributeDef = attributeDef;
+            fc.entityInstance = ei;
 
             // If the attribute is not updatable for some reason then set it as disabled.
             // If ei == undefined then there is no valid entity instance.
@@ -175,6 +227,18 @@ export class ZeidonFormBuilder {
 
         return form;
     }
+}
+
+export interface ZeidonFormReaderOptions {
+}
+
+export class ZeidonFormReader {
+    public readForm( oi: ObjectInstance,
+                     form: FormGroup,
+                     options?: ZeidonFormReaderOptions ) {
+        oi.root.selected().update( form.value );
+    }
+
 }
 
 /**

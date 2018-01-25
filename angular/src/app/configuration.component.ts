@@ -12,11 +12,10 @@ import * as zeidon from './zeidon-angular';
     selector: 'configuration-detail',
     templateUrl: 'configuration.component.html'
 })
-export class ConfigurationComponent implements OnChanges, OnInit, AfterViewInit {
+export class ConfigurationComponent implements OnChanges, OnInit {
     @Input() configOi: Configuration;
     @Input() configurationList: Configuration;
     @Output() onSessionStarted = new EventEmitter<Session>();
-    @ViewChildren( zeidon.ErrorElementDirective ) viewChildren: QueryList<zeidon.ErrorElementDirective>;
     form: FormGroup;
     thermometerTypes: ThermometerType;
 
@@ -29,11 +28,6 @@ export class ConfigurationComponent implements OnChanges, OnInit, AfterViewInit 
         } )
     }
 
-    ngAfterViewInit() {
-        console.log( "ngAfterViewInit" );
-        this.buildForm();
-    }
-
     ngOnChanges(changes: SimpleChanges) {
         this.buildForm();
         console.log( "ngOnChanges for configuration" );
@@ -44,7 +38,7 @@ export class ConfigurationComponent implements OnChanges, OnInit, AfterViewInit 
     }
 
     saveConfig( event ): void {
-        this.configOi.Configuration$.update( this.form.value );
+        new zeidon.ZeidonFormReader().readForm( this.configOi, this.form );
         this.configOi.commit().then(config => {
             this.configOi = config;
             this.buildForm();

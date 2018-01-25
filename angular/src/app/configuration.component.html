@@ -15,8 +15,10 @@
 
       <div>
         <label>Target Temperature: </label>
-        <input type="number" formControlName="TargetTemperature" [zeidonErrorElement]="targetError"
-               placeholder="target temperature" style="width:3em" />
+        <input
+               attributeContext="{{configOi.Configuration$.TemperatureUnit}}"
+              type="number" formControlName="TargetTemperature" [zeidonErrorElement]="targetError"
+              placeholder="target temperature" style="width:3em" />
       </div>
       <div #targetError class="alert alert-danger" style="display:none"></div>
 
@@ -89,7 +91,7 @@
                 <input type="text" formControlName="Name" placeholder="name" [zeidonErrorElement]="thermError"  />
                 <input type="checkbox" formControlName="AlarmOn" [zeidonErrorElement]="thermError" />
                 <input type="number" formControlName="AlarmLow" placeholder="low"
-                       zeidonContext="F"
+                       attributeContext="{{configOi.Configuration$.TemperatureUnit}}"
                        [zeidonErrorElement]="thermError" maxlength="2" style="width:3em" />
                 <input type="number" formControlName="AlarmHigh" placeholder="high"
                        [zeidonErrorElement]="thermError" maxlength="2" style="width:3em" />

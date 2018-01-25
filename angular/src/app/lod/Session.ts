@@ -361,7 +361,7 @@ export const Session_LodDef = {
                     name:         "TargetTemperature",
                     hidden:       false,
                     required:     true,
-                    domainName:   "Integer",
+                    domainName:   "Temperature",
                     persistent:   true,
                     key:          false,
                     update:       true,
