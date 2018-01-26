@@ -1,4 +1,4 @@
-z1000-Zeidon    UTC      TZCMLPLO 01/23/18   22:21:49 1.0a2    
+z1000-Zeidon    UTC      TZCMLPLO 01/26/18   01:11:09 1.0a2    
 eLPLR      1
 aName      UTC
 aDesc      Universal Temperature Controller
@@ -94,6 +94,24 @@ aStatus    1
 aUpdateInd 2
 aName      DateTime
 aLastUpdateDate 20171209203840695
+
+eW_MetaDef 3
+aCPLR_ZKey 905180731
+aStatus    1
+aName      TemperatureUnit
+aGroupName UDS
+
+eW_MetaDef 3
+aCPLR_ZKey 905180743
+aStatus    1
+aName      ProbeAlgorithm
+aGroupName UDS
+
+eW_MetaDef 3
+aCPLR_ZKey 905180737
+aStatus    1
+aName      Temperature
+aGroupName UDS
 
 eW_MetaDef 3
 aCPLR_ZKey 905180731
@@ -334,8 +352,8 @@ aStatus    1
 aUpdateInd 2
 aName      UDS
 aDesc      UDS domains
-aLastSyncDate 20180112231518336
-aLastUpdateDate 20180112231518336
+aLastSyncDate 20180126011043802
+aLastUpdateDate 20180126011043802
 
 eW_MetaType 2
 aType      14
@@ -380,27 +398,6 @@ eW_MetaDef 3
 aGroupName TZAPDMAA
 
 eW_MetaDef 3
-aCPLR_ZKey 905180743
-aStatus    1
-aName      ProbeAlgorithm
-aLastUpdateDate 20180112231518336
-aGroupName UDS
-
-eW_MetaDef 3
-aCPLR_ZKey 905180737
-aStatus    1
-aName      Temperature
-aLastUpdateDate 20180112231518336
-aGroupName UDS
-
-eW_MetaDef 3
-aCPLR_ZKey 905180731
-aStatus    1
-aName      TemperatureUnit
-aLastUpdateDate 20180112231518336
-aGroupName UDS
-
-eW_MetaDef 3
 aGroupName TZAPDMAA
 
 eW_MetaDef 3
@@ -408,6 +405,24 @@ aGroupName TablesA
 
 eW_MetaDef 3
 aGroupName Base
+
+eW_MetaDef 3
+aCPLR_ZKey 905180731
+aStatus    1
+aName      TemperatureUnit
+aGroupName UDS
+
+eW_MetaDef 3
+aCPLR_ZKey 905180743
+aStatus    1
+aName      ProbeAlgorithm
+aGroupName UDS
+
+eW_MetaDef 3
+aCPLR_ZKey 905180737
+aStatus    1
+aName      Temperature
+aGroupName UDS
 
 eW_MetaType 2
 aType      2004
@@ -544,33 +559,33 @@ aJavaClassName com.quinsoft.zeidon.domains.BooleanDomain
 eDomainJavaClass 2
 aJavaClassName com.quinsoft.zeidon.domains.DateTimeDomain
 
-i58        9
-i59        5
-i60        10
-i61        14
-i62        12
-i63        11
-i64        6
+i61        9
+i62        5
+i63        10
+i64        14
+i65        12
+i66        11
+i67        6
 i68        7
 i69        8
 i70        13
-i72        22
 i75        25
-i77        27
 i78        28
-i79        29
 i80        30
 i81        31
 i82        32
 i83        33
+i84        34
+i85        35
 i86        36
-i87        37
-i88        38
 i89        39
 i90        40
 i91        41
 i92        42
-i97        47
-i98        48
-i99        49
+i93        43
+i94        44
+i95        45
 i100       50
+i101       51
+i102       52
+i103       53

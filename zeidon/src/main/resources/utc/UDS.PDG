@@ -1,4 +1,4 @@
-z1000-Zeidon    UDS      TZDGSRCO 01/12/18   23:15:18 1.0a2    
+z1000-Zeidon    UDS      TZDGSRCO 01/26/18   01:10:43 1.0a2    
 eDomainGroup 1
 aZKey      905180724
 aNextZKeyToAssign 905180747
@@ -87,12 +87,12 @@ eContext   3
 aZKey      905180746
 aDesc      Celsius
 aName      C
+aIsDefault Y
 
 eContext   3
 aZKey      905180738
 aDesc      Fahrenheit
 aName      F
-aIsDefault Y
 
 eContext   3
 aZKey      905180747

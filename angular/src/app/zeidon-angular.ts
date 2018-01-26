@@ -48,7 +48,7 @@ export class AttributeContextDirective implements OnChanges {
 
         let ei = control.entityInstance;
         let attributeDef = control.attributeDef;
-        let value = ei ? ei.getAttribute( attributeDef.name, this.context ) : undefined;
+        let value = ei.getAttribute( attributeDef.name, this.context );
         control.setValue( value );
         control.zeidonContext = this.context;
         control.root.controlsWithContext.push(control);
@@ -241,7 +241,6 @@ export class ZeidonFormReader {
 
             if ( attributeDef.domain && attributeDef.domain && attributeDef.domain.domainFunctions ) {
                 value = attributeDef.domain && attributeDef.domain.domainFunctions.convertExternalValue( control.value, attributeDef, control.zeidonContext );
-                console.log( `Setting value to ${value}` )
                 control.setValue( value );
             }
         }
