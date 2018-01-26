@@ -51,7 +51,7 @@ export class AttributeContextDirective implements OnInit, OnChanges {
         value = ei ? ei.getAttribute( attributeDef.name, acd.context ) : undefined;
         acd.renderer.setProperty( acd.el.nativeElement, 'value', value );
         control.zeidonContext = acd.context;
-        control.root.hasZeidonContext = true;
+        control.root.controlsWithContext.push(control);
     }
 }
 
@@ -68,7 +68,7 @@ export class ErrorElementDirective implements Validator, OnInit, OnChanges {
     private control: AbstractControl;
 
     constructor( private el: ElementRef,
-                 private renderer: Renderer,
+                 private renderer: Renderer2,
                  private viewContainer: ViewContainerRef ) {
     }
 
@@ -89,8 +89,9 @@ export class ErrorElementDirective implements Validator, OnInit, OnChanges {
      */
     private initControl( control ) {
         this.control = control;
-        this.el.nativeElement.className = this.el.nativeElement.className +
-            ` attr_${control.attributeDef.name} entity_${control.entityDef.name} domain_${control.attributeDef.domain.name}`;
+        this.renderer.addClass( this.el.nativeElement, `attr_${control.attributeDef.name}` );
+        this.renderer.addClass( this.el.nativeElement, `entity_${control.entityDef.name}` );
+        this.renderer.addClass( this.el.nativeElement, `domain_${control.attributeDef.domain.name}` );
     }
 
     /**
@@ -104,12 +105,12 @@ export class ErrorElementDirective implements Validator, OnInit, OnChanges {
 
         if ( control.zeidonErrorMessage ) {
             if ( this.errorElement ) {
-                this.renderer.setElementStyle( this.errorElement, "display", "" );
+                this.renderer.setStyle( this.errorElement, "display", "" );
                 this.errorElement.innerHTML = control.zeidonErrorMessage;
             }
         } else {
             if ( this.errorElement ) {
-                this.renderer.setElementStyle( this.errorElement, "display", "none" );
+                this.renderer.setStyle( this.errorElement, "display", "none" );
             }
         }
         return null;
@@ -141,26 +142,14 @@ let domainValidator = function( entityDef: any, attributeDef ) {
     };
 };
 
-class ZeidonFormControl extends FormControl {
-    // set value( newValue ) {
-    //     this.value = newValue;
-    // }
-
-    // get value() {
-    //     return ( this as { value: any } ).value;
-    // }
-
-}
-
 export interface ZeidonFormBuilderOptions {
     childEntities? : string[] // If undefined then add all, otherwise list of child entities to be added.
 }
 
 export class ZeidonFormBuilder {
     public group( ei: EntityInstance,
-                  options?: ZeidonFormBuilderOptions,
-                  form?: FormGroup ): FormGroup {
-        return this.buildForms( ei, ei.oi.getLodDef(), ei.entityDef, options, form );
+                  options?: ZeidonFormBuilderOptions ): FormGroup {
+        return this.buildForms( ei, ei.oi.getLodDef(), ei.entityDef, options, undefined );
     }
 
     private buildForms( ei        : EntityInstance,
@@ -171,7 +160,15 @@ export class ZeidonFormBuilder {
 
         // Set default values
         options = options || {};
-        form = form || new FormGroup({});
+
+        // Create the root form if it doesn't exist.
+        if ( ! form ) {
+            form = new FormGroup({});
+
+            // Create an empty array on the root to keep track of which
+            // controls have Zeidon contexts.
+            (form as any).controlsWithContext = [];
+        }
 
         // Add a FormControl to the form for each attribute.  If ei is blank
         // then set the attribute value to undefined and read-only.  This allows the page
@@ -182,7 +179,7 @@ export class ZeidonFormBuilder {
                 continue;
 
             let value = ei ? ei.getAttribute( attrName) : undefined;
-            let formControl = new ZeidonFormControl( value, domainValidator( entityDef, attributeDef ) );
+            let formControl = new FormControl( value, domainValidator( entityDef, attributeDef ) );
 
             // Add entityDef and attributeDef to the control so it can be used later to add to the class.
             // (See ErrorElementDirective.)
