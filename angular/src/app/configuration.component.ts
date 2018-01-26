@@ -30,7 +30,6 @@ export class ConfigurationComponent implements OnChanges, OnInit {
 
     ngOnChanges(changes: SimpleChanges) {
         this.buildForm();
-        console.log( "ngOnChanges for configuration" );
     }
 
     buildForm() {

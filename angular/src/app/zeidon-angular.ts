@@ -18,39 +18,39 @@ import { ZeidonRestValues, RestActivator, RestCommitter } from './zeidon-rest-cl
 @Directive( {
     selector: '[attributeContext]',
 } )
-export class AttributeContextDirective implements OnInit, OnChanges {
+export class AttributeContextDirective implements OnChanges {
     @Input( "attributeContext" ) context: any;
 
     constructor( private el: ElementRef,
                  private ngControl: NgControl,
                  private renderer: Renderer2,
                  private viewContainer: ViewContainerRef ) {
-        let that = this;
-        ngControl.valueAccessor.writeValue = function( value: any ) {
-            that.setValueWithContext( that, value );
-        }
     }
 
     ngOnChanges( changes: SimpleChanges ) {
-        this.setValueWithContext( this );
+        // Set the zeidonContext to undefined.  This will force the value of
+        // the control to be reset with the new context.
+        (this.ngControl.control as any).zeidonContext = undefined;
+        this.setValueWithContext();
     }
 
-    ngOnInit(): void {
-        this.setValueWithContext( this );
+    ngDoCheck(): void {
+        this.setValueWithContext();
     }
 
-    private setValueWithContext( acd : AttributeContextDirective, value? : any ) {
-        let control = acd.ngControl.control as any;
-        if ( ! control ) {
-            acd.renderer.setProperty( acd.el.nativeElement, 'value', value );
+    private setValueWithContext() {
+        let control = this.ngControl.control as any;
+
+        // If the zeidonContext for this control has been set then we don't need
+        // to set the value because it's already been done.
+        if ( control.zeidonContext )
             return;
-        }
 
         let ei = control.entityInstance;
         let attributeDef = control.attributeDef;
-        value = ei ? ei.getAttribute( attributeDef.name, acd.context ) : undefined;
-        acd.renderer.setProperty( acd.el.nativeElement, 'value', value );
-        control.zeidonContext = acd.context;
+        let value = ei ? ei.getAttribute( attributeDef.name, this.context ) : undefined;
+        control.setValue( value );
+        control.zeidonContext = this.context;
         control.root.controlsWithContext.push(control);
     }
 }
@@ -233,6 +233,19 @@ export class ZeidonFormReader {
     public readForm( oi: ObjectInstance,
                      form: FormGroup,
                      options?: ZeidonFormReaderOptions ) {
+
+        // Apply the domain to convert the external value to the internal value.
+        for ( let control of (form as any).controlsWithContext ) {
+            let attributeDef = control.attributeDef;
+            let value;
+
+            if ( attributeDef.domain && attributeDef.domain && attributeDef.domain.domainFunctions ) {
+                value = attributeDef.domain && attributeDef.domain.domainFunctions.convertExternalValue( control.value, attributeDef, control.zeidonContext );
+                console.log( `Setting value to ${value}` )
+                control.setValue( value );
+            }
+        }
+
         oi.root.selected().update( form.value );
     }
 
