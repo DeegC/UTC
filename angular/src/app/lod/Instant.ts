@@ -139,7 +139,7 @@ export const Instant_LodDef = {
                     name:         "TargetTemperature",
                     hidden:       false,
                     required:     true,
-                    domainName:   "Temperature",
+                    domainName:   "Integer",
                     persistent:   true,
                     key:          false,
                     update:       true,

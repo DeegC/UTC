@@ -1,4 +1,4 @@
-z1000-Zeidon    SESSION  TZZOLODO 01/23/18   22:21:42 1.0a2    
+z1000-Zeidon    SESSION  TZZOLODO 01/29/18   23:55:15 1.0a2    
 eLOD       1
 aZKey      929210658
 aNextZKeyToAssign 929210711
@@ -233,12 +233,6 @@ aZKey      905181397
 aNotNull   Y
 
 eDomainRec 6
-aZKey      905180737
-aName      Temperature
-aDomainType E
-aDataType  M
-aDesc      Temperature stored as Fahrenheit.  Can be converted to C or K.
-aContextRestriction N
 
 eLOD_AttributeRec 4
 aZKey      929210683
@@ -442,6 +436,12 @@ aZKey      905181318
 aDesc      Reading from thermometer 0.
 
 eDomainRec 6
+aZKey      905180737
+aName      Temperature
+aDomainType E
+aDataType  M
+aDesc      Temperature stored as Fahrenheit.  Can be converted to C or K.
+aContextRestriction N
 
 eLOD_AttributeRec 4
 aZKey      929210668
@@ -960,6 +960,7 @@ i24        9
 i30        6
 i33        12
 i36        12
+i39        15
 i45        9
 i48        15
 i54        51
@@ -968,17 +969,16 @@ i60        9
 i63        15
 i66        12
 i69        9
-i79        39
-i82        39
-i85        39
-i88        39
-i91        39
-i94        39
-i97        39
-i100       39
-i103       39
+i79        15
+i85        82
+i88        82
+i91        82
+i94        82
+i97        82
+i100       82
+i103       82
 i106       15
-i109       39
+i109       82
 i112       9
 i115       12
 i121       6
@@ -1011,7 +1011,7 @@ i154       35
 i155       12
 i156       37
 i157       38
-i158       39
+i158       15
 i159       40
 i160       41
 i161       42
@@ -1076,37 +1076,37 @@ i219       75
 i220       76
 i221       77
 i222       78
-i223       39
+i223       15
 i224       80
 i225       81
-i226       39
+i226       82
 i227       83
 i228       84
-i229       39
+i229       82
 i230       86
 i231       87
-i232       39
+i232       82
 i233       89
 i234       90
-i235       39
+i235       82
 i236       92
 i237       93
-i238       39
+i238       82
 i239       95
 i240       96
-i241       39
+i241       82
 i242       98
 i243       99
-i244       39
+i244       82
 i245       101
 i246       102
-i247       39
+i247       82
 i248       104
 i249       105
 i250       15
 i251       107
 i252       108
-i253       39
+i253       82
 i254       110
 i255       111
 i256       9

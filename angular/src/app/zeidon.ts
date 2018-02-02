@@ -393,7 +393,6 @@ export class EntityInstance {
 
             this.setAttribute( attributeName, attributeDef.initialValue );
         }
-
     }
 
     setAttribute( attr: string, value: any, options: CreateOptions = DEFAULT_CREATE_OPTIONS ) {

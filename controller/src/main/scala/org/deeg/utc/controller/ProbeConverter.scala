@@ -6,6 +6,11 @@ import com.quinsoft.zeidon.scala.basedOn
 import com.quinsoft.zeidon.scala.Implicits._
 import com.quinsoft.zeidon.ZeidonException
 
+/**
+ * Used to convert a value read from the hardware into a temperature.
+ * This allows us to use different types of thermometers and different
+ * builds (e.g. resistor values).
+ */
 trait ProbeConverter {
     val thermometerType : View
 

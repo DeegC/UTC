@@ -1,4 +1,4 @@
-z1000-Zeidon    UTC      TZTENVRO 01/23/18   22:21:49 1.0a2    
+z1000-Zeidon    UTC      TZTENVRO 01/29/18   23:55:20 1.0a2    
 eTE_DB_Environ 1
 aName      UTC
 aZKey      1894
@@ -17,12 +17,12 @@ aTranslateNamesToLowerUnderscore Y
 
 eTE_TablRec 3
 aName      base
-aZKey      2702
+aZKey      2784
 aDataOrRel D
 
 eTE_FieldDataRel 4
 aName      id
-aZKey      2703
+aZKey      2785
 aDataOrRelfieldOrSet D
 aKey       Y
 aDataType  A
@@ -53,7 +53,7 @@ aER_DiagramPosY 17
 
 eTE_TablRecKey 4
 aName      id
-aZKey      2704
+aZKey      2786
 aCategory  2
 aDesc      Implements 
 
@@ -66,13 +66,13 @@ eTE_FieldDataRelKey 5
 
 eTE_TablRec 3
 aName      configuration
-aZKey      2705
+aZKey      2787
 aDataOrRel D
 aDesc      Config options for a monitoring session.
 
 eTE_FieldDataRel 4
 aName      id
-aZKey      2706
+aZKey      2788
 aDataOrRelfieldOrSet D
 aKey       Y
 aDataType  A
@@ -90,7 +90,7 @@ eDomain    6
 
 eTE_FieldDataRelFK_1 5
 aName      fk_id_configuration
-aZKey      2781
+aZKey      2863
 aDesc      configuration(has [1:10] ) thermometer_config
 aDataOrRelfieldOrSet R
 aDataType  A
@@ -99,7 +99,7 @@ aSQL_NULLS Y
 
 eTE_FieldDataRelFK_1 5
 aName      fk_id_configuration
-aZKey      2782
+aZKey      2864
 aDesc      configuration(has [0:m] ) z_session
 aDataOrRelfieldOrSet R
 aDataType  A
@@ -108,7 +108,7 @@ aSQL_NULLS Y
 
 eTE_FieldDataRel 4
 aName      description
-aZKey      2707
+aZKey      2789
 aDesc      Description of this session.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -135,7 +135,7 @@ aContextRestriction N
 
 eTE_FieldDataRel 4
 aName      notes
-aZKey      2708
+aZKey      2790
 aDesc      Notes that are copied to the Session when a new Session is created.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -153,11 +153,12 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      target_temperature
-aZKey      2709
+aZKey      2791
 aDataOrRelfieldOrSet D
 aKey       N
-aDataType  M
-aLength    40
+aDataType  L
+aLength    4
+aSQL_SCALE 0
 aSQL_NULLS Y
 awkSequence 4
 
@@ -167,16 +168,18 @@ aZKey      905181397
 aNotNull   Y
 
 eDomain    6
-aZKey      905180737
-aName      Temperature
-aDataType  M
-aDesc      Temperature stored as Fahrenheit.  Can be converted to C or K.
+aZKey      905181155
+aName      Integer
+aDataType  L
+aMaxStringLth 4
+aDecimalFormat 0
+aDesc      Integer numbers from -lots to +lots
 aDomainType E
 aContextRestriction N
 
 eTE_FieldDataRel 4
 aName      temperature_unit
-aZKey      2710
+aZKey      2792
 aDataOrRelfieldOrSet D
 aKey       N
 aDataType  S
@@ -199,7 +202,7 @@ aContextRestriction N
 
 eTE_FieldDataRel 4
 aName      record_temperatures
-aZKey      2711
+aZKey      2793
 aDesc      If 'Y', then record the smoker sesson.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -222,7 +225,7 @@ aContextRestriction N
 
 eTE_FieldDataRel 4
 aName      pid_p
-aZKey      2712
+aZKey      2794
 aDesc      P value for PID algorithm.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -239,18 +242,10 @@ aNotNull   Y
 aDesc      P value for PID algorithm.
 
 eDomain    6
-aZKey      905181155
-aName      Integer
-aDataType  L
-aMaxStringLth 4
-aDecimalFormat 0
-aDesc      Integer numbers from -lots to +lots
-aDomainType E
-aContextRestriction N
 
 eTE_FieldDataRel 4
 aName      pid_i
-aZKey      2713
+aZKey      2795
 aDesc      I value for PID algorithm.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -274,7 +269,7 @@ aContextRestriction N
 
 eTE_FieldDataRel 4
 aName      pid_d
-aZKey      2714
+aZKey      2796
 aDesc      D value for PID algorithm.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -293,7 +288,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      max_pwm
-aZKey      2715
+aZKey      2797
 aDesc      The max value for the output pwm.  Use lower values for more powerful blowers.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -311,7 +306,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      tweet_on
-aZKey      2716
+aZKey      2798
 aDesc      If 'Y', then periodically tweet status.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -328,7 +323,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      pwm_frequency
-aZKey      2717
+aZKey      2799
 aDesc      Frequency of the PWM signal
 aDataOrRelfieldOrSet D
 aKey       N
@@ -346,7 +341,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      generic_switch_name1
-aZKey      2718
+aZKey      2800
 aDesc      Name of generic switch 1
 aDataOrRelfieldOrSet D
 aKey       N
@@ -364,7 +359,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      generic_switch1
-aZKey      2719
+aZKey      2801
 aDesc      Boolean value for generic switch 1
 aDataOrRelfieldOrSet D
 aKey       N
@@ -381,7 +376,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      autoseq
-aZKey      2777
+aZKey      2859
 aDataOrRelfieldOrSet D
 aKey       N
 aDataType  L
@@ -418,7 +413,7 @@ aSAP_Entity 0
 
 eTE_FieldDataRel 4
 aName      fk_id_thermometer_type
-aZKey      2783
+aZKey      2865
 aDesc      thermometer_type(has [0:m] ) configuration
 aDataOrRelfieldOrSet R
 aDataType  A
@@ -453,7 +448,7 @@ aSAP_Entity 0
 
 eTE_FieldDataRel_PK 5
 aName      id
-aZKey      2759
+aZKey      2841
 aDataOrRelfieldOrSet D
 aKey       Y
 aDataType  A
@@ -471,7 +466,7 @@ aSAP_Entity 0
 
 eTE_TablRecKey 4
 aName      id
-aZKey      2720
+aZKey      2802
 aCategory  2
 aDesc      Implements 
 
@@ -488,13 +483,13 @@ eTE_FieldDataRelAsFK 6
 
 eTE_TablRec 3
 aName      instant
-aZKey      2721
+aZKey      2803
 aDataOrRel D
 aDesc      This entity records all the readings of a moment in time in a UTC run.
 
 eTE_FieldDataRel 4
 aName      timestamp
-aZKey      2722
+aZKey      2804
 aDesc      Instant that this record was recorded.
 aDataOrRelfieldOrSet D
 aKey       Y
@@ -520,11 +515,12 @@ aContextRestriction N
 
 eTE_FieldDataRel 4
 aName      target_temperature
-aZKey      2723
+aZKey      2805
 aDataOrRelfieldOrSet D
 aKey       N
-aDataType  M
-aLength    40
+aDataType  L
+aLength    4
+aSQL_SCALE 0
 aSQL_NULLS Y
 awkSequence 2
 
@@ -537,7 +533,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      therm0
-aZKey      2724
+aZKey      2806
 aDesc      Reading from thermometer 0.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -551,10 +547,16 @@ aZKey      905181318
 aDesc      Reading from thermometer 0.
 
 eDomain    6
+aZKey      905180737
+aName      Temperature
+aDataType  M
+aDesc      Temperature stored as Fahrenheit.  Can be converted to C or K.
+aDomainType E
+aContextRestriction N
 
 eTE_FieldDataRel 4
 aName      therm1
-aZKey      2725
+aZKey      2807
 aDesc      Reading from thermometer 1.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -571,7 +573,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      therm2
-aZKey      2726
+aZKey      2808
 aDesc      Reading from thermometer 2.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -588,7 +590,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      therm3
-aZKey      2727
+aZKey      2809
 aDesc      Reading from thermometer 3.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -605,7 +607,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      therm4
-aZKey      2728
+aZKey      2810
 aDesc      Reading from thermometer 4
 aDataOrRelfieldOrSet D
 aKey       N
@@ -622,7 +624,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      therm5
-aZKey      2729
+aZKey      2811
 aDesc      Reading from thermometer 5
 aDataOrRelfieldOrSet D
 aKey       N
@@ -639,7 +641,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      therm6
-aZKey      2730
+aZKey      2812
 aDataOrRelfieldOrSet D
 aKey       N
 aDataType  M
@@ -654,7 +656,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      therm7
-aZKey      2731
+aZKey      2813
 aDataOrRelfieldOrSet D
 aKey       N
 aDataType  M
@@ -669,7 +671,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      pw_m0
-aZKey      2732
+aZKey      2814
 aDesc      Set PWM speed for blower 0.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -687,7 +689,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      cpu_temperature
-aZKey      2733
+aZKey      2815
 aDataOrRelfieldOrSet D
 aKey       N
 aDataType  M
@@ -702,7 +704,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      error
-aZKey      2734
+aZKey      2816
 aDesc      If true there is an error
 aDataOrRelfieldOrSet D
 aKey       N
@@ -719,7 +721,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      error_message
-aZKey      2735
+aZKey      2817
 aDataOrRelfieldOrSet D
 aKey       N
 aDataType  V
@@ -735,7 +737,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      fk_id_session
-aZKey      2778
+aZKey      2860
 aDesc      z_session(has [0:m] ) instant
 aDataOrRelfieldOrSet R
 aKey       Y
@@ -772,7 +774,7 @@ aSAP_Entity 0
 
 eTE_FieldDataRel_PK 5
 aName      id
-aZKey      2738
+aZKey      2820
 aDataOrRelfieldOrSet D
 aKey       Y
 aDataType  A
@@ -789,7 +791,7 @@ aER_DiagramPosY 28
 
 eTE_TablRecKey 4
 aName      z_timestamp
-aZKey      2736
+aZKey      2818
 aCategory  3
 aDesc      Implements 
 
@@ -806,7 +808,7 @@ aTempOrderNo 3
 
 eTE_TablRec 3
 aName      session
-aZKey      2737
+aZKey      2819
 aDataOrRel D
 aDesc      A controller session; i.e. a cook.
 aKeepPhysicalCharacteristicsFlag Y
@@ -826,7 +828,7 @@ eTE_FieldDataRelFK_1 5
 
 eTE_FieldDataRel 4
 aName      date
-aZKey      2739
+aZKey      2821
 aDataOrRelfieldOrSet D
 aKey       N
 aDataType  T
@@ -844,7 +846,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      end_date
-aZKey      2740
+aZKey      2822
 aDataOrRelfieldOrSet D
 aKey       N
 aDataType  T
@@ -859,7 +861,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      notes
-aZKey      2741
+aZKey      2823
 aDesc      Notes regarding this session
 aDataOrRelfieldOrSet D
 aKey       N
@@ -902,7 +904,7 @@ eER_Entity 4
 
 eTE_TablRecKey 4
 aName      id
-aZKey      2742
+aZKey      2824
 aCategory  2
 aDesc      Implements 
 
@@ -917,13 +919,13 @@ eTE_FieldDataRelAsFK 6
 
 eTE_TablRec 3
 aName      steinhart_hart_config
-aZKey      2743
+aZKey      2825
 aDataOrRel D
 aDesc      Config values for SteinhartHart algorithm.
 
 eTE_FieldDataRel 4
 aName      id
-aZKey      2744
+aZKey      2826
 aDataOrRelfieldOrSet D
 aKey       Y
 aDataType  A
@@ -941,7 +943,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      a
-aZKey      2745
+aZKey      2827
 aDesc      Value "A" for Steinhart-Hart algoritrm
 aDataOrRelfieldOrSet D
 aKey       N
@@ -960,7 +962,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      b
-aZKey      2746
+aZKey      2828
 aDesc      Value "B" for Steinhart-Hart algoritrm
 aDataOrRelfieldOrSet D
 aKey       N
@@ -979,7 +981,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      c
-aZKey      2747
+aZKey      2829
 aDesc      Value "C" for Steinhart-Hart algoritrm
 aDataOrRelfieldOrSet D
 aKey       N
@@ -998,7 +1000,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      r
-aZKey      2748
+aZKey      2830
 aDesc      Value "R" for Steinhart-Hart algoritrm
 aDataOrRelfieldOrSet D
 aKey       N
@@ -1017,7 +1019,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      voltage_reference
-aZKey      2749
+aZKey      2831
 aDesc      VoltageReference for Steinhart-Hart algoritrm
 aDataOrRelfieldOrSet D
 aKey       N
@@ -1036,7 +1038,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      fk_id_thermometer_type
-aZKey      2779
+aZKey      2861
 aDesc      thermometer_type(has [0:1] ) steinhart_hart_config
 aDataOrRelfieldOrSet R
 aDataType  A
@@ -1075,7 +1077,7 @@ aSAP_Entity 0
 
 eTE_TablRecKey 4
 aName      id
-aZKey      2750
+aZKey      2832
 aCategory  2
 aDesc      Implements 
 
@@ -1088,13 +1090,13 @@ eTE_FieldDataRelKey 5
 
 eTE_TablRec 3
 aName      thermometer_config
-aZKey      2751
+aZKey      2833
 aDataOrRel D
 aDesc      Config values for the thermometer
 
 eTE_FieldDataRel 4
 aName      id
-aZKey      2752
+aZKey      2834
 aDataOrRelfieldOrSet D
 aKey       Y
 aDataType  A
@@ -1112,7 +1114,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      name
-aZKey      2753
+aZKey      2835
 aDesc      The name of this thermometer that will be displayed in the UI.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -1132,7 +1134,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      alarm_low
-aZKey      2754
+aZKey      2836
 aDesc      Sound the alarm if this thermometer goes below this value
 aDataOrRelfieldOrSet D
 aKey       N
@@ -1150,7 +1152,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      alarm_high
-aZKey      2755
+aZKey      2837
 aDesc      Sound the alarm if this thermometer goes over this value.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -1168,7 +1170,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      alarm_on
-aZKey      2756
+aZKey      2838
 aDesc      Sound the temperature alarm only when this is on.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -1185,7 +1187,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      autoseq
-aZKey      2776
+aZKey      2858
 aDataOrRelfieldOrSet D
 aKey       N
 aDataType  L
@@ -1220,7 +1222,7 @@ eER_Entity 4
 
 eTE_TablRecKey 4
 aName      id
-aZKey      2757
+aZKey      2839
 aCategory  2
 aDesc      Implements 
 
@@ -1233,7 +1235,7 @@ eTE_FieldDataRelKey 5
 
 eTE_TablRec 3
 aName      thermometer_type
-aZKey      2758
+aZKey      2840
 aDataOrRel D
 aDesc      Defines the diffferent thermometer types and the algorithms used to compute temperatures.
 
@@ -1252,7 +1254,7 @@ eTE_FieldDataRelFK_1 5
 
 eTE_FieldDataRelFK_1 5
 aName      fk_id_thermometer_type
-aZKey      2780
+aZKey      2862
 aDesc      thermometer_type(is default for [0:m] ) utc_config
 aDataOrRelfieldOrSet R
 aDataType  A
@@ -1263,7 +1265,7 @@ eTE_FieldDataRelFK_1 5
 
 eTE_FieldDataRel 4
 aName      name
-aZKey      2760
+aZKey      2842
 aDesc      Name of the thermo type
 aDataOrRelfieldOrSet D
 aKey       N
@@ -1283,7 +1285,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      description
-aZKey      2761
+aZKey      2843
 aDataOrRelfieldOrSet D
 aKey       N
 aDataType  V
@@ -1298,7 +1300,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      probe_algorithm
-aZKey      2762
+aZKey      2844
 aDesc      The name of the algorithm used to determine the probe's temperature.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -1324,7 +1326,7 @@ eER_Entity 4
 
 eTE_TablRecKey 4
 aName      id
-aZKey      2763
+aZKey      2845
 aCategory  2
 aDesc      Implements 
 
@@ -1343,13 +1345,13 @@ eTE_FieldDataRelAsFK 6
 
 eTE_TablRec 3
 aName      twitter_config
-aZKey      2764
+aZKey      2846
 aDataOrRel D
 aDesc      Config options for Twitter/tweeting.
 
 eTE_FieldDataRel 4
 aName      id
-aZKey      2765
+aZKey      2847
 aDataOrRelfieldOrSet D
 aKey       Y
 aDataType  A
@@ -1366,7 +1368,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      consumer_key
-aZKey      2766
+aZKey      2848
 aDesc      Twitter OAuth ConsumerKey
 aDataOrRelfieldOrSet D
 aKey       N
@@ -1384,7 +1386,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      consumer_secret
-aZKey      2767
+aZKey      2849
 aDesc      Twitter OAuth ConsumerSecret
 aDataOrRelfieldOrSet D
 aKey       N
@@ -1402,7 +1404,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      access_token
-aZKey      2768
+aZKey      2850
 aDesc      Twitter OAuth AccessToken
 aDataOrRelfieldOrSet D
 aKey       N
@@ -1420,7 +1422,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      access_token_secret
-aZKey      2769
+aZKey      2851
 aDesc      Twitter OAuth AccessTokenSecret
 aDataOrRelfieldOrSet D
 aKey       N
@@ -1438,7 +1440,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      username
-aZKey      2770
+aZKey      2852
 aDesc      Username for twitter account
 aDataOrRelfieldOrSet D
 aKey       N
@@ -1456,7 +1458,7 @@ eDomain    6
 
 eTE_FieldDataRel 4
 aName      tweet_period_in_minutes
-aZKey      2771
+aZKey      2853
 aDesc      How often, in minutes, to tweet status.
 aDataOrRelfieldOrSet D
 aKey       N
@@ -1482,7 +1484,7 @@ aER_DiagramPosY 26
 
 eTE_TablRecKey 4
 aName      id
-aZKey      2772
+aZKey      2854
 aCategory  2
 aDesc      Implements 
 
@@ -1495,13 +1497,13 @@ eTE_FieldDataRelKey 5
 
 eTE_TablRec 3
 aName      utc_config
-aZKey      2773
+aZKey      2855
 aDataOrRel D
 aDesc      Main configuration for UTC.
 
 eTE_FieldDataRel 4
 aName      id
-aZKey      2774
+aZKey      2856
 aDataOrRelfieldOrSet D
 aKey       Y
 aDataType  A
@@ -1551,7 +1553,7 @@ aSAP_Entity 0
 
 eTE_TablRecKey 4
 aName      id
-aZKey      2775
+aZKey      2857
 aCategory  2
 aDesc      Implements 
 
@@ -1565,26 +1567,26 @@ eTE_FieldDataRelKey 5
 i9         3
 i13        5
 i21        18
+i33        24
 i39        36
-i42        33
+i42        24
 i45        30
-i48        33
+i48        24
 i51        18
 i54        30
 i67        11
 i68        14
 i69        15
 i76        24
-i79        24
-i82        24
-i85        24
-i88        24
-i91        24
-i94        24
-i97        24
-i100       24
-i103       33
-i106       24
+i82        79
+i85        79
+i88        79
+i91        79
+i94        79
+i97        79
+i100       79
+i103       24
+i106       79
 i109       30
 i112       18
 i121       113
@@ -1612,8 +1614,8 @@ i170       63
 i174       148
 i178       5
 i181       18
-i184       33
-i187       33
+i184       24
+i187       24
 i190       30
 i193       57
 i194       64
@@ -1641,7 +1643,7 @@ i236       18
 i239       18
 i242       18
 i245       18
-i248       33
+i248       24
 i252       228
 i256       5
 i257       209

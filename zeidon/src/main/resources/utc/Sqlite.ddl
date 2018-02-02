@@ -18,7 +18,7 @@ CREATE TABLE configuration (
            id                                                               INTEGER PRIMARY KEY NOT NULL, 
            description                                                      longtext           NOT NULL, 
            notes                                                            longtext           NULL    , 
-           target_temperature                                               double             NOT NULL, 
+           target_temperature                                               int                NOT NULL, 
            temperature_unit                                                 varchar( 1 )       NOT NULL, 
            record_temperatures                                              int                NULL    , 
            pid_p                                                            int                NOT NULL, 
@@ -35,7 +35,7 @@ CREATE TABLE configuration (
 /* Entity - Instant */
 CREATE TABLE instant ( 
            timestamp                                                        datetime           NOT NULL, 
-           target_temperature                                               double             NOT NULL, 
+           target_temperature                                               int                NOT NULL, 
            therm0                                                           double             NULL    , 
            therm1                                                           double             NULL    , 
            therm2                                                           double             NULL    , 

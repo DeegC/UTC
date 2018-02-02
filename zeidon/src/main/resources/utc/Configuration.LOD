@@ -1,4 +1,4 @@
-z1000-Zeidon    CONFIGURATZZOLODO 01/23/18   22:21:41 1.0a2    
+z1000-Zeidon    CONFIGURATZZOLODO 01/29/18   23:55:14 1.0a2    
 eLOD       1
 aZKey      910225831
 aNextZKeyToAssign 910225868
@@ -299,12 +299,6 @@ aZKey      905181397
 aNotNull   Y
 
 eDomainRec 5
-aZKey      905180737
-aName      Temperature
-aDomainType E
-aDataType  M
-aDesc      Temperature stored as Fahrenheit.  Can be converted to C or K.
-aContextRestriction N
 
 eLOD_AttributeRec 3
 aZKey      910225838
@@ -678,6 +672,7 @@ i33        8
 i42        5
 i45        8
 i48        8
+i51        11
 i57        17
 i60        11
 i66        63
@@ -698,7 +693,7 @@ i91        47
 i92        8
 i93        49
 i94        50
-i95        51
+i95        11
 i96        52
 i97        53
 i98        54

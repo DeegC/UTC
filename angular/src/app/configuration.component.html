@@ -55,7 +55,6 @@
         <div #tweetError class="alert alert-danger" style="display:none"></div>
       </div>
 
-      <!--
       <div>
         <select id="TemperatureUnit" class="form-control" formControlName="TemperatureUnit">
           <option *ngFor="let entry of configOi.Configuration$.getAttributeDef( 'TemperatureUnit' ).domain.domainFunctions.getTableValues()"
@@ -65,7 +64,6 @@
           </option>
         </select>
       </div>
-    -->
 
       <div *ngIf="thermometerTypes; else loadingThermTypes">
         Thermometer Type:
@@ -91,7 +89,6 @@
                 <input type="text" formControlName="Name" placeholder="name" [zeidonErrorElement]="thermError"  />
                 <input type="checkbox" formControlName="AlarmOn" [zeidonErrorElement]="thermError" />
                 <input type="number" formControlName="AlarmLow" placeholder="low"
-                       attributeContext="{{configOi.Configuration$.TemperatureUnit}}"
                        [zeidonErrorElement]="thermError" maxlength="2" style="width:3em" />
                 <input type="number" formControlName="AlarmHigh" placeholder="high"
                        [zeidonErrorElement]="thermError" maxlength="2" style="width:3em" />
