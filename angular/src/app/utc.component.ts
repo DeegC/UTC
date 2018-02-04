@@ -25,6 +25,24 @@ Hardware: J Haddad
         </select>
       </div>
 
+
+      <div *ngIf="thermometerTypes; else loadingThermTypes">
+        Thermometer Type:
+        <select (change)="onThermTypeSelected($event.target.selectedIndex)">
+          <option *ngIf="utcConfig.UtcConfig$.DefaultThermometerType.length  === 0"
+                  selected  value=''>Select Default Thermometer Type</option>
+          <option *ngFor="let type of thermometerTypes.ThermometerType"
+                  [value]="type.Name"
+                  [selected]="type.Name === utcConfig.UtcConfig$.DefaultThermometerType$$.Name">
+            {{ type.Name }}
+          </option>
+        </select>
+      </div>
+      <ng-template #loadingThermTypes>
+        Fetching therm data...
+      </ng-template>
+
+
       <div>
         <button type="submit" class="btn btn-default" [disabled]="false">
             Save Global Configuration
@@ -165,7 +183,7 @@ export class UtcComponent implements OnInit {
                  private zeidonRestService: zeidon.ZeidonRestService ) { }
 
     ngOnInit(): void {
-        UtcConfig.activate().then( config => {
+        UtcConfig.activate( { Id: { ">": 0 } } ).then( config => {
             this.utcConfig = config;
             this.buildConfigForm();
         } );
@@ -185,6 +203,16 @@ export class UtcComponent implements OnInit {
 
     buildConfigForm() {
         this.configForm = new zeidon.ZeidonFormBuilder().group( this.utcConfig.UtcConfig$ );
+    }
+
+    onThermTypeSelected( typeIdx ): void {
+        // Subtract 1 from idx to take into account the blank option.
+        let type = this.thermometerTypes.ThermometerType[ typeIdx - 1 ];
+        if ( this.utcConfig.UtcConfig$.DefaultThermometerType$ )
+            this.utcConfig.UtcConfig$.DefaultThermometerType.exclude();
+
+        this.utcConfig.UtcConfig$.DefaultThermometerType.include( type );
+        this.buildConfigForm();
     }
 
     saveConfig( event ): void {
@@ -209,7 +237,6 @@ export class UtcComponent implements OnInit {
         this.selectedTherm = new ThermometerType( {
                 ProbeAlgorithm: "SteinhartHart",
                 SteinhartHartConfig: {
-
                 }
         } );
         this.buildThermConfigForm();
