@@ -1,7 +1,7 @@
-z1000-Zeidon    UTCCONFIGTZZOLODO 01/29/18   23:55:15 1.0a2    
+z1000-Zeidon    UTCCONFIGTZZOLODO 02/03/18   23:08:13 1.0a2    
 eLOD       1
 aZKey      107230446
-aNextZKeyToAssign 107230454
+aNextZKeyToAssign 107230455
 aName      UtcConfig
 aDesc      Global config options
 
@@ -141,6 +141,23 @@ aSAP_Attribute 0
 
 eDomainRec 5
 
+eLOD_AttributeRec 3
+aZKey      107230455
+aUpdate    Y
+
+eER_AttributeRec 4
+aName      TemperatureUnit
+aZKey      905181453
+aNotNull   Y
+
+eDomainRec 5
+aZKey      905180731
+aName      TemperatureUnit
+aDomainType T
+aDataType  S
+aMaxStringLth 1
+aContextRestriction N
+
 eER_EntityRec 3
 aName      UtcConfig
 aZKey      905181404
@@ -151,9 +168,17 @@ aER_DiagramPosY 5
 aSAP_Entity 0
 
 eLOD_Entity 2
+awkSelectedAttributeForDragSort 1
 
 eLOD_Attribute 3
 awkSequence 1
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 2
 
 eER_Attribute 4
 
@@ -219,24 +244,27 @@ aTranslateNamesToLowerUnderscore Y
 
 i11        8
 i20        5
-i22        1
-i23        18
-i24        19
-i25        5
-i26        21
-i27        2
-i28        3
-i29        4
-i30        5
-i31        6
-i32        7
-i33        8
-i34        9
-i35        10
-i36        8
-i37        12
-i38        13
-i39        14
-i40        15
-i41        16
-i42        17
+i25        1
+i26        18
+i27        19
+i28        5
+i29        21
+i30        22
+i31        23
+i32        24
+i33        2
+i34        3
+i35        4
+i36        5
+i37        6
+i38        7
+i39        8
+i40        9
+i41        10
+i42        8
+i43        12
+i44        13
+i45        14
+i46        15
+i47        16
+i48        17

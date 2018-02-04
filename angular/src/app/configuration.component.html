@@ -16,7 +16,6 @@
       <div>
         <label>Target Temperature: </label>
         <input
-               attributeContext="{{configOi.Configuration$.TemperatureUnit}}"
               type="number" formControlName="TargetTemperature" [zeidonErrorElement]="targetError"
               placeholder="target temperature" style="width:3em" />
       </div>
@@ -53,16 +52,6 @@
             formControlName="TweetOn" placeholder="tweet on" [zeidonErrorElement]="tweetError"
         />
         <div #tweetError class="alert alert-danger" style="display:none"></div>
-      </div>
-
-      <div>
-        <select id="TemperatureUnit" class="form-control" formControlName="TemperatureUnit">
-          <option *ngFor="let entry of configOi.Configuration$.getAttributeDef( 'TemperatureUnit' ).domain.domainFunctions.getTableValues()"
-            [selected]="(entry === configOi.Configuration$.TemperatureUnit)"
-            [value]="entry" >
-            {{ entry }}
-          </option>
-        </select>
       </div>
 
       <div *ngIf="thermometerTypes; else loadingThermTypes">

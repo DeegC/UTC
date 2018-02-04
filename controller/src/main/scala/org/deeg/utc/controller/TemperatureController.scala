@@ -84,7 +84,7 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
             if ( ! tc.AlarmOn.isTruthy )
                 next()
 
-            val temperature = currentInstant.Instant.getAttribute( s"Therm${thermCount}" )
+            val temperature = currentInstant.Instant.getAttribute( s"Therm${thermCount}" ).getDouble
 
             // Start by assuming the measured temperature is within the alarm values.
             var inThreshold = true

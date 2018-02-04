@@ -14,14 +14,30 @@ Software: DG Christensen (https://github.com/DeegC)<br/>
 Hardware: J Haddad
 
   <div *ngIf="utcConfig && utcConfig.isEmpty == false" >
-    <ul class="utcConfig">
-    </ul>
+    <form [formGroup]="configForm" (ngSubmit)="saveConfig($event)">
+      <div>
+        <select id="TemperatureUnit" class="form-control" formControlName="TemperatureUnit">
+          <option *ngFor="let entry of utcConfig.UtcConfig$.getAttributeDef( 'TemperatureUnit' ).domain.domainFunctions.getTableValues()"
+            [selected]="(entry === utcConfig.UtcConfig$.TemperatureUnit)"
+            [value]="entry" >
+            {{ entry }}
+          </option>
+        </select>
+      </div>
+
+      <div>
+        <button type="submit" class="btn btn-default" [disabled]="false">
+            Save Global Configuration
+        </button>
+      </div>
+    </form>
   </div>
 
+
     <div style="border: 1px solid #000000; padding: 25px;">
-    <div *ngIf="thermometerList && thermometerList.isEmpty == false" >
-        <ul class="thermometerList">
-            <li *ngFor="let therm of thermometerList.ThermometerType"
+    <div *ngIf="thermometerTypes && thermometerTypes.isEmpty == false" >
+        <ul class="thermometerTypes">
+            <li *ngFor="let therm of thermometerTypes.ThermometerType"
                 [class.selected]="selectedTherm.ThermometerType$$.Id == therm.Id">
                 <span (click)="onSelectThermConfig(therm)">
                     <span class="badge">{{therm.Name}}</span> {{therm.Description}}
@@ -139,9 +155,10 @@ Hardware: J Haddad
 })
 export class UtcComponent implements OnInit {
     utcConfig: UtcConfig;
-    thermometerList : ThermometerType;
+    thermometerTypes : ThermometerType;
     selectedTherm : ThermometerType = new ThermometerType();
     thermConfigForm: FormGroup;
+    configForm: FormGroup;
     debugInfo: DebugInfo;
 
     constructor( private utcRestService: RestService,
@@ -150,10 +167,11 @@ export class UtcComponent implements OnInit {
     ngOnInit(): void {
         UtcConfig.activate().then( config => {
             this.utcConfig = config;
+            this.buildConfigForm();
         } );
 
         ThermometerType.activate().then( list => {
-            this.thermometerList = list;
+            this.thermometerTypes = list;
         } );
 
         DebugInfo.activate().then( info => {
@@ -165,12 +183,24 @@ export class UtcComponent implements OnInit {
         this.thermConfigForm = new zeidon.ZeidonFormBuilder().group( this.selectedTherm.ThermometerType$$ );
     }
 
+    buildConfigForm() {
+        this.configForm = new zeidon.ZeidonFormBuilder().group( this.utcConfig.UtcConfig$ );
+    }
+
+    saveConfig( event ): void {
+        new zeidon.ZeidonFormReader().readForm( this.utcConfig, this.configForm );
+        this.utcConfig.commit().then( config => {
+            this.utcConfig = config;
+            this.buildConfigForm();
+        } );
+    }
+
     saveTherm( event ): void {
         this.selectedTherm.ThermometerType$.update( this.thermConfigForm.value );
         this.selectedTherm.commit().then( therm => {
             this.selectedTherm = therm;
             this.buildThermConfigForm();
-            this.thermometerList.reload();
+            this.thermometerTypes.reload();
         } );
     }
 

@@ -114,9 +114,6 @@ export class Session_Configuration extends zeidon.EntityInstance {
     get TargetTemperature(): number { return this.getAttribute("TargetTemperature") };
     set TargetTemperature(value: number) { this.setAttribute("TargetTemperature", value) };
 
-    get TemperatureUnit(): string { return this.getAttribute("TemperatureUnit") };
-    set TemperatureUnit(value: string) { this.setAttribute("TemperatureUnit", value) };
-
     get RecordTemperatures(): boolean { return this.getAttribute("RecordTemperatures") };
     set RecordTemperatures(value: boolean) { this.setAttribute("RecordTemperatures", value) };
 
@@ -362,16 +359,6 @@ export const Session_LodDef = {
                     hidden:       false,
                     required:     true,
                     domainName:   "Integer",
-                    persistent:   true,
-                    key:          false,
-                    update:       true,
-                    foreignKey:   false,
-                },
-                TemperatureUnit: {
-                    name:         "TemperatureUnit",
-                    hidden:       false,
-                    required:     true,
-                    domainName:   "TemperatureUnit",
                     persistent:   true,
                     key:          false,
                     update:       true,

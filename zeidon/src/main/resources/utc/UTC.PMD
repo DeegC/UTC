@@ -1,9 +1,9 @@
-z1000-Zeidon    UTC      TZEREMDO 01/29/18   23:54:39 1.0a2    
+z1000-Zeidon    UTC      TZEREMDO 02/03/18   23:07:03 1.0a2    
 eEntpER_Model 1
 aName      UTC
 aZKey      905181310
-aNextZKeyToAssign 905181452
-aLastSyncDate 20180129235439599
+aNextZKeyToAssign 905181453
+aLastSyncDate 20180203230703274
 aDesc      UDS Digital Supervisor (android)
 
 eER_Entity 2
@@ -51,7 +51,7 @@ aDesc      Config options for a monitoring session.
 aER_DiagramPosX 28
 aER_DiagramPosY 5
 aSAP_Entity 0
-awkSelectedAttributeForDragSort 4
+awkSelectedAttributeForDragSort 5
 
 eER_Attribute 3
 aName      Id
@@ -113,24 +113,10 @@ aDomainType E
 aContextRestriction N
 
 eER_Attribute 3
-aName      TemperatureUnit
-aZKey      905181336
-aNotNull   Y
-awkSequence 5
-
-eDomain    4
-aZKey      905180731
-aName      TemperatureUnit
-aDataType  S
-aMaxStringLth 1
-aDomainType T
-aContextRestriction N
-
-eER_Attribute 3
 aName      RecordTemperatures
 aZKey      905181337
 aDesc      If 'Y', then record the smoker sesson.
-awkSequence 6
+awkSequence 5
 
 eDomain    4
 aZKey      905181228
@@ -145,7 +131,7 @@ aName      PidP
 aZKey      905181338
 aNotNull   Y
 aDesc      P value for PID algorithm.
-awkSequence 7
+awkSequence 6
 
 eDomain    4
 
@@ -154,7 +140,7 @@ aName      PidI
 aZKey      905181339
 aNotNull   Y
 aDesc      I value for PID algorithm.
-awkSequence 8
+awkSequence 7
 
 eDomain    4
 aZKey      905181226
@@ -168,7 +154,7 @@ aName      PidD
 aZKey      905181340
 aNotNull   Y
 aDesc      D value for PID algorithm.
-awkSequence 9
+awkSequence 8
 
 eDomain    4
 
@@ -176,7 +162,7 @@ eER_Attribute 3
 aName      MaxPWM
 aZKey      905181341
 aDesc      The max value for the output pwm.  Use lower values for more powerful blowers.
-awkSequence 10
+awkSequence 9
 
 eDomain    4
 
@@ -184,7 +170,7 @@ eER_Attribute 3
 aName      TweetOn
 aZKey      905181342
 aDesc      If 'Y', then periodically tweet status.
-awkSequence 11
+awkSequence 10
 
 eDomain    4
 
@@ -192,7 +178,7 @@ eER_Attribute 3
 aName      PwmFrequency
 aZKey      905181344
 aDesc      Frequency of the PWM signal
-awkSequence 12
+awkSequence 11
 
 eDomain    4
 
@@ -201,7 +187,7 @@ aName      GenericSwitchName1
 aZKey      905181451
 aLth       100
 aDesc      Name of generic switch 1
-awkSequence 13
+awkSequence 12
 
 eDomain    4
 
@@ -209,7 +195,7 @@ eER_Attribute 3
 aName      GenericSwitch1
 aZKey      905181452
 aDesc      Boolean value for generic switch 1
-awkSequence 14
+awkSequence 13
 
 eDomain    4
 
@@ -948,6 +934,20 @@ aName      Id
 aZKey      905181406
 aSystemMaintained Y
 
+eER_Attribute 3
+aName      TemperatureUnit
+aZKey      905181453
+aNotNull   Y
+awkSequence 2
+
+eDomain    4
+aZKey      905180731
+aName      TemperatureUnit
+aDataType  S
+aMaxStringLth 1
+aDomainType T
+aContextRestriction N
+
 eER_RelLink 3
 
 eER_RelType_1 4
@@ -1027,135 +1027,135 @@ i7         4
 i8         2
 i11        3
 i17        15
-i25        19
-i29        27
-i31        19
-i33        23
-i35        19
-i37        15
-i39        23
-i52        13
-i53        12
-i54        10
-i61        19
-i65        63
-i67        63
-i69        63
-i71        63
-i73        63
-i75        63
-i77        63
-i79        19
-i81        63
-i83        23
-i85        15
-i89        47
-i90        59
-i92        88
-i93        47
-i94        58
-i95        56
-i96        47
-i98        3
-i102       57
-i104       57
-i106       15
-i107       88
-i108       87
-i109       86
-i110       55
-i111       46
-i112       45
-i113       44
-i114       9
-i115       100
-i116       99
-i117       97
-i120       3
-i124       27
-i126       27
-i128       27
-i130       27
-i132       27
-i136       51
-i137       122
-i138       121
-i139       119
-i140       43
-i142       3
-i146       15
+i23        19
+i27        25
+i29        19
+i31        21
+i33        19
+i35        15
+i37        21
+i50        13
+i51        12
+i52        10
+i59        19
+i63        61
+i65        61
+i67        61
+i69        61
+i71        61
+i73        61
+i75        61
+i77        19
+i79        61
+i81        21
+i83        15
+i87        45
+i88        57
+i90        86
+i91        45
+i92        56
+i93        54
+i94        45
+i96        3
+i100       55
+i102       55
+i104       15
+i105       86
+i106       85
+i107       84
+i108       53
+i109       44
+i110       43
+i111       42
+i112       9
+i113       98
+i114       97
+i115       95
+i118       3
+i122       25
+i124       25
+i126       25
+i128       25
+i130       25
+i134       49
+i135       120
+i136       119
+i137       117
+i138       41
+i140       3
+i144       15
+i146       19
 i148       19
-i150       19
-i152       23
-i154       23
-i155       42
-i156       41
-i157       40
-i158       9
-i159       144
-i160       143
-i161       141
-i162       51
-i164       3
+i150       21
+i152       21
+i153       40
+i154       39
+i155       38
+i156       9
+i157       142
+i158       141
+i159       139
+i160       49
+i162       3
+i166       15
 i168       15
-i170       15
-i173       135
-i174       134
-i175       133
-i176       118
-i177       50
-i178       49
-i179       48
-i180       9
-i185       166
-i186       165
-i187       163
-i190       3
+i171       133
+i172       132
+i173       131
+i174       116
+i175       48
+i176       47
+i177       46
+i178       9
+i183       164
+i184       163
+i185       161
+i188       3
+i192       15
 i194       15
 i196       15
 i198       15
 i200       15
-i202       15
-i204       19
-i205       192
-i206       191
-i207       189
-i208       184
-i210       3
-i213       183
-i214       182
-i215       181
-i216       51
-i217       212
-i218       211
-i219       209
-i220       87
-i221       88
-i222       47
-i223       86
-i224       55
-i225       134
-i226       135
-i227       51
-i228       133
-i229       118
-i230       182
-i231       181
-i232       51
-i233       183
-i234       184
-i235       41
-i236       40
+i202       19
+i203       190
+i204       189
+i205       187
+i206       182
+i208       3
+i213       181
+i214       180
+i215       179
+i216       49
+i217       210
+i218       209
+i219       207
+i220       85
+i221       86
+i222       45
+i223       84
+i224       53
+i225       132
+i226       133
+i227       49
+i228       131
+i229       116
+i230       180
+i231       179
+i232       49
+i233       181
+i234       182
+i235       39
+i236       38
 i237       9
-i238       42
-i239       43
-i240       45
-i241       44
+i238       40
+i239       41
+i240       43
+i241       42
 i242       9
-i243       46
-i244       47
-i245       49
-i246       50
-i247       51
-i248       48
+i243       44
+i244       45
+i245       47
+i246       48
+i247       49
+i248       46
 i249       9

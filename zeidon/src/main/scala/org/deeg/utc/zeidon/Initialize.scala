@@ -50,6 +50,7 @@ object Initialize {
             if ( utcConfig.isEmpty ) {
                 utcConfig.activateEmpty()
                 utcConfig.UtcConfig.create()
+                utcConfig.UtcConfig.TemperatureUnit = "F"
                 thermType.ThermometerType.setFirst()
                 utcConfig.DefaultThermometerType.include( thermType.ThermometerType )
 
@@ -65,7 +66,6 @@ object Initialize {
                 config.Configuration create()
                 config.Configuration.Description = "Basic configuration"
                 config.Configuration.TargetTemperature = 250
-                config.Configuration.TemperatureUnit = "F"
                 config.Configuration.RecordTemperatures = false
                 config.Configuration.MaxPWM = 255
                 config.Configuration.TweetOn = false

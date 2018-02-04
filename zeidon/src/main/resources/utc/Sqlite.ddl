@@ -19,7 +19,6 @@ CREATE TABLE configuration (
            description                                                      longtext           NOT NULL, 
            notes                                                            longtext           NULL    , 
            target_temperature                                               int                NOT NULL, 
-           temperature_unit                                                 varchar( 1 )       NOT NULL, 
            record_temperatures                                              int                NULL    , 
            pid_p                                                            int                NOT NULL, 
            pid_i                                                            double             NOT NULL, 
@@ -98,6 +97,7 @@ CREATE TABLE twitter_config (
 /* Entity - UtcConfig */
 CREATE TABLE utc_config ( 
            id                                                               INTEGER PRIMARY KEY NOT NULL, 
+           temperature_unit                                                 varchar( 1 )       NOT NULL, 
            fk_id_thermometer_type                                           INTEGER            NOT NULL ) ;
  
 GRANT ALL ON base TO PUBLIC 

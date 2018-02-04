@@ -63,6 +63,9 @@ export class UtcConfig_UtcConfig extends zeidon.EntityInstance {
     get Id(): string { return this.getAttribute("Id") };
     set Id(value: string) { this.setAttribute("Id", value) };
 
+    get TemperatureUnit(): string { return this.getAttribute("TemperatureUnit") };
+    set TemperatureUnit(value: string) { this.setAttribute("TemperatureUnit", value) };
+
     get DefaultThermometerType(): zeidon.EntityArray<UtcConfig_DefaultThermometerType> {
         return this.getChildEntityArray("DefaultThermometerType") as zeidon.EntityArray<UtcConfig_DefaultThermometerType>;
     }
@@ -124,6 +127,16 @@ export const UtcConfig_LodDef = {
                     domainName:   "GeneratedKey",
                     persistent:   true,
                     key:          true,
+                    update:       true,
+                    foreignKey:   false,
+                },
+                TemperatureUnit: {
+                    name:         "TemperatureUnit",
+                    hidden:       false,
+                    required:     true,
+                    domainName:   "TemperatureUnit",
+                    persistent:   true,
+                    key:          false,
                     update:       true,
                     foreignKey:   false,
                 },

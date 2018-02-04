@@ -22,6 +22,8 @@ trait HardwareInterface {
         throw new ZeidonException( "Unexpected number of UtcConfig entities" )
     }
 
+    protected val temperatureUnit = utcConfig.UtcConfig.TemperatureUnit.getString()
+
     protected var probeConverter : ProbeConverter = null
 
     def setConfigOi( configOi : View @basedOn( "Configuration" ) ) = {
@@ -57,7 +59,7 @@ trait HardwareInterface {
         if ( session == null )
             tempKelvin
 
-        return session.Configuration.TemperatureUnit.getString( "Abbrev" ) match {
+        return temperatureUnit match {
             case "K" => tempKelvin
             case "C" => tempKelvin - 273.15
             case "F" => tempKelvin * 9.0 / 5.0 - 459.67
