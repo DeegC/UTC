@@ -18,6 +18,9 @@ task generateDeb(type: Deb) {
 
     preInstall file('debianPreInstall.sh')
     postInstall file('debianPostInstall.sh')
+
+    requires( 'build-essential' )
+    requires( 'python-dev' )
     
     into '/opt/utc'
     from( '../bin' ) {

@@ -8,7 +8,7 @@ import com.quinsoft.zeidon.standardoe.JavaObjectEngine
 object Initialize {
     def initialize( oe : ObjectEngine ) = {
         oe.forTask( "UTC" ) { task =>
-            val thermType = task.activate( "ThermometerType", qual => {
+            val thermType = task.ThermometerType.activateWith( qual => {
                 qual.rootOnlyMultiple()
                 qual.limit( 1 )
             } )
@@ -42,7 +42,7 @@ object Initialize {
                 thermType.commit()
             }
 
-            val utcConfig = task.activate( "UtcConfig", qual => {
+            val utcConfig = task.UtcConfig.activateWith( qual => {
                 qual.rootOnlyMultiple()
                 qual.limit( 1 )
             } )
@@ -57,7 +57,7 @@ object Initialize {
                 utcConfig.commit()
             }
 
-            val config = task.activate( "Configuration", qual => {
+            val config = task.Configuration.activateWith( qual => {
                 qual.rootOnlyMultiple()
                 qual.limit( 1 )
             } )

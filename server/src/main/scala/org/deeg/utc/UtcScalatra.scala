@@ -76,8 +76,7 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
     get("/utc/getChart/:id") {
         contentType = "image/png"
         oe.forTask( "UTC" ) { task =>
-            val session = new View( task ) basedOn "Session"
-            session.activateWhere( _.Session.Id = params( "id" ) )
+            val session = task.Session.activate( _.Session.Id = params( "id" ) )
             session.logOi
 
             val generator = new ChartGenerator( session )
@@ -129,7 +128,7 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
     // Override the default Zeidon Scalatra server for activating DebugInfo
     get("/utc/DebugInfo") {
         oe.forTask( "UTC" ) { task =>
-            val info = task.newView("DebugInfo") activateEmpty()
+            val info = task.DebugInfo.empty()
             info.DebugInfo create()
             val f = new File( s"${UtcScalatra.TEMP_DIR}/logs" ).getAbsolutePath
             task.log().info( f )

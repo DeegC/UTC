@@ -38,6 +38,8 @@ case "$arch" in
 	HARDWARE="rpi"
 	PORT=80
 	export PATH="$PATH:./rpi"
+        # Initialize ports/speaker.
+	./rpi/startup.sh
 	;;
     
     *)
