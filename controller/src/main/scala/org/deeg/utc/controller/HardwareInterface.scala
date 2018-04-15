@@ -59,10 +59,10 @@ trait HardwareInterface {
         if ( session == null )
             tempKelvin
 
-        return temperatureUnit match {
-            case "K" => tempKelvin
-            case "C" => tempKelvin - 273.15
-            case "F" => tempKelvin * 9.0 / 5.0 - 459.67
+        return temperatureUnit(0) match {
+            case 'K' => tempKelvin
+            case 'C' => tempKelvin - 273.15
+            case 'F'=> tempKelvin * 9.0 / 5.0 - 459.67
         }
     }
 

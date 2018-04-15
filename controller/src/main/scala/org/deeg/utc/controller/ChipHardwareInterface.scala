@@ -12,7 +12,7 @@ import com.quinsoft.zeidon.scala.View
  */
 class ChipHardwareInterface(val task : Task ) extends HardwareInterface {
 
-    task.log().info("Using ChipHardwareInterface");
+    task.log().info(s"Using ${this.getClass.getName()}");
 
     var lastRead: DateTime = null
     var voltageArray: Array[Double] = null

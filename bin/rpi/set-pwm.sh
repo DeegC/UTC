@@ -1,16 +1,7 @@
 #!/bin/bash
 
+echo "Setting PWM to freq=$1 cycle=$2"
 freq="$1" # In Hz
 duty_cycle="$2" # 0-100
-
-echo "Setting PWM to freq=$1 cycle=$2"
- 
-let "pwmclock=19200000 / $freq / 100"
-echo "pwmclock = $pwmclock"
-
-gpio pwm-ms
-gpio pwmc $pwmclock
-gpio pwmr 100
-
-gpio -g pwm 18 $duty_cycle
-
+let "dcycle=10000 * $duty_cycle"
+pigs hp 18 $freq $dcycle
