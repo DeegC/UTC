@@ -62,8 +62,7 @@ export class ConfigurationComponent implements OnChanges, OnInit {
     }
 
     onThermTypeSelected( typeIdx ): void {
-        // Subtract 1 from idx to take into account the blank option.
-        let type = this.thermometerTypes.ThermometerType[ typeIdx - 1 ];
+        let type = this.thermometerTypes.ThermometerType[ typeIdx ];
         if ( this.configOi.Configuration$.ThermometerType$ )
             this.configOi.Configuration$.ThermometerType.exclude();
 

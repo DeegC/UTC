@@ -24,7 +24,7 @@ class SteinhartHart( val thermometerType : View @basedOn( "ThermometerType" ) )
     thermometerType.SteinhartHartConfig.logEntity()
 
     def computeTemperatureKelvin( voltageReading : Double ): Double = {
-        if ( voltageReading > 3.22 )
+        if ( voltageReading >= voltageReference )
             return Double.NaN
 
         val diff = voltageReference - voltageReading

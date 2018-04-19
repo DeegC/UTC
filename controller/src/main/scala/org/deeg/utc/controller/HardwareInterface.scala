@@ -62,7 +62,7 @@ trait HardwareInterface {
         return temperatureUnit(0) match {
             case 'K' => tempKelvin
             case 'C' => tempKelvin - 273.15
-            case 'F'=> tempKelvin * 9.0 / 5.0 - 459.67
+            case 'F' => tempKelvin * 9.0 / 5.0 - 459.67
         }
     }
 
