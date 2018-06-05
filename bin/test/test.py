@@ -37,15 +37,15 @@ def temperatur_sensor (Rt, typ, unit): #Ermittelt die Temperatur
     if Rt == 0.0:
         return -1.0
     
-    name = "ET-73" # Config_Sensor.get(typ,'name')
-
     a = 0.00335672 # Config_Sensor.getfloat(typ,'a')
     b = 0.000291888 # Config_Sensor.getfloat(typ,'b')
     c = 0.00000439054 # Config_Sensor.getfloat(typ,'c')
     Rn = 200 # Config_Sensor.getfloat(typ,'Rn')
 
-    v = math.log(Rt/Rn)
-    T = (1/(a + b*v + c*v*v)) - 273
+    r = Rt/Rn
+    print "Resistance = ", r
+    r = math.log(r)
+    T = (1/(a + b*r + c*r*r)) - 273
 
     if T is None:
         return -1.0
