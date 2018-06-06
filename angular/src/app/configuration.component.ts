@@ -62,10 +62,15 @@ export class ConfigurationComponent implements OnChanges, OnInit {
     }
 
     onThermTypeSelected( typeIdx ): void {
-        let type = this.thermometerTypes.ThermometerType[ typeIdx ];
         if ( this.configOi.Configuration$.ThermometerType$ )
             this.configOi.Configuration$.ThermometerType.exclude();
+        else
+            // If we get here then a thermtype was not already specified.  That should
+            // mean that an additional option called "Specify therm type" was displayed.
+            // Subtract one from the index to account for it.
+            typeIdx -= 1;
 
+        let type = this.thermometerTypes.ThermometerType[ typeIdx ];
         this.configOi.Configuration$.ThermometerType.include( type );
         this.buildForm();
     }
