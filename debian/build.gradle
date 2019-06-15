@@ -28,10 +28,9 @@ task generateDeb(type: Deb) {
     }
     from '../sqlite/utc.sqlite.empty.db'
 
-    from( 'utc-server.service' ) {
+    from( ['utc-server.service', 'pigpiod.service' ] ) {
         into '/lib/systemd/system'
     }
-
 }
 
 build.dependsOn 'generateDeb'
