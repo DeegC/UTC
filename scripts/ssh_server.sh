@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# SSH to CHIP server.
+# SSH to UTC server.
 
 if [ "$1" == "" ]; then
-    echo "CHIP's IP address required as first param"
+    echo "UTC's IP address required as first param"
     exit 1
 fi
 
-xterm.sh -bg gray -fg black -e ssh $1 &
+xterm.sh -bg black -fg white -e ssh $1 &
