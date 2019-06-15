@@ -1,6 +1,7 @@
 .gradle/
 build/
 eclipse-bin/
+tmp/
 .classpath
 .project
 .settings/

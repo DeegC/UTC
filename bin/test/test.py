@@ -32,20 +32,17 @@ def read_sensors():
     return values
 
 
-def temperatur_sensor (Rt, typ, unit): #Ermittelt die Temperatur
+def temperatur_sensor (Rt, unit): #Ermittelt die Temperatur
 
-    if Rt == 0.0:
+    if Rt == 0:
         return -1.0
     
-    a = 0.00335672 # Config_Sensor.getfloat(typ,'a')
-    b = 0.000291888 # Config_Sensor.getfloat(typ,'b')
-    c = 0.00000439054 # Config_Sensor.getfloat(typ,'c')
-    Rn = 200 # Config_Sensor.getfloat(typ,'Rn')
+    a = 2.3067434E-4
+    b = 2.3696596E-4
+    c = 1.2636414E-7
 
-    r = Rt/Rn
-    print "Resistance = ", r
-    r = math.log(r)
-    T = (1/(a + b*r + c*r*r)) - 273
+    r = math.log(Rt)
+    T = (1/(a + b*r + c*r*r*r)) - 273
 
     if T is None:
         return -1.0
@@ -55,25 +52,29 @@ def temperatur_sensor (Rt, typ, unit): #Ermittelt die Temperatur
     elif unit == 'fahrenheit':
         return T * 1.8 +32
 
-messwiderstand = 10
-maxadc = 4096.0
-
 #values = read_sensors()
 values =  [3908.0, 2837.0, 3914.0, 4095.0, 4095.0, 4095.0, 4095.0, 4095.0]
 print "ADC values = ", values
 
+R = 10000.0
+Vref = 3.43
+
+# Convert to voltage
 for i in range(8):
-    values[i] = 4095.0 - values[i]
+    values[i] = 4095.0 / values[i] * Vref
     #values[i] = median_filter( [ values[i], values[i], values[i] ] )
 
+print "Voltage = ", values
+    
+# Compute resistance
 for i in range(8):
-    if values[i] > 0:
-        values[i] = messwiderstand*((maxadc/ values[i]) - 1)
+    values[i] = ((1 / values[i]) * R)
+    #values[i] = ((Vref * R) - (values[i] * R)) / values[i]
 
-print "Before SH values = ", values
+print "Resistence = ", values
 
 for i in range(8):
-        values[i] = round(temperatur_sensor(values[i], 5, 'fahrenheit'), 2)
+        values[i] = round(temperatur_sensor(values[i], 'fahrenheit'), 2)
 
 print "Temperatures F = ", values
 
