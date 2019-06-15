@@ -60,8 +60,8 @@ task generateTypescriptFiles( type: JavaExec ) {
 
     // Set up properties so this only gets executed if an XOD has changed.
     outputs.upToDateSpec = new org.gradle.api.specs.AndSpec()
-    inputs.files "$xodDir/Configuration.XOD"
-    outputs.files typescriptDir
+    inputs.files "$xodDir/*.XOD"
+    outputs.files "$typescriptDir/*.XOD"
 
     main = "com.quinsoft.zeidon.javascript.GenerateXodsForTypescript"
     classpath( configurations.generateTypescriptFiles, sourceSets.main.runtimeClasspath, '../bin/conf' )
