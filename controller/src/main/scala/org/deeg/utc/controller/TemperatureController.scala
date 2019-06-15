@@ -40,18 +40,27 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
 
     private val twitter = new TwitterFeed( currentSession )
 
+    private var lastPid: Double = 0.0
+
     /**
      * Main method for processing a single tick of the controller.
      */
     private def tick() {
         logger.debug( "Main controller tick..." )
-        currentInstant = hardware.readSensors( currentSession )
-        currentInstant.Instant.TargetTemperature = currentSession.Configuration.TargetTemperature
 
-        blinkGreenLed
-        saveInstantToDb
-        checkForTemperatureErrors
-        twitter.tweetSmokerStatus( currentInstant )
+        try {
+            currentInstant = hardware.readSensors( currentSession )
+            currentInstant.Instant.TargetTemperature = currentSession.Configuration.TargetTemperature
+
+            blinkGreenLed
+            saveInstantToDb
+            checkForTemperatureErrors
+            twitter.tweetSmokerStatus( currentInstant )
+        } catch {
+            case e: Exception => {
+                logger.error( e )
+            }
+        }
     }
 
     private def blinkGreenLed {
@@ -132,10 +141,18 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
      * @return the result to use in PIDController
      */
     override def pidGet(): Double = {
-        val instant = hardware.readSensors( currentSession )
-        logger.debug( s"PID value = ${instant.Instant.Therm0}" )
+        try {
+            val instant = hardware.readSensors( currentSession )
+            logger.debug( s"PID value = ${instant.Instant.Therm0}" )
+            lastPid = instant.Instant.Therm0
+        } catch {
+            case e: Exception => {
+                // If we get an error we'll keep going put use the last PID.
+                logger.error( e )
+            }
+        }
 
-        return instant.Instant.Therm0
+        return lastPid
     }
 
     /**

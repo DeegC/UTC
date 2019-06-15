@@ -22,12 +22,12 @@ class ChipHardwareInterface(val task : Task ) extends HardwareInterface {
     setGreenLed( true )
     setYellowLed( true )
 
-    override def setPwm(pwm: Int, freq: Int) {
+    override def setPwm(pwm: Int, freq: Int) = synchronized {
         super.setPwm(pwm, freq)
         task.log().info( s"set-pwm.sh ${freq} ${pwm}".!! )
     }
 
-    override def readTemperature(probe: Int): Double = {
+    override def readTemperature(probe: Int): Double = synchronized {
         read_mcp3008()
         return voltageArray(probe) // "+ 1" is a hack to get around short-term error in hardware.
     }
@@ -48,7 +48,7 @@ class ChipHardwareInterface(val task : Task ) extends HardwareInterface {
         lastRead = now
     }
 
-    override def readCpuTemperature: Int = {
+    override def readCpuTemperature: Int = synchronized {
         val lsb = "i2cget -y -f 0 0x34 0x5f".!!
         val msb = "i2cget -y -f 0 0x34 0x5e".!!
         task.slog.debug(s"lsb = '$lsb', msb = '$msb'")
@@ -60,19 +60,19 @@ class ChipHardwareInterface(val task : Task ) extends HardwareInterface {
         tempf.round.toInt
     }
 
-    override def setRedLed(on: Boolean) {
+    override def setRedLed(on: Boolean) = synchronized {
         task.log().info( s"set-led.sh red ${on}".!! )
     }
 
-    override def setGreenLed( on: Boolean ) {
+    override def setGreenLed( on: Boolean ) = synchronized {
         task.log().info( s"set-led.sh green ${on}".!! )
     }
 
-    override def setYellowLed( on: Boolean ) {
+    override def setYellowLed( on: Boolean ) = synchronized {
         task.log().info( s"set-led.sh yellow ${on}".!! )
     }
 
-    override def setGenericSwitch( number: Int, on: Boolean ) {
+    override def setGenericSwitch( number: Int, on: Boolean ) = synchronized {
         task.log().warn(s"Generic switch ${number} not supported on CHIP.")
     }
 
