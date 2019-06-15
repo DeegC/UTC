@@ -12,7 +12,7 @@ import { UTC_DomainFunctions } from './UTC-DomainFunctions';
 
 // TwitterConfig LOD.
 export class TwitterConfig extends zeidon.ObjectInstance {
-    protected rootEntityName(): string { return "TwitterConfig" };
+    protected rootEntityName(): string { return "Twitter" };
 
     public getApplicationName(): String { return "UTC" };
 
