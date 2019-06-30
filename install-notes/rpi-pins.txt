@@ -1,0 +1,8 @@
+gpio23 =aux out
+gpio4  =buzzer
+gpio25 =led1
+gpio16 =led2
+gpio20 =led3
+gpio18/pwm =fan
+gpio24 = ?
+Using hardware SPI

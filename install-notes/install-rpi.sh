@@ -1,5 +1,7 @@
 #!/bin/bash
 
+NOT COMPLETELY FINISHED CONVERTING FROM CHIP TO RPI
+
 # Used to set up dev environment for UTC.  Run on the RPi as root.
 if [ "$(whoami)" != "root" ]; then
     echo "Run as root"
@@ -13,9 +15,9 @@ fi
 
 user=$1
 
-# Determine the CHIP bin
+# Determine the RPI bin
 SCRIPTPATH=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
-CHIPBIN=$SCRIPTPATH/../bin/chip
+RPIBIN=$SCRIPTPATH/../bin/rpi
 SERVERBIN=$SCRIPTPATH/../bin
 
 reboot=0
@@ -64,7 +66,7 @@ fi
 
 if [ ! -f /etc/init.d/utc-init ]; then
     echo "Installing utc-init"
-    cat utc-init | sed -e "s|CHIPBIN|$CHIPBIN|g" -e "s|SERVERBIN|$SERVERBIN|g" > /etc/init.d/utc-init
+    cat utc-init | sed -e "s|RPIBIN|$RPIBIN|g" -e "s|SERVERBIN|$SERVERBIN|g" > /etc/init.d/utc-init
     chmod 755 /etc/init.d/utc-init
     update-rc.d utc-init defaults
 fi
@@ -82,11 +84,11 @@ if [ ! -f $maildir/send-ip ]; then
 
 if [ "\$2" = "up" ]; then
     ip addr show wlan0  | mail -s"Chip IP" $emailaddress
-    $CHIPBIN/set-led yellow on
+    $RPIBIN/set-led yellow on
 fi
 
 if [ "\$2" = "down" ]; then
-    $CHIPBIN/set-led yellow off
+    $RPIBIN/set-led yellow off
 fi
 
 EOF
