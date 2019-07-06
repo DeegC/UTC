@@ -1,7 +1,7 @@
-z1000-Zeidon    CONFIGURATZZOLODO 02/03/18   23:07:34 1.0a2    
+z1000-Zeidon    CONFIGURATZZOLODO 07/01/19   23:19:31 1.0a2    
 eLOD       1
 aZKey      910225831
-aNextZKeyToAssign 910225868
+aNextZKeyToAssign 910225869
 aName      Configuration
 aDesc      Main configuration object
 
@@ -426,6 +426,19 @@ aDesc      Boolean value for generic switch 1
 
 eDomainRec 5
 
+eLOD_AttributeRec 3
+aZKey      910225869
+aUpdate    Y
+aInit      true
+aSeqOrder  A
+
+eER_AttributeRec 4
+aName      SoundsOn
+aZKey      905181454
+aDesc      If true, then play sounds (note: alarm is always on if it's selected).
+
+eDomainRec 5
+
 eER_EntityRec 3
 aName      Configuration
 aZKey      905181331
@@ -436,7 +449,7 @@ aER_DiagramPosY 5
 aSAP_Entity 0
 
 eLOD_Entity 2
-awkSelectedAttributeForDragSort 4
+awkSelectedAttributeForDragSort 14
 
 eLOD_Attribute 3
 awkSequence 1
@@ -524,6 +537,13 @@ eDomain    5
 
 eLOD_Attribute 3
 awkSequence 13
+
+eER_Attribute 4
+
+eDomain    5
+
+eLOD_Attribute 3
+awkSequence 14
 
 eER_Attribute 4
 
@@ -655,82 +675,86 @@ i69        17
 i72        11
 i75        8
 i78        17
-i80        1
-i81        40
-i82        41
-i83        5
-i84        43
-i85        44
-i86        8
-i87        46
-i88        47
+i81        17
+i83        1
+i84        40
+i85        41
+i86        5
+i87        43
+i88        44
 i89        8
-i90        49
-i91        50
-i92        11
-i93        52
-i94        53
-i95        17
-i96        55
-i97        56
-i98        11
-i99        58
-i100       59
-i101       60
-i102       61
-i103       62
+i90        46
+i91        47
+i92        8
+i93        49
+i94        50
+i95        11
+i96        52
+i97        53
+i98        17
+i99        55
+i100       56
+i101       11
+i102       58
+i103       59
 i104       60
-i105       64
-i106       65
-i107       11
-i108       67
-i109       68
-i110       17
-i111       70
-i112       71
-i113       11
-i114       73
-i115       74
-i116       8
-i117       76
-i118       77
-i119       17
-i120       79
-i121       2
-i122       3
-i123       4
-i124       5
-i125       6
-i126       7
-i127       8
-i128       9
-i129       10
-i130       11
-i131       12
-i132       13
-i133       11
-i134       15
-i135       16
-i136       17
-i137       18
-i138       19
-i139       17
-i140       21
-i141       22
-i142       23
-i143       24
-i144       25
-i145       26
-i146       5
-i147       28
-i148       29
-i149       8
-i150       31
-i151       32
-i152       8
-i153       34
-i154       35
-i155       36
-i156       37
-i157       38
-i158       39
+i105       61
+i106       62
+i107       60
+i108       64
+i109       65
+i110       11
+i111       67
+i112       68
+i113       17
+i114       70
+i115       71
+i116       11
+i117       73
+i118       74
+i119       8
+i120       76
+i121       77
+i122       17
+i123       79
+i124       80
+i125       17
+i126       82
+i127       2
+i128       3
+i129       4
+i130       5
+i131       6
+i132       7
+i133       8
+i134       9
+i135       10
+i136       11
+i137       12
+i138       13
+i139       11
+i140       15
+i141       16
+i142       17
+i143       18
+i144       19
+i145       17
+i146       21
+i147       22
+i148       23
+i149       24
+i150       25
+i151       26
+i152       5
+i153       28
+i154       29
+i155       8
+i156       31
+i157       32
+i158       8
+i159       34
+i160       35
+i161       36
+i162       37
+i163       38
+i164       39

@@ -80,6 +80,13 @@ trait HardwareInterface {
     def setYellowLed( on: Boolean )
     def setGenericSwitch( number: Int, on: Boolean )
     def shutdown()
+
+    /**
+     * Turns on (and off) the beeper.  Odd numbers are the length of time the
+     * beep is on, even numbers are pauses in between.  For example, this beeps
+     * twice with a short pause between: 250 100 250
+     */
+    def beep( milliseconds: Int* )
 }
 
 object HardwareInterface {

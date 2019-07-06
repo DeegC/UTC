@@ -1,11 +1,11 @@
-z1000-Zeidon    UTCCONFIGTZZOXODO 02/03/18   23:08:13 1.0a2    
+z1000-Zeidon    UTCCONFIGTZZOXODO 07/01/19   23:18:42 1.0a2    
 eOBJECT    1
 aNAME      UtcConfig
 aZKey      107230446
 aDFT_DBNAME Sqlite
 aDATABASE  Sqlite
 aOPER_LIBNM UtcConfig
-aER_DATE   20180203230703274
+aER_DATE   20190701231736199
 
 eENTITY    2
 aNAME      UtcConfig
@@ -46,7 +46,7 @@ aXVAATT_TOK 2
 
 eATTRIB    3
 aNAME      fk_id_thermometer_type
-aERATT_TOK 2944
+aERATT_TOK 5548
 aPERSIST   Y
 aAPDM_TOK  905181242
 aDOMAIN    GeneratedKey
@@ -63,7 +63,7 @@ aRECNAME   utc_config
 aTYPE      P
 
 eDATAFIELD 4
-aFLDLTH    64
+aFLDLTH    4
 aFLDNAME   id
 aFLDTYPE   A
 aXVAATT_TOK 1
@@ -75,7 +75,7 @@ aFLDTYPE   S
 aXVAATT_TOK 2
 
 eDATAFIELD 4
-aFLDLTH    64
+aFLDLTH    4
 aFLDNAME   fk_id_thermometer_type
 aFLDTYPE   A
 aXVAATT_TOK 3
@@ -146,7 +146,7 @@ aRECNAME   thermometer_type
 aTYPE      P
 
 eDATAFIELD 5
-aFLDLTH    64
+aFLDLTH    4
 aFLDNAME   id
 aFLDTYPE   A
 aXVAATT_TOK 4

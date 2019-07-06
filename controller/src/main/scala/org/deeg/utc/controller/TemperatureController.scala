@@ -182,6 +182,10 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
         pid.setSetpoint( currentSession.Configuration.TargetTemperature );
         pid.enable()
 
+        // Two quick beeps to say we started.
+        if ( currentSession.Configuration.SoundsOn )
+            hardware.beep( 250, 100, 250 )
+
         // Run until someone calls stop()
         running = true;
         while ( running ) {
@@ -194,6 +198,10 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
         hardware.setGreenLed( false )
         hardware.setRedLed( false )
         hardware.setYellowLed( false )
+
+        // One long beep to say we finished.
+        if ( currentSession.Configuration.SoundsOn )
+            hardware.beep( 500 )
 
         logger.info( "Controller done." )
     }

@@ -28,6 +28,7 @@ CREATE TABLE configuration (
            pwm_frequency                                                    int                NULL    , 
            generic_switch_name1                                             varchar( 100 )     NULL    , 
            generic_switch1                                                  int                NULL    , 
+           sounds_on                                                        int                NULL    , 
            autoseq                                                          int                NULL    , 
            fk_id_thermometer_type                                           INTEGER            NOT NULL ) ;
  

@@ -1,4 +1,4 @@
-z1000-Zeidon    UTC      TZCMLPLO 05/05/18   16:08:46 1.0a2    
+z1000-Zeidon    UTC      TZCMLPLO 07/05/19   19:55:50 1.0a2    
 eLPLR      1
 aName      UTC
 aDesc      Universal Temperature Controller
@@ -158,8 +158,8 @@ aStatus    1
 aUpdateInd 2
 aName      UTC
 aDesc      UDS Digital Supervisor (android)
-aLastSyncDate 20180203230703892
-aLastUpdateDate 20180203230703892
+aLastSyncDate 20190701231736208
+aLastUpdateDate 20190701231736208
 
 eW_MetaType 2
 aType      5
@@ -173,8 +173,8 @@ aStatus    1
 aUpdateInd 2
 aName      UTC
 aDesc      Universal Temperature Controller
-aLastSyncDate 20180203230743426
-aLastUpdateDate 20180203230743426
+aLastSyncDate 20190701231823646
+aLastUpdateDate 20190701231823646
 
 eW_MetaType 2
 aType      7
@@ -185,8 +185,8 @@ aStatus    1
 aUpdateInd 2
 aName      Configuration
 aDesc      Main configuration object
-aLastSyncDate 20171225225854032
-aLastUpdateDate 20171225225854032
+aLastSyncDate 20190701231931250
+aLastUpdateDate 20190701231931250
 
 eW_MetaDef 3
 aCPLR_ZKey 316000030
@@ -571,13 +571,13 @@ i69        8
 i70        13
 i75        25
 i78        28
-i80        36
-i81        30
+i80        30
+i81        36
 i82        33
-i83        35
-i84        34
-i85        32
-i86        31
+i83        32
+i84        31
+i85        34
+i86        35
 i89        39
 i90        40
 i91        41

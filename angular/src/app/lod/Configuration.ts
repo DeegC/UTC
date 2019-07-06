@@ -99,6 +99,9 @@ export class Configuration_Configuration extends zeidon.EntityInstance {
     get GenericSwitch1(): boolean { return this.getAttribute("GenericSwitch1") };
     set GenericSwitch1(value: boolean) { this.setAttribute("GenericSwitch1", value) };
 
+    get SoundsOn(): boolean { return this.getAttribute("SoundsOn") };
+    set SoundsOn(value: boolean) { this.setAttribute("SoundsOn", value) };
+
     get ThermometerConfig(): zeidon.EntityArray<Configuration_ThermometerConfig> {
         return this.getChildEntityArray("ThermometerConfig") as zeidon.EntityArray<Configuration_ThermometerConfig>;
     }
@@ -329,6 +332,17 @@ export const Configuration_LodDef = {
                     update:       true,
                     foreignKey:   false,
                     initialValue: "false",
+                },
+                SoundsOn: {
+                    name:         "SoundsOn",
+                    hidden:       false,
+                    required:     false,
+                    domainName:   "Boolean",
+                    persistent:   true,
+                    key:          false,
+                    update:       true,
+                    foreignKey:   false,
+                    initialValue: "true",
                 },
                 autoseq: {
                     name:         "autoseq",

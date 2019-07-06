@@ -79,6 +79,10 @@ class ChipHardwareInterface(val task : Task ) extends HardwareInterface {
     override def shutdown() {
         "shutdown now".!!
     }
+
+    override def beep( milliseconds: Int* ) {
+        task.log().debug( s"beep.sh ${milliseconds.mkString( " " )}".!! )
+    }
 }
 
 object ChipHardwareInterface {

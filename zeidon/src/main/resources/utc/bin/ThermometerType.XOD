@@ -1,11 +1,11 @@
-z1000-Zeidon    THERMOMETTZZOXODO 02/03/18   23:07:35 1.0a2    
+z1000-Zeidon    THERMOMETTZZOXODO 07/01/19   23:18:42 1.0a2    
 eOBJECT    1
 aNAME      ThermometerType
 aZKey      101003202
 aDFT_DBNAME Sqlite
 aDATABASE  Sqlite
 aOPER_LIBNM ThermometerType
-aER_DATE   20180203230703274
+aER_DATE   20190701231736199
 
 eENTITY    2
 aNAME      ThermometerType
@@ -71,7 +71,7 @@ aRECNAME   thermometer_type
 aTYPE      P
 
 eDATAFIELD 4
-aFLDLTH    64
+aFLDLTH    4
 aFLDNAME   id
 aFLDTYPE   A
 aXVAATT_TOK 1
@@ -185,7 +185,7 @@ aXVAATT_TOK 10
 
 eATTRIB    4
 aNAME      fk_id_thermometer_type
-aERATT_TOK 2943
+aERATT_TOK 5547
 aPERSIST   Y
 aAPDM_TOK  905181242
 aDOMAIN    GeneratedKey
@@ -202,7 +202,7 @@ aRECNAME   steinhart_hart_config
 aTYPE      P
 
 eDATAFIELD 5
-aFLDLTH    64
+aFLDLTH    4
 aFLDNAME   id
 aFLDTYPE   A
 aXVAATT_TOK 5
@@ -238,7 +238,7 @@ aFLDTYPE   M
 aXVAATT_TOK 10
 
 eDATAFIELD 5
-aFLDLTH    64
+aFLDLTH    4
 aFLDNAME   fk_id_thermometer_type
 aFLDTYPE   A
 aXVAATT_TOK 11

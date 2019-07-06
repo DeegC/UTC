@@ -455,6 +455,16 @@ export const Session_LodDef = {
                     update:       true,
                     foreignKey:   false,
                 },
+                SoundsOn: {
+                    name:         "SoundsOn",
+                    hidden:       true,
+                    required:     false,
+                    domainName:   "Boolean",
+                    persistent:   true,
+                    key:          false,
+                    update:       false,
+                    foreignKey:   false,
+                },
                 autoseq: {
                     name:         "autoseq",
                     hidden:       true,

@@ -41,6 +41,10 @@ class TestHardwareInterface(val task : Task) extends HardwareInterface {
         task.log().info(s"Turning Generic switch ${number} to ${on}")
     }
 
+    override def beep( milliseconds: Int* ) {
+        task.log().debug( s"beep.sh ${milliseconds.mkString( " " )}" )
+    }
+
     override def shutdown() {
         task.log().info("Pretending to shut down.")
     }
