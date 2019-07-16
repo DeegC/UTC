@@ -34,6 +34,7 @@ case "$arch" in
 	;;
     
     Raspbian)
+	# RPi logs can be viewed with "sudo journalctl" and search for "start_server".
 	echo "Using Raspberry Pi"
 	HARDWARE="rpi"
 	PORT=80

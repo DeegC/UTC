@@ -12,3 +12,6 @@ cd $DIR/..
 DIR=$(pwd)
 echo $DIR
 rsync -av debian/build/distributions/*.deb $1:/home/dgc/projects/UTC
+
+echo "Install with:"
+echo "sudo dpkg -i --force-overwrite /home/dgc/projects/UTC/utc_1.1-1_all.deb"
