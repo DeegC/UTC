@@ -57,6 +57,7 @@ fi
 set-pwm.sh 10000 0  # We may need to make freq configurable.
 set-led.sh green on # Leave yellow alone--it indicates network connection
 set-led.sh red on
+beep.sh 100 100 100
 
 # Set up chart dir and clean out old files
 mkdir -p ./tmp/charts > /dev/null

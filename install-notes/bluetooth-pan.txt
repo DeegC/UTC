@@ -1,0 +1,9 @@
+Installed Bluez and blueman, paired phone.  Turn on BT tethering on phone.  Was able to use
+blueman-applet to get PAN working.
+
+In applet: List devices then select "View/Local Services...".  Under PAN Support select "Blueman (dhclient)"
+
+Once PAN was working was able to follow instructions in this post to set up cron job to connect:
+https://www.raspberrypi.org/forums/viewtopic.php?t=223029#p1400465
+
+(I installed bt-pan but don't remember how.)

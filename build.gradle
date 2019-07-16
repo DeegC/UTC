@@ -1,6 +1,6 @@
 subprojects { subproject ->
   group = 'com.quinsoft.zeidon'
-  version = '1.0'
+  version = '1.1'
   
   ext.versions = [
      scala: '2.12',
