@@ -3,6 +3,10 @@ var URL = require('./URL');
 
 module.exports = URLUtils;
 
+// Allow the `x == null` pattern.  This is eslint's "null: 'ignore'" option,
+// but jshint doesn't support this.
+/* jshint eqeqeq: false */
+
 // This is an abstract superclass for Location, HTMLAnchorElement and
 // other types that have the standard complement of "URL decomposition
 // IDL attributes".  This is now standardized as URLUtils, see:
@@ -11,75 +15,212 @@ module.exports = URLUtils;
 // The getter and setter methods parse and rebuild the URL on each
 // invocation; there is no attempt to cache the value and be more efficient
 function URLUtils() {}
-URLUtils.prototype = {
-  constructor: URLUtils,
+URLUtils.prototype = Object.create(Object.prototype, {
 
-  get protocol() {
-    var url = new URL(this.href);
-    if (url.isAbsolute()) return url.scheme + ":";
-    else return "";
+  _url: { get: function() {
+    // XXX: this should do the "Reinitialize url" steps, and "null" should
+    // be a valid return value.
+    return new URL(this.href);
+  } },
+
+  protocol: {
+    get: function() {
+      var url = this._url;
+      if (url && url.scheme) return url.scheme + ":";
+      else return ":";
+    },
+    set: function(v) {
+      var output = this.href;
+      var url = new URL(output);
+      if (url.isAbsolute()) {
+        v = v.replace(/:+$/, "");
+        v = v.replace(/[^-+\.a-zA-Z0-9]/g, URL.percentEncode);
+        if (v.length > 0) {
+          url.scheme = v;
+          output = url.toString();
+        }
+      }
+      this.href = output;
+    },
   },
 
-  get host() {
-    var url = new URL(this.href);
-    if (url.isAbsolute() && url.isAuthorityBased())
-      return url.host + (url.port ? (":" + url.port) : "");
-    else
-      return "";
+  host: {
+    get: function() {
+      var url = this._url;
+      if (url.isAbsolute() && url.isAuthorityBased())
+        return url.host + (url.port ? (":" + url.port) : "");
+      else
+        return "";
+    },
+    set: function(v) {
+      var output = this.href;
+      var url = new URL(output);
+      if (url.isAbsolute() && url.isAuthorityBased()) {
+        v = v.replace(/[^-+\._~!$&'()*,;:=a-zA-Z0-9]/g, URL.percentEncode);
+        if (v.length > 0) {
+          url.host = v;
+          delete url.port;
+          output = url.toString();
+        }
+      }
+      this.href = output;
+    },
   },
 
-  get hostname() {
-    var url = new URL(this.href);
-    if (url.isAbsolute() && url.isAuthorityBased())
-      return url.host;
-    else
-      return "";
+  hostname: {
+    get: function() {
+      var url = this._url;
+      if (url.isAbsolute() && url.isAuthorityBased())
+        return url.host;
+      else
+        return "";
+    },
+    set: function(v) {
+      var output = this.href;
+      var url = new URL(output);
+      if (url.isAbsolute() && url.isAuthorityBased()) {
+        v = v.replace(/^\/+/, "");
+        v = v.replace(/[^-+\._~!$&'()*,;:=a-zA-Z0-9]/g, URL.percentEncode);
+        if (v.length > 0) {
+          url.host = v;
+          output = url.toString();
+        }
+      }
+      this.href = output;
+    },
   },
 
-  get port() {
-    var url = new URL(this.href);
-    if (url.isAbsolute() && url.isAuthorityBased() && url.port!==undefined)
-      return url.port;
-    else
-      return "";
+  port: {
+    get: function() {
+      var url = this._url;
+      if (url.isAbsolute() && url.isAuthorityBased() && url.port!==undefined)
+        return url.port;
+      else
+        return "";
+    },
+    set: function(v) {
+      var output = this.href;
+      var url = new URL(output);
+      if (url.isAbsolute() && url.isAuthorityBased()) {
+        v = '' + v;
+        v = v.replace(/[^0-9].*$/, "");
+        v = v.replace(/^0+/, "");
+        if (v.length === 0) v = "0";
+        if (parseInt(v, 10) <= 65535) {
+          url.port = v;
+          output = url.toString();
+        }
+      }
+      this.href = output;
+    },
   },
 
-  get pathname() {
-    var url = new URL(this.href);
-    if (url.isAbsolute() && url.isHierarchical())
-      return url.path;
-    else
-      return "";
+  pathname: {
+    get: function() {
+      var url = this._url;
+      if (url.isAbsolute() && url.isHierarchical())
+        return url.path;
+      else
+        return "";
+    },
+    set: function(v) {
+      var output = this.href;
+      var url = new URL(output);
+      if (url.isAbsolute() && url.isHierarchical()) {
+        if (v.charAt(0) !== "/")
+          v = "/" + v;
+        v = v.replace(/[^-+\._~!$&'()*,;:=@\/a-zA-Z0-9]/g, URL.percentEncode);
+        url.path = v;
+        output = url.toString();
+      }
+      this.href = output;
+    },
   },
 
-  get search() {
-    var url = new URL(this.href);
-    if (url.isAbsolute() && url.isHierarchical() && url.query!==undefined)
-      return "?" + url.query;
-    else
-      return "";
+  search: {
+    get: function() {
+      var url = this._url;
+      if (url.isAbsolute() && url.isHierarchical() && url.query!==undefined)
+        return "?" + url.query;
+      else
+        return "";
+    },
+    set: function(v) {
+      var output = this.href;
+      var url = new URL(output);
+      if (url.isAbsolute() && url.isHierarchical()) {
+        if (v.charAt(0) === "?") v = v.substring(1);
+        v = v.replace(/[^-+\._~!$&'()*,;:=@\/?a-zA-Z0-9]/g, URL.percentEncode);
+        url.query = v;
+        output = url.toString();
+      }
+      this.href = output;
+    },
   },
 
-  get hash() {
-    var url = new URL(this.href);
-    if (url.isAbsolute() && url.fragment !== undefined)
-      return "#" + url.fragment;
-    else
-      return "";
+  hash: {
+    get: function() {
+      var url = this._url;
+      if (url == null || url.fragment == null || url.fragment === '') {
+        return "";
+      } else {
+        return "#" + url.fragment;
+      }
+    },
+    set: function(v) {
+      var output = this.href;
+      var url = new URL(output);
+
+      if (v.charAt(0) === "#") v = v.substring(1);
+      v = v.replace(/[^-+\._~!$&'()*,;:=@\/?a-zA-Z0-9]/g, URL.percentEncode);
+      url.fragment = v;
+      output = url.toString();
+
+      this.href = output;
+    },
   },
 
-  get username() {
-    var url = new URL(this.href);
-    return url.username || '';
+  username: {
+    get: function() {
+      var url = this._url;
+      return url.username || '';
+    },
+    set: function(v) {
+      var output = this.href;
+      var url = new URL(output);
+      if (url.isAbsolute()) {
+        v = v.replace(/[\x00-\x1F\x7F-\uFFFF "#<>?`\/@\\:]/g, URL.percentEncode);
+        url.username = v;
+        output = url.toString();
+      }
+      this.href = output;
+    },
   },
 
-  get password() {
-    var url = new URL(this.href);
-    return url.password || '';
+  password: {
+    get: function() {
+      var url = this._url;
+      return url.password || '';
+    },
+    set: function(v) {
+      var output = this.href;
+      var url = new URL(output);
+      if (url.isAbsolute()) {
+        if (v==='') {
+          url.password = null;
+        } else {
+          v = v.replace(/[\x00-\x1F\x7F-\uFFFF "#<>?`\/@\\]/g, URL.percentEncode);
+          url.password = v;
+        }
+        output = url.toString();
+      }
+      this.href = output;
+    },
   },
 
-  get origin() {
-    var url = new URL(this.href);
+  origin: { get: function() {
+    var url = this._url;
+    if (url == null) { return ''; }
     var originForPort = function(defaultPort) {
       var origin = [url.scheme, url.host, +url.port || defaultPort];
       // XXX should be "unicode serialization"
@@ -101,144 +242,23 @@ URLUtils.prototype = {
       // this is what chrome does
       return url.scheme + '://';
     }
-  },
+  } },
 
   /*
-  get searchParams() {
-    var url = new URL(this.href);
-    // XXX
+  searchParams: {
+    get: function() {
+      var url = this._url;
+      // XXX
+    },
+    set: function(v) {
+      var output = this.href;
+      var url = new URL(output);
+      // XXX
+      this.href = output;
+    },
   },
   */
-
-  set protocol(v) {
-    var output = this.href;
-    var url = new URL(output);
-    if (url.isAbsolute()) {
-      v = v.replace(/:+$/, "");
-      v = v.replace(/[^-+\.a-zA-Z0-9]/g, URL.percentEncode);
-      if (v.length > 0) {
-        url.scheme = v;
-        output = url.toString();
-      }
-    }
-    this.href = output;
-  },
-
-  set host(v) {
-    var output = this.href;
-    var url = new URL(output);
-    if (url.isAbsolute() && url.isAuthorityBased()) {
-      v = v.replace(/[^-+\._~!$&'()*,;:=a-zA-Z0-9]/g, URL.percentEncode);
-      if (v.length > 0) {
-        url.host = v;
-        delete url.port;
-        output = url.toString();
-      }
-    }
-    this.href = output;
-  },
-
-  set hostname(v) {
-    var output = this.href;
-    var url = new URL(output);
-    if (url.isAbsolute() && url.isAuthorityBased()) {
-      v = v.replace(/^\/+/, "");
-      v = v.replace(/[^-+\._~!$&'()*,;:=a-zA-Z0-9]/g, URL.percentEncode);
-      if (v.length > 0) {
-        url.host = v;
-        output = url.toString();
-      }
-    }
-    this.href = output;
-  },
-
-  set port(v) {
-    var output = this.href;
-    var url = new URL(output);
-    if (url.isAbsolute() && url.isAuthorityBased()) {
-      v = '' + v;
-      v = v.replace(/[^0-9].*$/, "");
-      v = v.replace(/^0+/, "");
-      if (v.length === 0) v = "0";
-      if (parseInt(v, 10) <= 65535) {
-        url.port = v;
-        output = url.toString();
-      }
-    }
-    this.href = output;
-  },
-
-  set pathname(v) {
-    var output = this.href;
-    var url = new URL(output);
-    if (url.isAbsolute() && url.isHierarchical()) {
-      if (v.charAt(0) !== "/")
-        v = "/" + v;
-      v = v.replace(/[^-+\._~!$&'()*,;:=@\/a-zA-Z0-9]/g, URL.percentEncode);
-      url.path = v;
-      output = url.toString();
-    }
-    this.href = output;
-  },
-
-  set search(v) {
-    var output = this.href;
-    var url = new URL(output);
-    if (url.isAbsolute() && url.isHierarchical()) {
-      if (v.charAt(0) === "?") v = v.substring(1);
-      v = v.replace(/[^-+\._~!$&'()*,;:=@\/?a-zA-Z0-9]/g, URL.percentEncode);
-      url.query = v;
-      output = url.toString();
-    }
-    this.href = output;
-  },
-
-  set hash(v) {
-    var output = this.href;
-    var url = new URL(output);
-    if (url.isAbsolute()) {
-      if (v.charAt(0) === "#") v = v.substring(1);
-      v = v.replace(/[^-+\._~!$&'()*,;:=@\/?a-zA-Z0-9]/g, URL.percentEncode);
-      url.fragment = v;
-      output = url.toString();
-    }
-    this.href = output;
-  },
-
-  set username(v) {
-    var output = this.href;
-    var url = new URL(output);
-    if (url.isAbsolute()) {
-      v = v.replace(/[\x00-\x1F\x7F-\uFFFF "#<>?`\/@\\:]/g, URL.percentEncode);
-      url.username = v;
-      output = url.toString();
-    }
-    this.href = output;
-  },
-
-  set password(v) {
-    var output = this.href;
-    var url = new URL(output);
-    if (url.isAbsolute()) {
-      if (v==='') {
-        url.password = null;
-      } else {
-        v = v.replace(/[\x00-\x1F\x7F-\uFFFF "#<>?`\/@\\]/g, URL.percentEncode);
-        url.password = v;
-      }
-      output = url.toString();
-    }
-    this.href = output;
-  }/*,
-
-  set searchParams(v) {
-    var output = this.href;
-    var url = new URL(output);
-    // XXX
-    this.href = output;
-  }
-  */
-};
+});
 
 URLUtils._inherit = function(proto) {
   // copy getters/setters from URLUtils to o.

@@ -8,8 +8,9 @@ var utils = require('./utils');
 var xml = require('./xmlnames');
 
 // Each document must have its own instance of the domimplementation object
-// Even though these objects have no state
-function DOMImplementation() {}
+function DOMImplementation(contextObject) {
+  this.contextObject = contextObject;
+}
 
 
 // Feature/version pairs that DOMImplementation.hasFeature() returns
@@ -28,10 +29,9 @@ DOMImplementation.prototype = {
   },
 
   createDocumentType: function createDocumentType(qualifiedName, publicId, systemId) {
-    if (!xml.isValidName(qualifiedName)) utils.InvalidCharacterError();
-    if (!xml.isValidQName(qualifiedName)) utils.NamespaceError();
+    if (!xml.isValidQName(qualifiedName)) utils.InvalidCharacterError();
 
-    return new DocumentType(qualifiedName, publicId, systemId);
+    return new DocumentType(this.contextObject, qualifiedName, publicId, systemId);
   },
 
   createDocument: function createDocument(namespace, qualifiedName, doctype) {
@@ -50,25 +50,33 @@ DOMImplementation.prototype = {
       e = null;
 
     if (doctype) {
-      if (doctype.ownerDocument) utils.WrongDocumentError();
       d.appendChild(doctype);
     }
 
     if (e) d.appendChild(e);
+    if (namespace === utils.NAMESPACE.HTML) {
+      d._contentType = 'application/xhtml+xml';
+    } else if (namespace === utils.NAMESPACE.SVG) {
+      d._contentType = 'image/svg+xml';
+    } else {
+      d._contentType = 'application/xml';
+    }
 
     return d;
   },
 
   createHTMLDocument: function createHTMLDocument(titleText) {
     var d = new Document(true, null);
-    d.appendChild(new DocumentType('html'));
+    d.appendChild(new DocumentType(d, 'html'));
     var html = d.createElement('html');
     d.appendChild(html);
     var head = d.createElement('head');
     html.appendChild(head);
-    var title = d.createElement('title');
-    head.appendChild(title);
-    title.appendChild(d.createTextNode(titleText));
+    if (titleText !== undefined) {
+      var title = d.createElement('title');
+      head.appendChild(title);
+      title.appendChild(d.createTextNode(titleText));
+    }
     html.appendChild(d.createElement('body'));
     d.modclock = 1; // Start tracking modifications
     return d;

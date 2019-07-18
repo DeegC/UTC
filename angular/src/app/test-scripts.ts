@@ -1,7 +1,7 @@
 import { ZeidonConfiguration, Position, ActivateLockError } from './zeidon';
 import { ZeidonRestValues, RestActivator, RestCommitter, RxHttpWrapper } from './zeidon-rest-client';
 import {Configuration} from "./lod/Configuration";
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import {RxHttpRequest} from 'rx-http-request';
 
 const REST_VALUES: ZeidonRestValues = {

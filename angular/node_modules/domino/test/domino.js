@@ -32,7 +32,7 @@ exports.querySelectorAll = function() {
 
 exports.qsaOrder = function() {
   var window = domino.createDocument('<h2></h2><h3></h3><h3></h3><h2></h2><h3></h3>');
-  window.querySelectorAll('h2, h3').map(function(el) {
+  Array.from(window.querySelectorAll('h2, h3')).map(function(el) {
     return el.tagName;
   })
   .should.eql(['H2', 'H3', 'H3', 'H2', 'H3']);
@@ -43,6 +43,39 @@ exports.orphanQSA = function() {
   var p = document.createElement('p');
   p.querySelectorAll('p').should.have.length(0);
   p.querySelectorAll('p').should.have.length(0);
+};
+
+// This is https://github.com/chjj/zest/issues/22
+exports.tildeQSA = function() {
+  var document = domino.createDocument('<div class="foo-bar foo">');
+  var els = document.querySelectorAll('.foo');
+  els.should.have.length(1);
+};
+
+exports.rootQSA = function() {
+  // the root element should be both first-child and last-child
+  var document = domino.createDocument('foo');
+  var html = document.documentElement;
+  html.matches(':first-child').should.be.true();
+  html.matches(':last-child').should.be.true();
+  html.matches(':only-child').should.be.true();
+  html.matches(':first-of-type').should.be.true();
+  html.matches(':last-of-type').should.be.true();
+  html.matches(':nth-child(1)').should.be.true();
+  html.matches(':nth-child(2)').should.be.false();
+  html.matches(':nth-last-child(1)').should.be.true();
+  html.matches(':nth-last-child(2)').should.be.false();
+  html.matches(':nth-of-type(1)').should.be.true();
+  html.matches(':nth-of-type(2)').should.be.false();
+  html.matches(':nth-last-of-type(1)').should.be.true();
+  html.matches(':nth-last-of-type(2)').should.be.false();
+};
+
+exports.escapeQSA = function() {
+  var document = domino.createDocument('<p>foo');
+  // ensure that selector parsing can handle escaped characters
+  document.querySelectorAll('p\\22\\27p').should.have.length(0);
+  document.querySelectorAll('\\50').should.have.length(1);
 };
 
 exports.gh20 = function() {
@@ -202,6 +235,17 @@ exports.jquery2_2 = function() {
   window.$.ajax({ url: 'test://', dataType: "test", timeout: 1, async: true });
 };
 
+exports.jquery3 = function() {
+  var window = domino.createWindow(html);
+  window.$ = require(__dirname + '/../node_modules/jquery/dist/jquery.js')(window);
+  window.$.should.be.ok();
+  window.$('.foo').should.have.length(3);
+  window.$.ajaxTransport("test", function() {
+    return { send: function() {}, abort: function() {} };
+  });
+  window.$.ajax({ url: 'test://', dataType: "test", timeout: 1, async: true });
+};
+
 exports.treeWalker = function() {
   var window = domino.createWindow(html);
   var d = window.document;
@@ -213,7 +257,6 @@ exports.treeWalker = function() {
   tw.root.should.equal(root);
   tw.currentNode.should.equal(root);
   tw.whatToShow.should.equal(0x4);
-  tw.filter.constructor.should.equal(window.NodeFilter.constructor);
 
   var actual = [];
   while (tw.nextNode() !== null) {
@@ -240,7 +283,6 @@ exports.nodeIterator = function() {
   ni.root.should.equal(root);
   ni.referenceNode.should.equal(root);
   ni.whatToShow.should.equal(0x4);
-  ni.filter.constructor.should.equal(window.NodeFilter.constructor);
 
   var actual = [];
   for (var n = ni.nextNode(); n ; n = ni.nextNode()) {
@@ -254,6 +296,41 @@ exports.nodeIterator = function() {
     root.lastChild.firstChild,
     root.lastChild.lastChild.firstChild
   ]);
+};
+
+exports.nodeIterator2 = function() {
+  /* jshint bitwise: false */
+  var document = domino.createDocument(
+    '<a>123<b>456<script>alert(1)</script></b></a>789'
+  );
+  var NodeFilter = domino.impl.NodeFilter;
+  var ni = document.createNodeIterator(
+    document.body,
+    NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_TEXT,
+    function() { return NodeFilter.FILTER_ACCEPT; },
+    false
+  );
+  var node = ni.nextNode();
+  node.tagName.should.equal('BODY');
+  node = ni.nextNode();
+  node.tagName.should.equal('A');
+  node = ni.nextNode();
+  node.nodeName.should.equal('#text');
+  node = ni.nextNode();
+  node.tagName.should.equal('B');
+  node.insertAdjacentHTML('AfterEnd', node.innerHTML);
+  node.parentNode.removeChild(node);
+  node = ni.nextNode();
+  node.nodeName.should.equal('#text');
+  node = ni.nextNode();
+  node.tagName.should.equal('SCRIPT');
+  node.parentNode.removeChild(node);
+  node = ni.nextNode();
+  node.nodeName.should.equal('#text');
+  node = ni.nextNode();
+  (node === null).should.be.true();
+  document.body.innerHTML.should.equal('<a>123456</a>789');
+  /* jshint bitwise: true */
 };
 
 exports.innerHTML = function() {
@@ -473,7 +550,7 @@ exports.normalize = function() {
 };
 
 exports.replaceChild = function() {
-  var impl = new domino.impl.DOMImplementation();
+  var impl = domino.createDOMImplementation();
   var doc = impl.createDocument();
   var root = doc.appendChild(doc.createElement('root'));
   root.outerHTML.should.equal('<root></root>');
@@ -947,4 +1024,377 @@ exports.gh99 = function() {
   }
   match[0].textContent.should.equal('x');
   match[1].textContent.should.equal('y');
+};
+
+exports.gh112 = function() {
+  // attributes named 'xmlns' are fine. (gh #112)
+  var window = domino.createWindow(
+    '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><b></b></html>'
+  );
+  var document = window.document;
+  document.documentElement.setAttribute('xmlns', 'test');
+  var b = document.querySelector('b');
+  b.innerHTML = '<test></test>';
+  var test = document.querySelector('test');
+  // Note that this seems contrary to what is implied by
+  // https://lists.w3.org/Archives/Public/www-dom/2011JulSep/0153.html
+  // but matches what modern browsers do.
+  b.namespaceURI.should.equal('http://www.w3.org/1999/xhtml');
+  test.namespaceURI.should.equal('http://www.w3.org/1999/xhtml');
+};
+
+exports.gh107 = function() {
+    var document = domino.createDocument();
+    document.scrollingElement.should.equal(document.documentElement);
+};
+
+exports.gh109 = function() {
+  var document = domino.createDocument();
+  var div = document.createElement('div');
+  div.classList.add('one', 'two');
+  div.classList.length.should.equal(2);
+  div.classList.contains('one').should.be.true();
+  div.classList.contains('two').should.be.true();
+  div.classList.remove('one', 'two');
+  div.classList.length.should.equal(0);
+  div.classList.contains('one').should.be.false();
+  div.classList.contains('two').should.be.false();
+};
+
+exports.gh111 = function() {
+  var document = domino.createDocument();
+  var div = document.createElement('div');
+  div.classList.toggle('a');
+  div.classList.toggle('b', true);
+  div.classList.length.should.equal(2);
+  div.classList.value.should.equal('a b');
+  div.classList.toggle('a');
+  div.classList.toggle('b', true);
+  div.classList.length.should.equal(1);
+  div.classList.value.should.equal('b');
+  div.classList.toggle('b', false);
+  div.classList.length.should.equal(0);
+  div.classList.value.should.equal('');
+
+  div.classList.value = ' foo\rbat \n baz a\nb\f\t';
+  div.classList.value.should.equal(' foo\rbat \n baz a\nb\f\t');
+  div.classList.length.should.equal(5);
+  div.classList.contains('').should.be.false();
+  div.classList.contains(' ').should.be.false();
+  div.classList.contains('\n').should.be.false();
+  div.classList.contains('\f').should.be.false();
+  div.classList[0].should.equal('foo');
+  div.classList[1].should.equal('bat');
+  div.classList.item(2).should.equal('baz');
+  div.classList.contains('a').should.be.true();
+  div.classList.contains('b').should.be.true();
+  div.classList.replace('bat', 'ball');
+  div.classList.value.should.equal('foo ball baz a b');
+  div.classList.length.should.equal(5);
+  div.classList.contains('ball').should.be.true();
+  div.classList[1].should.equal('ball');
+};
+
+exports.gh126 = function() {
+  var document = domino.createDocument();
+  var div = document.createElement('div');
+  div.classList.length.should.equal(0);
+  div.classList.add();
+  div.classList.length.should.equal(0);
+  div.classList.add(undefined);
+  div.classList.add(null);
+  div.classList.length.should.equal(2);
+  div.classList.remove();
+  div.classList.length.should.equal(2);
+  div.classList.contains(undefined).should.be.true();
+  div.classList.contains('undefined').should.be.true();
+  div.classList.contains(null).should.be.true();
+  div.classList.contains('null').should.be.true();
+  div.classList.remove(undefined, null);
+  div.classList.length.should.equal(0);
+  div.classList.contains(undefined).should.be.false();
+  div.classList.contains('undefined').should.be.false();
+  div.classList.contains(null).should.be.false();
+  div.classList.contains('null').should.be.false();
+};
+
+exports.arrayfrom = function() {
+    // If your version of node supports Array.from, it should support
+    // Array.from(node.attributes) ... even though we don't use proxies.
+    if (typeof(Array.from) !== 'function') { return; }
+    var d = domino.createDocument('');
+    var e = d.createElement('span');
+    e.setAttribute('a','1');
+    e.setAttribute('b','2');
+    var a = Array.from(e.attributes);
+    a.should.have.length(2);
+    a[0].should.have.property('name','a');
+    a[0].should.have.property('value','1');
+    a[1].should.have.property('name','b');
+    a[1].should.have.property('value','2');
+};
+
+exports.gh119 = function() {
+  var document = domino.createDocument('<div></div>');
+  var div = document.querySelector('div');
+  div.style.flex = '1 1 0px';
+  div.outerHTML.should.equal('<div style="flex: 1 1 0px;"></div>');
+
+  document = domino.createDocument('<div></div>');
+  div = document.querySelector('div');
+  div.style.flexFlow = 'row wrap';
+  div.outerHTML.should.equal('<div style="flex-flow: row wrap;"></div>');
+
+  document = domino.createDocument('<div></div>');
+  div = document.querySelector('div');
+  div.style.flexBasis = '0px';
+  div.style.flexGrow = 1;
+  div.style.flexShrink = 1;
+  div.style.flexDirection = 'column';
+  div.style.flexWrap = 'wrap';
+
+  div.outerHTML.should.equal('<div style="flex-basis: 0px; flex-grow: 1; flex-shrink: 1; flex-direction: column; flex-wrap: wrap;"></div>');
+};
+
+exports.gh121 = function() {
+  var document = domino.createDocument('<div></div>');
+  var div = document.querySelector('div');
+  div.className = 'ab a';
+  div.matches('.a').should.be.true();
+  div.matches('[class~=a]').should.be.true();
+  div.className = 'a ab';
+  div.matches('.a').should.be.true();
+  div.matches('[class~=a]').should.be.true();
+};
+
+exports.gh127 = function() {
+  var document = domino.createDocument('<a href="#foo"></a><a href="http://#foo"></a>');
+  var aEls = document.querySelectorAll('a');
+  aEls.length.should.equal(2);
+  for (var i=0; i < aEls.length; i++) {
+    aEls[i].hash.should.equal('#foo');
+  }
+};
+
+exports.gh128 = function() {
+  var document = domino.createDocument('<a target="xInSeNsItIvEx"></a><a target="xYx"></a>');
+  var expected = document.querySelectorAll('a')[0];
+
+  [
+    { sel: '[target*="insensitive" i]' },
+    { sel: "[target='XinsensitiveX'i]" },
+    { sel: '[target=XINSENSITIVEX i]' },
+    { sel: '[target=XINSENSITIVEXi]', expectFail: true },
+    { sel: '[target^=XI i]' },
+    { sel: '[target^=XIi]', expectFail: true },
+    { sel: '[target^=XI]', expectFail: true },
+    { sel: '[target$=EX i]' },
+    { sel: '[target$="ex"i]' },
+    { sel: '[target~="xinsensitivex"i]' },
+    { sel: '[target|="xinsensitivex"  i]' },
+  ].forEach(function(oneCase) {
+    var a = document.querySelectorAll('*'+oneCase.sel);
+    if (oneCase.expectFail) {
+      a.length.should.equal(0);
+    } else {
+      a.length.should.equal(1);
+      a[0].should.be.exactly(expected);
+    }
+  });
+};
+
+exports.gh129 = function() {
+  var window = domino.createWindow();
+  var document = window.document;
+  var div = document.body.appendChild(document.createElement('div'));
+  div.innerHTML = '<p></p><span></span>';
+  var span = div.firstChild.nextSibling;
+  div.textContent = '';
+  (span.parentNode === null).should.equal(true);
+};
+
+exports.gh135 = function() {
+  var document = domino.createDocument('<a target="foobar"></a>');
+  var a = document.querySelectorAll('*[target$="aaaaaaa"]');
+  a.length.should.equal(0);
+};
+
+exports.gh136 = function() {
+  var document = domino.createDocument('<option> \f\tabc\n');
+  var o = document.querySelector('option');
+  o.value.should.equal('abc');
+  o.text.should.equal('abc');
+  o.textContent.should.equal(' \f\tabc\n');
+  o.value = ' def ';
+  o.value.should.equal(' def ');
+  o.text.should.equal('abc');
+  o.text = ' ghi ';
+  o.text.should.equal('ghi');
+  o.textContent.should.equal(' ghi ');
+  o.outerHTML.should.equal("<option value=\" def \"> ghi </option>");
+};
+
+// Examples from
+// https://developer.mozilla.org/en-US/docs/Web/API/Element/outerHTML
+exports.outerHTML1 = function() {
+    var document = domino.createDocument(
+        '<div id="d"><p>Content</p><p>Further Elaborated</p></div>'
+    );
+    var d = document.getElementById('d');
+    d.outerHTML.should.equal(
+        '<div id="d"><p>Content</p><p>Further Elaborated</p></div>'
+    );
+};
+
+exports.outerHTML2 = function() {
+    var document = domino.createDocument(
+        '<div id="container"><div id="d">This is a div.</div></div>'
+    );
+    var container = document.getElementById('container');
+    var d = document.getElementById('d');
+    container.firstChild.nodeName.should.equal('DIV');
+
+    d.outerHTML = "<p>This paragraph replaced the original div.</p>";
+    container.firstChild.nodeName.should.equal('P');
+
+    (d.parentNode === null).should.be.true();
+};
+
+exports.outerHTML3 = function() {
+    var document = domino.createDocument();
+    var div = document.createElement("div");
+    div.outerHTML = "<div class=\"test\">test</div>";
+    // "Many browsers will also throw an exception"
+    div.outerHTML.should.equal('<div></div>');
+};
+
+exports.outerHTML4 = function() {
+    var document = domino.createDocument("<p>hello there</p>");
+    var p = document.getElementsByTagName("p")[0];
+    p.nodeName.should.equal("P");
+    p.outerHTML = "<div>This div replaced a paragraph.</div>";
+    p.nodeName.should.equal("P");
+    (p.parentNode === null).should.be.true();
+};
+
+// Test case taken from
+// https://developer.mozilla.org/en-US/docs/Web/API/Text/wholeText
+exports.wholeText = function() {
+  var document = domino.createDocument(
+    '<p>Thru-hiking is great! <strong>No insipid election coverage!</strong>' +
+    ' However, <a href="http://en.wikipedia.org/wiki/Absentee_ballot">casting' +
+    ' a ballot</a> is tricky.</p>'
+  );
+  var para = document.querySelector('p');
+  para.removeChild(para.childNodes[1]);
+  para.firstChild.wholeText.should.equal("Thru-hiking is great!  However, ");
+};
+
+exports.documentClone = function() {
+  var document = domino.createDocument('throw away');
+  var html = document.implementation.createHTMLDocument('my title');
+  html.body.innerHTML = '<p>Inside <b>body';
+  var copy = html.cloneNode(true); // deep copy!
+  (html === copy).should.be.false();
+  html.nodeType.should.equal(copy.nodeType);
+  html.nodeName.should.equal(copy.nodeName);
+  html.title.should.equal(copy.title);
+  html.body.outerHTML.should.equal(copy.body.outerHTML);
+  copy.head.ownerDocument.should.equal(copy);
+  copy.body.ownerDocument.should.equal(copy);
+};
+
+exports.insertForeignElement = function() {
+  // Sanitization test case from DOMPurify
+  // Verifies that prefixes are handled correctly during the
+  // "insert a foreign element" step in HTML parsing.
+  // https://html.spec.whatwg.org/multipage/parsing.html#insert-a-foreign-element
+  var document = domino.createDocument(
+    '<svg xmlns="http://www.w3.org/2000/svg">'+
+    '<xsl:stylesheet id="stylesheet" version="1.0" ' +
+      'xmlns:xsl="http://www.w3.org/1999/XSL/Transform">' +
+    '<xsl:template match="/">' +
+    '<iframe xmlns="http://www.w3.org/1999/xhtml" src="javascript:alert(125)">'
+  );
+  var el = document.querySelector('*[match]');
+  el.namespaceURI.should.equal('http://www.w3.org/2000/svg');
+  el.localName.should.equal('xsl:template'); // Not 'template' !
+  el.outerHTML.should.equal(
+    '<xsl:template match="/">' +
+    '<iframe xmlns="http://www.w3.org/1999/xhtml" src="javascript:alert(125)">'+
+    '</iframe></xsl:template>'
+  );
+};
+
+exports.bodyNL = function() {
+  var document = domino.createDocument(
+    '<body></body>\n'
+  );
+  // This may be surprising, but it's what the spec requires.
+  document.body.textContent.should.equal('\n');
+};
+
+exports.testIncompleteTag = function() {
+  var document = domino.createDocument('<p>hello<');
+  document.body.outerHTML.should.equal('<body><p>hello&lt;</p></body>');
+};
+
+exports.incrementalHTMLParser1 = function() {
+  // Verify correct operation of incremental parser, fed chunks which split
+  // up tokens.
+  var incrParser = domino.createIncrementalHTMLParser();
+  var neverPause = function() { return false; };
+  incrParser.write('<p>hello<');
+  incrParser.process(neverPause);
+
+  incrParser.write('b>foo&am');
+  incrParser.process(neverPause);
+
+  incrParser.write('p;<');
+  incrParser.process(neverPause);
+
+  incrParser.write('/p>');
+  incrParser.process(neverPause);
+
+  incrParser.end();
+  // omitting the pauseFunc is equivalent to passing neverPause
+  incrParser.process().should.equal(/*no more to do*/false);
+
+  incrParser.document().outerHTML.should.equal(
+    '<html><head></head><body><p>hello<b>foo&amp;</b></p></body></html>'
+  );
+};
+
+exports.incrementalHTMLParser2 = function() {
+  // Verify correct operation of incremental parser when we only manage to
+  // scan one token at each step.
+  var justOneStep = function() {
+    var counter = 1;
+    return function() { return (counter--) <= 0; };
+  };
+  var incrParser = domino.createIncrementalHTMLParser();
+  incrParser.write('<p>hello<');
+  incrParser.write('b>foo&am');
+  incrParser.write('p;<');
+  incrParser.write('/p>');
+  incrParser.end();
+
+  [
+    '<html><head></head><body><p></p></body></html>',
+    '<html><head></head><body><p>hello</p></body></html>',
+    '<html><head></head><body><p>hello<b></b></p></body></html>',
+    '<html><head></head><body><p>hello<b>foo</b></p></body></html>',
+    '<html><head></head><body><p>hello<b>foo</b></p></body></html>',
+    '<html><head></head><body><p>hello<b>foo</b></p></body></html>',
+    '<html><head></head><body><p>hello<b>foo</b></p></body></html>',
+    '<html><head></head><body><p>hello<b>foo</b></p></body></html>',
+    '<html><head></head><body><p>hello<b>foo&amp;</b></p></body></html>',
+  ].forEach(function(step) {
+    incrParser.process(justOneStep()).should.equal(/*more to do!*/true);
+    incrParser.document().outerHTML.should.equal(step);
+  });
+  incrParser.process(justOneStep()).should.equal(/*no more to do*/false);
+  incrParser.document().outerHTML.should.equal(
+    '<html><head></head><body><p>hello<b>foo&amp;</b></p></body></html>'
+  );
 };

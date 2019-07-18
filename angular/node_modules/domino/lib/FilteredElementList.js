@@ -10,6 +10,7 @@ var Node = require('./Node');
 // It is used to implement the
 // {Document,Element}.getElementsBy{TagName,ClassName}{,NS} methods.
 //
+// XXX this should inherit from NodeList
 
 function FilteredElementList(root, filter) {
   this.root = root;
@@ -20,20 +21,25 @@ function FilteredElementList(root, filter) {
   this.traverse();
 }
 
-FilteredElementList.prototype = {
-  get length() {
+FilteredElementList.prototype = Object.create(Object.prototype, {
+  length: { get: function() {
     this.checkcache();
     if (!this.done) this.traverse();
     return this.cache.length;
-  },
+  } },
 
-  item: function(n) {
+  item: { value: function(n) {
     this.checkcache();
-    if (!this.done && n >= this.cache.length) this.traverse(n);
+    if (!this.done && n >= this.cache.length) {
+      // This can lead to O(N^2) behavior if we stop when we get to n
+      // and the caller is iterating through the items in order; so
+      // be sure to do the full traverse here.
+      this.traverse(/*n*/);
+    }
     return this.cache[n];
-  },
+  } },
 
-  checkcache: function() {
+  checkcache: { value: function() {
     if (this.lastModTime !== this.root.lastModTime) {
       // subtree has changed, so invalidate cache
       for (var i = this.cache.length-1; i>=0; i--) {
@@ -43,12 +49,12 @@ FilteredElementList.prototype = {
       this.done = false;
       this.lastModTime = this.root.lastModTime;
     }
-  },
+  } },
 
   // If n is specified, then traverse the tree until we've found the nth
   // item (or until we've found all items).  If n is not specified,
   // traverse until we've found all items.
-  traverse: function(n) {
+  traverse: { value: function(n) {
     // increment n so we can compare to length, and so it is never falsy
     if (n !== undefined) n++;
 
@@ -61,10 +67,10 @@ FilteredElementList.prototype = {
 
     // no next element, so we've found everything
     this.done = true;
-  },
+  } },
 
   // Return the next element under root that matches filter
-  next: function() {
+  next: { value: function() {
     var start = (this.cache.length === 0) ? this.root // Start at the root or at
       : this.cache[this.cache.length-1]; // the last element we found
 
@@ -82,5 +88,5 @@ FilteredElementList.prototype = {
       elt = elt.nextElement(this.root);
     }
     return null;
-  }
-};
+  } },
+});

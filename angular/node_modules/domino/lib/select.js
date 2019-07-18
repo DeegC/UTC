@@ -4,6 +4,7 @@
  * Zest (https://github.com/chjj/zest)
  * A css selector engine.
  * Copyright (c) 2011-2012, Christopher Jeffrey. (MIT Licensed)
+ * Domino version based on Zest v0.1.3 with bugfixes applied.
  */
 
 /**
@@ -53,6 +54,13 @@ var lastChild = function(el) {
            && (el = el.previousSibling));
   }
   return el;
+};
+
+var parentIsElement = function(n) {
+  if (!n.parentNode) { return false; }
+  var nodeType = n.parentNode.nodeType;
+  // The root `html` element can be a first- or last-child, too.
+  return nodeType === 1 || nodeType === 9;
 };
 
 var unquote = function(str) {
@@ -164,7 +172,7 @@ var nth = function(param_, test, last) {
     , advance = !last ? next : prev;
 
   return function(el) {
-    if (el.parentNode.nodeType !== 1) return;
+    if (!parentIsElement(el)) return;
 
     var rel = find(el.parentNode)
       , pos = 0;
@@ -224,7 +232,8 @@ var selectors = {
           }
           break;
         case 'href':
-          attr = el.getAttribute('href', 2);
+        case 'src':
+          attr = el.getAttribute(key, 2);
           break;
         case 'title':
           // getAttribute('title') can be '' when non-existent sometimes?
@@ -262,14 +271,13 @@ var selectors = {
     };
   },
   ':first-child': function(el) {
-    return !prev(el) && el.parentNode.nodeType === 1;
+    return !prev(el) && parentIsElement(el);
   },
   ':last-child': function(el) {
-    return !next(el) && el.parentNode.nodeType === 1;
+    return !next(el) && parentIsElement(el);
   },
   ':only-child': function(el) {
-    return !prev(el) && !next(el)
-      && el.parentNode.nodeType === 1;
+    return !prev(el) && !next(el) && parentIsElement(el);
   },
   ':nth-child': function(param, last) {
     return nth(param, function() {
@@ -292,7 +300,7 @@ var selectors = {
     };
   },
   ':first-of-type': function(el) {
-    if (el.parentNode.nodeType !== 1) return;
+    if (!parentIsElement(el)) return;
     var type = el.nodeName;
     /*jshint -W084 */
     while (el = prev(el)) {
@@ -301,7 +309,7 @@ var selectors = {
     return true;
   },
   ':last-of-type': function(el) {
-    if (el.parentNode.nodeType !== 1) return;
+    if (!parentIsElement(el)) return;
     var type = el.nodeName;
     /*jshint -W084 */
     while (el = next(el)) {
@@ -339,8 +347,13 @@ var selectors = {
   ':focus': function(el) {
     return el === el.ownerDocument.activeElement;
   },
-  ':matches': function(sel) {
+  ':is': function(sel) {
     return compileGroup(sel);
+  },
+  // :matches is an older name for :is; see
+  // https://github.com/w3c/csswg-drafts/issues/3258
+  ':matches': function(sel) {
+    return selectors[':is'](sel);
   },
   ':nth-match': function(param, last) {
     var args = param.split(/\s*,\s*/)
@@ -492,15 +505,18 @@ var operators = {
     return attr.indexOf(val) !== -1;
   },
   '~=': function(attr, val) {
-    var i = attr.indexOf(val)
+    var i
+      , s
       , f
       , l;
 
-    if (i === -1) return;
-    f = attr[i - 1];
-    l = attr[i + val.length];
-
-    return (!f || f === ' ') && (!l || l === ' ');
+    for (s = 0; true; s = i + 1) {
+      i = attr.indexOf(val, s);
+      if (i === -1) return false;
+      f = attr[i - 1];
+      l = attr[i + val.length];
+      if ((!f || f === ' ') && (!l || l === ' ')) return true;
+    }
   },
   '|=': function(attr, val) {
     var i = attr.indexOf(val)
@@ -515,7 +531,8 @@ var operators = {
     return attr.indexOf(val) === 0;
   },
   '$=': function(attr, val) {
-    return attr.indexOf(val) + val.length === attr.length;
+    var i = attr.lastIndexOf(val);
+    return i !== -1 && i + val.length === attr.length;
   },
   // non-standard
   '!=': function(attr, val) {
@@ -652,7 +669,7 @@ var compile = function(sel_) {
   while (sel) {
     if (cap = rules.qname.exec(sel)) {
       sel = sel.substring(cap[0].length);
-      qname = cap[1];
+      qname = decodeid(cap[1]);
       buff.push(tok(qname, true));
     } else if (cap = rules.simple.exec(sel)) {
       sel = sel.substring(cap[0].length);
@@ -727,15 +744,15 @@ var tok = function(cap, qname) {
   if (qname) {
     return cap === '*'
       ? selectors['*']
-      : selectors.type(decodeid(cap));
+      : selectors.type(cap);
   }
 
   // class/id
   if (cap[1]) {
     return cap[1][0] === '.'
 	  // XXX unescape here?  or in attr?
-      ? selectors.attr('class', '~=', decodeid(cap[1].substring(1)))
-      : selectors.attr('id', '=', decodeid(cap[1].substring(1)));
+      ? selectors.attr('class', '~=', decodeid(cap[1].substring(1)), false)
+      : selectors.attr('id', '=', decodeid(cap[1].substring(1)), false);
   }
 
   // pseudo-name
@@ -750,7 +767,12 @@ var tok = function(cap, qname) {
   // attr op
   // attr value
   if (cap[4]) {
-    return selectors.attr(decodeid(cap[4]), cap[5] || '-', unquote(cap[6]), false);
+    var value = cap[6];
+    var i = /["'\s]\s*I$/i.test(value);
+    if (i) {
+      value = value.replace(/\s*I$/i, '');
+    }
+    return selectors.attr(decodeid(cap[4]), cap[5] || '-', unquote(value), i);
   }
 
   throw new SyntaxError('Unknown Selector.');

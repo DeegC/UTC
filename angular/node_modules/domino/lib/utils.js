@@ -41,6 +41,10 @@ exports.nyi = function() {
   throw new Error("NotYetImplemented");
 };
 
+exports.shouldOverride = function() {
+  throw new Error("Abstract function; should be overriding in subclass.");
+};
+
 exports.assert = function(expr, msg) {
   if (!expr) {
     throw new Error("Assertion failed: " + (msg || "") + "\n" + new Error().stack);
@@ -69,5 +73,13 @@ exports.documentOrder = function(n,m) {
 };
 
 exports.toASCIILowerCase = function(s) {
-  return s.replace(/[A-Z]+/g, function(t) { return t.toLowerCase(); });
+  return s.replace(/[A-Z]+/g, function(c) {
+    return c.toLowerCase();
+  });
+};
+
+exports.toASCIIUpperCase = function(s) {
+  return s.replace(/[a-z]+/g, function(c) {
+    return c.toUpperCase();
+  });
 };

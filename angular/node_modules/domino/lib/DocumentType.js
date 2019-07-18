@@ -3,14 +3,12 @@ module.exports = DocumentType;
 
 var Node = require('./Node');
 var Leaf = require('./Leaf');
-var utils = require('./utils');
 var ChildNode = require('./ChildNode');
 
-function DocumentType(name, publicId, systemId) {
-  // Unlike other nodes, doctype nodes always start off unowned
-  // until inserted
+function DocumentType(ownerDocument, name, publicId, systemId) {
+  Leaf.call(this);
   this.nodeType = Node.DOCUMENT_TYPE_NODE;
-  this.ownerDocument = null;
+  this.ownerDocument = ownerDocument || null;
   this.name = name;
   this.publicId = publicId || "";
   this.systemId = systemId || "";
@@ -25,7 +23,7 @@ DocumentType.prototype = Object.create(Leaf.prototype, {
 
   // Utility methods
   clone: { value: function clone() {
-    utils.DataCloneError();
+    return new DocumentType(this.ownerDocument, this.name, this.publicId, this.systemId);
   }},
 
   isEqual: { value: function isEqual(n) {

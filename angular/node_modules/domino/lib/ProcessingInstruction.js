@@ -5,6 +5,7 @@ var Node = require('./Node');
 var CharacterData = require('./CharacterData');
 
 function ProcessingInstruction(doc, target, data) {
+  CharacterData.call(this);
   this.nodeType = Node.PROCESSING_INSTRUCTION_NODE;
   this.ownerDocument = doc;
   this.target = target;
@@ -14,6 +15,7 @@ function ProcessingInstruction(doc, target, data) {
 var nodeValue = {
   get: function() { return this._data; },
   set: function(v) {
+    if (v === null || v === undefined) { v = ''; } else { v = String(v); }
     this._data = v;
     if (this.rooted) this.ownerDocument.mutateValue(this);
   }
@@ -23,7 +25,12 @@ ProcessingInstruction.prototype = Object.create(CharacterData.prototype, {
   nodeName: { get: function() { return this.target; }},
   nodeValue: nodeValue,
   textContent: nodeValue,
-  data: nodeValue,
+  data: {
+    get: nodeValue.get,
+    set: function(v) {
+      nodeValue.set.call(this, v===null ? '' : String(v));
+    },
+  },
 
   // Utility methods
   clone: { value: function clone() {
