@@ -19,16 +19,17 @@ task generateDeb(type: Deb) {
     preInstall file('debianPreInstall.sh')
     postInstall file('debianPostInstall.sh')
 
-    requires( 'build-essential' )
-    requires( 'python-dev' )
-    
+    // Package dependencies.
+    //requires( 'build-essential' )
+    //requires( 'java' )
+
     into '/opt/utc'
     from( '../bin' ) {
         exclude 'tmp'
     }
     from '../sqlite/utc.sqlite.empty.db'
 
-    from( ['utc-server.service', 'pigpiod.service' ] ) {
+    from( ['utc-server.service' ] ) {
         into '/lib/systemd/system'
     }
 }

@@ -13,6 +13,19 @@ for when that will change).
 We are currently in the process of changing the hardware to use the Raspberry Pi Zero W.  The
 RPi is ~ $10 more (when the SD card is included) but has lots of support and is ubiquitous.
 
+# Install
+
+First time install, which will set up user(s) and other projects.
+
+```
+wget https://raw.githubusercontent.com/DeegC/UTC/master/installs/install-utc.sh
+wget https://raw.githubusercontent.com/DeegC/UTC/master/installs/utc.config
+
+sudo ./install-utc
+```
+
+
+
 # Build
 
 If you have Gradle installed, run:
@@ -23,9 +36,17 @@ Otherwise run:
 
 ```./gradlew build```
 
-# Install on Target environment (RPi, CHIP)
+# Install on Target environment (RPi)
 
-To be done.
+```
+wget https://raw.githubusercontent.com/DeegC/UTC/master/installs/install-utc.sh
+wget https://raw.githubusercontent.com/DeegC/UTC/master/installs/utc.config
+
+nano utc.config
+
+chmod +x install-utc.sh
+sudo ./install-utc.sh
+```
 
 # Start Server
 

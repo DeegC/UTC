@@ -62,6 +62,12 @@ if ! pip list | grep -i adafruit-mcp3008 > /dev/null; then
     pip install adafruit-mcp3008
 fi
 
+# Make sure pigpiod is started with sockets on.
+if grep -q "pigpiod -l" /lib/systemd/system/pigpiod.service; then
+    sed -i 's/pigpiod -l/pigpiod/' /lib/systemd/system/pigpiod.service
+    systemctl daemon-reload
+fi
+
 # Check to see if java runs.  If no, then install java 8
 if ! java -version &> /dev/null; then
     echo "Installing Java 8"
