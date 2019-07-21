@@ -49,14 +49,15 @@ if [ ! -z "$DEV_USER" ]; then
     fi
 fi
 
-if [ "$arch" = "rpi" ]; then
+echo "Checking for adafruit-mcp3008..."
+if ! pip list | grep -iq adafruit-mcp3008; then
     # Install Adafruit pip code to access the MCP3008 chip
     echo "Installing adafruit-mcp3008"
     pip install adafruit-mcp3008
 fi
 
 # Check to see if java runs.  If no, then install java 8
-if java -version; then
+if ! java -version &> /dev/null; then
     echo "Installing Java 8"
     apt install openjdk-8-jre-headless openjdk-8-jre
     echo ""
@@ -71,7 +72,7 @@ DEB_FILE=utc_1.1-1_all.deb
 if [ ! -f $DEB_FILE ]; then
     echo "Downloading .deb file"
     wget -q --auth-no-challenge --header='Accept:application/octet-stream' \
-        https://api.github.com/repos/DeegC/UTC/releases/assets/13783892 -O $DEB_FILE
+        https://github.com/DeegC/UTC/releases/download/1.1/$DEB_FILE
 
     dpkg -i $DEB_FILE
 fi
