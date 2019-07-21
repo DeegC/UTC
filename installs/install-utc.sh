@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Installs UTC from scratch.
 
@@ -18,7 +18,13 @@ fi
 # what env we're on.
 arch='rpi'
 user='utc'
-hostname utc
+
+current_hostname=$(hostname)
+if [ ! -z "$UTC_HOSTNAME ] && [ "$current_hostname" != "$UTC_HOSTNAME" ]; then
+    hostname $UTC_HOSTNAME
+    echo "$UTC_HOSTNAME" > /etc/hostname
+    sed -i "s/$current_hostname/$UTC_HOSTNAME/" /etc/hosts
+fi
 
 if ! id -u "$user" > /dev/null; then
     adduser --system --shell /bin/bash $user
@@ -90,7 +96,9 @@ if [ -n "$GMAIL_EMAIL_RECIPIENT" ]; then
     fi
 
     echo "Installing GMail notification for $GMAIL"
-    sudo apt-get install ssmtp mailutils
+    if which mail > /dev/null; then
+        sudo apt-get install ssmtp mailutils
+    fi
 
     echo "# Set up smtp to send email via gmail.
 root=$GMAIL_EMAIL_RECIPIENT
