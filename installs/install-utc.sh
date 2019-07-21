@@ -11,7 +11,7 @@ fi
 
 if [ -f utc.config ]; then
     echo "Loading utc.config"
-    . utc.config
+    . ./utc.config
 fi
 
 # For now we'll just assume we're on a RPi.  In the future we'll use 'uname -a' to determine
@@ -55,13 +55,16 @@ if [ "$arch" = "rpi" ]; then
     pip install adafruit-mcp3008
 fi
 
-# Add Oracle Java 8 ppa.  We need Oracle Java 8 for ARM for performance reasons.
-if [ ! -f /etc/apt/sources.list.d/webupd8team-java.list ]; then
+# Check to see if java runs.  If no, then install java 8
+if java -version; then
     echo "Installing Java 8"
-    apt install software-properties-common
-    add-apt-repository ppa:webupd8team/java
-    apt-get update
-    apt install oracle-java8-installer
+    apt install openjdk-8-jre-headless openjdk-8-jre
+    echo ""
+    echo " --"
+    echo " -- Choose Java 8"
+    echo " --"
+    echo ""
+    update-alternatives --config java
 fi
 
 DEB_FILE=utc_1.1-1_all.deb
