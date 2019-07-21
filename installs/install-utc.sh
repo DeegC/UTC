@@ -50,7 +50,7 @@ if [ ! -z "$DEV_USER" ]; then
 fi
 
 echo "Checking for adafruit-mcp3008..."
-if ! pip list | grep -iq adafruit-mcp3008; then
+if ! pip list | grep -i adafruit-mcp3008 > /dev/null; then
     # Install Adafruit pip code to access the MCP3008 chip
     echo "Installing adafruit-mcp3008"
     pip install adafruit-mcp3008
