@@ -20,7 +20,7 @@ arch='rpi'
 user='utc'
 
 current_hostname=$(hostname)
-if [ ! -z "$UTC_HOSTNAME ] && [ "$current_hostname" != "$UTC_HOSTNAME" ]; then
+if [ ! -z "$UTC_HOSTNAME" ] && [ "$current_hostname" != "$UTC_HOSTNAME" ]; then
     hostname $UTC_HOSTNAME
     echo "$UTC_HOSTNAME" > /etc/hostname
     sed -i "s/$current_hostname/$UTC_HOSTNAME/" /etc/hosts
@@ -102,7 +102,7 @@ if [ -n "$GMAIL_EMAIL_RECIPIENT" ]; then
     fi
 
     echo "Installing GMail notification for $GMAIL"
-    if which mail > /dev/null; then
+    if ! which mail > /dev/null; then
         sudo apt-get install ssmtp mailutils
     fi
 
