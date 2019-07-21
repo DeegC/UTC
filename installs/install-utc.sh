@@ -18,6 +18,7 @@ fi
 # what env we're on.
 arch='rpi'
 user='utc'
+hostname utc
 
 if ! id -u "$user" > /dev/null; then
     adduser --system --shell /bin/bash $user
@@ -72,7 +73,52 @@ if [ ! -f $DEB_FILE ]; then
     dpkg -i $DEB_FILE
 fi
 
+# If specified, then set up smtp to email the IP address via gmail.
+if [ -n "$GMAIL_EMAIL_RECIPIENT" ]; then
+    if [ -z "$GMAIL_ACCOUNT" ]; then
+        echo "GMAIL_ACCOUNT needs to be set to the gmail account name."
+        exit 1
+    fi
+
+    if [ -z "$GMAIL_PASSWORD" ]; then
+        echo "GMAIL_PASSWORD needs to be set"
+        exit 1
+    fi
+
+    echo "Installing GMail notification for $GMAIL"
+    sudo apt-get install ssmtp mailutils
+
+    echo "# Set up smtp to send email via gmail.
+root=$GMAIL_EMAIL_RECIPIENT
+mailhub=smtp.gmail.com:587
+hostname=utc
+FromLineOverride=YES
+AuthUser=$GMAIL_ACCOUNT
+AuthPass=$GMAIL_PASSWORD
+UseSTARTTLS=YES" > /etc/ssmtp/ssmtp.conf
+
+    # Set up script to send email when network is up.
+    echo "#!/bin/sh
+send-mail(){
+    sleep 20
+    ip addr show wlan0  | mail -s\"RPi IP\" $GMAIL_EMAIL_IP
+}
+send-mail &" > /etc/network/if-up.d/send-ip
+    chmod +x /etc/network/if-up.d/send-ip
+fi
+
 if echo "$BLUETOOTH" | grep -iq "^[yt1]"; then
-    echo "Installing bluetooth"
-    apt install bluez blueman
+    if which bluetoothctl > /dev/null; then
+        echo "Installing bluetooth"
+        apt install bluez
+    fi
+
+    echo "We will now try to pair with your phone.  Make sure BT is on and discoverable."
+    echo "Execute the following once bluetoothctl starts: "
+    echo "      scan on"
+    echo "      trust <MAC ADDR>"
+    echo "      pair <MAC ADDR>"
+    echo "      exit"
+
+    bluetoothctl
 fi
