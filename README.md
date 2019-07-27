@@ -4,27 +4,19 @@ This is a work-in-progress repository for creating a temperature controller that
 
 This is the next generation controller based on my previous [UDS] (http://www.instructables.com/id/Tweeting-Wireless-Ugly-Drum-Smoker-UDS-tempera/)
 
-# Status
-
-The software and hardware have been tested and it is all working at a basic level.  Unfortunately
-the hardware was built using a NTC C.H.I.P. which is not currently available (with no known date
-for when that will change).
-
-We are currently in the process of changing the hardware to use the Raspberry Pi Zero W.  The
-RPi is ~ $10 more (when the SD card is included) but has lots of support and is ubiquitous.
 
 # Install
 
-First time install, which will set up user(s) and other projects.
+First time install, which will set up user(s) and installs necessary packages.  This will set up UTC to automatically start.
 
 ```
 wget https://raw.githubusercontent.com/DeegC/UTC/master/installs/install-utc.sh
 wget https://raw.githubusercontent.com/DeegC/UTC/master/installs/utc.config
-
-sudo ./install-utc
+chmod +x install-utc.sh
+sudo ./install-utc.sh
 ```
 
-
+If you want to change default install behavior edit ```utc.config``` before running ```install-utc.sh```.  See comments in the file for more.
 
 # Build
 
@@ -36,20 +28,4 @@ Otherwise run:
 
 ```./gradlew build```
 
-# Install on Target environment (RPi)
 
-```
-wget https://raw.githubusercontent.com/DeegC/UTC/master/installs/install-utc.sh
-wget https://raw.githubusercontent.com/DeegC/UTC/master/installs/utc.config
-
-nano utc.config
-
-chmod +x install-utc.sh
-sudo ./install-utc.sh
-```
-
-# Start Server
-
-In ./bin directory run:
-
-```./start_server.sh```
