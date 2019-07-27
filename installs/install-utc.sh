@@ -26,7 +26,7 @@ if [ ! -z "$UTC_HOSTNAME" ] && [ "$current_hostname" != "$UTC_HOSTNAME" ]; then
     sed -i "s/$current_hostname/$UTC_HOSTNAME/" /etc/hosts
 fi
 
-if ! id -u "$user" > /dev/null; then
+if ! id -u "$user" &> /dev/null; then
     adduser --system --shell /bin/bash $user
     adduser $user netdev
 
@@ -45,7 +45,7 @@ fi
 
 # If DEV_USER defined add the user and some development tools.
 if [ ! -z "$DEV_USER" ]; then
-    if ! id -u "$DEV_USER" > /dev/null; then
+    if ! id -u "$DEV_USER" &> /dev/null; then
         echo "Adding user $DEV_USER..."
         useradd $DEV_USER -s /bin/bash -m  -G sudo
         if [ ! -z "$DEV_USER_PASSWORD" ]; then
@@ -119,7 +119,7 @@ UseSTARTTLS=YES" > /etc/ssmtp/ssmtp.conf
     echo "#!/bin/sh
 send-mail(){
     sleep 20
-    ip addr show wlan0  | mail -s\"RPi IP\" $GMAIL_EMAIL_IP
+    ip addr show wlan0  | mail -s\"RPi IP\" $GMAIL_EMAIL_RECIPIENT
 }
 send-mail &" > /etc/network/if-up.d/send-ip
     chmod +x /etc/network/if-up.d/send-ip
