@@ -18,6 +18,10 @@ sudo ./install-utc.sh
 
 If you want to change default install behavior edit ```utc.config``` before running ```install-utc.sh```.  See comments in the file for more.
 
+# Install Oracle Java 8 JDK
+
+https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+
 # Build
 
 If you have Gradle installed, run:

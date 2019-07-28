@@ -103,25 +103,32 @@ if [ -n "$GMAIL_EMAIL_RECIPIENT" ]; then
 
     echo "Installing GMail notification for $GMAIL"
     if ! which mail > /dev/null; then
-        sudo apt-get install ssmtp mailutils
+        sudo apt install msmtp mailutils
     fi
 
-    echo "# Set up smtp to send email via gmail.
-root=$GMAIL_EMAIL_RECIPIENT
-mailhub=smtp.gmail.com:587
-hostname=utc
-FromLineOverride=YES
-AuthUser=$GMAIL_ACCOUNT
-AuthPass=$GMAIL_PASSWORD
-UseSTARTTLS=YES" > /etc/ssmtp/ssmtp.conf
+    echo "# Set up msmtp to send email via gmail.
+defaults
+auth           on
+tls            on
+tls_starttls   on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+
+account        gmail
+host           smtp.gmail.com
+port           587
+from           $GMAIL_ACCOUNT
+user           $GMAIL_ACCOUNT
+password       $GMAIL_PASSWORD
+
+account default : gmail" > /etc/msmtprc
 
     # Set up script to send email when network is up.
-    echo "#!/bin/sh
-send-mail(){
+    echo "#!/bin/bash
+send_mail(){
     sleep 20
-    ip addr show wlan0  | mail -s\"RPi IP\" $GMAIL_EMAIL_RECIPIENT
+    echo -e \"Subject: RPi IP\n\n  $(ip addr show wlan0)\" | msmtp -v $GMAIL_EMAIL_RECIPIENT
 }
-send-mail &" > /etc/network/if-up.d/send-ip
+send_mail &" > /etc/network/if-up.d/send-ip
     chmod +x /etc/network/if-up.d/send-ip
 fi
 
