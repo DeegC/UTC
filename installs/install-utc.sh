@@ -68,6 +68,15 @@ if grep -q "pigpiod -l" /lib/systemd/system/pigpiod.service; then
     systemctl daemon-reload
 fi
 
+if [ -f .tar ]; then
+    tarfile=...get full path...
+    pushd /usr/lib/jvm > /dev/null
+    tar xvf $tarfile
+    update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk1.8.0_221/bin/java 1
+    update-alternatives --set java /usr/lib/jvm/jdk1.8.0_221/bin/java
+    popd > /dev/null
+fi
+
 # Check to see if java runs.  If no, then install java 8
 if ! java -version &> /dev/null; then
     echo "Installing Java 8"
@@ -125,7 +134,7 @@ account default : gmail" > /etc/msmtprc
     # Set up script to send email when network is up.
     echo "#!/bin/bash
 send_mail(){
-    sleep 20
+    sleep 60 # Give msmtp time to start up and finish booting.
     echo -e \"Subject: RPi IP\n\n  $(ip addr show wlan0)\" | msmtp -v $GMAIL_EMAIL_RECIPIENT
 }
 send_mail &" > /etc/network/if-up.d/send-ip
