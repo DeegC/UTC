@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Pushes the current .deb to github as a release.
+
 source ~/.github-api-token
 tag=1.1
 asset="../debian/build/distributions/utc_$tag-1_all.deb"

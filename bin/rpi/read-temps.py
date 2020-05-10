@@ -59,7 +59,7 @@ maxadc = 4096.0
 
 values = read_sensors()
 values = map( average_filter, values )
-print "ADC values = ", values
+#print "ADC values = ", values
 
 for i in range(8):
     if values[i] > 2:
@@ -68,7 +68,7 @@ for i in range(8):
     else:
         values[i] = 0.0
 
-print "Temperatures F = "
+#print "Temperatures F = "
 for t in values:
     print t
 pi.bb_spi_close(CS)

@@ -132,6 +132,9 @@ export class Session_Configuration extends zeidon.EntityInstance {
     get TweetOn(): boolean { return this.getAttribute("TweetOn") };
     set TweetOn(value: boolean) { this.setAttribute("TweetOn", value) };
 
+    get SoundsOn(): boolean { return this.getAttribute("SoundsOn") };
+    set SoundsOn(value: boolean) { this.setAttribute("SoundsOn", value) };
+
     get PwmFrequency(): number { return this.getAttribute("PwmFrequency") };
     set PwmFrequency(value: number) { this.setAttribute("PwmFrequency", value) };
 
@@ -425,6 +428,16 @@ export const Session_LodDef = {
                     foreignKey:   false,
                     initialValue: "false",
                 },
+                SoundsOn: {
+                    name:         "SoundsOn",
+                    hidden:       false,
+                    required:     false,
+                    domainName:   "Boolean",
+                    persistent:   true,
+                    key:          false,
+                    update:       true,
+                    foreignKey:   false,
+                },
                 PwmFrequency: {
                     name:         "PwmFrequency",
                     hidden:       false,
@@ -453,16 +466,6 @@ export const Session_LodDef = {
                     persistent:   true,
                     key:          false,
                     update:       true,
-                    foreignKey:   false,
-                },
-                SoundsOn: {
-                    name:         "SoundsOn",
-                    hidden:       true,
-                    required:     false,
-                    domainName:   "Boolean",
-                    persistent:   true,
-                    key:          false,
-                    update:       false,
                     foreignKey:   false,
                 },
                 autoseq: {
