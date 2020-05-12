@@ -51,7 +51,14 @@ if [ ! -z "$DEV_USER" ]; then
         if [ ! -z "$DEV_USER_PASSWORD" ]; then
             echo "$DEV_USER:$DEV_USER_PASSWORD" | chpasswd
         fi
-        apt install vim git x11vnc ruby htop mlocate sqlite3
+	apt update
+        apt install --assume-yes vim git x11vnc ruby htop mlocate sqlite3
+
+	read -p "Disable user pi user from ssh? (yes/no) : " yesno
+	if [[ "$yesno" = y* ]]; then
+	    echo "Disabling pi from ssh"
+	    echo "DenyUsers pi" >> /etc/ssh/sshd_config
+	fi
     fi
 fi
 
@@ -80,7 +87,7 @@ fi
 # Check to see if java runs.  If no, then install java 8
 if ! java -version &> /dev/null; then
     echo "Installing Java 8"
-    apt install openjdk-8-jre-headless openjdk-8-jre
+    apt install --assume-yes openjdk-8-jre-headless openjdk-8-jre
     echo ""
     echo " --"
     echo " -- Choose Java 8"
@@ -113,7 +120,7 @@ if [ -n "$GMAIL_EMAIL_RECIPIENT" ]; then
 
     echo "Installing GMail notification for $GMAIL"
     if ! which msmtp > /dev/null; then
-        sudo apt install msmtp mailutils
+        sudo apt install --assume-yes msmtp mailutils
     fi
 
     echo "# Set up msmtp to send email via gmail.
@@ -145,7 +152,7 @@ fi
 if echo "$BLUETOOTH" | grep -iq "^[yt1]"; then
     if which bluetoothctl > /dev/null; then
         echo "Installing bluetooth"
-        apt install bluez
+        apt install --assume-yes bluez
     fi
 
     echo "We will now try to pair with your phone.  Make sure BT is on and discoverable."
