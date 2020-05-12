@@ -95,6 +95,7 @@ if [ ! -f $DEB_FILE ]; then
     wget -q --auth-no-challenge --header='Accept:application/octet-stream' \
         https://github.com/DeegC/UTC/releases/download/1.1/$DEB_FILE
 
+    # Do we need --force-overwrite here?
     dpkg -i $DEB_FILE
 fi
 
@@ -111,7 +112,7 @@ if [ -n "$GMAIL_EMAIL_RECIPIENT" ]; then
     fi
 
     echo "Installing GMail notification for $GMAIL"
-    if ! which mail > /dev/null; then
+    if ! which msmtp > /dev/null; then
         sudo apt install msmtp mailutils
     fi
 
