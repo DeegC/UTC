@@ -3,9 +3,9 @@
 # Initializes the RPi pins to be low.
 
 initialize_pin() {
-    ping=$1
+    pin=$1
     # Use sleep to give commands a chance to finish
-    echo "pin = $ping"
+    echo "pin = $pin"
     echo "$pin" > /sys/class/gpio/export   # Turn pin on.  I/O error means it's already on.
     sleep 1
     echo "out" > /sys/class/gpio/gpio$pin/direction
