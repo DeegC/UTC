@@ -3,15 +3,16 @@
 # Initializes the RPi pins to be low.
 
 initialize_pin() {
+    pin=$1
     # Use sleep to give commands a chance to finish
-    echo "pin = $1"
-    echo "$1" > /sys/class/gpio/export   # Turn pin on.  I/O error means it's already on.
+    echo "pin = $pin"
+    echo "$pin" > /sys/class/gpio/export   # Turn pin on.  I/O error means it's already on.
     sleep 1
-    echo "out" > /sys/class/gpio/gpio$1/direction
+    echo "out" > /sys/class/gpio/gpio$pin/direction
     sleep 1
-    echo "1" > /sys/class/gpio/gpio$1/value
+    echo "1" > /sys/class/gpio/gpio$pin/value
     sleep 1
-    echo "0" > /sys/class/gpio/gpio$1/value
+    echo "0" > /sys/class/gpio/gpio$pin/value
 }
 
 # Wait for pigpio to start

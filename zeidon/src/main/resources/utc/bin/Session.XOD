@@ -1,4 +1,4 @@
-z1000-Zeidon    SESSION  TZZOXODO 07/01/19   23:18:41 1.0a2    
+z1000-Zeidon    SESSION  TZZOXODO 05/09/20   18:12:52 1.0a2    
 eOBJECT    1
 aNAME      Session
 aZKey      929210658
@@ -119,6 +119,7 @@ eCHILDENTITY 3
 aNAME      Configuration
 aERENT_TOK 905181331
 aERREL_TOK 905181391
+aFULLPERSIST Y
 aCARDMIN   1
 aCARDMAX   1
 aPDELETE   E
@@ -248,6 +249,17 @@ aUPDATE    Y
 aXVAATT_TOK 15
 
 eATTRIB    4
+aNAME      SoundsOn
+aERATT_TOK 905181454
+aPERSIST   Y
+aAPDM_TOK  905181228
+aDOMAIN    Boolean
+aTYPE      L
+aLTH       4
+aUPDATE    Y
+aXVAATT_TOK 16
+
+eATTRIB    4
 aNAME      PwmFrequency
 aERATT_TOK 905181344
 aPERSIST   Y
@@ -256,7 +268,7 @@ aDOMAIN    Integer
 aTYPE      L
 aLTH       4
 aUPDATE    Y
-aXVAATT_TOK 16
+aXVAATT_TOK 17
 
 eATTRIB    4
 aNAME      GenericSwitchName1
@@ -267,7 +279,7 @@ aDOMAIN    Text
 aTYPE      S
 aLTH       100
 aUPDATE    Y
-aXVAATT_TOK 17
+aXVAATT_TOK 18
 
 eATTRIB    4
 aNAME      GenericSwitch1
@@ -278,17 +290,6 @@ aDOMAIN    Boolean
 aTYPE      L
 aLTH       4
 aUPDATE    Y
-aXVAATT_TOK 18
-
-eATTRIB    4
-aNAME      SoundsOn
-aERATT_TOK 905181454
-aPERSIST   Y
-aAPDM_TOK  905181228
-aDOMAIN    Boolean
-aTYPE      L
-aLTH       4
-aHIDDEN    Y
 aXVAATT_TOK 19
 
 eATTRIB    4
@@ -381,26 +382,26 @@ aFLDTYPE   O
 aXVAATT_TOK 15
 
 eDATAFIELD 5
+aFLDLTH    1
+aFLDNAME   sounds_on
+aFLDTYPE   O
+aXVAATT_TOK 16
+
+eDATAFIELD 5
 aFLDLTH    4
 aFLDNAME   pwm_frequency
 aFLDTYPE   L
-aXVAATT_TOK 16
+aXVAATT_TOK 17
 
 eDATAFIELD 5
 aFLDLTH    100
 aFLDNAME   generic_switch_name1
 aFLDTYPE   S
-aXVAATT_TOK 17
-
-eDATAFIELD 5
-aFLDLTH    1
-aFLDNAME   generic_switch1
-aFLDTYPE   O
 aXVAATT_TOK 18
 
 eDATAFIELD 5
 aFLDLTH    1
-aFLDNAME   sounds_on
+aFLDNAME   generic_switch1
 aFLDTYPE   O
 aXVAATT_TOK 19
 

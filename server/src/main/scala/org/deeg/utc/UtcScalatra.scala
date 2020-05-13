@@ -41,6 +41,11 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
     hardware.setRedLed( false )
     hardware.setYellowLed( false )
 
+    // Preload configurations.
+    oe.forTask( "UTC" ) { task =>
+        task.Configuration.all()
+    }
+
     @volatile var controller : TemperatureController = null
 
     def getObjectEngine(): ObjectEngine = {

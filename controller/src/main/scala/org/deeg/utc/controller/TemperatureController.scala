@@ -176,7 +176,7 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
         pid = new PIDController( currentSession.Configuration.PidP,
                                  currentSession.Configuration.PidI,
                                  currentSession.Configuration.PidD,
-                                 0.0, this, this, 5.0, logger );
+                                 0.0, this, this, 5.0, logger )
 
         pid.setOutputRange( 0, 100 );
         pid.setSetpoint( currentSession.Configuration.TargetTemperature );
@@ -187,7 +187,8 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
             hardware.beep( 250, 100, 250 )
 
         // Run until someone calls stop()
-        running = true;
+        logger.info( "Starting tick loop" )
+        running = true
         while ( running ) {
             tick();
             Thread.sleep( mainLoopDelay )
@@ -209,8 +210,9 @@ class TemperatureController( private val currentSession: View @basedOn( "Session
     def isRunning = running
 
     def stop() {
+        logger.info( "Received notification to stop controller" )
         if ( running ) {
-            logger.info( "Received notification to stop controller" )
+            logger.info( "Stopping controller" )
             running = false
         }
     }

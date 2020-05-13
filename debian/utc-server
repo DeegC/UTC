@@ -4,7 +4,7 @@
 USER="utc"
 case "$1" in
     start)
-	pigpiod # Try starting it even though it might already be started.
+#	pigpiod # Try starting it even though it might already be started.
 	su ${USER} -s /bin/bash -c "/opt/utc/start_server.sh"
 	;;
 
