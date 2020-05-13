@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# Rsync .war file to CHIP server.  This is faster than building it on CHIP.
+# Copy .war file to server.
 
 if [ "$1" == "" ]; then
-    echo "CHIP's IP address required as first param"
+    echo "Servers's IP address required as first param"
     exit 1
 fi
 
+remote_server="$1"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd $DIR/..
-DIR=$(pwd)
-WAR=$(find . -name \*.war)
+WAR=$(find $DIR/../bin -name \*.war)
 echo $DIR/$WAR
-rsync -av $DIR/$WAR $1:$DIR/$WAR
+scp $WAR $remote_server:/opt/utc
+ssh $remote_server -t 'sudo service utc-server restart'
