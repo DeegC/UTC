@@ -12,28 +12,9 @@ import { UTC_DomainFunctions } from './UTC-DomainFunctions';
 
 // TwitterConfig LOD.
 export class TwitterConfig extends zeidon.ObjectInstance {
-    protected rootEntityName(): string { return "Twitter" };
 
-    public getApplicationName(): String { return "UTC" };
-
-    getPrototype(entityName: string): any {
-        return TwitterConfigEntityPrototypes[entityName];
-    }
-
-    public getLodDef() {
-        return TwitterConfig_LodDef;
-    };
-
-    public getDomain( name: string ): zeidon.Domain {
-        return UTC_DomainList[name];
-    };
-
-    public getDomainFunctions( domain: zeidon.Domain ): zeidon.DomainFunctions {
-        let f = UTC_DomainFunctions[ domain.class ];
-        if ( f )
-            return new f( domain );
-
-        return undefined;
+    constructor( initialize = undefined, options: zeidon.CreateOptions = undefined ) {
+        super( TwitterConfig_LodDef, initialize, options );
     }
 
     get Twitter(): zeidon.EntityArray<TwitterConfig_Twitter> {
@@ -44,12 +25,9 @@ export class TwitterConfig extends zeidon.ObjectInstance {
         return this.roots.selected() as TwitterConfig_Twitter;
     }
 
-    // Returns the current entity instance if it exists, otherwise returns an instance
-    // that will returned 'undefined' for any property values.  This is the
-    // equivalent to the "elvis operator"
-    get Twitter$$(): TwitterConfig_Twitter {
-        return (this.roots.selected() as TwitterConfig_Twitter) || zeidon.SAFE_INSTANCE;
-    }
+    // Following allow accessing of child entity instances directly from the OI,
+    // similar to Zeidon Views.
+
 
     public static activate( qual?: any ): Promise<TwitterConfig> {
         return zeidon.ObjectInstance.activateOi( new TwitterConfig(), qual );
@@ -86,8 +64,10 @@ const TwitterConfigEntityPrototypes = {
     Twitter: TwitterConfig_Twitter.prototype, 
 }
 
-export const TwitterConfig_LodDef = {
+export const TwitterConfig_LodDefStructure = {
     name: "TwitterConfig",
+    root: "Twitter",
+    applicationName: "UTC",
     entities: {
         Twitter: {
             name:        "Twitter",
@@ -100,6 +80,7 @@ export const TwitterConfig_LodDef = {
             deletable:   true,
             excludable:  false,
             updatable:   true,
+            derived:     false,
             parentDelete: true,
             childEntities: {
             },
@@ -179,3 +160,6 @@ export const TwitterConfig_LodDef = {
 
     }
 }
+
+export const TwitterConfig_LodDef = new zeidon.LodDef( TwitterConfig_LodDefStructure, TwitterConfigEntityPrototypes, UTC_DomainList, UTC_DomainFunctions );
+        

@@ -12,28 +12,9 @@ import { UTC_DomainFunctions } from './UTC-DomainFunctions';
 
 // UtcConfig LOD.
 export class UtcConfig extends zeidon.ObjectInstance {
-    protected rootEntityName(): string { return "UtcConfig" };
 
-    public getApplicationName(): String { return "UTC" };
-
-    getPrototype(entityName: string): any {
-        return UtcConfigEntityPrototypes[entityName];
-    }
-
-    public getLodDef() {
-        return UtcConfig_LodDef;
-    };
-
-    public getDomain( name: string ): zeidon.Domain {
-        return UTC_DomainList[name];
-    };
-
-    public getDomainFunctions( domain: zeidon.Domain ): zeidon.DomainFunctions {
-        let f = UTC_DomainFunctions[ domain.class ];
-        if ( f )
-            return new f( domain );
-
-        return undefined;
+    constructor( initialize = undefined, options: zeidon.CreateOptions = undefined ) {
+        super( UtcConfig_LodDef, initialize, options );
     }
 
     get UtcConfig(): zeidon.EntityArray<UtcConfig_UtcConfig> {
@@ -44,11 +25,16 @@ export class UtcConfig extends zeidon.ObjectInstance {
         return this.roots.selected() as UtcConfig_UtcConfig;
     }
 
-    // Returns the current entity instance if it exists, otherwise returns an instance
-    // that will returned 'undefined' for any property values.  This is the
-    // equivalent to the "elvis operator"
-    get UtcConfig$$(): UtcConfig_UtcConfig {
-        return (this.roots.selected() as UtcConfig_UtcConfig) || zeidon.SAFE_INSTANCE;
+    // Following allow accessing of child entity instances directly from the OI,
+    // similar to Zeidon Views.
+
+
+    get DefaultThermometerType(): zeidon.EntityArray<UtcConfig_DefaultThermometerType> {
+        return this.UtcConfig$?.DefaultThermometerType;
+    }
+
+    get DefaultThermometerType$(): UtcConfig_DefaultThermometerType {
+        return this.UtcConfig$?.DefaultThermometerType$;
     }
 
     public static activate( qual?: any ): Promise<UtcConfig> {
@@ -74,10 +60,6 @@ export class UtcConfig_UtcConfig extends zeidon.EntityInstance {
     get DefaultThermometerType$(): UtcConfig_DefaultThermometerType {
         return this.getChildEntityArray("DefaultThermometerType").selected() as UtcConfig_DefaultThermometerType;
     }
-
-    get DefaultThermometerType$$(): UtcConfig_DefaultThermometerType {
-        return (this.getChildEntityArray("DefaultThermometerType").selected() as UtcConfig_DefaultThermometerType) || zeidon.SAFE_INSTANCE;
-    }
 }
 
 export class UtcConfig_DefaultThermometerType extends zeidon.EntityInstance {
@@ -101,8 +83,10 @@ const UtcConfigEntityPrototypes = {
     DefaultThermometerType: UtcConfig_DefaultThermometerType.prototype, 
 }
 
-export const UtcConfig_LodDef = {
+export const UtcConfig_LodDefStructure = {
     name: "UtcConfig",
+    root: "UtcConfig",
+    applicationName: "UTC",
     entities: {
         UtcConfig: {
             name:        "UtcConfig",
@@ -115,6 +99,7 @@ export const UtcConfig_LodDef = {
             deletable:   true,
             excludable:  false,
             updatable:   true,
+            derived:     false,
             parentDelete: true,
             childEntities: {
                 DefaultThermometerType: {},
@@ -166,6 +151,7 @@ export const UtcConfig_LodDef = {
             deletable:   false,
             excludable:  true,
             updatable:   false,
+            derived:     false,
             parentDelete: false,
             childEntities: {
             },
@@ -215,3 +201,6 @@ export const UtcConfig_LodDef = {
 
     }
 }
+
+export const UtcConfig_LodDef = new zeidon.LodDef( UtcConfig_LodDefStructure, UtcConfigEntityPrototypes, UTC_DomainList, UTC_DomainFunctions );
+        

@@ -12,28 +12,9 @@ import { UTC_DomainFunctions } from './UTC-DomainFunctions';
 
 // DebugInfo LOD.
 export class DebugInfo extends zeidon.ObjectInstance {
-    protected rootEntityName(): string { return "DebugInfo" };
 
-    public getApplicationName(): String { return "UTC" };
-
-    getPrototype(entityName: string): any {
-        return DebugInfoEntityPrototypes[entityName];
-    }
-
-    public getLodDef() {
-        return DebugInfo_LodDef;
-    };
-
-    public getDomain( name: string ): zeidon.Domain {
-        return UTC_DomainList[name];
-    };
-
-    public getDomainFunctions( domain: zeidon.Domain ): zeidon.DomainFunctions {
-        let f = UTC_DomainFunctions[ domain.class ];
-        if ( f )
-            return new f( domain );
-
-        return undefined;
+    constructor( initialize = undefined, options: zeidon.CreateOptions = undefined ) {
+        super( DebugInfo_LodDef, initialize, options );
     }
 
     get DebugInfo(): zeidon.EntityArray<DebugInfo_DebugInfo> {
@@ -44,11 +25,16 @@ export class DebugInfo extends zeidon.ObjectInstance {
         return this.roots.selected() as DebugInfo_DebugInfo;
     }
 
-    // Returns the current entity instance if it exists, otherwise returns an instance
-    // that will returned 'undefined' for any property values.  This is the
-    // equivalent to the "elvis operator"
-    get DebugInfo$$(): DebugInfo_DebugInfo {
-        return (this.roots.selected() as DebugInfo_DebugInfo) || zeidon.SAFE_INSTANCE;
+    // Following allow accessing of child entity instances directly from the OI,
+    // similar to Zeidon Views.
+
+
+    get File(): zeidon.EntityArray<DebugInfo_File> {
+        return this.DebugInfo$?.File;
+    }
+
+    get File$(): DebugInfo_File {
+        return this.DebugInfo$?.File$;
     }
 
     public static activate( qual?: any ): Promise<DebugInfo> {
@@ -68,10 +54,6 @@ export class DebugInfo_DebugInfo extends zeidon.EntityInstance {
     get File$(): DebugInfo_File {
         return this.getChildEntityArray("File").selected() as DebugInfo_File;
     }
-
-    get File$$(): DebugInfo_File {
-        return (this.getChildEntityArray("File").selected() as DebugInfo_File) || zeidon.SAFE_INSTANCE;
-    }
 }
 
 export class DebugInfo_File extends zeidon.EntityInstance {
@@ -89,8 +71,10 @@ const DebugInfoEntityPrototypes = {
     File: DebugInfo_File.prototype, 
 }
 
-export const DebugInfo_LodDef = {
+export const DebugInfo_LodDefStructure = {
     name: "DebugInfo",
+    root: "DebugInfo",
+    applicationName: "UTC",
     entities: {
         DebugInfo: {
             name:        "DebugInfo",
@@ -103,6 +87,7 @@ export const DebugInfo_LodDef = {
             deletable:   true,
             excludable:  false,
             updatable:   true,
+            derived:     true,
             parentDelete: true,
             childEntities: {
                 File: {},
@@ -124,6 +109,7 @@ export const DebugInfo_LodDef = {
             deletable:   true,
             excludable:  false,
             updatable:   true,
+            derived:     true,
             parentDelete: true,
             childEntities: {
             },
@@ -153,3 +139,6 @@ export const DebugInfo_LodDef = {
 
     }
 }
+
+export const DebugInfo_LodDef = new zeidon.LodDef( DebugInfo_LodDefStructure, DebugInfoEntityPrototypes, UTC_DomainList, UTC_DomainFunctions );
+        

@@ -12,28 +12,9 @@ import { UTC_DomainFunctions } from './UTC-DomainFunctions';
 
 // Configuration LOD.
 export class Configuration extends zeidon.ObjectInstance {
-    protected rootEntityName(): string { return "Configuration" };
 
-    public getApplicationName(): String { return "UTC" };
-
-    getPrototype(entityName: string): any {
-        return ConfigurationEntityPrototypes[entityName];
-    }
-
-    public getLodDef() {
-        return Configuration_LodDef;
-    };
-
-    public getDomain( name: string ): zeidon.Domain {
-        return UTC_DomainList[name];
-    };
-
-    public getDomainFunctions( domain: zeidon.Domain ): zeidon.DomainFunctions {
-        let f = UTC_DomainFunctions[ domain.class ];
-        if ( f )
-            return new f( domain );
-
-        return undefined;
+    constructor( initialize = undefined, options: zeidon.CreateOptions = undefined ) {
+        super( Configuration_LodDef, initialize, options );
     }
 
     get Configuration(): zeidon.EntityArray<Configuration_Configuration> {
@@ -44,11 +25,24 @@ export class Configuration extends zeidon.ObjectInstance {
         return this.roots.selected() as Configuration_Configuration;
     }
 
-    // Returns the current entity instance if it exists, otherwise returns an instance
-    // that will returned 'undefined' for any property values.  This is the
-    // equivalent to the "elvis operator"
-    get Configuration$$(): Configuration_Configuration {
-        return (this.roots.selected() as Configuration_Configuration) || zeidon.SAFE_INSTANCE;
+    // Following allow accessing of child entity instances directly from the OI,
+    // similar to Zeidon Views.
+
+
+    get ThermometerConfig(): zeidon.EntityArray<Configuration_ThermometerConfig> {
+        return this.Configuration$?.ThermometerConfig;
+    }
+
+    get ThermometerConfig$(): Configuration_ThermometerConfig {
+        return this.Configuration$?.ThermometerConfig$;
+    }
+
+    get ThermometerType(): zeidon.EntityArray<Configuration_ThermometerType> {
+        return this.Configuration$?.ThermometerType;
+    }
+
+    get ThermometerType$(): Configuration_ThermometerType {
+        return this.Configuration$?.ThermometerType$;
     }
 
     public static activate( qual?: any ): Promise<Configuration> {
@@ -111,10 +105,6 @@ export class Configuration_Configuration extends zeidon.EntityInstance {
         return this.getChildEntityArray("ThermometerConfig").selected() as Configuration_ThermometerConfig;
     }
 
-    get ThermometerConfig$$(): Configuration_ThermometerConfig {
-        return (this.getChildEntityArray("ThermometerConfig").selected() as Configuration_ThermometerConfig) || zeidon.SAFE_INSTANCE;
-    }
-
     get ThermometerType(): zeidon.EntityArray<Configuration_ThermometerType> {
         return this.getChildEntityArray("ThermometerType") as zeidon.EntityArray<Configuration_ThermometerType>;
     }
@@ -122,10 +112,6 @@ export class Configuration_Configuration extends zeidon.EntityInstance {
 
     get ThermometerType$(): Configuration_ThermometerType {
         return this.getChildEntityArray("ThermometerType").selected() as Configuration_ThermometerType;
-    }
-
-    get ThermometerType$$(): Configuration_ThermometerType {
-        return (this.getChildEntityArray("ThermometerType").selected() as Configuration_ThermometerType) || zeidon.SAFE_INSTANCE;
     }
 }
 
@@ -173,8 +159,10 @@ const ConfigurationEntityPrototypes = {
     ThermometerType: Configuration_ThermometerType.prototype, 
 }
 
-export const Configuration_LodDef = {
+export const Configuration_LodDefStructure = {
     name: "Configuration",
+    root: "Configuration",
+    applicationName: "UTC",
     entities: {
         Configuration: {
             name:        "Configuration",
@@ -187,6 +175,7 @@ export const Configuration_LodDef = {
             deletable:   true,
             excludable:  false,
             updatable:   true,
+            derived:     false,
             parentDelete: true,
             childEntities: {
                 ThermometerConfig: {},
@@ -380,6 +369,7 @@ export const Configuration_LodDef = {
             deletable:   true,
             excludable:  false,
             updatable:   true,
+            derived:     false,
             parentDelete: true,
             childEntities: {
             },
@@ -481,6 +471,7 @@ export const Configuration_LodDef = {
             deletable:   false,
             excludable:  true,
             updatable:   false,
+            derived:     false,
             parentDelete: false,
             childEntities: {
             },
@@ -530,3 +521,6 @@ export const Configuration_LodDef = {
 
     }
 }
+
+export const Configuration_LodDef = new zeidon.LodDef( Configuration_LodDefStructure, ConfigurationEntityPrototypes, UTC_DomainList, UTC_DomainFunctions );
+        

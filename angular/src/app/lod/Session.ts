@@ -12,28 +12,9 @@ import { UTC_DomainFunctions } from './UTC-DomainFunctions';
 
 // Session LOD.
 export class Session extends zeidon.ObjectInstance {
-    protected rootEntityName(): string { return "Session" };
 
-    public getApplicationName(): String { return "UTC" };
-
-    getPrototype(entityName: string): any {
-        return SessionEntityPrototypes[entityName];
-    }
-
-    public getLodDef() {
-        return Session_LodDef;
-    };
-
-    public getDomain( name: string ): zeidon.Domain {
-        return UTC_DomainList[name];
-    };
-
-    public getDomainFunctions( domain: zeidon.Domain ): zeidon.DomainFunctions {
-        let f = UTC_DomainFunctions[ domain.class ];
-        if ( f )
-            return new f( domain );
-
-        return undefined;
+    constructor( initialize = undefined, options: zeidon.CreateOptions = undefined ) {
+        super( Session_LodDef, initialize, options );
     }
 
     get Session(): zeidon.EntityArray<Session_Session> {
@@ -44,11 +25,32 @@ export class Session extends zeidon.ObjectInstance {
         return this.roots.selected() as Session_Session;
     }
 
-    // Returns the current entity instance if it exists, otherwise returns an instance
-    // that will returned 'undefined' for any property values.  This is the
-    // equivalent to the "elvis operator"
-    get Session$$(): Session_Session {
-        return (this.roots.selected() as Session_Session) || zeidon.SAFE_INSTANCE;
+    // Following allow accessing of child entity instances directly from the OI,
+    // similar to Zeidon Views.
+
+
+    get Configuration(): zeidon.EntityArray<Session_Configuration> {
+        return this.Session$?.Configuration;
+    }
+
+    get Configuration$(): Session_Configuration {
+        return this.Session$?.Configuration$;
+    }
+
+    get ThermometerConfig(): zeidon.EntityArray<Session_ThermometerConfig> {
+        return this.Session$?.Configuration$?.ThermometerConfig;
+    }
+
+    get ThermometerConfig$(): Session_ThermometerConfig {
+        return this.Session$?.Configuration$?.ThermometerConfig$;
+    }
+
+    get Instant(): zeidon.EntityArray<Session_Instant> {
+        return this.Session$?.Instant;
+    }
+
+    get Instant$(): Session_Instant {
+        return this.Session$?.Instant$;
     }
 
     public static activate( qual?: any ): Promise<Session> {
@@ -81,10 +83,6 @@ export class Session_Session extends zeidon.EntityInstance {
         return this.getChildEntityArray("Configuration").selected() as Session_Configuration;
     }
 
-    get Configuration$$(): Session_Configuration {
-        return (this.getChildEntityArray("Configuration").selected() as Session_Configuration) || zeidon.SAFE_INSTANCE;
-    }
-
     get Instant(): zeidon.EntityArray<Session_Instant> {
         return this.getChildEntityArray("Instant") as zeidon.EntityArray<Session_Instant>;
     }
@@ -92,10 +90,6 @@ export class Session_Session extends zeidon.EntityInstance {
 
     get Instant$(): Session_Instant {
         return this.getChildEntityArray("Instant").selected() as Session_Instant;
-    }
-
-    get Instant$$(): Session_Instant {
-        return (this.getChildEntityArray("Instant").selected() as Session_Instant) || zeidon.SAFE_INSTANCE;
     }
 }
 
@@ -151,10 +145,6 @@ export class Session_Configuration extends zeidon.EntityInstance {
 
     get ThermometerConfig$(): Session_ThermometerConfig {
         return this.getChildEntityArray("ThermometerConfig").selected() as Session_ThermometerConfig;
-    }
-
-    get ThermometerConfig$$(): Session_ThermometerConfig {
-        return (this.getChildEntityArray("ThermometerConfig").selected() as Session_ThermometerConfig) || zeidon.SAFE_INSTANCE;
     }
 }
 
@@ -236,8 +226,10 @@ const SessionEntityPrototypes = {
     Instant: Session_Instant.prototype, 
 }
 
-export const Session_LodDef = {
+export const Session_LodDefStructure = {
     name: "Session",
+    root: "Session",
+    applicationName: "UTC",
     entities: {
         Session: {
             name:        "Session",
@@ -250,6 +242,7 @@ export const Session_LodDef = {
             deletable:   true,
             excludable:  false,
             updatable:   true,
+            derived:     false,
             parentDelete: true,
             childEntities: {
                 Configuration: {},
@@ -322,6 +315,7 @@ export const Session_LodDef = {
             deletable:   false,
             excludable:  true,
             updatable:   false,
+            derived:     false,
             parentDelete: false,
             childEntities: {
                 ThermometerConfig: {},
@@ -504,6 +498,7 @@ export const Session_LodDef = {
             deletable:   false,
             excludable:  false,
             updatable:   false,
+            derived:     false,
             parentDelete: false,
             childEntities: {
             },
@@ -615,6 +610,7 @@ export const Session_LodDef = {
             deletable:   true,
             excludable:  false,
             updatable:   true,
+            derived:     false,
             parentDelete: true,
             childEntities: {
             },
@@ -774,3 +770,6 @@ export const Session_LodDef = {
 
     }
 }
+
+export const Session_LodDef = new zeidon.LodDef( Session_LodDefStructure, SessionEntityPrototypes, UTC_DomainList, UTC_DomainFunctions );
+        

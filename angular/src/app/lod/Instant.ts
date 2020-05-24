@@ -12,28 +12,9 @@ import { UTC_DomainFunctions } from './UTC-DomainFunctions';
 
 // Instant LOD.
 export class Instant extends zeidon.ObjectInstance {
-    protected rootEntityName(): string { return "Instant" };
 
-    public getApplicationName(): String { return "UTC" };
-
-    getPrototype(entityName: string): any {
-        return InstantEntityPrototypes[entityName];
-    }
-
-    public getLodDef() {
-        return Instant_LodDef;
-    };
-
-    public getDomain( name: string ): zeidon.Domain {
-        return UTC_DomainList[name];
-    };
-
-    public getDomainFunctions( domain: zeidon.Domain ): zeidon.DomainFunctions {
-        let f = UTC_DomainFunctions[ domain.class ];
-        if ( f )
-            return new f( domain );
-
-        return undefined;
+    constructor( initialize = undefined, options: zeidon.CreateOptions = undefined ) {
+        super( Instant_LodDef, initialize, options );
     }
 
     get Instant(): zeidon.EntityArray<Instant_Instant> {
@@ -44,12 +25,9 @@ export class Instant extends zeidon.ObjectInstance {
         return this.roots.selected() as Instant_Instant;
     }
 
-    // Returns the current entity instance if it exists, otherwise returns an instance
-    // that will returned 'undefined' for any property values.  This is the
-    // equivalent to the "elvis operator"
-    get Instant$$(): Instant_Instant {
-        return (this.roots.selected() as Instant_Instant) || zeidon.SAFE_INSTANCE;
-    }
+    // Following allow accessing of child entity instances directly from the OI,
+    // similar to Zeidon Views.
+
 
     public static activate( qual?: any ): Promise<Instant> {
         return zeidon.ObjectInstance.activateOi( new Instant(), qual );
@@ -107,8 +85,10 @@ const InstantEntityPrototypes = {
     Instant: Instant_Instant.prototype, 
 }
 
-export const Instant_LodDef = {
+export const Instant_LodDefStructure = {
     name: "Instant",
+    root: "Instant",
+    applicationName: "UTC",
     entities: {
         Instant: {
             name:        "Instant",
@@ -121,6 +101,7 @@ export const Instant_LodDef = {
             deletable:   true,
             excludable:  false,
             updatable:   true,
+            derived:     false,
             parentDelete: true,
             childEntities: {
             },
@@ -280,3 +261,6 @@ export const Instant_LodDef = {
 
     }
 }
+
+export const Instant_LodDef = new zeidon.LodDef( Instant_LodDefStructure, InstantEntityPrototypes, UTC_DomainList, UTC_DomainFunctions );
+        

@@ -33,7 +33,7 @@ Hardware: J Haddad
                   selected  value=''>Select Default Thermometer Type</option>
           <option *ngFor="let type of thermometerTypes.ThermometerType"
                   [value]="type.Name"
-                  [selected]="type.Name === utcConfig.UtcConfig$.DefaultThermometerType$$.Name">
+                  [selected]="type.Name === utcConfig.UtcConfig$.DefaultThermometerType$?.Name">
             {{ type.Name }}
           </option>
         </select>
@@ -56,7 +56,7 @@ Hardware: J Haddad
     <div *ngIf="thermometerTypes && thermometerTypes.isEmpty == false" >
         <ul class="thermometerTypes">
             <li *ngFor="let therm of thermometerTypes.ThermometerType"
-                [class.selected]="selectedTherm.ThermometerType$$.Id == therm.Id">
+                [class.selected]="selectedTherm.ThermometerType$?.Id == therm.Id">
                 <span (click)="onSelectThermConfig(therm)">
                     <span class="badge">{{therm.Name}}</span> {{therm.Description}}
                 </span>
@@ -198,7 +198,7 @@ export class UtcComponent implements OnInit {
     }
 
     buildThermConfigForm() {
-        this.thermConfigForm = new zeidon.ZeidonFormBuilder().group( this.selectedTherm.ThermometerType$$ );
+        this.thermConfigForm = new zeidon.ZeidonFormBuilder().group( this.selectedTherm.ThermometerType$ );
     }
 
     buildConfigForm() {

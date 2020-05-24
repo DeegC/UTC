@@ -12,28 +12,9 @@ import { UTC_DomainFunctions } from './UTC-DomainFunctions';
 
 // ThermometerType LOD.
 export class ThermometerType extends zeidon.ObjectInstance {
-    protected rootEntityName(): string { return "ThermometerType" };
 
-    public getApplicationName(): String { return "UTC" };
-
-    getPrototype(entityName: string): any {
-        return ThermometerTypeEntityPrototypes[entityName];
-    }
-
-    public getLodDef() {
-        return ThermometerType_LodDef;
-    };
-
-    public getDomain( name: string ): zeidon.Domain {
-        return UTC_DomainList[name];
-    };
-
-    public getDomainFunctions( domain: zeidon.Domain ): zeidon.DomainFunctions {
-        let f = UTC_DomainFunctions[ domain.class ];
-        if ( f )
-            return new f( domain );
-
-        return undefined;
+    constructor( initialize = undefined, options: zeidon.CreateOptions = undefined ) {
+        super( ThermometerType_LodDef, initialize, options );
     }
 
     get ThermometerType(): zeidon.EntityArray<ThermometerType_ThermometerType> {
@@ -44,11 +25,16 @@ export class ThermometerType extends zeidon.ObjectInstance {
         return this.roots.selected() as ThermometerType_ThermometerType;
     }
 
-    // Returns the current entity instance if it exists, otherwise returns an instance
-    // that will returned 'undefined' for any property values.  This is the
-    // equivalent to the "elvis operator"
-    get ThermometerType$$(): ThermometerType_ThermometerType {
-        return (this.roots.selected() as ThermometerType_ThermometerType) || zeidon.SAFE_INSTANCE;
+    // Following allow accessing of child entity instances directly from the OI,
+    // similar to Zeidon Views.
+
+
+    get SteinhartHartConfig(): zeidon.EntityArray<ThermometerType_SteinhartHartConfig> {
+        return this.ThermometerType$?.SteinhartHartConfig;
+    }
+
+    get SteinhartHartConfig$(): ThermometerType_SteinhartHartConfig {
+        return this.ThermometerType$?.SteinhartHartConfig$;
     }
 
     public static activate( qual?: any ): Promise<ThermometerType> {
@@ -80,10 +66,6 @@ export class ThermometerType_ThermometerType extends zeidon.EntityInstance {
     get SteinhartHartConfig$(): ThermometerType_SteinhartHartConfig {
         return this.getChildEntityArray("SteinhartHartConfig").selected() as ThermometerType_SteinhartHartConfig;
     }
-
-    get SteinhartHartConfig$$(): ThermometerType_SteinhartHartConfig {
-        return (this.getChildEntityArray("SteinhartHartConfig").selected() as ThermometerType_SteinhartHartConfig) || zeidon.SAFE_INSTANCE;
-    }
 }
 
 export class ThermometerType_SteinhartHartConfig extends zeidon.EntityInstance {
@@ -113,8 +95,10 @@ const ThermometerTypeEntityPrototypes = {
     SteinhartHartConfig: ThermometerType_SteinhartHartConfig.prototype, 
 }
 
-export const ThermometerType_LodDef = {
+export const ThermometerType_LodDefStructure = {
     name: "ThermometerType",
+    root: "ThermometerType",
+    applicationName: "UTC",
     entities: {
         ThermometerType: {
             name:        "ThermometerType",
@@ -127,6 +111,7 @@ export const ThermometerType_LodDef = {
             deletable:   true,
             excludable:  false,
             updatable:   true,
+            derived:     false,
             parentDelete: true,
             childEntities: {
                 SteinhartHartConfig: {},
@@ -188,6 +173,7 @@ export const ThermometerType_LodDef = {
             deletable:   true,
             excludable:  false,
             updatable:   true,
+            derived:     false,
             parentDelete: true,
             childEntities: {
             },
@@ -267,3 +253,6 @@ export const ThermometerType_LodDef = {
 
     }
 }
+
+export const ThermometerType_LodDef = new zeidon.LodDef( ThermometerType_LodDefStructure, ThermometerTypeEntityPrototypes, UTC_DomainList, UTC_DomainFunctions );
+        
