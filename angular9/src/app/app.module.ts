@@ -9,22 +9,25 @@ import { ZeidonRestValues } from './zeidon-rest-client';
 import { ZeidonAngularConfiguration, ZeidonRestService, AttributeContextDirective } from './zeidon-angular';
 import { RestService } from './rest.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ConfigurationListComponent } from './configuration-list/configuration-list.component';
 
-// If we are running under browserSync then we'll set the port number to be 8080.
-// This makes it easier to switch back and forth between dev mode and running under Jetty.
-let zeidonRestPort = window.location.port;
-if ( ( window as any ).___browserSync___ ) {
-    console.log( "Running under browserSync" );
-    zeidonRestPort = "8080";  // Set port to be jetty running in different process.
-}
+var restUrl = '';
+if ( document.URL.startsWith( 'http://localhost:4200' ) )                           // Angular test server
+    restUrl = `http://localhost:8080/api/utc`;                                      // Local jetty
+else
+if ( document.URL.startsWith( 'http://localhost' ) )                                // Served from jetty
+    restUrl = `${document.baseURI}api/CheeseWiz`;
+
+console.log( `restUrl = ${restUrl}` );
 
 const REST_VALUES: ZeidonRestValues = {
-    restUrl: `http://${window.location.hostname}:${zeidonRestPort}/api/utc`
+    restUrl: restUrl
 };
 
 @NgModule( {
     declarations: [
-        AppComponent
+        AppComponent,
+        ConfigurationListComponent
     ],
     imports: [
         BrowserModule,
