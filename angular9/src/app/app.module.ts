@@ -10,6 +10,7 @@ import { ZeidonAngularConfiguration, ZeidonRestService, AttributeContextDirectiv
 import { RestService } from './rest.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfigurationListComponent } from './configuration-list/configuration-list.component';
+import { ConfigurationComponent } from './configuration/configuration.component';
 
 var restUrl = '';
 if ( document.URL.startsWith( 'http://localhost:4200' ) )                           // Angular test server
@@ -27,7 +28,8 @@ const REST_VALUES: ZeidonRestValues = {
 @NgModule( {
     declarations: [
         AppComponent,
-        ConfigurationListComponent
+        ConfigurationListComponent,
+        ConfigurationComponent
     ],
     imports: [
         BrowserModule,

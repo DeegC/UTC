@@ -1,1 +1,22 @@
-<p>configuration-list works!</p>
+<div *ngIf="sessionOi && sessionOi.isEmpty == false" class="alert alert-danger">
+    Session is running!
+</div>
+<div *ngIf="configurationList && configurationList.isEmpty == false">
+    <ul class="configurations">
+        <li *ngFor="let config of configurationList.Configuration"
+            [class.selected]="selectedConfigOi && selectedConfigOi.Configuration$.Id == config.Id">
+            <span (click)="onSelect(config)">
+                <span class="badge">{{config.Id}}</span> {{config.Description}}
+            </span>
+            <img src="assets/img/red-x.png" (click)="onDelete( config )" />
+        </li>
+    </ul>
+</div>
+<button type="button" class="btn btn-default" (click)="newConfiguration()">
+    New Configuration
+</button>
+<div *ngIf="selectedConfigOi">
+    <configuration-detail [configOi]="selectedConfigOi" [configurationList]="configurationList"
+        (onSessionStarted)="onSessionStarted($event)">
+    </configuration-detail>
+</div>
