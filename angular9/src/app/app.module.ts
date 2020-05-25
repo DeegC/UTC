@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 
 import { ZeidonConfiguration } from './zeidon';
 import { ZeidonRestValues } from './zeidon-rest-client';
-import { ZeidonAngularConfiguration, ZeidonRestService, AttributeContextDirective } from './zeidon-angular';
+import { ZeidonAngularConfiguration, ZeidonRestService, AttributeContextDirective, ErrorElementDirective } from './zeidon-angular';
 import { RestService } from './rest.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfigurationListComponent } from './configuration-list/configuration-list.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 var restUrl = '';
 if ( document.URL.startsWith( 'http://localhost:4200' ) )                           // Angular test server
@@ -28,13 +30,18 @@ const REST_VALUES: ZeidonRestValues = {
 @NgModule( {
     declarations: [
         AppComponent,
+        ErrorElementDirective,
+        AttributeContextDirective,
         ConfigurationListComponent,
         ConfigurationComponent
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
-        AppRoutingModule
+        AppRoutingModule,
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule
     ],
     providers: [
         RestService,

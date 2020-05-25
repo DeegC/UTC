@@ -1,1 +1,113 @@
-<p>configuration works!</p>
+<div *ngIf="configOi">
+    <form [formGroup]="form" (ngSubmit)="saveConfig($event)">
+        <h2>Configuration Details</h2>
+        <div>
+            <label>Id: </label>{{configOi.Configuration$.Id}}
+        </div>
+        <div>
+            <label>Description: </label>
+            <input type="text" formControlName="Description" [zeidonErrorElement]="descriptionError"
+                placeholder="Description" />
+        </div>
+        <div #descriptionError class="alert alert-danger" style="display:none"></div>
+
+        <div>
+            <label>Target Temperature: </label>
+            <input type="number" formControlName="TargetTemperature" [zeidonErrorElement]="targetError"
+                placeholder="target temperature" style="width:3em" />
+        </div>
+        <div #targetError class="alert alert-danger" style="display:none"></div>
+
+        <div>
+            <label>PID: </label>
+            <input type="number" formControlName="PidP" [zeidonErrorElement]="pidError" placeholder="P" maxlength="2"
+                style="width:3em" />
+            <input formControlName="PidI" [zeidonErrorElement]="pidError" placeholder="I" maxlength="5"
+                style="width:3em" />
+            <input formControlName="PidD" [zeidonErrorElement]="pidError" placeholder="D" maxlength="2"
+                style="width:3em" />
+        </div>
+        <div #pidError class="alert alert-danger" style="display:none"></div>
+
+        <div>
+            <label>Max PWM: </label>
+            <input type="number" formControlName="MaxPWM" [zeidonErrorElement]="pwmError" placeholder="max PWM"
+                style="width:3em" />
+        </div>
+        <div #pwmError class="alert alert-danger" style="display:none"></div>
+
+        <div>
+            <label>PWM Frequency: </label>
+            <input type="number" formControlName="PwmFrequency" [zeidonErrorElement]="freqError" placeholder="freq"
+                style="width:3em" />
+        </div>
+        <div #freqError class="alert alert-danger" style="display:none"></div>
+
+        <div>
+            <label>Tweet On: </label>
+            <input type="checkbox" formControlName="TweetOn" placeholder="tweet on" [zeidonErrorElement]="tweetError" />
+            <div #tweetError class="alert alert-danger" style="display:none"></div>
+        </div>
+
+        <div *ngIf="thermometerTypes; else loadingThermTypes">
+            Thermometer Type:
+            <select (change)="onThermTypeSelected($event.target.selectedIndex)">
+                <option *ngIf="configOi.Configuration$.ThermometerType.length === 0" selected value=''>Select
+                    Thermometer Type</option>
+                <option *ngFor="let type of thermometerTypes.ThermometerType" [value]="type.Name"
+                    [selected]="type.Name === configOi.Configuration$.ThermometerType$?.Name">
+                    {{ type.Name }}
+                </option>
+            </select>
+        </div>
+        <ng-template #loadingThermTypes>
+            Fetching therm data...
+        </ng-template>
+
+        <h3>Thermometers</h3>
+        <div formArrayName="ThermometerConfig">
+            <div *ngFor="let therm of form.controls.ThermometerConfig.controls; let i = index;">
+                <div [formGroupName]="i">
+                    <label>{{i + 1}}</label>
+                    <input type="text" formControlName="Name" placeholder="name" [zeidonErrorElement]="thermError" />
+                    <input type="checkbox" formControlName="AlarmOn" [zeidonErrorElement]="thermError" />
+                    <input type="number" formControlName="AlarmLow" placeholder="low" [zeidonErrorElement]="thermError"
+                        maxlength="2" style="width:3em" />
+                    <input type="number" formControlName="AlarmHigh" placeholder="high"
+                        [zeidonErrorElement]="thermError" maxlength="2" style="width:3em" />
+                    <img src="assets/img/red-x.png" (click)="deleteThermometer( form.controls.ThermometerConfig, i )" />
+                </div>
+                <div #thermError class="alert alert-danger" style="display:none"></div>
+            </div>
+        </div>
+
+        <div>
+            <button type="button" class="btn btn-default" (click)="newThermometer()"
+                [disabled]="configOi.Configuration$.ThermometerConfig.length > 7">
+                New Thermometer
+            </button>
+        </div>
+
+        <h3>Switches</h3>
+        <div>
+            <input type="text" formControlName="GenericSwitchName1" [zeidonErrorElement]="switchError"
+                placeholder="Switch name" />
+            <input type="checkbox" formControlName="GenericSwitch1" [zeidonErrorElement]="switchError" />
+        </div>
+        <div #switchError class="alert alert-danger" style="display:none"></div>
+
+        <div>
+            <button type="submit" class="btn btn-default" [disabled]="false">
+                Save Configuration
+            </button>
+            <button type="button" class="btn btn-default" (click)="cancel()">
+                Cancel
+            </button>
+        </div>
+        <div>
+            <button type="button" class="btn btn-default" (click)="startSession()">
+                Start Session
+            </button>
+        </div>
+    </form>
+</div>

@@ -7,9 +7,9 @@ import { RestService } from '../rest.service';
 import { ZeidonFormBuilder, ZeidonFormReader } from '../zeidon-angular';
 
 @Component({
-  selector: 'configuation-detail',
+  selector: 'configuration-detail',
   templateUrl: './configuration.component.html',
-  styleUrls: ['./configuration.component.css']
+  styleUrls: ['./configuration.component.css'],
 })
 export class ConfigurationComponent implements OnChanges, OnInit {
     @Input() configOi: Configuration;
@@ -18,7 +18,7 @@ export class ConfigurationComponent implements OnChanges, OnInit {
     form: FormGroup;
     thermometerTypes: ThermometerType;
 
-    constructor( private restService: RestService, private formBuilder: FormBuilder ) {
+    constructor( private restService: RestService ) {
     }
 
     ngOnInit() {
