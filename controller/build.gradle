@@ -1,4 +1,6 @@
-apply plugin: 'scala'
+plugins {
+    id 'scala'
+}
 
 description ="""
 Controller logic
@@ -14,4 +16,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.scalatest:scalatest_2.12:3.0.4'
     testRuntime 'org.scala-lang.modules:scala-xml_2.12:1.0.5'
+}
+
+java {
+    // This is required to force the scala plugin to compile the .java files with java 8.
+    disableAutoTargetJvm()
+    sourceCompatibility = JavaVersion.VERSION_1_8
 }
