@@ -1,0 +1,15 @@
+<div *ngIf="sessionList && sessionList.isEmpty == false">
+    <ul class="configurations">
+        <li *ngFor="let session of sessionList.Session"
+            [class.selected]="selectedSessionOi && selectedSessionOi.Session$.Id == session.Id">
+            <span (click)="onSelect(session)">
+                <span class="badge">{{session.Id}}</span> {{session.Date | date:'yyyy-MM-dd hh:mm a'}}
+            </span>
+            <img src="assets/img/red-x.png" (click)="onDelete( session )" />
+        </li>
+    </ul>
+</div>
+<div *ngIf="selectedSessionOi">
+    <history-detail [sessionOi]="selectedSessionOi">
+    </history-detail>
+</div>

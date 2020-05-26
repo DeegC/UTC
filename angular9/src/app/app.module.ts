@@ -14,6 +14,7 @@ import { ConfigurationComponent } from './configuration/configuration.component'
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UtcComponent } from './utc/utc.component';
+import { HistoryComponent } from './history/history.component';
 
 var restUrl = '';
 if ( document.URL.startsWith( 'http://localhost:4200' ) )                           // Angular test server
@@ -35,7 +36,8 @@ const REST_VALUES: ZeidonRestValues = {
         AttributeContextDirective,
         ConfigurationListComponent,
         ConfigurationComponent,
-        UtcComponent
+        UtcComponent,
+        HistoryComponent
     ],
     imports: [
         BrowserModule,
