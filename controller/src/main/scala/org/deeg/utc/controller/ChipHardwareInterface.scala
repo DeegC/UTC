@@ -3,9 +3,10 @@ package org.deeg.utc.controller
 import com.quinsoft.zeidon.scala.Implicits._
 import sys.process._
 import com.quinsoft.zeidon.Task
-import org.joda.time.DateTime
 import com.quinsoft.zeidon.scala.basedOn
 import com.quinsoft.zeidon.scala.View
+import java.time.ZonedDateTime
+import java.time.temporal.ChronoUnit
 
 /**
  * Interface with a C.H.I.P.
@@ -14,7 +15,7 @@ class ChipHardwareInterface(val task : Task ) extends HardwareInterface {
 
     task.log().info(s"Using ${this.getClass.getName()}");
 
-    var lastRead: DateTime = null
+    var lastRead: ZonedDateTime = null
     var voltageArray: Array[Double] = null
 
     // Set LEDs to indicate that the server is up.
@@ -35,9 +36,9 @@ class ChipHardwareInterface(val task : Task ) extends HardwareInterface {
     private def read_mcp3008(): Unit = {
         // To keep from overworking the CHIP we'll read the temps no more
         // than once a second.
-        val now = DateTime.now()
+        val now = ZonedDateTime.now()
         if (lastRead != null) {
-            val diff = now.getMillis - lastRead.getMillis
+            val diff = ChronoUnit.MILLIS.between( now, lastRead )
             if (diff < 1000)
                 return
         }
