@@ -1,0 +1,146 @@
+<p>Software: DG Christensen (https://github.com/DeegC)<br />
+Hardware: J Haddad
+</p>
+
+<div *ngIf="utcConfig && utcConfig.isEmpty == false">
+    <form [formGroup]="configForm" (ngSubmit)="saveConfig($event)">
+        <div>
+            <select id="TemperatureUnit" class="form-control" formControlName="TemperatureUnit">
+                <option
+                    *ngFor="let entry of utcConfig.UtcConfig$.getAttributeDef( 'TemperatureUnit' ).domain.domainFunctions.getTableValues()"
+                    [selected]="(entry === utcConfig.UtcConfig$.TemperatureUnit)" [value]="entry">
+                    {{ entry }}
+                </option>
+            </select>
+        </div>
+
+
+        <div *ngIf="thermometerTypes; else loadingThermTypes">
+            Thermometer Type:
+            <select (change)="onThermTypeSelected($event.target.selectedIndex)">
+                <option *ngIf="utcConfig.UtcConfig$.DefaultThermometerType.length  === 0" selected value=''>Select
+                    Default Thermometer Type</option>
+                <option *ngFor="let type of thermometerTypes.ThermometerType" [value]="type.Name"
+                    [selected]="type.Name === utcConfig.UtcConfig$.DefaultThermometerType$?.Name">
+                    {{ type.Name }}
+                </option>
+            </select>
+        </div>
+        <ng-template #loadingThermTypes>
+            Fetching therm data...
+        </ng-template>
+
+
+        <div>
+            <button type="submit" class="btn btn-default" [disabled]="false">
+                Save Global Configuration
+            </button>
+        </div>
+    </form>
+</div>
+
+
+<div style="border: 1px solid #000000; padding: 25px;">
+    <div *ngIf="thermometerTypes && thermometerTypes.isEmpty == false">
+        <ul class="thermometerTypes">
+            <li *ngFor="let therm of thermometerTypes.ThermometerType"
+                [class.selected]="selectedTherm.ThermometerType$?.Id == therm.Id">
+                <span (click)="onSelectThermConfig(therm)">
+                    <span class="badge">{{therm.Name}}</span> {{therm.Description}}
+                </span>
+                <img src="assets/img/red-x.png" (click)="onDeleteThermConfig( therm )" />
+            </li>
+        </ul>
+    </div>
+
+    <button type="button" class="btn btn-default" (click)="newThermometerType()">
+        New Thermometer Type
+    </button>
+
+    <h4>Thermometer Type Configuration:</h4>
+    <div *ngIf="! selectedTherm.isEmpty">
+        <form [formGroup]="thermConfigForm" (ngSubmit)="saveTherm($event)">
+            <div>
+                <label>Name: </label>
+                <input type="text" class="my-class" formControlName="Name" [zeidonErrorElement]="nameError"
+                    placeholder="name" />
+            </div>
+            <div #nameError class="alert alert-danger" style="display:none"></div>
+
+            <div>
+                <label>Description: </label>
+                <textarea formControlName="Description" [zeidonErrorElement]="descriptionError" rows="4" cols="50">
+            </textarea>
+            </div>
+            <div #descriptionError class="alert alert-danger" style="display:none"></div>
+
+            <div>
+                <select id="ProbeAlgorithm" class="form-control" formControlName="ProbeAlgorithm">
+                    <option
+                        *ngFor="let entry of selectedTherm.ThermometerType$.getAttributeDef( 'ProbeAlgorithm' ).domain.domainFunctions.getTableValues()"
+                        [selected]="(entry === selectedTherm.ThermometerType$.ProbeAlgorithm)" [value]="entry">
+                        {{ entry }}
+                    </option>
+                </select>
+            </div>
+
+            <div formGroupName="SteinhartHartConfig">
+                <div>
+                    <label>A: </label>
+                    <input type="number" formControlName="A" [zeidonErrorElement]="steinhartError"
+                        placeholder="steinhart A value" />
+                </div>
+                <div>
+                    <label>B: </label>
+                    <input type="number" formControlName="B" [zeidonErrorElement]="steinhartError"
+                        placeholder="steinhart B value" />
+                </div>
+                <div>
+                    <label>C: </label>
+                    <input type="number" formControlName="C" [zeidonErrorElement]="steinhartError"
+                        placeholder="steinhart C value" />
+                </div>
+                <div>
+                    <label>R: </label>
+                    <input type="number" formControlName="R" [zeidonErrorElement]="steinhartError"
+                        placeholder="steinhart R value" />
+                </div>
+                <div #steinhartError class="alert alert-danger" style="display:none"></div>
+
+                <div>
+                    <label>Voltage Reference: </label>
+                    <input type="number" formControlName="VoltageReference" [zeidonErrorElement]="voltageError"
+                        placeholder="voltage reference" />
+                </div>
+                <div #voltageError class="alert alert-danger" style="display:none"></div>
+
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-default" [disabled]="false">
+                    Save Configuration
+                </button>
+                <button type="button" class="btn btn-default" (click)="cancel()">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<h4>Log files</h4>
+<div *ngIf="debugInfo && ! debugInfo.isEmpty">
+    <ul class="logFileList">
+        <li *ngFor="let file of debugInfo.DebugInfo$.File">
+            <a>
+                <span>{{file.Name}}</span> {{file.Size}}
+            </a>
+            <img src="assets/img/red-x.png" (click)="onDeleteFile( file )" />
+        </li>
+    </ul>
+
+</div>
+
+<button type="button" class="btn btn-default" (click)="shutdown()">
+    Shutdown Computer
+</button>
