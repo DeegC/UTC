@@ -1,0 +1,7 @@
+<div>
+    =============================================================
+    {{sessionOi.Session$.Date | date:'yyyy-MM-dd hh:mm a'}}
+    <div *ngIf="chartUrl">
+        <img [src]="chartUrl" />
+    </div>
+</div>

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ConfigurationListComponent } from './configuration-list/configuration-list.component';
 import { UtcComponent } from './utc/utc.component';
 import { HistoryComponent } from './history/history.component';
+import { SessionComponent } from './session/session.component';
 
 const routes: Routes = [
     {
@@ -13,6 +14,10 @@ const routes: Routes = [
     {
         path: 'configlist',
         component: ConfigurationListComponent
+    },
+    {
+        path: 'session',
+        component: SessionComponent
     },
     {
         path: 'utc',

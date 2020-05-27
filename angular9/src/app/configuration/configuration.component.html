@@ -66,7 +66,7 @@
 
         <h3>Thermometers</h3>
         <div formArrayName="ThermometerConfig">
-            <div *ngFor="let therm of form.controls.ThermometerConfig.controls; let i = index;">
+            <div *ngFor="let therm of configOi.Configuration$.ThermometerConfig; let i = index;">
                 <div [formGroupName]="i">
                     <label>{{i + 1}}</label>
                     <input type="text" formControlName="Name" placeholder="name" [zeidonErrorElement]="thermError" />

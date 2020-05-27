@@ -97,6 +97,10 @@ export class UtcComponent implements OnInit {
         this.zeidonRestService.deleteRoot( therm );
     }
 
+    onDeleteFile( file: string ) {
+        // Send message to delete the file.
+    }
+
     shutdown(): void {
         console.log( "Requesting shutdown" );
         this.utcRestService.shutdown();

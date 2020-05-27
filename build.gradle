@@ -4,7 +4,7 @@ subprojects { subproject ->
   
   ext.versions = [
      scala: '2.12',
-     zeidon: '1.5.0-SNAPSHOT'
+     zeidon: '2.0.0-J8-SNAPSHOT'
   ]
 
   repositories {

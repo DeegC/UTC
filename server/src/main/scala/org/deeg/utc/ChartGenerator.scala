@@ -8,7 +8,8 @@ import com.quinsoft.zeidon.standardoe.JavaObjectEngine
 import com.quinsoft.zeidon.scala.Implicits._
 import com.quinsoft.zeidon.scala.AttributeInstance
 import org.jfree.data.time.Second
-import org.joda.time.DateTime
+import java.time.ZonedDateTime
+import java.util.Date
 import scala.collection.mutable.ArrayBuffer
 
 class ChartGenerator( val session: View @basedOn( "Session" ) ) {
@@ -36,7 +37,8 @@ class ChartGenerator( val session: View @basedOn( "Session" ) ) {
     }
 
     private def toSeconds( timestamp: AttributeInstance ) : Second = {
-        new Second( timestamp.value.asInstanceOf[DateTime].toDate() )
+        val date = Date.from(timestamp.value.asInstanceOf[ZonedDateTime].toInstant());
+        new Second( date )
     }
 }
 

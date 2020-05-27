@@ -32,8 +32,6 @@ class UtcScalatra extends ZeidonRestScalatra with CorsSupport {
 
     val task = oe.createTask("UTC")
 
-    val logger = task.log()
-
     private val hardware = HardwareInterface.getHardwareInterface( task )
 
     // Indicate via LEDs that we're up and ready to go.
