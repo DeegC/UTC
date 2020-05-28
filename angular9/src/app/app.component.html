@@ -1,11 +1,9 @@
 <h1>{{title}}</h1>
-<nav class="navbar navbar-fixed-top">
-    <div class="container">
-
-    <a routerLink="/configlist" routerLinkActive="active">Configurations</a>
-    <a routerLink="/session" routerLinkActive="active">Session</a>
-    <a routerLink="/history" routerLinkActive="active">History</a>
-    <a routerLink="/utc" routerLinkActive="active">UTC</a>
-    </div>
+<nav mat-tab-nav-bar>
+    <a mat-tab-link routerLink="/configlist" routerLinkActive="active">Configurations</a>
+    <a mat-tab-link routerLink="/session" routerLinkActive="active">Session</a>
+    <a mat-tab-link routerLink="/history" routerLinkActive="active">History</a>
+    <a mat-tab-link routerLink="/utc" routerLinkActive="active">UTC</a>
 </nav>
+
 <router-outlet></router-outlet>

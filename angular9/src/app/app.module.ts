@@ -17,6 +17,8 @@ import { UtcComponent } from './utc/utc.component';
 import { HistoryComponent } from './history/history.component';
 import { SessionComponent } from './session/session.component';
 import { HistoryDetailComponent } from './history-detail/history-detail.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTabsModule } from '@angular/material/tabs';
 
 var restUrl = '';
 if ( document.URL.startsWith( 'http://localhost:4200' ) )                           // Angular test server
@@ -49,7 +51,9 @@ const REST_VALUES: ZeidonRestValues = {
         AppRoutingModule,
         CommonModule,
         ReactiveFormsModule,
-        FormsModule
+        MatTabsModule,
+        FormsModule,
+        BrowserAnimationsModule
     ],
     providers: [
         RestService,
