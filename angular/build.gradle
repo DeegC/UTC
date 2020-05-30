@@ -1,0 +1,26 @@
+// The build file is only used to build the angular code when building
+// the entire Northwind system.  Generally just use npm commands for dev work.
+description ="""
+Angular application for UTC.
+
+Project name: ${project.name}
+"""
+
+configurations {
+    build
+    clean
+}
+
+dependencies {
+    build project( ':utc-zeidon' )
+}
+
+task build( type:Exec ) {
+    commandLine 'ng', 'build', '--prod=true'
+}
+
+task clean( type:Exec ) {
+    commandLine 'rm', '-rf', './dist'
+}
+
+build.dependsOn(':utc-zeidon:build')
