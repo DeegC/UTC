@@ -10,7 +10,7 @@ import { ObjectInstance, EntityInstance, Pagination } from './zeidon';
 import { FormGroup, FormControl, FormArray, NgControl } from '@angular/forms';
 import { CanDeactivate } from '@angular/router';
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/map'
+import { map } from "rxjs/operators";
 
 import { ZeidonConfiguration } from './zeidon';
 import { ZeidonRestValues, RestActivator, RestCommitter } from './zeidon-rest-client';
@@ -373,12 +373,14 @@ class HttpWrapper {
     constructor( private http: HttpClient ) {}
 
     get( url: string ) : Promise<any> {
-        return this.http.get( url ).map( response => { return { body: response } } ).toPromise();
+        return this.http.get( url )
+            .pipe( map( response => { return { body: response } } ) )
+            .toPromise();
     }
 
     post( url: string, body: string, headers?: string | { [ name: string]: string | string[]; } ) : Promise<any> {
         return this.http.post( url, body, { headers: new HttpHeaders( headers ) } )
-                        .map( response => { return { body: response } } )
+                        .pipe( map( response => { return { body: response } } ) )
                         .toPromise();
     }
 }

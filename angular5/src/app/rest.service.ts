@@ -22,7 +22,6 @@ export class RestService {
                  private sanitizer: DomSanitizer,
                  private values: ZeidonRestValues) {
 
-        console.log( "Opened RestService" );
         UtcConfig.activate().then( config => {
             this.globalConfig = config;
         } );

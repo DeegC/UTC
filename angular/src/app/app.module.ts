@@ -1,83 +1,66 @@
-import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule }   from '@angular/forms';
-import { ReactiveFormsModule }   from '@angular/forms';
-import { RouterModule }   from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
-import './rxjs-extensions';
+import { NgModule } from '@angular/core';
 
-import { AppComponent }   from './app.component';
-import { ConfigurationListComponent }   from './configuration-list.component';
-import { UtcComponent } from './utc.component';
-import { ErrorElementDirective }   from './zeidon-angular';
-import { ConfigurationComponent }   from './configuration.component';
-import { RestService }   from './rest.service';
-import { SessionComponent }   from './session.component';
-import { HistoryComponent }   from './history.component';
-import { HistoryDetailComponent }   from './history-detail.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
 import { ZeidonConfiguration } from './zeidon';
 import { ZeidonRestValues } from './zeidon-rest-client';
-import { ZeidonAngularConfiguration, ZeidonRestService, AttributeContextDirective } from './zeidon-angular';
+import { ZeidonAngularConfiguration, ZeidonRestService, AttributeContextDirective, ErrorElementDirective } from './zeidon-angular';
+import { RestService } from './rest.service';
+import { HttpClientModule } from '@angular/common/http';
+import { ConfigurationListComponent } from './configuration-list/configuration-list.component';
+import { ConfigurationComponent } from './configuration/configuration.component';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { UtcComponent } from './utc/utc.component';
+import { HistoryComponent } from './history/history.component';
+import { SessionComponent } from './session/session.component';
+import { HistoryDetailComponent } from './history-detail/history-detail.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-// If we are running under browserSync then we'll set the port number to be 8080.
-// This makes it easier to switch back and forth between dev mode and running under Jetty.
-let zeidonRestPort = window.location.port;
-if ( (window as any).___browserSync___ ) {
-  console.log("Running under browserSync");
-  zeidonRestPort = "8080";  // Set port to be jetty running in different process.
-}
+var restUrl = '';
+if ( document.URL.startsWith( 'http://localhost:4200' ) )                           // Angular test server
+    restUrl = `http://localhost:8080/api/utc`;                                      // Local jetty
+else
+    restUrl = `${document.baseURI}api/utc`;
+
+console.log( `restUrl = ${restUrl}` );
 
 const REST_VALUES: ZeidonRestValues = {
-  restUrl: `http://${window.location.hostname}:${zeidonRestPort}/api/utc`
+    restUrl: restUrl
 };
 
-@NgModule({
-  imports:      [ BrowserModule,
-                  FormsModule,
-                  ReactiveFormsModule,
-                  HttpClientModule,
-                  RouterModule.forRoot([
-                    {
-                      path: '',
-                      redirectTo: '/configlist',
-                      pathMatch: 'full'
-                    },
-                    {
-                      path: 'configlist',
-                      component: ConfigurationListComponent
-                    },
-                    {
-                      path: 'session',
-                      component: SessionComponent
-                    },
-                    {
-                      path: 'history',
-                      component: HistoryComponent
-                    },
-                    {
-                      path: 'utc',
-                      component: UtcComponent
-                    }
-                    ], { useHash: true } /* required for use with Jetty */ )
-   ],
-  declarations: [ AppComponent,
-                  ConfigurationListComponent,
-                  ConfigurationComponent,
-                  ErrorElementDirective,
-                  AttributeContextDirective,
-                  HistoryComponent,
-                  HistoryDetailComponent,
-                  UtcComponent,
-                  SessionComponent ],
-  providers: [ RestService,
-               ZeidonRestService,
-               { provide: ZeidonRestValues, useValue: REST_VALUES },
-               { provide: ZeidonConfiguration, useClass: ZeidonAngularConfiguration },
-             ],
-  bootstrap: [ AppComponent ]
-})
+@NgModule( {
+    declarations: [
+        AppComponent,
+        ErrorElementDirective,
+        AttributeContextDirective,
+        ConfigurationListComponent,
+        ConfigurationComponent,
+        UtcComponent,
+        HistoryComponent,
+        SessionComponent,
+        HistoryDetailComponent
+    ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        BrowserAnimationsModule
+    ],
+    providers: [
+        RestService,
+        ZeidonRestService,
+        { provide: ZeidonRestValues, useValue: REST_VALUES },
+        { provide: ZeidonConfiguration, useClass: ZeidonAngularConfiguration },
+    ],
+    bootstrap: [ AppComponent ]
+} )
 export class AppModule {
-  // This constructor is required to force Angular injector to load the ZeidonConfiguration.
-  constructor( private zeidonConfig: ZeidonConfiguration ) { }
+    // This constructor is required to force Angular injector to load the ZeidonConfiguration.
+    constructor( private zeidonConfig: ZeidonConfiguration ) { }
 }
