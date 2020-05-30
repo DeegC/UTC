@@ -13,6 +13,7 @@ export class ConfigurationListComponent implements OnInit {
     selectedConfigOi: Configuration;
     configurationList: Configuration;
     sessionOi: Session;
+    displayedColumns = [ "id", "description", "delete" ];
 
     constructor( private zeidonRestService: ZeidonRestService ) { }
 

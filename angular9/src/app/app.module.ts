@@ -19,6 +19,7 @@ import { SessionComponent } from './session/session.component';
 import { HistoryDetailComponent } from './history-detail/history-detail.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatTableModule } from '@angular/material/table';
 
 var restUrl = '';
 if ( document.URL.startsWith( 'http://localhost:4200' ) )                           // Angular test server
@@ -52,6 +53,7 @@ const REST_VALUES: ZeidonRestValues = {
         CommonModule,
         ReactiveFormsModule,
         MatTabsModule,
+        MatTableModule,
         FormsModule,
         BrowserAnimationsModule
     ],
