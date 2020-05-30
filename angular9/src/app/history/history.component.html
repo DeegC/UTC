@@ -1,13 +1,19 @@
 <div *ngIf="sessionList && sessionList.isEmpty == false">
-    <ul class="configurations">
-        <li *ngFor="let session of sessionList.Session"
-            [class.selected]="selectedSessionOi && selectedSessionOi.Session$.Id == session.Id">
-            <span (click)="onSelect(session)">
-                <span class="badge">{{session.Id}}</span> {{session.Date | date:'yyyy-MM-dd hh:mm a'}}
-            </span>
-            <img src="assets/img/red-x.png" (click)="onDelete( session )" />
-        </li>
-    </ul>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Delete?</th>
+            </tr>
+        </thead>
+        <tr *ngFor="let session of sessionList.Session">
+            <td (click)="onSelect(session)">{{ session.Id}}</td>
+            <td (click)="onSelect(session)">{{ session.Date | date:'yyyy-MM-dd hh:mm a' }}</td>
+            <td><img src="assets/img/red-x.png" (click)="onDelete( session )" /></td>
+        </tr>
+    </table>
 </div>
 <div *ngIf="selectedSessionOi">
     <app-history-detail [sessionOi]="selectedSessionOi">

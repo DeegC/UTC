@@ -16,11 +16,20 @@
 
         <div><label>Fan: </label>{{currentState.Instant$.PWM0}}</div>
 
-        <div *ngFor="let therm of currentSession.Session$.Configuration$.ThermometerConfig; let i = index;">
-            <div><label>{{therm.Name}} </label>{{getThermTemperature( i ) }}</div>
-        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Temperature</th>
+                </tr>
+            </thead>
+            <tr *ngFor="let therm of currentSession.Session$.Configuration$.ThermometerConfig; let i = index;">
+                <td>{{ therm.Name }}</td>
+                <td>{{ getThermTemperature( i ) }}</td>
+            </tr>
+            <tr><td>CPU Temp</td> <td>{{currentState.Instant$.CpuTemperature}}</td></tr>
+        </table>
 
-        <div><label>CPU Temp: </label>{{currentState.Instant$.CpuTemperature}}</div>
         <div><label>Timestamp: </label>{{currentState.Instant$.Timestamp}}</div>
     </div>
 

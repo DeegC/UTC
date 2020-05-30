@@ -42,15 +42,22 @@ Hardware: J Haddad
 
 <div style="border: 1px solid #000000; padding: 25px;">
     <div *ngIf="thermometerTypes && thermometerTypes.isEmpty == false">
-        <ul class="thermometerTypes">
-            <li *ngFor="let therm of thermometerTypes.ThermometerType"
-                [class.selected]="selectedTherm.ThermometerType$?.Id == therm.Id">
-                <span (click)="onSelectThermConfig(therm)">
-                    <span class="badge">{{therm.Name}}</span> {{therm.Description}}
-                </span>
-                <img src="assets/img/red-x.png" (click)="onDeleteThermConfig( therm )" />
-            </li>
-        </ul>
+
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Delete?</th>
+                </tr>
+            </thead>
+            <tr *ngFor="let therm of thermometerTypes.ThermometerType">
+                <td (click)="onSelectThermConfig( therm )">{{ therm.Name}}</td>
+                <td (click)="onSelectThermConfig( therm )">{{ therm.Description }}</td>
+                <td><img src="assets/img/red-x.png" (click)="onDeleteThermConfig( therm )" /></td>
+            </tr>
+        </table>
     </div>
 
     <button type="button" class="btn btn-default" (click)="newThermometerType()">
@@ -130,15 +137,20 @@ Hardware: J Haddad
 
 <h4>Log files</h4>
 <div *ngIf="debugInfo && ! debugInfo.isEmpty">
-    <ul class="logFileList">
-        <li *ngFor="let file of debugInfo.DebugInfo$.File">
-            <a>
-                <span>{{file.Name}}</span> {{file.Size}}
-            </a>
-            <img src="assets/img/red-x.png" (click)="onDeleteFile( file )" />
-        </li>
-    </ul>
-
+    <table>
+        <thead>
+            <tr>
+                <th>Filename</th>
+                <th>File size</th>
+                <th>Delete?</th>
+            </tr>
+        </thead>
+        <tr *ngFor="let file of debugInfo.DebugInfo$.File">
+            <td>{{ file.Name }}</td>
+            <td>{{ file.Size }}</td>
+            <td><img src="assets/img/red-x.png" (click)="onDeleteFile( file )" /></td>
+        </tr>
+    </table>
 </div>
 
 <button type="button" class="btn btn-default" (click)="shutdown()">
