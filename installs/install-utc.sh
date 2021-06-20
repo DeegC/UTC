@@ -107,22 +107,34 @@ if [ ! -f $DEB_FILE ]; then
 fi
 
 # If specified, then set up smtp to email the IP address via gmail.
-if [ -n "$GMAIL_EMAIL_RECIPIENT" ]; then
-    if [ -z "$GMAIL_ACCOUNT" ]; then
-        echo "GMAIL_ACCOUNT needs to be set to the gmail account name."
+if [ -n "$MAIL_EMAIL_RECIPIENT" ]; then
+    if [ -z "$MAIL_ACCOUNT" ]; then
+        echo "MAIL_ACCOUNT needs to be set to the gmail account name."
         exit 1
     fi
 
-    if [ -z "$GMAIL_PASSWORD" ]; then
-        echo "GMAIL_PASSWORD needs to be set"
+    if [ -z "$MAIL_PASSWORD" ]; then
+        echo "MAIL_PASSWORD needs to be set"
         exit 1
     fi
 
-    echo "Installing GMail notification for $GMAIL"
+    echo "Installing email notification for $MAIL_ACCOUNT"
     if ! which msmtp > /dev/null; then
         sudo apt install --assume-yes msmtp mailutils
     fi
 
+    case "$MAIL_ACCOUNT" in
+        .*gmail.*)
+            EMAIL_HOST=smtp.gmail.com
+            ;;
+        .*comcast.*)
+            EMAIL_HOST=smtp.comcast.net
+            ;;
+        *)
+            echo "Unknown mail account $MAIL_ACCOUNT"
+            ;;
+    esac
+    
     echo "# Set up msmtp to send email via gmail.
 defaults
 auth           on
@@ -130,20 +142,20 @@ tls            on
 tls_starttls   on
 tls_trust_file /etc/ssl/certs/ca-certificates.crt
 
-account        gmail
-host           smtp.gmail.com
+account        smoker
+host           $EMAIL_HOST
 port           587
-from           $GMAIL_ACCOUNT
-user           $GMAIL_ACCOUNT
-password       $GMAIL_PASSWORD
+from           $MAIL_ACCOUNT
+user           $MAIL_ACCOUNT
+password       $MAIL_PASSWORD
 
-account default : gmail" > /etc/msmtprc
+account default : smoker" > /etc/msmtprc
 
     # Set up script to send email when network is up.
     echo "#!/bin/bash
 send_mail(){
     sleep 60 # Give msmtp time to start up and finish booting.
-    echo -e \"Subject: RPi IP\n\n  $(ip addr show wlan0)\" | msmtp -v $GMAIL_EMAIL_RECIPIENT
+    echo -e \"Subject: RPi IP\n\n  http://$(hostname -I | awk '{print \$1}')/\" | msmtp -v $MAIL_EMAIL_RECIPIENT
 }
 send_mail &" > /etc/network/if-up.d/send-ip
     chmod +x /etc/network/if-up.d/send-ip
