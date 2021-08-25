@@ -1,6 +1,10 @@
 #!/bin/bash
 
 network="192.168.0."
+if [ ! -z "$1" ]; then
+    network="$1"
+fi
+
 port=80
 for host in {1..255}; do
     echo "Pinging $network$host"
