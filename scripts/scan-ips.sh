@@ -8,7 +8,7 @@ fi
 port=80
 for host in {1..255}; do
     echo "Pinging $network$host"
-    ping -c 1 $network$host &> /dev/null
+    ping -c 1 $network$host &> /dev/null || break
     if [ $? -eq 0 ]; then
         echo " >>> Found $network$host <<<"
         (echo > /dev/tcp/$network$host/$port) &>/dev/null
